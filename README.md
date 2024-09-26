@@ -3,7 +3,7 @@
 
 ## Library Overview
 
-ETIA (Ετία: "cause" in Greek) is a cutting-edge automated causal discovery library that takes causal analysis beyond traditional methods. It is designed to tackle complex, real-world problems by automating the entire causal discovery process, offering a combination of feature selection, causal structure learning, and causal reasoning validation that is unmatched in other libraries.
+ETIA (Αιτία (pronounced etía): "cause" in Greek) is a cutting-edge automated causal discovery library that takes causal analysis beyond traditional methods. It is designed to tackle complex, real-world problems by automating the entire causal discovery process, offering a combination of feature selection, causal structure learning, and causal reasoning validation that is unmatched in other libraries.
 
 ETIA provides:
 - **Dimensionality Reduction** through its **Automated Feature Selection (AFS)** module, which ensures only the most relevant variables are used, even in high-dimensional datasets.
