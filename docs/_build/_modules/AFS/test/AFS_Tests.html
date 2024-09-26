@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AFS.test.AFS_Tests &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AFS.html">AFS package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CausalLearning.html">CausalLearning package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">AFS.test.AFS_Tests</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for AFS.test.AFS_Tests</h1><div class="highlight"><pre>
+<span></span><span class="c1"># test_afs.py</span>
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">ETIA.AFS</span> <span class="kn">import</span> <span class="n">AFS</span>
+<span class="kn">from</span> <span class="nn">ETIA.AFS.predictive_configurator</span> <span class="kn">import</span> <span class="n">PredictiveConfigurator</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span><span class="p">,</span> <span class="n">make_regression</span>
+
+<div class="viewcode-block" id="TestAFS"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS">[docs]</a><span class="k">class</span> <span class="nc">TestAFS</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TestAFS.setUpClass"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.setUpClass">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="c1"># Generate synthetic classification data</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">X_classification</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">y_classification</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span>
+            <span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">n_informative</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">n_redundant</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">feature_names_classification</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">data_classification</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">X_classification</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">feature_names_classification</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">data_classification</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">y_classification</span>
+
+        <span class="c1"># Generate synthetic regression data</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">X_regression</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">y_regression</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span>
+            <span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">n_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">n_informative</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">feature_names_regression</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">data_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">X_regression</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">feature_names_regression</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">data_regression</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">y_regression</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_initialization_defaults"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_initialization_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">test_initialization_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test initialization with default parameters.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">num_processors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">oos_protocol</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_initialization_custom"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_initialization_custom">[docs]</a>    <span class="k">def</span> <span class="nf">test_initialization_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test initialization with custom parameters.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_processors</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">oos_protocol</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Holdout&#39;</span><span class="p">,</span> <span class="s1">&#39;test_size&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">num_processors</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">oos_protocol</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;Holdout&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_default_config_classification"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_default_config_classification">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_default_config_classification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with default configurations on classification data.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># Run 10% of configurations to make test faster</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_classification&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;original_data&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;reduced_data&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;best_config&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;selected_features&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_default_config_regression"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_default_config_regression">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_default_config_regression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with default configurations on regression data.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;continuous&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_regression</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># Run 10% of configurations to make test faster</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_regression&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;original_data&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;reduced_data&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;best_config&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;selected_features&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_custom_configs"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_custom_configs">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_custom_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with custom configurations.&quot;&quot;&quot;</span>
+        <span class="n">custom_configs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;fs_name&#39;</span><span class="p">:</span> <span class="s1">&#39;fbed&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ind_test_name&#39;</span><span class="p">:</span> <span class="s1">&#39;testIndReg&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;preprocess_method&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;linear_regression&#39;</span><span class="p">,</span>  <span class="c1"># Added model</span>
+                <span class="s1">&#39;r_path&#39;</span><span class="p">:</span> <span class="s1">&#39;R&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;continuous&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_regression</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="n">custom_configs</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_custom_configs&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;best_config&#39;</span><span class="p">],</span> <span class="n">custom_configs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_percentage_configs"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_percentage_configs">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_percentage_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with a percentage of configurations.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># This test specifically tests using 10% of configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_percentage_configs&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;best_config&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_invalid_pred_configs"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_invalid_pred_configs">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_invalid_pred_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test error handling when invalid pred_configs are provided.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+                <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+                <span class="n">pred_configs</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># Invalid percentage</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_invalid_pred_configs&#39;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_recursive_feature_selection_depth"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_recursive_feature_selection_depth">[docs]</a>    <span class="k">def</span> <span class="nf">test_recursive_feature_selection_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test recursive feature selection with depth greater than 1.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_recursive_fs&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">test_random_seed_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that results are reproducible when random_seed is set.&quot;&quot;&quot;</span>
+        <span class="n">afs1</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">afs2</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">results1</span> <span class="o">=</span> <span class="n">afs1</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_reproducibility&#39;</span>
+        <span class="p">)</span>
+        <span class="n">results2</span> <span class="o">=</span> <span class="n">afs2</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_reproducibility&#39;</span>
+        <span class="p">)</span>
+        <span class="c1"># Allow for minor variations if exact reproducibility isn&#39;t possible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">results1</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="nb">set</span><span class="p">(</span><span class="n">results2</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]))</span>
+
+<div class="viewcode-block" id="TestAFS.test_multiple_target_variables"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_multiple_target_variables">[docs]</a>    <span class="k">def</span> <span class="nf">test_multiple_target_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with multiple target variables.&quot;&quot;&quot;</span>
+        <span class="n">data_multi_target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">data_multi_target</span><span class="p">[</span><span class="s1">&#39;target2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="s1">&#39;target2&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data_multi_target</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_multiple_targets&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;target2&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_no_features_selected"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_no_features_selected">[docs]</a>    <span class="k">def</span> <span class="nf">test_no_features_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test handling when no features are selected.&quot;&quot;&quot;</span>
+        <span class="c1"># Create data where features are not informative</span>
+        <span class="n">data_non_informative</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_classification</span><span class="p">)</span>
+        <span class="n">data_non_informative</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data_non_informative</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_no_features_selected&#39;</span>
+        <span class="p">)</span>
+        <span class="c1"># Check that the number of selected features is minimal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertLessEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_preprocessing_methods"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_preprocessing_methods">[docs]</a>    <span class="k">def</span> <span class="nf">test_preprocessing_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with preprocessing methods.&quot;&quot;&quot;</span>
+        <span class="n">custom_configs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;fs_name&#39;</span><span class="p">:</span> <span class="s1">&#39;fbed&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ind_test_name&#39;</span><span class="p">:</span> <span class="s1">&#39;testIndReg&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;preprocess_method&#39;</span><span class="p">:</span> <span class="s1">&#39;standard&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;linear_regression&#39;</span><span class="p">,</span>  <span class="c1"># Added model</span>
+                <span class="s1">&#39;r_path&#39;</span><span class="p">:</span> <span class="s1">&#39;R&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;continuous&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_regression</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="n">custom_configs</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_preprocessing&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;best_config&#39;</span><span class="p">][</span><span class="s1">&#39;preprocess_method&#39;</span><span class="p">],</span> <span class="s1">&#39;standard&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_handling_cycles_in_recursion"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_handling_cycles_in_recursion">[docs]</a>    <span class="k">def</span> <span class="nf">test_handling_cycles_in_recursion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that visited features are handled correctly to avoid cycles.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_cycles_in_recursion&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_invalid_data_input"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_invalid_data_input">[docs]</a>    <span class="k">def</span> <span class="nf">test_invalid_data_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test error handling when invalid data input is provided.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>  <span class="c1"># Invalid data type</span>
+                <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+                <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_invalid_data_input&#39;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_invalid_target_features_input"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_invalid_target_features_input">[docs]</a>    <span class="k">def</span> <span class="nf">test_invalid_target_features_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test error handling when invalid target_features input is provided.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+                <span class="n">target_features</span><span class="o">=</span><span class="s1">&#39;invalid&#39;</span><span class="p">,</span>  <span class="c1"># Invalid target_features type</span>
+                <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_invalid_target_features&#39;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_oos_protocol"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_oos_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">test_oos_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test custom out-of-sample protocol.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">oos_protocol</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;KFoldCV&#39;</span><span class="p">,</span> <span class="s1">&#39;folds&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_oos_protocol&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">afs</span><span class="o">.</span><span class="n">oos_protocol</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;KFoldCV&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_bootstrap_bias_correction"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_bootstrap_bias_correction">[docs]</a>    <span class="k">def</span> <span class="nf">test_bootstrap_bias_correction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that bootstrap bias correction returns a float score.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="c1"># This test does not need pred_configs adjustment</span>
+        <span class="n">target_type</span> <span class="o">=</span> <span class="s1">&#39;categorical&#39;</span>
+        <span class="c1"># Simulate fold_predictions</span>
+        <span class="n">fold_predictions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">bbc_score</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">bootstrap_bias_correction</span><span class="p">(</span><span class="n">fold_predictions</span><span class="p">,</span> <span class="n">target_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">bbc_score</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_feature_selection_with_no_preprocessing"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_feature_selection_with_no_preprocessing">[docs]</a>    <span class="k">def</span> <span class="nf">test_feature_selection_with_no_preprocessing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test feature selection without preprocessing.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">custom_configs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;fs_name&#39;</span><span class="p">:</span> <span class="s1">&#39;ses&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ind_test_name&#39;</span><span class="p">:</span> <span class="s1">&#39;testIndReg&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;preprocess_method&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;linear_regression&#39;</span><span class="p">,</span>  <span class="c1"># Added model</span>
+                <span class="s1">&#39;r_path&#39;</span><span class="p">:</span> <span class="s1">&#39;R&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;continuous&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_regression</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="n">custom_configs</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_no_preprocessing&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;best_config&#39;</span><span class="p">][</span><span class="s1">&#39;preprocess_method&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_depth_zero"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_depth_zero">[docs]</a>    <span class="k">def</span> <span class="nf">test_depth_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that depth zero returns empty selected features.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_depth_zero&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_invalid_depth"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_invalid_depth">[docs]</a>    <span class="k">def</span> <span class="nf">test_invalid_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test error handling for invalid depth.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Invalid depth</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_random_seed_effect"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_random_seed_effect">[docs]</a>    <span class="k">def</span> <span class="nf">test_random_seed_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that different random seeds produce different results.&quot;&quot;&quot;</span>
+        <span class="n">afs1</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">afs2</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results1</span> <span class="o">=</span> <span class="n">afs1</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_random_seed_effect&#39;</span>
+        <span class="p">)</span>
+        <span class="n">results2</span> <span class="o">=</span> <span class="n">afs2</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_random_seed_effect&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">results1</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">],</span> <span class="n">results2</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_large_depth"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_large_depth">[docs]</a>    <span class="k">def</span> <span class="nf">test_large_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test handling of large depth values.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_large_depth&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertGreaterEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_feature_selector_error_handling"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_feature_selector_error_handling">[docs]</a>    <span class="k">def</span> <span class="nf">test_feature_selector_error_handling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that feature selector errors are handled gracefully.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="c1"># Modify the data to cause an error in feature selection (e.g., all NaNs)</span>
+        <span class="n">data_with_nans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">data_with_nans</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data_with_nans</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_feature_selector_error&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_predictive_model_error_handling"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_predictive_model_error_handling">[docs]</a>    <span class="k">def</span> <span class="nf">test_predictive_model_error_handling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that predictive model errors are handled gracefully.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="c1"># Create a configuration that would cause an error in model training</span>
+        <span class="n">custom_configs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;fs_name&#39;</span><span class="p">:</span> <span class="s1">&#39;fbed&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ind_test_name&#39;</span><span class="p">:</span> <span class="s1">&#39;invalid_test&#39;</span><span class="p">,</span>  <span class="c1"># Invalid test name</span>
+                <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;preprocess_method&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;r_path&#39;</span><span class="p">:</span> <span class="s1">&#39;R&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="n">custom_configs</span><span class="p">,</span>  <span class="c1"># Using custom configs</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_predictive_model_error&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][</span><span class="s1">&#39;target&#39;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_with_numpy_array"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_with_numpy_array">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_with_numpy_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with data provided as a NumPy array.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="n">data_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># Convert to DataFrame to include column names</span>
+        <span class="n">data_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data_df</span><span class="p">,</span>  <span class="c1"># Use DataFrame instead of NumPy array</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_numpy_array&#39;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;reduced_data&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_run_afs_with_data_filename"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_run_afs_with_data_filename">[docs]</a>    <span class="k">def</span> <span class="nf">test_run_afs_with_data_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test running AFS with data provided as a filename.&quot;&quot;&quot;</span>
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+        <span class="n">data_filename</span> <span class="o">=</span> <span class="s1">&#39;test_data.csv&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">data_filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="c1"># Added pred_configs=0.1 to limit configurations</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data_filename</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_data_filename&#39;</span>
+        <span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">data_filename</span><span class="p">)</span>  <span class="c1"># Clean up</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;reduced_data&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestAFS.test_logging_output"><a class="viewcode-back" href="../../../AFS.test.html#AFS.test.AFS_Tests.TestAFS.test_logging_output">[docs]</a>    <span class="k">def</span> <span class="nf">test_logging_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Test that logging output is produced when verbose is True.&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">io</span>
+        <span class="kn">import</span> <span class="nn">logging</span>
+        <span class="n">log_stream</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;afs_library.AFS&#39;</span><span class="p">)</span>  <span class="c1"># Use the module&#39;s logger</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">log_stream</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+        <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
+        <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_classification</span><span class="p">,</span>
+            <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;test_logging_output&#39;</span>
+        <span class="p">)</span>
+
+        <span class="n">handler</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">log_contents</span> <span class="o">=</span> <span class="n">log_stream</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">log_contents</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

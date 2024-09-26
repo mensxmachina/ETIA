@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../Experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../AFS.html">AFS package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CausalLearning.html">CausalLearning package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="bidirected_path"><a class="viewcode-back" href="../../../../../CausalLearning.CDHPO.OCT.causal_graph_utils.html#CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary.bidirected_path">[docs]</a><span class="k">def</span> <span class="nf">bidirected_path</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Recursive function to find the nodes that are reachable in any bidirected path starting from the node i</span>
+<span class="sd">    Author : kbiza@csd.uoc.gr</span>
+<span class="sd">    Args:</span>
+<span class="sd">        i (int): the starting node (not a list of integer!!)</span>
+<span class="sd">        matrix (numpy array): matrix of size N*N where N is the number of nodes in tetrad_graph</span>
+<span class="sd">                matrix(i, j) = 2 and matrix(j, i) = 3: i--&gt;j</span>
+<span class="sd">                matrix(i, j) = 1 and matrix(j, i) = 1: io-oj</span>
+<span class="sd">                matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j</span>
+<span class="sd">                matrix(i, j) = 3 and matrix(j, i) = 3: i---j</span>
+<span class="sd">                matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list_nodes (list): the nodes that are reachable in any bidirected path starting from node i</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">bidirected_neighbors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">bidirected_neighbors</span> <span class="o">=</span> <span class="n">bidirected_neighbors</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bidirected_neighbors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">list_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">list_nodes</span> <span class="o">=</span> <span class="n">list_nodes</span><span class="o">+</span><span class="n">bidirected_neighbors</span>
+
+    <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">matrix</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">bidirected_neighbors</span><span class="p">:</span>
+        <span class="n">next_neighbors</span> <span class="o">=</span> <span class="n">bidirected_path</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">next_neighbors</span><span class="p">:</span>
+            <span class="n">list_nodes</span> <span class="o">=</span> <span class="n">list_nodes</span><span class="o">+</span><span class="n">next_neighbors</span>
+
+    <span class="k">return</span> <span class="n">list_nodes</span></div>
+
+
+
+<div class="viewcode-block" id="markov_boundary"><a class="viewcode-back" href="../../../../../CausalLearning.CDHPO.OCT.causal_graph_utils.html#CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary.markov_boundary">[docs]</a><span class="k">def</span> <span class="nf">markov_boundary</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">matrix_pd</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Identify the markov boundary of the target node.</span>
+<span class="sd">    Function for DAGs, PDAGs and MAGs  (not for PAGs)</span>
+<span class="sd">    Author:kbiza@csd.uoc.gr</span>
+<span class="sd">    Args:</span>
+<span class="sd">        target (int): index of the target node in the matrix (not a list of int!!)</span>
+<span class="sd">        matrix_pd (pandas Dataframe): an array of size N*N where N is the number of nodes in tetrad_graph</span>
+<span class="sd">                matrix(i, j) = 2 and matrix(j, i) = 3: i--&gt;j</span>
+<span class="sd">                matrix(i, j) = 1 and matrix(j, i) = 1: io-oj    in PAGs</span>
+<span class="sd">                matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j    in MAGs and PAGs</span>
+<span class="sd">                matrix(i, j) = 3 and matrix(j, i) = 3: i---j    in PDAGs</span>
+<span class="sd">                matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j    in PAGs</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        markov_boundary (list) : list of indexes for the markov boundary ot the target</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">matrix_pd</span> <span class="ow">is</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix_pd</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix_pd</span>
+    <span class="c1"># check if the input matrix is PAG</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">matrix</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;cannot find MB due to an undirected edge (need DAG or MAG)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Common for PDAGs and MAGs</span>
+    <span class="n">parents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">target</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">target</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">parents_of_children</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+        <span class="n">parents_of_children</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">child</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">child</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="c1"># Undirected adjacencies (in PDAGs)</span>
+    <span class="n">other_adjacencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">target</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="c1"># District sets in MAGs</span>
+    <span class="n">district_i</span> <span class="o">=</span> <span class="n">bidirected_path</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">matrix</span><span class="p">))</span>
+    <span class="n">district_children</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+        <span class="n">district_child</span> <span class="o">=</span> <span class="n">bidirected_path</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">matrix</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">district_child</span><span class="p">:</span>
+            <span class="n">district_children</span> <span class="o">+=</span> <span class="n">district_child</span>
+
+    <span class="n">parents_of_district_i</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">district_i</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">di</span> <span class="ow">in</span> <span class="n">district_i</span><span class="p">:</span>
+            <span class="n">parents_of_district_i</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">di</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">di</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">district_i</span> <span class="o">=</span><span class="p">[]</span> <span class="c1"># bidirected_path returns none (fix if needed)</span>
+
+    <span class="n">parents_of_district_children</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">district_children</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">dchild</span> <span class="ow">in</span> <span class="n">district_children</span><span class="p">:</span>
+            <span class="n">parents_of_district_children</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">dchild</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">matrix</span><span class="p">[:,</span> <span class="n">dchild</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+
+    <span class="n">markov_boundary</span> <span class="o">=</span> <span class="n">parents</span> <span class="o">+</span> <span class="n">children</span> <span class="o">+</span> <span class="n">parents_of_children</span> <span class="o">+</span> \
+                      <span class="n">other_adjacencies</span> <span class="o">+</span>\
+                      <span class="n">district_i</span> <span class="o">+</span> <span class="n">district_children</span> <span class="o">+</span> \
+                      <span class="n">parents_of_district_i</span> <span class="o">+</span> <span class="n">parents_of_district_children</span>
+
+
+    <span class="n">markov_boundary</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">markov_boundary</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">markov_boundary</span><span class="p">:</span>
+        <span class="n">markov_boundary</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">markov_boundary</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

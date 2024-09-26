@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AFS.test package &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AFS.utils package" href="AFS.utils.html" />
+    <link rel="prev" title="AFS.feature_selectors package" href="AFS.feature_selectors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="AFS.html">AFS package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="AFS.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="AFS.feature_selectors.html">AFS.feature_selectors package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">AFS.test package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-AFS.test.AFS_Tests">AFS.test.AFS_Tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-AFS.test.demo">AFS.test.demo module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.utils.html">AFS.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.AFS">AFS.AFS module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.feature_selector">AFS.feature_selector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.oos">AFS.oos module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.predictive_configurator">AFS.predictive_configurator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.predictive_model">AFS.predictive_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.preprocessor">AFS.preprocessor module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.html">CausalLearning package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="AFS.html">AFS package</a></li>
+      <li class="breadcrumb-item active">AFS.test package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/AFS.test.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-AFS.test">
+<span id="afs-test-package"></span><h1>AFS.test package<a class="headerlink" href="#module-AFS.test" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-AFS.test.AFS_Tests">
+<span id="afs-test-afs-tests-module"></span><h2>AFS.test.AFS_Tests module<a class="headerlink" href="#module-AFS.test.AFS_Tests" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TestAFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.setUpClass">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setUpClass</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.setUpClass"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.setUpClass" title="Permalink to this definition"></a></dt>
+<dd><p>Hook method for setting up class fixture before running tests in the class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_initialization_defaults">
+<span class="sig-name descname"><span class="pre">test_initialization_defaults</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_initialization_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_initialization_defaults" title="Permalink to this definition"></a></dt>
+<dd><p>Test initialization with default parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_initialization_custom">
+<span class="sig-name descname"><span class="pre">test_initialization_custom</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_initialization_custom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_initialization_custom" title="Permalink to this definition"></a></dt>
+<dd><p>Test initialization with custom parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_default_config_classification">
+<span class="sig-name descname"><span class="pre">test_run_afs_default_config_classification</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_default_config_classification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_default_config_classification" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with default configurations on classification data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_default_config_regression">
+<span class="sig-name descname"><span class="pre">test_run_afs_default_config_regression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_default_config_regression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_default_config_regression" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with default configurations on regression data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_custom_configs">
+<span class="sig-name descname"><span class="pre">test_run_afs_custom_configs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_custom_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_custom_configs" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with custom configurations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_percentage_configs">
+<span class="sig-name descname"><span class="pre">test_run_afs_percentage_configs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_percentage_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_percentage_configs" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with a percentage of configurations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_invalid_pred_configs">
+<span class="sig-name descname"><span class="pre">test_run_afs_invalid_pred_configs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_invalid_pred_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_invalid_pred_configs" title="Permalink to this definition"></a></dt>
+<dd><p>Test error handling when invalid pred_configs are provided.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_recursive_feature_selection_depth">
+<span class="sig-name descname"><span class="pre">test_recursive_feature_selection_depth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_recursive_feature_selection_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_recursive_feature_selection_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Test recursive feature selection with depth greater than 1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_multiple_target_variables">
+<span class="sig-name descname"><span class="pre">test_multiple_target_variables</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_multiple_target_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_multiple_target_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with multiple target variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_no_features_selected">
+<span class="sig-name descname"><span class="pre">test_no_features_selected</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_no_features_selected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_no_features_selected" title="Permalink to this definition"></a></dt>
+<dd><p>Test handling when no features are selected.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_preprocessing_methods">
+<span class="sig-name descname"><span class="pre">test_preprocessing_methods</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_preprocessing_methods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_preprocessing_methods" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with preprocessing methods.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_handling_cycles_in_recursion">
+<span class="sig-name descname"><span class="pre">test_handling_cycles_in_recursion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_handling_cycles_in_recursion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_handling_cycles_in_recursion" title="Permalink to this definition"></a></dt>
+<dd><p>Test that visited features are handled correctly to avoid cycles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_invalid_data_input">
+<span class="sig-name descname"><span class="pre">test_invalid_data_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_invalid_data_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_invalid_data_input" title="Permalink to this definition"></a></dt>
+<dd><p>Test error handling when invalid data input is provided.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_invalid_target_features_input">
+<span class="sig-name descname"><span class="pre">test_invalid_target_features_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_invalid_target_features_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_invalid_target_features_input" title="Permalink to this definition"></a></dt>
+<dd><p>Test error handling when invalid target_features input is provided.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_oos_protocol">
+<span class="sig-name descname"><span class="pre">test_oos_protocol</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_oos_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_oos_protocol" title="Permalink to this definition"></a></dt>
+<dd><p>Test custom out-of-sample protocol.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_bootstrap_bias_correction">
+<span class="sig-name descname"><span class="pre">test_bootstrap_bias_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_bootstrap_bias_correction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_bootstrap_bias_correction" title="Permalink to this definition"></a></dt>
+<dd><p>Test that bootstrap bias correction returns a float score.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_feature_selection_with_no_preprocessing">
+<span class="sig-name descname"><span class="pre">test_feature_selection_with_no_preprocessing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_feature_selection_with_no_preprocessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_feature_selection_with_no_preprocessing" title="Permalink to this definition"></a></dt>
+<dd><p>Test feature selection without preprocessing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_depth_zero">
+<span class="sig-name descname"><span class="pre">test_depth_zero</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_depth_zero"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_depth_zero" title="Permalink to this definition"></a></dt>
+<dd><p>Test that depth zero returns empty selected features.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_invalid_depth">
+<span class="sig-name descname"><span class="pre">test_invalid_depth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_invalid_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_invalid_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Test error handling for invalid depth.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_random_seed_effect">
+<span class="sig-name descname"><span class="pre">test_random_seed_effect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_random_seed_effect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_random_seed_effect" title="Permalink to this definition"></a></dt>
+<dd><p>Test that different random seeds produce different results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_large_depth">
+<span class="sig-name descname"><span class="pre">test_large_depth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_large_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_large_depth" title="Permalink to this definition"></a></dt>
+<dd><p>Test handling of large depth values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_feature_selector_error_handling">
+<span class="sig-name descname"><span class="pre">test_feature_selector_error_handling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_feature_selector_error_handling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_feature_selector_error_handling" title="Permalink to this definition"></a></dt>
+<dd><p>Test that feature selector errors are handled gracefully.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_predictive_model_error_handling">
+<span class="sig-name descname"><span class="pre">test_predictive_model_error_handling</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_predictive_model_error_handling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_predictive_model_error_handling" title="Permalink to this definition"></a></dt>
+<dd><p>Test that predictive model errors are handled gracefully.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_with_numpy_array">
+<span class="sig-name descname"><span class="pre">test_run_afs_with_numpy_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_with_numpy_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_with_numpy_array" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with data provided as a NumPy array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_run_afs_with_data_filename">
+<span class="sig-name descname"><span class="pre">test_run_afs_with_data_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_run_afs_with_data_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_run_afs_with_data_filename" title="Permalink to this definition"></a></dt>
+<dd><p>Test running AFS with data provided as a filename.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="AFS.test.AFS_Tests.TestAFS.test_logging_output">
+<span class="sig-name descname"><span class="pre">test_logging_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/AFS_Tests.html#TestAFS.test_logging_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.AFS_Tests.TestAFS.test_logging_output" title="Permalink to this definition"></a></dt>
+<dd><p>Test that logging output is produced when verbose is True.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-AFS.test.demo">
+<span id="afs-test-demo-module"></span><h2>AFS.test.demo module<a class="headerlink" href="#module-AFS.test.demo" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="AFS.test.demo.main">
+<span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/test/demo.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AFS.test.demo.main" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="AFS.feature_selectors.html" class="btn btn-neutral float-left" title="AFS.feature_selectors package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AFS.utils.html" class="btn btn-neutral float-right" title="AFS.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

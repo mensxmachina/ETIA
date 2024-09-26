@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CausalLearning.configurations.parameters &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AFS.html">AFS package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CausalLearning.html">CausalLearning package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">CausalLearning.configurations.parameters</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for CausalLearning.configurations.parameters</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">..model_validation_protocols.available_mvp_protocols</span> <span class="kn">import</span> <span class="n">available_mvp_protocols</span>
+<span class="kn">from</span> <span class="nn">..regressors</span> <span class="kn">import</span> <span class="n">regressors</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">..algorithms.causaldiscoveryalgorithms</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..algorithms.tetrad_algorithm</span> <span class="kn">import</span> <span class="n">TetradAlgorithm</span>
+<span class="kn">from</span> <span class="nn">..algorithms.tigramite_algorithm</span> <span class="kn">import</span> <span class="n">TigramiteAlgorithm</span>
+<span class="kn">from</span> <span class="nn">..algorithms.causalnex_algorithm</span> <span class="kn">import</span> <span class="n">NoTears</span>
+<span class="kn">from</span> <span class="nn">..algorithms.cdt_algorithms</span> <span class="kn">import</span> <span class="n">SAMAlgorithm</span>
+<span class="kn">from</span> <span class="nn">..util.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd"># Class `MVP_Parameters`</span>
+
+<span class="sd">## __init__(protocol_name = &#39;KFoldCV&#39;, parameters = {&#39;folds&#39;: 10, &#39;folds_to_run&#39;: 1})</span>
+
+<span class="sd">### Input</span>
+
+<span class="sd">- `protocol_name` (str, optional): name of the OOS protocol. Default value is `&#39;KFoldCV&#39;`.</span>
+<span class="sd">- `parameters` (dict, optional): parameters for the OOS protocol. Default value is `{&#39;folds&#39;: 10, &#39;folds_to_run&#39;: 1}`.</span>
+
+<span class="sd">### Output</span>
+
+<span class="sd">None</span>
+
+<span class="sd">### Functionality</span>
+
+<span class="sd">- Initializes the class instance with the given values or default values.</span>
+<span class="sd">- Sets the value of `protocol_name` and `parameters` attributes.</span>
+<span class="sd">- Check if the specified `protocol_name` exists in `available_mvp_protocols.available_mvp_protocols` dictionary.</span>
+<span class="sd">  - If exists, sets the `protocol` attribute to the value of `available_mvp_protocols.available_mvp_protocols[protocol_name]`</span>
+<span class="sd">  - If not, raises an exception &quot;The protocol you chose is not available&quot;.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="MVP_Parameters"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.MVP_Parameters">[docs]</a><span class="k">class</span> <span class="nc">MVP_Parameters</span><span class="p">:</span>
+    <span class="c1"># Set default values for the protocol name and parameters</span>
+    <span class="n">protocol_name</span> <span class="o">=</span> <span class="s1">&#39;KFoldCV&#39;</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="nb">object</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;folds_to_run&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+    <span class="c1"># Initialize the class with the specified values or default values</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol_name</span><span class="o">=</span><span class="s1">&#39;KFoldCV&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;folds&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;folds_to_run&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protocol_name</span> <span class="o">=</span> <span class="n">protocol_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+        <span class="c1"># Check if the specified protocol name exists in available protocols</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">protocol_name</span> <span class="ow">in</span> <span class="n">available_mvp_protocols</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">available_mvp_protocols</span><span class="p">[</span><span class="n">protocol_name</span><span class="p">]</span>
+            <span class="n">available_mvp_protocols</span><span class="p">[</span><span class="n">protocol_name</span><span class="p">]</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Raise an exception if the specified protocol does not exist</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The protocol you chose is not available&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;The protocol you chose is not available&#39;</span><span class="p">)</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd"># Class `Regressor_parameters`</span>
+
+<span class="sd">## __init__(regressor_name=&#39;RandomForestRegressor&#39;, parameters = {&#39;n_trees&#39;: 100, &#39;min_samples_leaf&#39;: 0.1, &#39;max_depth&#39;: 10})</span>
+
+<span class="sd">### Input</span>
+
+<span class="sd">- `regressor_name` (str, optional): name of the regressor. Default value is `&#39;RandomForestRegressor&#39;`.</span>
+<span class="sd">- `parameters` (dict, optional): parameters for the regressor. Default value is `{&#39;n_trees&#39;: 100, &#39;min_samples_leaf&#39;: 0.1, &#39;max_depth&#39;: 10}`.</span>
+
+<span class="sd">### Output</span>
+
+<span class="sd">None</span>
+
+<span class="sd">### Functionality</span>
+
+<span class="sd">- Initializes the class instance with the given values or default values.</span>
+<span class="sd">- Sets the value of `regressor_name` and `parameters` attributes.</span>
+<span class="sd">- Check if the specified `regressor_name` exists in `regressors.available_regressors` dictionary.</span>
+<span class="sd">  - If exists, sets the `regressor` attribute to the value of `regressors.available_regressors[regressor_name].set_regressor_params(parameters)`</span>
+<span class="sd">  - If not, raises an exception &quot;The regressor you chose is not available&quot;.</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="Regressor_parameters"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Regressor_parameters">[docs]</a><span class="k">class</span> <span class="nc">Regressor_parameters</span><span class="p">:</span>
+    <span class="c1"># Set default values for the regressor name and parameters</span>
+    <span class="n">regressor_name</span> <span class="o">=</span> <span class="s1">&#39;RandomForestRegressor&#39;</span>
+    <span class="n">regressor</span> <span class="o">=</span> <span class="nb">object</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_trees&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+
+    <span class="c1"># Initialize the class with the specified values or default values</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regressor_name</span><span class="o">=</span><span class="s1">&#39;RandomForestRegressor&#39;</span><span class="p">,</span>
+                 <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_trees&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor_name</span> <span class="o">=</span> <span class="n">regressor_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+        <span class="c1"># Check if the specified regressor name exists in available regressors</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">regressor_name</span> <span class="ow">in</span> <span class="n">regressors</span><span class="o">.</span><span class="n">available_regressors</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">regressors</span><span class="o">.</span><span class="n">available_regressors</span><span class="p">[</span><span class="n">regressor_name</span><span class="p">]</span><span class="o">.</span><span class="n">set_regressor_params</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Raise an exception if the specified regressor does not exist</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;The regressor you chose is not available&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;The regressor you chose is not available&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CDHPO_Parameters"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters">[docs]</a><span class="k">class</span> <span class="nc">CDHPO_Parameters</span><span class="p">:</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># init_main_params function initializes the main parameters of the CDHPO algorithm.</span>
+    <span class="c1"># It sets alpha (the significance level), n_permutations (the number of permutations), causal_sufficiency (whether to assume latent variables), and variables_type (the type of variables).</span>
+    <span class="c1"># Input:</span>
+    <span class="c1">#   alpha (float) : significance level (default value is 0.01).</span>
+    <span class="c1">#   n_permutations (int) : number of permutations (default value is 200).</span>
+    <span class="c1">#   causal_sufficiency (bool) : whether to assume latent variables (default value is True).</span>
+    <span class="c1">#   variables_type (str) : type of variables (&#39;mixed&#39;, &#39;discrete&#39; or &#39;continuous&#39;) (default value is &#39;mixed&#39;).</span>
+    <span class="c1"># Output:</span>
+    <span class="c1">#   None</span>
+<div class="viewcode-block" id="CDHPO_Parameters.init_main_params"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.init_main_params">[docs]</a>    <span class="k">def</span> <span class="nf">init_main_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_permutations</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">causal_sufficiency</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">variables_type</span><span class="o">=</span><span class="s1">&#39;mixed&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_permutations</span> <span class="o">=</span> <span class="n">n_permutations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">causal_sufficiency</span> <span class="o">=</span> <span class="n">causal_sufficiency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables_type</span> <span class="o">=</span> <span class="n">variables_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oos_protocol</span> <span class="o">=</span> <span class="n">MVP_Parameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">Regressor_parameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;CDHPO Parameters has ben initialized&#39;</span><span class="p">)</span></div>
+
+    <span class="c1"># set_regressor function sets the regressor of the CDHPO algorithm.</span>
+    <span class="c1"># Input:</span>
+    <span class="c1">#   name (str) : name of the regressor.</span>
+    <span class="c1">#   parameters (dict) : parameters of the regressor.</span>
+    <span class="c1"># Output:</span>
+    <span class="c1">#   None</span>
+<div class="viewcode-block" id="CDHPO_Parameters.set_regressor"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.set_regressor">[docs]</a>    <span class="k">def</span> <span class="nf">set_regressor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">Regressor_parameters</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Regressor_parameters has been set&#39;</span><span class="p">)</span></div>
+
+    <span class="c1"># set_oos_protocol function sets the out-of-sample protocol of the CDHPO algorithm.</span>
+    <span class="c1"># Input:</span>
+    <span class="c1">#   name (str) : name of the out-of-sample protocol.</span>
+    <span class="c1">#   parameters (dict) : parameters of the out-of-sample protocol.</span>
+    <span class="c1"># Output:</span>
+    <span class="c1">#   None</span>
+<div class="viewcode-block" id="CDHPO_Parameters.set_oos_protocol"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.set_oos_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">set_oos_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oos_protocol</span> <span class="o">=</span> <span class="n">MVP_Parameters</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;OOS protocol has been set&#39;</span><span class="p">)</span></div>
+
+    <span class="c1"># set_cd_algorithms function sets the causal discovery algorithms of the CDHPO algorithm.</span>
+    <span class="c1"># Input:</span>
+    <span class="c1">#   algorithms (list of str) : names of the causal discovery algorithms.</span>
+    <span class="c1"># Output:</span>
+    <span class="c1">#   None</span>
+    <span class="c1"># Raises:</span>
+    <span class="c1"># Exception: If the algorithm does not exist or the parameter/value is invalid</span>
+<div class="viewcode-block" id="CDHPO_Parameters.set_cd_algorithms"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.set_cd_algorithms">[docs]</a>    <span class="k">def</span> <span class="nf">set_cd_algorithms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">data_info</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">algorithms</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">algo</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;tetrad&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TetradAlgorithm</span><span class="p">(</span><span class="n">algo</span><span class="p">)]</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">init_algo</span><span class="p">(</span><span class="n">data_info</span><span class="p">)</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tetrad&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">algo</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;tigramite&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TigramiteAlgorithm</span><span class="p">(</span><span class="n">algo</span><span class="p">)]</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">init_algo</span><span class="p">(</span><span class="n">data_info</span><span class="p">)</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tigramite&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">algo</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;causalnex&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NoTears</span><span class="o">.</span><span class="n">NoTearsAlgorithm</span><span class="p">(</span><span class="n">algo</span><span class="p">)]</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;causalnex&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">algo</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;cdt&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">SAMAlgorithm</span><span class="o">.</span><span class="n">SAMAlgorithm</span><span class="p">(</span><span class="n">algo</span><span class="p">)]</span>
+                <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;cdt&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span> <span class="o">=</span> <span class="n">algorithms</span><span class="p">[</span><span class="n">algo</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;This algorithm (&quot;</span> <span class="o">+</span> <span class="n">algo</span> <span class="o">+</span> <span class="s2">&quot;) does not exist in the database&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="n">algorithms</span></div>
+
+<div class="viewcode-block" id="CDHPO_Parameters.check_configs"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.check_configs">[docs]</a>    <span class="k">def</span> <span class="nf">check_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_info</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">check_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">],</span> <span class="n">data_info</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Algorithm &#39;</span><span class="p">,</span> <span class="n">algo</span><span class="p">,</span> <span class="s1">&#39; has wrong parameters or parameter values&#39;</span><span class="p">)</span></div>
+
+
+    <span class="c1"># add_cd_algorithm function adds a causal discovery algorithm to the CDHPO algorithm.</span>
+    <span class="c1"># Input:</span>
+    <span class="c1">#   algorithm (str) : name of the causal discovery algorithm to add.</span>
+    <span class="c1">#   parameters (dict) : parameters of the causal discovery algorithm to add.</span>
+    <span class="c1">#   data_info (dict) : Information about the dataset</span>
+    <span class="c1"># Output:</span>
+    <span class="c1">#   None</span>
+    <span class="c1"># Raises:</span>
+    <span class="c1"># Exception: If the algorithm does not exist or the parameter/value is invalid</span>
+<div class="viewcode-block" id="CDHPO_Parameters.add_cd_algorithm"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.add_cd_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">add_cd_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">data_info</span><span class="p">):</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">algorithm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">algorithm</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;tetrad&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TetradAlgorithm</span><span class="o">.</span><span class="n">TetradAlgorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)]</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">init_algo</span><span class="p">(</span><span class="n">data_info</span><span class="p">)</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tetrad&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">algorithm</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;tigramite&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TigramiteAlgorithm</span><span class="o">.</span><span class="n">TigramiteAlgorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)]</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">init_algo</span><span class="p">(</span><span class="n">data_info</span><span class="p">)</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tigramite&#39;</span><span class="p">]</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">algorithm</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;causalnex&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NoTears</span><span class="o">.</span><span class="n">NoTearsAlgorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)]</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tigramite&#39;</span><span class="p">]</span>
+            <span class="k">elif</span><span class="p">(</span><span class="n">algorithm</span> <span class="ow">in</span> <span class="n">cd_algorithms</span><span class="p">[</span><span class="s1">&#39;cdt&#39;</span><span class="p">][</span><span class="s1">&#39;algorithms&#39;</span><span class="p">]):</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">SAMAlgorithm</span><span class="o">.</span><span class="n">SAMAlgorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">)]</span>
+                <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;library&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tigramite&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;This algorithm does not exist in the database&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Warning</span><span class="p">(</span><span class="s1">&#39;Causal Dicovery algorithm already added&#39;</span><span class="p">)</span></div>
+
+    <span class="c1"># add_cd_algorithm_parameters function adds additional parameters to a Causal Discovery Algorithm previously added</span>
+    <span class="c1"># Input:</span>
+    <span class="c1">#   algorithm (str) : name of the causal discovery algorithm to add.</span>
+    <span class="c1">#   parameters (dict) : parameters of the causal discovery algorithm to add.</span>
+    <span class="c1"># Output:</span>
+    <span class="c1">#   None</span>
+    <span class="c1"># Raises:</span>
+    <span class="c1"># Exception: If the algorithm does not exist or the parameter is invalid</span>
+
+<div class="viewcode-block" id="CDHPO_Parameters.add_cd_algorithm_parameters"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.CDHPO_Parameters.add_cd_algorithm_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">add_cd_algorithm_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">algorithm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tried to add parameters for non existent algorithm&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Tried to add parameters for non existent algorithm&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">param</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tried to add invalid parameter&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Tried to add invalid parameter&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="n">param</span><span class="p">]):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algorithm</span><span class="p">][</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Parameters added to algorithm &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">algorithm</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Antonios Ntroumpogiannis.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

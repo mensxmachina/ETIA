@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to ETIA’s documentation! &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation Guide" href="Installation%20Guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.html">AFS package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.html">CausalLearning package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to ETIA’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-etia-s-documentation">
+<h1>Welcome to ETIA’s documentation!<a class="headerlink" href="#welcome-to-etia-s-documentation" title="Permalink to this heading"></a></h1>
+<p>We introduce ETIA, a system designed for Automated Causal Discovery (AutoCD). AutoCD aims to fully automate the application of causal discovery and causal reasoning methods, delivering comprehensive causal information and answering user queries. ETIA performs dimensionality reduction, causal structure learning, and causal reasoning, making sophisticated causal analysis accessible to all, including non-experts.</p>
+<section id="introduction-to-etia">
+<h2>Introduction to ETIA<a class="headerlink" href="#introduction-to-etia" title="Permalink to this heading"></a></h2>
+<p>ETIA stands for an automated system that simplifies causal discovery and reasoning, processes traditionally requiring extensive expertise. ETIA makes these sophisticated methods accessible to non-experts by automating the analysis pipeline and delivering insights comparable to those of a human analyst.</p>
+<p><strong>What is Automated Causal Discovery (AutoCD)?</strong>
+AutoCD refers to systems that automate the application of causal discovery and reasoning methods. The primary goal is to provide all causal information and answers to user queries, mimicking the output of an expert analyst. ETIA embodies this concept by optimizing data representation and causal discovery algorithms to derive the best-fitting causal models.</p>
+<p><strong>Core Features of ETIA</strong>:
+- <strong>Dimensionality Reduction</strong>: Uses automated feature selection to handle high-dimensional data, reducing the problem space to essential variables.</p>
+<ul class="simple">
+<li><p><strong>Causal Structure Learning</strong>: Employs a variety of state-of-the-art causal discovery algorithms and optimizes their hyper-parameters to learn the best causal model.</p></li>
+<li><p><strong>Causal Reasoning and Visualization</strong>: Offers tools to answer causal queries, calculate confidence measures, and visualize causal relationships.</p></li>
+</ul>
+<p><strong>Modules in ETIA</strong>:
+1. <strong>Automated Feature Selection (AFS)</strong>: Identifies the minimal set of variables necessary for accurate causal modeling.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Causal Learning (CL)</strong>: Optimizes the causal discovery process, selecting the best algorithm and parameters.</p></li>
+<li><p><strong>Causal Reasoning and Visualization (CRV)</strong>: Provides insights and visualizations of the causal model, including confidence measures and adjustment sets.</p></li>
+</ol>
+<p><strong>Use Case Example</strong>:
+ETIA has been benchmarked on synthetic datasets, showcasing its ability to handle various causal discovery problems. A detailed use case example illustrates ETIA’s functionalities and performance.</p>
+</section>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<p>To start using ETIA, follow the installation instructions provided in the next section. ETIA’s user-friendly interface and automated processes make it accessible for users with varying levels of expertise in causal discovery.</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation%20Guide.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Installation%20Guide.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation%20Guide.html#installing-autocd">Installing AutoCD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation%20Guide.html#installing-from-source">Installing from Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Installation%20Guide.html#verify-installation">Verify Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Use%20Cases.html">Use Cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#extract-the-causal-relationships-for-a-single-temporal-dataset">1. Extract the causal relationships for a single temporal dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#extract-the-causal-relationships-for-a-single-time-series-dataset">2. Extract the causal relationships for a single time-series dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#extract-the-causal-relationships-of-a-variable-of-interest-for-a-single-temporal-dataset">3. Extract the causal relationships of a variable of interest for a single temporal dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#extract-the-causal-relationships-of-a-variable-of-interest-for-a-single-time-series-dataset">4. Extract the causal relationships of a variable of interest for a single time-series dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#configure-own-hyperparameters-for-dataset-analysis">5. Configure own hyperparameters for dataset analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#restart-analysis-with-new-hyperparameters-or-algorithms">6. Restart analysis with new hyperparameters or algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#add-and-test-a-custom-causal-discovery-algorithm">7. Add and test a custom causal discovery algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#get-the-best-model-between-multiple-algorithms">8. Get the best model between multiple algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#get-the-best-model-within-a-family-of-algorithms">9. Get the best model within a family of algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Use%20Cases.html#simulate-a-dataset-for-future-experiments">10. Simulate a dataset for future experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#experimental-setup">Experimental Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#afs-evaluating-the-markov-blanket-identification">AFS: Evaluating the Markov Blanket Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#cl-evaluating-the-output-causal-structure">CL: Evaluating the Output Causal Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#crv-evaluating-the-adjustment-set-identification">CRV: Evaluating the Adjustment Set Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Experiments.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.html">AFS package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AFS.feature_selectors.html">AFS.feature_selectors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.test.html">AFS.test package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="AFS.test.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AFS.test.html#module-AFS.test.AFS_Tests">AFS.test.AFS_Tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AFS.test.html#module-AFS.test.demo">AFS.test.demo module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.utils.html">AFS.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.AFS">AFS.AFS module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.feature_selector">AFS.feature_selector module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.oos">AFS.oos module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.predictive_configurator">AFS.predictive_configurator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.predictive_model">AFS.predictive_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AFS.html#module-AFS.preprocessor">AFS.preprocessor module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.html">CausalLearning package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.html">CausalLearning.CDHPO package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CDHPO.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CDHPO.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CDHPO.html#module-CausalLearning.CDHPO.CDHPOBase">CausalLearning.CDHPO.CDHPOBase module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CausalModel.html">CausalLearning.CausalModel package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.BayessianNetwork">CausalLearning.CausalModel.BayessianNetwork module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.CPDAG">CausalLearning.CausalModel.CPDAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.DAG">CausalLearning.CausalModel.DAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.GraphWrapperBase">CausalLearning.CausalModel.GraphWrapperBase module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.MAG">CausalLearning.CausalModel.MAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.PAG">CausalLearning.CausalModel.PAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.CausalModel.html#module-CausalLearning.CausalModel.utils">CausalLearning.CausalModel.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.html">CausalLearning.algorithms package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.algorithms.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.algorithms.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.algorithms.html#module-CausalLearning.algorithms.OutputType">CausalLearning.algorithms.OutputType module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.algorithms.html#causallearning-algorithms-causal-discovery-algorithm-module">CausalLearning.algorithms.causal_discovery_algorithm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.algorithms.html#module-CausalLearning.algorithms.causaldiscoveryalgorithms">CausalLearning.algorithms.causaldiscoveryalgorithms module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.algorithms.html#module-CausalLearning.algorithms.utils">CausalLearning.algorithms.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.configurations.html">CausalLearning.configurations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.causal_configs">CausalLearning.configurations.causal_configs module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.ci_tests">CausalLearning.configurations.ci_tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.class_causal_configurator">CausalLearning.configurations.class_causal_configurator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.configurations">CausalLearning.configurations.configurations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.default_parameters">CausalLearning.configurations.default_parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.parameters">CausalLearning.configurations.parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.configurations.html#module-CausalLearning.configurations.scores">CausalLearning.configurations.scores module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.data.html">CausalLearning.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.data.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.data.html#module-CausalLearning.data.Dataset">CausalLearning.data.Dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.data.html#module-CausalLearning.data.utils">CausalLearning.data.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.html">CausalLearning.model_validation_protocols package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#module-CausalLearning.model_validation_protocols.MVP_ProtocolBase">CausalLearning.model_validation_protocols.MVP_ProtocolBase module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#module-CausalLearning.model_validation_protocols.available_mvp_protocols">CausalLearning.model_validation_protocols.available_mvp_protocols module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.regressors.html">CausalLearning.regressors package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.regressors.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.regressors.html#module-CausalLearning.regressors.LinearRegressor">CausalLearning.regressors.LinearRegressor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.regressors.html#module-CausalLearning.regressors.RandomForestRegressor">CausalLearning.regressors.RandomForestRegressor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.regressors.html#module-CausalLearning.regressors.regressors">CausalLearning.regressors.regressors module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.test.html">CausalLearning.test package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.test.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.test.html#causallearning-test-demo-module">CausalLearning.test.demo module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.util.html">CausalLearning.util package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.util.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.util.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.util.html#module-CausalLearning.util.dataset_util">CausalLearning.util.dataset_util module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.util.html#module-CausalLearning.util.logger">CausalLearning.util.logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CausalLearning.util.html#module-CausalLearning.util.print_graph">CausalLearning.util.print_graph module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.html">CausalLearning.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.html#module-CausalLearning.CausalLearner">CausalLearning.CausalLearner module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CRV.html">CRV package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CRV.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CRV.confidence.html">CRV.confidence package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CRV.confidence.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.confidence.html#crv-confidence-confidence-module">CRV.confidence.confidence module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.queries.html">CRV.queries package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CRV.queries.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.queries.html#crv-queries-one-bidirected-path-module">CRV.queries.one_bidirected_path module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.queries.html#crv-queries-one-directed-path-module">CRV.queries.one_directed_path module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.queries.html#crv-queries-one-path-anytype-module">CRV.queries.one_path_anytype module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.queries.html#crv-queries-one-potentially-directed-path-module">CRV.queries.one_potentially_directed_path module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.utils.html">CRV.utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.visualization.html">CRV.visualization package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CRV.visualization.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.visualization.html#crv-visualization-cytoscape-utils-module">CRV.visualization.cytoscape_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CRV.visualization.html#crv-visualization-visualization-module">CRV.visualization.visualization module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">simulation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="simulation.demo.html">simulation.demo package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="simulation.demo.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.demo.html#simulation-demo-discrete-example-module">simulation.demo.discrete_example module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="simulation.demo.html#simulation-demo-linear-example-module">simulation.demo.linear_example module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#module-simulation.base_simulation">simulation.base_simulation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#simulation-distributions-module">simulation.distributions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation.html#simulation-sample-data-module">simulation.sample_data module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Installation%20Guide.html" class="btn btn-neutral float-right" title="Installation Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

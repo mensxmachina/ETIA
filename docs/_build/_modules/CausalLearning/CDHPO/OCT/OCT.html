@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CausalLearning.CDHPO.OCT.OCT &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../AFS.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CausalLearning.html">CausalLearning Package Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CausalLearning.html#overview">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CausalLearning.html#running-examples">Running Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CausalLearning.html#causal-learning-main-class">Causal Learning Main Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">CausalLearning.CDHPO.OCT.OCT</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for CausalLearning.CDHPO.OCT.OCT</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mutual_info_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ParameterGrid</span>
+
+<span class="kn">from</span> <span class="nn">...CausalModel</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.causal_graph_utils.markov_boundary</span> <span class="kn">import</span> <span class="n">markov_boundary</span>
+<span class="kn">from</span> <span class="nn">..CDHPOBase</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">...CausalModel.utils</span> <span class="kn">import</span> <span class="n">matrix_to_pywhy_graph</span><span class="p">,</span> <span class="n">pywhy_graph_to_matrix</span>
+<span class="kn">from</span> <span class="nn">...algorithms.causaldiscoveryalgorithms</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="OCT"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT">[docs]</a><span class="k">class</span> <span class="nc">OCT</span><span class="p">(</span><span class="n">CDHPOBase</span><span class="p">):</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oct_params</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">results_folder</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor for the OCT class.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        oct_params : object</span>
+<span class="sd">            Object containing the parameters required for the OCT procedure.</span>
+<span class="sd">        data : pandas DataFrame</span>
+<span class="sd">            Data to be used for the OCT procedure.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class for performing Order-Based Causal Transfer (OCT) procedure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Class member to store the parameters required for the OCT procedure.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List to store the results of the OCT procedure.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_configs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List to store the configurations for Markov boundary identification.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List to store the configurations for predictive modeling.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu_configs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List to store the configurations for measuring the predictive performance.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Numpy array to store the size of the Markov boundary for each node.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of samples and nodes in the data.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_configs_run</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of configurations run during the OCT procedure.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List of configurations that have been run during the OCT procedure.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Matrix array of the mec graph of the best configuration&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix_graph</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Matrix array of the graph of the best configuration&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_map</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Var map array of the best configuration&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Data to be used for the OCT procedure.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mec_graphs_configs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="n">results_folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span> <span class="o">=</span> <span class="n">oct_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_data_type_info</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;OCT Object is initialized&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="OCT.save_progress"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the progress of the OCT to a file.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        path (str): The file path to save the progress to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="o">+</span><span class="s1">&#39;OCT&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OCT.load_progress"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.load_progress">[docs]</a>    <span class="k">def</span> <span class="nf">load_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load the progress of the OCT from a file.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        path (str): The file path to load the progress from.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s1">&#39;OCT&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+<div class="viewcode-block" id="OCT.fold_fit"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.fold_fit">[docs]</a>    <span class="k">def</span> <span class="nf">fold_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="n">train_indexes</span><span class="p">,</span> <span class="n">test_indexes</span><span class="p">,</span> <span class="n">fold</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A function that performs Markov boundary identification and predictive modeling for a single fold of a target in a particular configuration.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            target (int): Target index.</span>
+<span class="sd">            c (int): Configuration index.</span>
+<span class="sd">            mec_graphs_configs (list of numpy arrays): MEC graphs configurations.</span>
+<span class="sd">            data_train (pandas DataFrame): Training data.</span>
+<span class="sd">            data_test (pandas DataFrame): Testing data.</span>
+<span class="sd">            fold (int): Fold index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            mb (numpy array): Markov boundary.</span>
+<span class="sd">            prediction (numpy array): Predicted values.</span>
+<span class="sd">            y_test (numpy array): Actual target values for the test data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">[</span><span class="n">c</span><span class="p">]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="c1"># Markov boundary identification</span>
+        <span class="n">mb</span> <span class="o">=</span> <span class="n">markov_boundary</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">fold</span><span class="p">])</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">fold</span><span class="p">,</span> <span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mb</span><span class="p">)</span>
+
+        <span class="c1"># Predictive modeling</span>
+        <span class="n">data_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span>
+        <span class="n">X_train</span> <span class="o">=</span> <span class="n">data_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:,</span> <span class="n">mb</span><span class="p">]</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">data_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:,</span> <span class="n">target</span><span class="p">]</span>
+        <span class="n">X_test</span> <span class="o">=</span> <span class="n">data_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:,</span> <span class="n">mb</span><span class="p">]</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="n">data_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:,</span> <span class="n">target</span><span class="p">]</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">and</span> <span class="n">fold</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">mb</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">[</span><span class="s1">&#39;var_type&#39;</span><span class="p">][</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;categorical&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mb</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">clf</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">regressor</span><span class="p">)</span>
+                <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+                <span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+                <span class="n">score_r2</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">values</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">counts</span><span class="p">)])</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mb</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">clf</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">regressor</span><span class="o">.</span><span class="n">regressor</span><span class="p">)</span>
+                <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+                <span class="n">prediction</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+                <span class="n">score_r2</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Fold &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fold</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; for variable &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; is fitted&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">mb</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">mb</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">y_test</span><span class="p">]</span></div>
+
+    <span class="n">y_test_folds_all</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="OCT.nodes_parallel"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.nodes_parallel">[docs]</a>    <span class="k">def</span> <span class="nf">nodes_parallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="n">train_indexes</span><span class="p">,</span> <span class="n">test_indexes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the mutual information between the true values and predicted values of a target node in a parallel manner</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        target (int): target node id</span>
+<span class="sd">        c (int): regularization parameter</span>
+<span class="sd">        mec_graphs_configs (list): list of mec graph configurations</span>
+<span class="sd">        data_train (numpy array): training data</span>
+<span class="sd">        data_test (numpy array): test data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        mu (float): mutual information score between the true values and predicted values</span>
+<span class="sd">        mb_folds (list): list of Markov blanket of each fold</span>
+<span class="sd">        pred_folds (list): list of predictions for each fold</span>
+<span class="sd">        y_test_folds (list): list of true values for each fold</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fold_fit</span><span class="p">)(</span><span class="n">target</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="n">train_indexes</span><span class="p">,</span> <span class="n">test_indexes</span><span class="p">,</span> <span class="n">fold</span><span class="p">)</span> <span class="k">for</span> <span class="n">fold</span> <span class="ow">in</span>
+            <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">folds_to_run</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="n">mb_folds</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">pred_folds</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">y_test_folds</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="c1"># Predictive performance for pooled out-of-sample predictions</span>
+        <span class="n">pred_folds_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">pred_folds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">y_test_folds_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y_test_folds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">[</span><span class="s1">&#39;var_type&#39;</span><span class="p">][</span><span class="n">target</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;categorical&#39;</span><span class="p">:</span>
+            <span class="n">mu</span> <span class="o">=</span> <span class="n">mutual_info_score</span><span class="p">(</span><span class="n">y_test_folds_np</span><span class="p">,</span> <span class="n">pred_folds_np</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mu</span> <span class="o">=</span> <span class="n">mutual_info_continuous</span><span class="p">(</span><span class="n">y_test_folds_np</span><span class="p">,</span> <span class="n">pred_folds_np</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;All folds for target &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; has been fitted&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">mb_folds</span><span class="p">,</span> <span class="n">pred_folds</span><span class="p">,</span> <span class="n">y_test_folds</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OCT.config_parallel"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.config_parallel">[docs]</a>    <span class="k">def</span> <span class="nf">config_parallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="n">train_indexes</span><span class="p">,</span> <span class="n">test_indexes</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the mutual information scores for all target nodes in a parallel manner</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        c (int): regularization parameter</span>
+<span class="sd">        mec_graphs_configs (list): list of mec graph configurations</span>
+<span class="sd">        data_train (numpy array): training data</span>
+<span class="sd">        data_test (numpy array): test data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        mu (list): list of mutual information scores for each target node</span>
+<span class="sd">        mb_folds (list): list of Markov blanket of each fold for each target node</span>
+<span class="sd">        pred_folds (list): list of predictions for each fold for each target node</span>
+<span class="sd">        y_test_folds (list): list of true values for each fold for each target node</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nodes_parallel</span><span class="p">)(</span><span class="n">target</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="n">train_indexes</span><span class="p">,</span> <span class="n">test_indexes</span><span class="p">)</span> <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span>
+            <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Mutual information has been calculated for all nodes for config &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_progress</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]]</span></div>
+
+    <span class="c1"># Function for parallel mutual info for permutations</span>
+<div class="viewcode-block" id="OCT.permutations"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.permutations">[docs]</a>    <span class="k">def</span> <span class="nf">permutations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">poolYhat_best</span><span class="p">,</span> <span class="n">poolYhat_cur</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="n">poolY</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the mutual information score after swapping two predictions</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        node (int): node id</span>
+<span class="sd">        poolYhat_best (np.array): array of predictions of best configuration</span>
+<span class="sd">        poolYhat_cur (np.array): array of predictions of current configuration</span>
+<span class="sd">        idxs (list): list of indexes for permutation</span>
+<span class="sd">        poolY (np.array): ground truth target variable</span>
+<span class="sd">        i (int): index for the current iteration in the permutation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        [x,y] (list): mutual information scores of the best and current configurations after the swap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">swap_best</span> <span class="o">=</span> <span class="n">poolYhat_best</span>
+        <span class="n">swap_best</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">poolYhat_cur</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="n">swap_cur</span> <span class="o">=</span> <span class="n">poolYhat_cur</span>
+        <span class="n">swap_cur</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">poolYhat_best</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">[</span><span class="s1">&#39;var_type&#39;</span><span class="p">][</span><span class="n">node</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;categorical&#39;</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">mutual_info_score</span><span class="p">(</span><span class="n">poolY</span><span class="p">,</span> <span class="n">swap_best</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">mutual_info_score</span><span class="p">(</span><span class="n">poolY</span><span class="p">,</span> <span class="n">swap_cur</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">mutual_info_continuous</span><span class="p">(</span><span class="n">poolY</span><span class="p">,</span> <span class="n">swap_best</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">mutual_info_continuous</span><span class="p">(</span><span class="n">poolY</span><span class="p">,</span> <span class="n">swap_cur</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span></div>
+
+    <span class="c1"># Function for paralallel permuation of nodes</span>
+<div class="viewcode-block" id="OCT.permutations_nodes"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.permutations_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">permutations_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parallel calculation of mutual information score after swapping predictions of different configurations</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        node (int): node id</span>
+<span class="sd">        c (int): configuration id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        [results[:, 0], results[:, 1]] (list): mutual information scores of the best and current configurations after the swap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">poolYhat_best</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span><span class="p">][</span><span class="n">node</span><span class="p">]</span>
+        <span class="n">poolYhat_best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">poolYhat_best</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">poolYhat_cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">node</span><span class="p">]</span>
+        <span class="n">poolYhat_cur</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">poolYhat_cur</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">poolY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_test_nodes</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+        <span class="n">poolY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">poolY</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">permutations</span><span class="p">)(</span><span class="n">node</span><span class="p">,</span> <span class="n">poolYhat_best</span><span class="p">,</span> <span class="n">poolYhat_cur</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">idxs</span><span class="p">,</span> <span class="n">poolY</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span>
+            <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">n_permutations</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;All permutations for node &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; have been completed&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span></div>
+
+<div class="viewcode-block" id="OCT.calculate_pvalues"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.calculate_pvalues">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_pvalues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parallel calculation of mutual information score after swapping predictions of different configurations</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        c (int): configuration id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        [results[:, 0], results[:, 1]] (list): mutual information scores of the best and current configurations after the swap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">swap_best_metric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">n_permutations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span>
+            <span class="n">swap_cur_metric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">n_permutations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span>
+
+            <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">permutations_nodes</span><span class="p">)(</span><span class="n">node</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+            <span class="n">swap_best_metric</span><span class="p">,</span> <span class="n">swap_cur_metric</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">curMetric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+
+        <span class="n">bestMetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span><span class="p">)</span>
+        <span class="n">obs_t_stat</span> <span class="o">=</span> <span class="n">bestMetric</span> <span class="o">-</span> <span class="n">curMetric</span>
+        <span class="n">t_stat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">swap_best_metric</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">swap_cur_metric</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">t_stat</span> <span class="o">&gt;=</span> <span class="n">obs_t_stat</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">n_permutations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_val</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Pvalues have been calculated&#39;</span><span class="p">)</span>
+        <span class="c1"># H0: the difference in performance is zero</span>
+        <span class="k">if</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">alpha</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="OCT.run"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;You have already ran some configurations, please use run_new function&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Trying to run OCT when previous configurations have already ran&#39;</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">init_protocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+            <span class="n">cd_configs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ParameterGrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">]))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running: &#39;</span> <span class="o">+</span> <span class="n">algo</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">cd_configs</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;var_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">[</span><span class="s1">&#39;var_type&#39;</span><span class="p">]</span>
+                <span class="n">config_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">run_protocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">)</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+                <span class="k">for</span> <span class="n">mec_graph</span> <span class="ow">in</span> <span class="n">config_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pywhy_graph_to_matrix</span><span class="p">(</span><span class="n">mec_graph</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_progress</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Protocol for params &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; has been ran&#39;</span><span class="p">)</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">algo</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mec_graphs_configs</span> <span class="o">=</span> <span class="n">results</span>
+        <span class="c1">#print(self.mec_graphs_configs)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">folds_to_run</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_parallel</span><span class="p">)(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">train_indexes</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">test_indexes</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span>
+            <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu_configs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_configs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_nodes</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu_configs_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu_configs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu_configs_np</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">idxs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pred_co</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">n_permutations</span><span class="p">):</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_co</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">idxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="c1"># permutation test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculate_pvalues</span><span class="p">)(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)))</span>
+        <span class="c1"># select configuration</span>
+        <span class="n">OCTs_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]):</span>
+                <span class="n">OCTs_c</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Best causal configuration is &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_progress</span><span class="p">()</span>
+
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="o">+</span><span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="o">+</span><span class="s1">&#39;matrix_graph&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_graph</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">+</span> <span class="s1">&#39;var_map&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_map</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OCT.run_new"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.run_new">[docs]</a>    <span class="k">def</span> <span class="nf">run_new</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">init_protocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Trying to run more configurations when no previous configurations has been ran&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No Previous run!&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">thresh</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+            <span class="c1"># print(self.cdhpo_params.configs[algo])</span>
+            <span class="n">cd_configs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ParameterGrid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">configs</span><span class="p">[</span><span class="n">algo</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">cd_configs</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;is_cat_var&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">[</span><span class="s1">&#39;var_type&#39;</span><span class="p">]</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">algo</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">is_dict_in_array</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)):</span>
+                    <span class="k">continue</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Running: &#39;</span> <span class="o">+</span> <span class="n">algo</span><span class="p">)</span>
+
+                <span class="n">config_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">run_protocol</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">params</span><span class="p">)</span>
+                <span class="n">tmp_results</span> <span class="o">=</span> <span class="p">[[],</span> <span class="p">[]]</span>
+                <span class="k">for</span> <span class="n">mec_graph</span> <span class="ow">in</span> <span class="n">config_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">tmp_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pywhy_graph_to_matrix</span><span class="p">(</span><span class="n">mec_graph</span><span class="p">))</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_results</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_progress</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mec_graphs_configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mec_graphs_configs</span><span class="p">,</span><span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">folds_to_run</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_parallel</span><span class="p">)(</span><span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mec_graphs_configs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">train_indexes</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">oos_protocol</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">test_indexes</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span>
+            <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu_configs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mb_configs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_test_nodes</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu_configs_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu_configs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu_configs_np</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span><span class="p">)</span>
+
+        <span class="c1">#self.idxs = []</span>
+        <span class="n">pred_co</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        for i in range(self.cdhpo_params.n_permutations):</span>
+<span class="sd">            idx = np.random.randint(0, high=2, size=len(pred_co), dtype=bool)</span>
+<span class="sd">            self.idxs.append(idx)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># permutation test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">p_values</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">))))))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">8</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculate_pvalues</span><span class="p">)(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)))</span>
+        <span class="c1"># select configuration</span>
+        <span class="n">OCTs_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]):</span>
+                <span class="n">OCTs_c</span> <span class="o">=</span> <span class="n">c</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Best causal configuration is &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_progress</span><span class="p">()</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="o">+</span><span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="OCT.find_best_config"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.OCT.html#CausalLearning.CDHPO.OCT.OCT.OCT.find_best_config">[docs]</a>    <span class="k">def</span> <span class="nf">find_best_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
+        <span class="n">indxs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">)):</span>
+            <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">algorithms</span><span class="p">):</span>
+                <span class="n">indxs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">indxs</span> <span class="o">==</span> <span class="p">[]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Cannot find best configuration between algorithms that have not ran yet&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Cannot find best configuration between algorithms that have not ran yet&#39;</span><span class="p">)</span>
+
+        <span class="n">opt_config</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span><span class="p">[</span><span class="n">indxs</span><span class="p">])</span>
+
+        <span class="n">OCTs_c</span> <span class="o">=</span> <span class="n">opt_config</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">indxs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]):</span>
+                <span class="n">OCTs_c</span> <span class="o">=</span> <span class="n">c</span>
+
+        <span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">][</span><span class="s1">&#39;model&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">],</span> <span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span><span class="p">]</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

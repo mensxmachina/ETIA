@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>build.lib.data package &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.html">AFS package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.html">CausalLearning package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">build.lib.data package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/build.lib.data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-build.lib.data">
+<span id="build-lib-data-package"></span><h1>build.lib.data package<a class="headerlink" href="#module-build.lib.data" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-build.lib.data.Dataset">
+<span id="build-lib-data-dataset-module"></span><h2>build.lib.data.Dataset module<a class="headerlink" href="#module-build.lib.data.Dataset" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="build.lib.data.Dataset.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_time_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encode_categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_constants</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_val_thr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/Dataset.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.Dataset.Dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for efficiently managing datasets. It supports loading data from
+pandas DataFrames, numpy arrays, CSV files, and more, with flexible handling
+of column names and robust error management.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="build.lib.data.Dataset.Dataset.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/Dataset.html#Dataset.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.Dataset.Dataset.load_data" title="Permalink to this definition"></a></dt>
+<dd><p>Loads data into the Dataset instance, handling different types of input data
+with flexibility for missing column names.</p>
+<p>Parameters:
+- data: The data to load (DataFrame, numpy array, or CSV file path).
+- column_names: Optional column names for numpy array or CSV file without headers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="build.lib.data.Dataset.Dataset.process_data">
+<span class="sig-name descname"><span class="pre">process_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encode_categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_constants</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_val_thr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/Dataset.html#Dataset.process_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.Dataset.Dataset.process_data" title="Permalink to this definition"></a></dt>
+<dd><p>Processes the loaded data, performing type detection, optional encoding of categorical variables,
+and removing constant columns or rows with missing values based on user preference.</p>
+<p>Parameters:
+- encode_categorical: Whether to encode categorical variables.
+- remove_constants: Whether to remove constant columns.
+- remove_missing: Whether to remove rows with missing values.
+- unique_val_thr: Threshold for unique values count to consider a variable as categorical.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="build.lib.data.Dataset.Dataset.get_dataset">
+<span class="sig-name descname"><span class="pre">get_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/Dataset.html#Dataset.get_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.Dataset.Dataset.get_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the loaded and processed dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="build.lib.data.Dataset.Dataset.get_info">
+<span class="sig-name descname"><span class="pre">get_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/Dataset.html#Dataset.get_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.Dataset.Dataset.get_info" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a summary of the dataset information, including data types and
+time-related information if available.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-build.lib.data.utils">
+<span id="build-lib-data-utils-module"></span><h2>build.lib.data.utils module<a class="headerlink" href="#module-build.lib.data.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="build.lib.data.utils.var_types_and_categorical_encoding">
+<span class="sig-name descname"><span class="pre">var_types_and_categorical_encoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encode_categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_constants</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_val_thr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/utils.html#var_types_and_categorical_encoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.utils.var_types_and_categorical_encoding" title="Permalink to this definition"></a></dt>
+<dd><p>Analyzes and optionally transforms the data based on the variable types, presence of constant columns, and missing values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – pandas DataFrame with possible nan values, str, int, floats, and objects.</p></li>
+<li><p><strong>encode_categorical</strong> – boolean indicating whether to encode categorical variables.</p></li>
+<li><p><strong>remove_constants</strong> – boolean indicating whether to remove constant columns.</p></li>
+<li><p><strong>remove_missing</strong> – boolean indicating whether to remove rows with any missing values.</p></li>
+<li><p><strong>unique_val_thr</strong> – threshold to determine if a variable is categorical based on its unique values count.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>possibly transformed DataFrame based on the options.
+data_type_info: DataFrame with variable type information and additional details.
+data_type: overall data type classification (‘continuous’, ‘categorical’, ‘mixed’).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.lib.data.utils.timeseries_to_timelagged">
+<span class="sig-name descname"><span class="pre">timeseries_to_timelagged</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/utils.html#timeseries_to_timelagged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.utils.timeseries_to_timelagged" title="Permalink to this definition"></a></dt>
+<dd><p>Converts time-series data to time-lagged data
+Parameters
+———-</p>
+<blockquote>
+<div><dl class="simple">
+<dt>data_pd (pandas dataframe): time-series dataset</dt><dd><p>e.g. V1, V2</p>
+</dd>
+</dl>
+<p>n_lags(int) : number fo previous lags
+window(bool) : True for non-overlapped windows</p>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>data_pd_tl(pandas dataframe)<span class="classifier">time-lagged dataset</span></dt><dd><p>e.g. V1, V2, V1:1, V2:1</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.lib.data.utils.timelagged_to_timeseries">
+<span class="sig-name descname"><span class="pre">timelagged_to_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/utils.html#timelagged_to_timeseries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.utils.timelagged_to_timeseries" title="Permalink to this definition"></a></dt>
+<dd><p>Converts time-lagged data to time-series data
+Parameters
+———-</p>
+<blockquote>
+<div><dl class="simple">
+<dt>data_pd(pandas dataframe): time-lagged dataset</dt><dd><p>e.g. V1, V2, V1:1, V2:1</p>
+</dd>
+</dl>
+<p>n_lags(int) : number fo previous lags</p>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>ts_data(pandas dataframe)<span class="classifier">time-series dataset</span></dt><dd><p>e.g. V1, V2</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.lib.data.utils.logMp">
+<span class="sig-name descname"><span class="pre">logMp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/utils.html#logMp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.utils.logMp" title="Permalink to this definition"></a></dt>
+<dd><p>For data transformation with sklearn</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="build.lib.data.utils.transform_data">
+<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/build/lib/data/utils.html#transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#build.lib.data.utils.transform_data" title="Permalink to this definition"></a></dt>
+<dd><p>Data transfomation with sklearn
+Parameters
+———-</p>
+<blockquote>
+<div><p>data_pd(pandas dataframe): dataset
+data_type_info(pandas dataframe)
+transform_type(str):{qgaussian, log, minmax, standardize}</p>
+</div></blockquote>
+<blockquote>
+<div><p>transformed_data(pandas dataframe)</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

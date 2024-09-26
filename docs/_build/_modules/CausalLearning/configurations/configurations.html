@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CausalLearning.configurations.configurations &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Installation%20Guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Use%20Cases.html">Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AFS.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CausalLearning.html">CausalLearning Package Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CausalLearning.html#overview">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CausalLearning.html#running-examples">Running Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CausalLearning.html#causal-learning-main-class">Causal Learning Main Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../CRV.html">CRV package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../simulation.html">simulation package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">CausalLearning.configurations.configurations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for CausalLearning.configurations.configurations</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">..data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">.parameters</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.default_parameters</span> <span class="kn">import</span> <span class="n">default_conf</span>
+<span class="kn">from</span> <span class="nn">.class_causal_configurator</span> <span class="kn">import</span> <span class="n">CausalDiscoveryConfigurator</span>
+
+
+<div class="viewcode-block" id="Configurations"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations">[docs]</a><span class="k">class</span> <span class="nc">Configurations</span><span class="p">:</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">cdhpo_params</span> <span class="o">=</span> <span class="n">CDHPO_Parameters</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_input</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_lags</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">time_lagged</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">time_series</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">conf_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the `Configurations` class with a dataset (file or DataFrame).</span>
+
+<span class="sd">        Input:</span>
+<span class="sd">        - dataset_input: Can be a file path or a pandas DataFrame containing the dataset.</span>
+<span class="sd">        - n_lags: Number of lags (for time series).</span>
+<span class="sd">        - time_lagged: Boolean indicating if the data is time-lagged.</span>
+<span class="sd">        - time_series: Boolean indicating if the dataset is time series data.</span>
+<span class="sd">        - conf_file: (Optional) JSON configuration file containing parameters for the causal discovery experiment.</span>
+
+<span class="sd">        Output: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span> <span class="o">=</span> <span class="n">n_lags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span> <span class="o">=</span> <span class="n">time_lagged</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span> <span class="o">=</span> <span class="n">time_series</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+
+        <span class="c1"># Initialize dataset from either a filename or preloaded data</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">data_time_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="n">n_lags</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="n">time_lagged</span><span class="p">},</span>
+                                   <span class="n">time_series</span><span class="o">=</span><span class="n">time_series</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">,</span>
+                                   <span class="n">data_time_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="n">n_lags</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="n">time_lagged</span><span class="p">},</span>
+                                   <span class="n">time_series</span><span class="o">=</span><span class="n">time_series</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataset_input must be either a file path or a pandas DataFrame&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If conf_file is provided, process it. Otherwise, set default configurations.</span>
+        <span class="k">if</span> <span class="n">conf_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;.json&#39;</span> <span class="ow">in</span> <span class="n">conf_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf_file</span> <span class="o">=</span> <span class="n">conf_file</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proccess_conf_file</span><span class="p">()</span>  <span class="c1"># Process the JSON file</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_default_configuration</span><span class="p">()</span>  <span class="c1"># Set default configuration based on dataset</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Configurations object has been initialized&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Configurations.set_default_configuration"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.set_default_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set default configurations based on the dataset when no JSON configuration file is provided.</span>
+
+<span class="sd">        Input: None</span>
+<span class="sd">        Output: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conf_file</span> <span class="o">=</span> <span class="n">default_conf</span>
+        <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">dataset_name</span> <span class="ow">or</span> <span class="s1">&#39;Preloaded Dataset&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+            <span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span><span class="p">,</span>
+            <span class="s1">&#39;time_series&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+
+        <span class="c1"># Configure CDHPO parameters using default configurations</span>
+        <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">init_main_params</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">],</span>
+                                           <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;variables_type&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_regressor</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                        <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_oos_protocol</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                           <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
+
+        <span class="c1"># Configure causal discovery algorithms</span>
+        <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+        <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+            <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+            <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Configurations.proccess_conf_file"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.proccess_conf_file">[docs]</a>    <span class="k">def</span> <span class="nf">proccess_conf_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process the JSON file containing all vital information, such as algorithms, algorithm parameters, run mode, etc.</span>
+
+<span class="sd">        Input: None</span>
+<span class="sd">        Output: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;time_lagged&#39;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">][</span><span class="s1">&#39;time_lagged&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;n_lags&#39;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">][</span><span class="s1">&#39;n_lags&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;time_series&#39;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">][</span><span class="s1">&#39;time_series&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Initialize the dataset from the configuration file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">][</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">],</span>
+                               <span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">},</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;Results_folder_path&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Process CDHPO parameters</span>
+        <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">init_main_params</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">],</span>
+                                           <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;variables_type&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_regressor</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                        <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_oos_protocol</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                           <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+
+        <span class="c1"># Configure causal discovery algorithms</span>
+        <span class="k">if</span> <span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">:</span>
+            <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+            <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+                <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+                <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Configurations.add_conf_from_file"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.add_conf_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_conf_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="n">confs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">confs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">algo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">add_cd_algorithm</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">confs</span><span class="p">[</span><span class="n">algo</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">add_cd_algorithm_parameters</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">confs</span><span class="p">[</span><span class="n">algo</span><span class="p">])</span></div>
+
+
+    <span class="c1"># Set the name of the file containing the dataset</span>
+<div class="viewcode-block" id="Configurations.set_dataset_filename"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.set_dataset_filename">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the name of the file containing the dataset.</span>
+
+<span class="sd">        Input:</span>
+<span class="sd">        - filename: A string representing the name of the file containing the dataset.</span>
+
+<span class="sd">        Output: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_filename</span> <span class="o">=</span> <span class="n">filename</span></div>
+
+    <span class="c1"># Get the name of the file containing the dataset</span>
+<div class="viewcode-block" id="Configurations.get_dataset_filename"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.get_dataset_filename">[docs]</a>    <span class="k">def</span> <span class="nf">get_dataset_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the name of the file containing the dataset.</span>
+
+<span class="sd">        Input: None</span>
+
+<span class="sd">        Output:</span>
+<span class="sd">        - A string representing the name of the file containing the dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_filename</span></div>
+
+    <span class="c1"># Add algorithm in a dictionary</span>
+<div class="viewcode-block" id="Configurations.add_cd_algorithm"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.add_cd_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">add_cd_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an algorithm to a dictionary of algorithms.</span>
+
+<span class="sd">        Input:</span>
+<span class="sd">        - algorithm: A string representing the name of the algorithm.</span>
+<span class="sd">        - parameters: A dictionary containing the parameters for the algorithm.</span>
+
+<span class="sd">        Output: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">add_cd_algorithm</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
+        <span class="c1">#self.cdhpo_params.check_configs(self.dataset_info)</span>
+
+
+        <span class="c1"># Initialize all possible parameter values for each algorithm in a dictionary</span>
+<div class="viewcode-block" id="Configurations.init_configurations_for_algorithm"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.init_configurations_for_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">init_configurations_for_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">configurations</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initializes all possible parameter values for each algorithm in a dictionary.</span>
+
+<span class="sd">            Input:</span>
+<span class="sd">            - algorithm (str): name of the algorithm</span>
+<span class="sd">            - configurations (dict): dictionary of configurations for the given algorithm</span>
+
+<span class="sd">            Output: None</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">            Exception: If the algorithm does not exist or the configurations for the algorithm have already been initialized</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">algorithm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithms</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Tried setting configurations for non existing algorithm&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">algorithm</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Configurations for &#39;</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="s1">&#39; have been already initialized&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="p">[</span><span class="n">algorithm</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurations</span></div>
+
+        <span class="c1"># Assign an id to all possible configurations (i.e. all possible algorithms with all possible parameter combinations)</span>
+<div class="viewcode-block" id="Configurations.assign_conf_id"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.assign_conf_id">[docs]</a>    <span class="k">def</span> <span class="nf">assign_conf_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Assigns an id to all possible configurations.</span>
+
+<span class="sd">            Input: None</span>
+<span class="sd">            Output: None</span>
+
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">pass</span></div>
+
+        <span class="c1"># Add more parameters/values for an algorithm</span>
+<div class="viewcode-block" id="Configurations.add_parameters_for_cd_algorithm"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.add_parameters_for_cd_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">add_parameters_for_cd_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Adds more parameters/values for a given algorithm.</span>
+
+<span class="sd">            Input:</span>
+<span class="sd">            - algorithm (str): name of the algorithm</span>
+<span class="sd">            - parameters (dict): dictionary of parameters for the given algorithm</span>
+
+<span class="sd">            Output: None</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">add_cd_algorithm_parameters</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span></div>
+            <span class="c1">#self.cdhpo_params.check_configs(self.dataset_info)</span>
+
+        <span class="c1"># Return how many configurations have already run</span>
+<div class="viewcode-block" id="Configurations.return_number_of_executed_conf"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.return_number_of_executed_conf">[docs]</a>    <span class="k">def</span> <span class="nf">return_number_of_executed_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns the number of configurations that have already run.</span>
+
+<span class="sd">            Input: None</span>
+
+<span class="sd">            Output:</span>
+<span class="sd">            - int: the number of configurations that have already run</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">ran</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">id_</span><span class="p">):</span>
+                    <span class="n">ran</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">ran</span></div>
+
+        <span class="c1"># Check whether all possible configurations have run</span>
+<div class="viewcode-block" id="Configurations.check_all_conf_executed"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.check_all_conf_executed">[docs]</a>    <span class="k">def</span> <span class="nf">check_all_conf_executed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Checks whether all possible configurations have run.</span>
+
+<span class="sd">            Input: None</span>
+
+<span class="sd">            Output:</span>
+<span class="sd">            - bool: True if all possible configurations have run, False otherwise</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">exec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_number_of_executed_conf</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">)</span> <span class="o">!=</span> <span class="n">exec</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+        <span class="c1"># Return all remaining configurations to be executed</span>
+<div class="viewcode-block" id="Configurations.return_remaining_conf"><a class="viewcode-back" href="../../../CausalLearning.configurations.html#CausalLearning.configurations.configurations.Configurations.return_remaining_conf">[docs]</a>    <span class="k">def</span> <span class="nf">return_remaining_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Returns all remaining configurations to be executed.</span>
+
+<span class="sd">            Input: None</span>
+
+<span class="sd">            Output:</span>
+<span class="sd">            - list: list of remaining configurations to be executed</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
