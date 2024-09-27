@@ -1,0 +1,22 @@
+
+Automated Feature Selection (AFS)
+=================================
+
+The AFS module provides functionality for reducing the dimensionality of the dataset by selecting the Markov boundary of the target variable.
+
+Main Class
+----------
+
+- `AFS <afs.AFS>`_
+
+Available Algorithms
+--------------------
+
+- **FBED**
+- **SES**
+
+Classes
+-------
+
+- `AFS <afs.AFS>`_
+- `AFSConfiguration <afs.AFSConfiguration>`_

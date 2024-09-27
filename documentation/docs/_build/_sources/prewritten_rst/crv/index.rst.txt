@@ -1,0 +1,23 @@
+
+Causal Reasoning Validation (CRV)
+=================================
+
+The CRV module provides tools for evaluating and visualizing the discovered causal graphs.
+
+Main Class
+----------
+
+- `CRV <crv.CRV>`_
+
+Functionalities
+---------------
+
+- **Edge Confidence Calculation**
+- **Path Discovery**
+- **Visualization using Cytoscape**
+
+Classes
+-------
+
+- `CRV <crv.CRV>`_
+- `CRVConfiguration <crv.CRVConfiguration>`_

@@ -1,0 +1,18 @@
+ETIA.interventions package
+==========================
+
+.. automodule:: ETIA.interventions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+ETIA.interventions.interventional\_policy module
+------------------------------------------------
+
+.. automodule:: ETIA.interventions.interventional_policy
+   :members:
+   :undoc-members:
+   :show-inheritance:

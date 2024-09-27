@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CausalLearning.CDHPO.OCT package &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ETIA.CausalLearning.CDHPO package" href="CausalLearning.CDHPO.html" />
+    <link rel="prev" title="ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#how-cl-works">How CL Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-independence-tests">Available Independence Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-scoring-functions">Available Scoring Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#main-class">Main Class</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="cl_index.html#helper-classes">Helper Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html">ETIA.CausalLearning.algorithms.causalnex_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.cdt_algorithms.html">ETIA.CausalLearning.algorithms.cdt_algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.jar_files.html">ETIA.CausalLearning.algorithms.jar_files package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.html">ETIA.CausalLearning.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.tetrad_algorithm.html">ETIA.CausalLearning.algorithms.tetrad_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.tigramite_algorithm.html">ETIA.CausalLearning.algorithms.tigramite_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CausalModel.html">ETIA.CausalLearning.CausalModel package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ETIA.CausalLearning.CDHPO.OCT package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CDHPO.OCT.OCT">ETIA.CausalLearning.CDHPO.OCT.OCT module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CDHPO.OCT.utils">ETIA.CausalLearning.CDHPO.OCT.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.html">ETIA.CausalLearning.CDHPO package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.configurations.html">ETIA.CausalLearning.configurations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.data.html">ETIA.CausalLearning.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.kfold.html">ETIA.CausalLearning.model_validation_protocols.kfold package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.html">ETIA.CausalLearning.model_validation_protocols package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.regressors.html">ETIA.CausalLearning.regressors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.oct_functions.html">ETIA.CausalLearning.utils.oct_functions package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.html">ETIA.CausalLearning.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="cl_index.html">Causal Learning (CL)</a></li>
+      <li class="breadcrumb-item active">ETIA.CausalLearning.CDHPO.OCT package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CausalLearning.CDHPO.OCT.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ETIA.CausalLearning.CDHPO.OCT">
+<span id="etia-causallearning-cdhpo-oct-package"></span><h1>ETIA.CausalLearning.CDHPO.OCT package<a class="headerlink" href="#module-ETIA.CausalLearning.CDHPO.OCT" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ETIA.CausalLearning.CDHPO.OCT.OCT">
+<span id="etia-causallearning-cdhpo-oct-oct-module"></span><h2>ETIA.CausalLearning.CDHPO.OCT.OCT module<a class="headerlink" href="#module-ETIA.CausalLearning.CDHPO.OCT.OCT" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OCT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oct_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase" title="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">CDHPOBase</span></code></a></p>
+<p>Class for performing Order-Based Causal Transfer (OCT) procedure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oct_params</strong> (<em>CDHPOParameters</em>) – Object containing the parameters required for the OCT procedure.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset" title="ETIA.CausalLearning.data.Dataset.Dataset"><em>Dataset</em></a>) – Data to be used for the OCT procedure.</p></li>
+<li><p><strong>results_folder</strong> (<em>str</em>) – Path to the folder where results will be saved.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.run" title="Permalink to this definition"></a></dt>
+<dd><p>Executes the OCT procedure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.run_new">
+<span class="sig-name descname"><span class="pre">run_new</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.run_new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.run_new" title="Permalink to this definition"></a></dt>
+<dd><p>Continues the OCT procedure with new configurations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.find_best_config">
+<span class="sig-name descname"><span class="pre">find_best_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.find_best_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.find_best_config" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the best configuration among specified algorithms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.save_progress">
+<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.save_progress" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the current state of the OCT object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.load_progress">
+<span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.load_progress" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the OCT object state from a file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the current state of the OCT object to a file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT" title="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT"><span class="pre">OCT</span></a></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the OCT object state from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The file path to load the progress from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded OCT object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT" title="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT">OCT</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.fold_fit">
+<span class="sig-name descname"><span class="pre">fold_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mec_graphs_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.fold_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.fold_fit" title="Permalink to this definition"></a></dt>
+<dd><p>Performs Markov boundary identification and predictive modeling for a single fold of a target in a particular configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>int</em>) – Target variable index.</p></li>
+<li><p><strong>c</strong> (<em>int</em>) – Configuration index.</p></li>
+<li><p><strong>mec_graphs_configs</strong> (<em>list</em>) – MEC graphs configurations.</p></li>
+<li><p><strong>train_indexes</strong> (<em>list</em>) – List of training indices for each fold.</p></li>
+<li><p><strong>test_indexes</strong> (<em>list</em>) – List of testing indices for each fold.</p></li>
+<li><p><strong>fold</strong> (<em>int</em>) – Fold index.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mb</strong> (<em>np.ndarray</em>) – Markov boundary indices.</p></li>
+<li><p><strong>prediction</strong> (<em>np.ndarray</em>) – Predicted values.</p></li>
+<li><p><strong>y_test</strong> (<em>np.ndarray</em>) – Actual target values for the test data.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.nodes_parallel">
+<span class="sig-name descname"><span class="pre">nodes_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mec_graphs_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.nodes_parallel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.nodes_parallel" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the mutual information between the true values and predicted values of a target node in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> (<em>int</em>) – Target variable index.</p></li>
+<li><p><strong>c</strong> (<em>int</em>) – Configuration index.</p></li>
+<li><p><strong>mec_graphs_configs</strong> (<em>list</em>) – MEC graphs configurations.</p></li>
+<li><p><strong>train_indexes</strong> (<em>list</em>) – List of training indices for each fold.</p></li>
+<li><p><strong>test_indexes</strong> (<em>list</em>) – List of testing indices for each fold.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mu</strong> (<em>float</em>) – Mutual information score between the true values and predicted values.</p></li>
+<li><p><strong>mb_folds</strong> (<em>list</em>) – List of Markov boundaries for each fold.</p></li>
+<li><p><strong>pred_folds</strong> (<em>list</em>) – List of predictions for each fold.</p></li>
+<li><p><strong>y_test_folds</strong> (<em>list</em>) – List of true values for each fold.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.config_parallel">
+<span class="sig-name descname"><span class="pre">config_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mec_graphs_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_indexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.config_parallel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.config_parallel" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the mutual information scores for all target nodes in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>int</em>) – Configuration index.</p></li>
+<li><p><strong>mec_graphs_configs</strong> (<em>list</em>) – MEC graphs configurations.</p></li>
+<li><p><strong>train_indexes</strong> (<em>list</em>) – List of training indices for each fold.</p></li>
+<li><p><strong>test_indexes</strong> (<em>list</em>) – List of testing indices for each fold.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mu_list</strong> (<em>np.ndarray</em>) – Array of mutual information scores for each target node.</p></li>
+<li><p><strong>mb_list</strong> (<em>list</em>) – List of Markov boundaries for each target node.</p></li>
+<li><p><strong>pred_list</strong> (<em>list</em>) – List of predictions for each target node.</p></li>
+<li><p><strong>y_test_list</strong> (<em>list</em>) – List of true values for each target node.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.permutations">
+<span class="sig-name descname"><span class="pre">permutations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poolYhat_best</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poolYhat_cur</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idxs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poolY</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.permutations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.permutations" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the mutual information scores after swapping predictions between best and current configurations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>int</em>) – Node index.</p></li>
+<li><p><strong>poolYhat_best</strong> (<em>np.ndarray</em>) – Predictions from the best configuration.</p></li>
+<li><p><strong>poolYhat_cur</strong> (<em>np.ndarray</em>) – Predictions from the current configuration.</p></li>
+<li><p><strong>idxs</strong> (<em>np.ndarray</em>) – Indices for permutation.</p></li>
+<li><p><strong>poolY</strong> (<em>np.ndarray</em>) – Actual target values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – Mutual information score for the best configuration after swap.</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – Mutual information score for the current configuration after swap.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.permutations_nodes">
+<span class="sig-name descname"><span class="pre">permutations_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.permutations_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.permutations_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Performs permutations for a single node across all permutations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>int</em>) – Node index.</p></li>
+<li><p><strong>c</strong> (<em>int</em>) – Configuration index.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>swap_best_metric</strong> (<em>np.ndarray</em>) – Array of mutual information scores for the best configuration after swaps.</p></li>
+<li><p><strong>swap_cur_metric</strong> (<em>np.ndarray</em>) – Array of mutual information scores for the current configuration after swaps.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.calculate_pvalues">
+<span class="sig-name descname"><span class="pre">calculate_pvalues</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.calculate_pvalues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.calculate_pvalues" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates p-values to compare the current configuration with the best one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>c</strong> (<em>int</em>) – Configuration index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Executes the OCT procedure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>opt_config</strong> (<em>dict</em>) – The optimal configuration found.</p></li>
+<li><p><strong>matrix_mec_graph</strong> (<em>np.ndarray</em>) – The MEC graph matrix of the optimal configuration.</p></li>
+<li><p><strong>library_results</strong> (<em>Any</em>) – Results from the causal discovery library.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">run_new</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.run_new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Continues the OCT procedure with new configurations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>opt_config</strong> (<em>dict</em>) – The optimal configuration found.</p></li>
+<li><p><strong>matrix_mec_graph</strong> (<em>np.ndarray</em>) – The MEC graph matrix of the optimal configuration.</p></li>
+<li><p><strong>library_results</strong> (<em>Any</em>) – Results from the causal discovery library.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">find_best_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/OCT.html#OCT.find_best_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the best configuration among specified algorithms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>algorithms</strong> (<em>list</em>) – List of algorithm names to consider.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>best_config</strong> (<em>dict</em>) – The best configuration among the specified algorithms.</p></li>
+<li><p><strong>matrix_mec_graph</strong> (<em>np.ndarray</em>) – The MEC graph matrix of the best configuration.</p></li>
+<li><p><strong>library_results</strong> (<em>Any</em>) – Results from the causal discovery library.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If no configurations have been run for the specified algorithms.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CDHPO.OCT.utils">
+<span id="etia-causallearning-cdhpo-oct-utils-module"></span><h2>ETIA.CausalLearning.CDHPO.OCT.utils module<a class="headerlink" href="#module-ETIA.CausalLearning.CDHPO.OCT.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.utils.is_dict_in_array">
+<span class="sig-name descname"><span class="pre">is_dict_in_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/utils.html#is_dict_in_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.utils.is_dict_in_array" title="Permalink to this definition"></a></dt>
+<dd><p>Check if a dictionary is already in an array of dictionaries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dictionary</strong> (<em>dict</em>) – the dictionary to check</p></li>
+<li><p><strong>array</strong> (<em>list</em>) – the array of dictionaries to check</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the dictionary is in the array, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.OCT.utils.mutual_info_continuous">
+<span class="sig-name descname"><span class="pre">mutual_info_continuous</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_hat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/OCT/utils.html#mutual_info_continuous"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.OCT.utils.mutual_info_continuous" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the mutual information between two continuous variables, assuming Gaussian distribution
+:param y: vector of true values
+:type y: numpy array
+:param y_hat: vector of predicted values
+:type y_hat: numpy array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mutual information of y and y_hat</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>mutual_info (float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CausalLearning.CDHPO.OCT.causal_graph_utils.html" class="btn btn-neutral float-left" title="ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CausalLearning.CDHPO.html" class="btn btn-neutral float-right" title="ETIA.CausalLearning.CDHPO package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -5,3 +5,4 @@ include ETIA/AFS/jsons/fs_algs.json
 include ETIA/AFS/jsons/preprocess_algs.json
 recursive-include ETIA/CausalLearning/algorithms/jar_files *.jar
 recursive-include ETIA/AFS/feature_selectors *.R
+recursive-include ETIA/CRV/adjustment *.R

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.interventions.interventional_policy &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../causal_learning/index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ETIA.interventions.interventional_policy</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ETIA.interventions.interventional_policy</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1">#from skopt import gp_minimize</span>
+<span class="kn">from</span> <span class="nn">..simulation</span> <span class="kn">import</span> <span class="n">sample_data_from_cm</span>
+<span class="kn">from</span> <span class="nn">..causal_model</span> <span class="kn">import</span> <span class="n">CausalModel</span>
+<div class="viewcode-block" id="InterventionalPolicy"><a class="viewcode-back" href="../../../interventions.html#ETIA.interventions.InterventionalPolicy">[docs]</a><span class="k">class</span> <span class="nc">InterventionalPolicy</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents interventional policies for a given causal model.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    set_value(doVal=None)</span>
+<span class="sd">        Sets the values for interventions.</span>
+<span class="sd">    optimize_a_target_exhaustive(Y, data)</span>
+<span class="sd">        Optimizes a target variable using exhaustive search.</span>
+<span class="sd">    optimize_a_target_bayesian(Y, data)</span>
+<span class="sd">        Optimizes a target variable using Bayesian optimization.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cm</span><span class="p">,</span> <span class="n">doV</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the InterventionalPolicy with a causal model and manipulated variables.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cm : CausalModel</span>
+<span class="sd">            The causal model.</span>
+<span class="sd">        doV : list</span>
+<span class="sd">            The manipulated variables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cm</span> <span class="o">=</span> <span class="n">cm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">doV</span> <span class="o">=</span> <span class="n">doV</span>
+
+<div class="viewcode-block" id="InterventionalPolicy.set_value"><a class="viewcode-back" href="../../../interventions.html#ETIA.interventions.InterventionalPolicy.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doVal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the values for interventions.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        doVal : list or None</span>
+<span class="sd">            The values set by the user or None for random values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            The values for the interventions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">doVal</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">doVal</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">doV</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="InterventionalPolicy.optimize_a_target_exhaustive"><a class="viewcode-back" href="../../../interventions.html#ETIA.interventions.InterventionalPolicy.optimize_a_target_exhaustive">[docs]</a>    <span class="k">def</span> <span class="nf">optimize_a_target_exhaustive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes a target variable using exhaustive search.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Y : int</span>
+<span class="sd">            The variable to optimize (maximization).</span>
+<span class="sd">        data : np.ndarray</span>
+<span class="sd">            The dataset over all variables in the causal model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            The optimal values for intervention.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_backdoor_paths</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doV</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="n">z_obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">Z</span><span class="p">]</span>
+        <span class="n">v_obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doV</span><span class="p">]</span>
+        <span class="n">y_obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">Y</span><span class="p">]</span>
+
+        <span class="n">optimal_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">best_value</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">best_v</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">v_obs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span><span class="n">y_obs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">v_obs</span><span class="p">,</span> <span class="n">z_obs</span><span class="p">]))</span>
+                <span class="n">predicted_y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">v</span><span class="p">,</span> <span class="n">z_obs</span><span class="p">[</span><span class="n">i</span><span class="p">]]))</span>
+                <span class="k">if</span> <span class="n">predicted_y</span> <span class="o">&gt;</span> <span class="n">best_value</span><span class="p">:</span>
+                    <span class="n">best_value</span> <span class="o">=</span> <span class="n">predicted_y</span>
+                    <span class="n">best_v</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="n">optimal_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">optimal_values</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InterventionalPolicy.optimize_a_target_bayesian"><a class="viewcode-back" href="../../../interventions.html#ETIA.interventions.InterventionalPolicy.optimize_a_target_bayesian">[docs]</a>    <span class="k">def</span> <span class="nf">optimize_a_target_bayesian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes a target variable using Bayesian optimization.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Y : int</span>
+<span class="sd">            The variable to optimize (maximization).</span>
+<span class="sd">        data : np.ndarray</span>
+<span class="sd">            The dataset over all variables in the causal model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        np.ndarray</span>
+<span class="sd">            The optimal values for intervention.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block_backdoor_paths</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doV</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="n">z_obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">Z</span><span class="p">]</span>
+        <span class="n">v_obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">doV</span><span class="p">]</span>
+        <span class="n">y_obs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">Y</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">function_to_optimize</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span><span class="n">y_obs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">v_obs</span><span class="p">,</span> <span class="n">z_obs</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">v</span><span class="p">,</span> <span class="n">z_obs</span><span class="p">]))</span>
+
+        <span class="n">optimal_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1">#res = gp_minimize(function_to_optimize, dimensions=[(0, 1)] * len(self.doV), n_calls=15)</span>
+            <span class="n">optimal_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">optimal_values</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InterventionalPolicy.block_backdoor_paths"><a class="viewcode-back" href="../../../interventions.html#ETIA.interventions.InterventionalPolicy.block_backdoor_paths">[docs]</a>    <span class="k">def</span> <span class="nf">block_backdoor_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doV</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Blocks backdoor paths from the manipulated variables to the target variable.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        doV : list</span>
+<span class="sd">            The manipulated variables.</span>
+<span class="sd">        Y : int</span>
+<span class="sd">            The target variable.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list</span>
+<span class="sd">            The variables to block backdoor paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Logic to block backdoor paths</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InterventionalPolicy.fit_model"><a class="viewcode-back" href="../../../interventions.html#ETIA.interventions.InterventionalPolicy.fit_model">[docs]</a>    <span class="k">def</span> <span class="nf">fit_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">,</span> <span class="n">predictors</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fits a model to predict the target variable based on the predictors.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y_obs : np.ndarray</span>
+<span class="sd">            The observed values of the target variable.</span>
+<span class="sd">        predictors : np.ndarray</span>
+<span class="sd">            The predictor variables.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sklearn.linear_model.LinearRegression</span>
+<span class="sd">            The fitted model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">predictors</span><span class="p">,</span> <span class="n">y_obs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

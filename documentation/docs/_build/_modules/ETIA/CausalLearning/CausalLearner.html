@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CausalLearning.CausalLearner &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../causal_learning/index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ETIA.CausalLearning.CausalLearner</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ETIA.CausalLearning.CausalLearner</h1><div class="highlight"><pre>
+<span></span><span class="c1"># ETIA/CausalLearning/CausalLearner.py</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+
+<span class="kn">from</span> <span class="nn">.algorithms</span> <span class="kn">import</span> <span class="n">causaldiscoveryalgorithms</span>
+<span class="kn">from</span> <span class="nn">.data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">.configurations</span> <span class="kn">import</span> <span class="n">Configurations</span>
+<span class="kn">from</span> <span class="nn">.CDHPO</span> <span class="kn">import</span> <span class="n">OCT</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">.CausalModel.utils</span> <span class="kn">import</span> <span class="n">pywhy_graph_to_matrix</span>
+<span class="kn">from</span> <span class="nn">..utils.jvm_manager</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># Import the JVMManager</span>
+
+<div class="viewcode-block" id="CausalLearner"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner">[docs]</a><span class="k">class</span> <span class="nc">CausalLearner</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CausalLearner class for automated causal discovery.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset_input : str or Dataset</span>
+<span class="sd">        Either a file path to the dataset or a Dataset instance containing the data.</span>
+<span class="sd">    configurations : Configurations, optional</span>
+<span class="sd">        A Configurations object containing experiment configurations. If None, default configurations are used.</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        If True, prints detailed logs. Default is False.</span>
+<span class="sd">    n_jobs : int, optional</span>
+<span class="sd">        Number of jobs for parallel processing. Default is the number of CPU cores.</span>
+<span class="sd">    random_seed : int, optional</span>
+<span class="sd">        Seed for random number generator to ensure reproducibility. Default is None.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    learn_model()</span>
+<span class="sd">        Runs the causal discovery process.</span>
+<span class="sd">    print_results(opt_conf=None)</span>
+<span class="sd">        Prints the results of the causal discovery process.</span>
+<span class="sd">    set_dataset(dataset)</span>
+<span class="sd">        Sets the dataset for the causal learner.</span>
+<span class="sd">    set_configurations(configurations)</span>
+<span class="sd">        Sets the configurations for the causal learner.</span>
+<span class="sd">    save_progress(path=None)</span>
+<span class="sd">        Saves the progress of the experiment to a file.</span>
+<span class="sd">    load_progress(path)</span>
+<span class="sd">        Loads the progress of the experiment from a file.</span>
+<span class="sd">    add_configurations_from_file(filename)</span>
+<span class="sd">        Adds additional configurations to the experiment from a JSON file.</span>
+<span class="sd">    update_learnt_model()</span>
+<span class="sd">        Updates the learnt model with new configurations.</span>
+<span class="sd">    get_best_model_between_algorithms(algorithms)</span>
+<span class="sd">        Gets the best model between specified algorithms.</span>
+<span class="sd">    get_best_model_between_family(**kwargs)</span>
+<span class="sd">        Gets the best model within a family of algorithms based on specified criteria.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">],</span>
+        <span class="n">configurations</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configurations</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">random_seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">n_jobs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+        <span class="n">start_jvm</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span> <span class="o">=</span> <span class="n">random_seed</span>
+
+        <span class="c1"># Setup logging</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="s1">&#39;Initializing CausalLearner&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Initialize dataset</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset_input</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="c1"># If a plain DataFrame is provided, initialize Dataset with a default name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">,</span>
+                <span class="n">data_time_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+                <span class="n">time_series</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;Preloaded Dataset&#39;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataset_input must be either a file path, a Dataset instance, or a pandas DataFrame&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Initialize configurations</span>
+        <span class="k">if</span> <span class="n">configurations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">Configurations</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span> <span class="n">Configurations</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">configurations</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">results_folder</span>
+
+        <span class="c1"># Initialize CDHPO (Combined Discovery and Hyperparameter Optimization)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span> <span class="o">=</span> <span class="n">OCT</span><span class="p">(</span>
+            <span class="n">oct_params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="n">results_folder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_time</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Set random seed for reproducibility</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+            <span class="kn">import</span> <span class="nn">random</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
+<div class="viewcode-block" id="CausalLearner.learn_model"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.learn_model">[docs]</a>    <span class="k">def</span> <span class="nf">learn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the causal discovery process using the OCT algorithm.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple containing:</span>
+<span class="sd">            - opt_conf: The optimal configuration found.</span>
+<span class="sd">            - matrix_mec_graph: The MEC graph matrix.</span>
+<span class="sd">            - run_time: The runtime of the CDHPO process.</span>
+<span class="sd">            - library_results: Results from the causal discovery libraries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="s1">&#39;Starting OCT Run&#39;</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute error during CDHPO run: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during CDHPO run: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;CDHPO Runtime: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">run_time</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;optimal_conf&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span>
+            <span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span>
+            <span class="s1">&#39;run_time&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_time</span><span class="p">,</span>
+            <span class="s1">&#39;library_results&#39;</span><span class="p">:</span> <span class="n">library_results</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="CausalLearner.print_results"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.print_results">[docs]</a>    <span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_conf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints the results of the causal discovery process.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        opt_conf : dict, optional</span>
+<span class="sd">            The optimal configuration to print. If None, uses self.opt_conf.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">opt_conf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">opt_conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best Causal Discovery configuration was:&#39;</span><span class="p">,</span> <span class="n">opt_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;With parameters:&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">par</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">opt_conf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">par</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;is_cat_var&#39;</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="s1">&#39;var_type&#39;</span><span class="p">,</span> <span class="s1">&#39;indexes&#39;</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">par</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The MEC matrix graph is:&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">pywhy_graph_to_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="CausalLearner.set_dataset"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the dataset for the causal learner.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataset : Dataset</span>
+<span class="sd">            The Dataset object to set.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If dataset is not of type Dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Dataset must be of type Dataset.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
+
+<div class="viewcode-block" id="CausalLearner.set_configurations"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.set_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">set_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configurations</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the configurations for the causal learner.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        configurations : Configurations</span>
+<span class="sd">            The Configurations object to set.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If configurations is not of type Configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span> <span class="n">Configurations</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">configurations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CausalLearner.save_progress"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the progress of the experiment to a file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str, optional</span>
+<span class="sd">            The file path to save the progress to. If None, saves to &#39;Experiment.pkl&#39; in results_folder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="p">,</span> <span class="s1">&#39;Experiment.pkl&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;Progress saved to </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CausalLearner.load_progress"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.load_progress">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_progress</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the progress of the experiment from a file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The file path to load the progress from.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        CausalLearner</span>
+<span class="sd">            The loaded CausalLearner object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">learner</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">learner</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;Progress loaded from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">learner</span></div>
+
+<div class="viewcode-block" id="CausalLearner.add_configurations_from_file"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds additional configurations to the experiment from a JSON file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            The filename of the JSON file containing configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">add_configurations_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;Configurations added from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CausalLearner.update_learnt_model"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.update_learnt_model">[docs]</a>    <span class="k">def</span> <span class="nf">update_learnt_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the learnt model with the new configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="s1">&#39;Updating learnt model with new configurations&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">run_new</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CausalLearner.get_best_model_between_algorithms"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.get_best_model_between_algorithms">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_algorithms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the best model between specified algorithms.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        algorithms : list</span>
+<span class="sd">            A list of algorithm names to consider.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            The best configuration among the specified algorithms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">best_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">find_best_config</span><span class="p">(</span><span class="n">algorithms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;Best configuration among specified algorithms: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">best_config</span></div>
+
+<div class="viewcode-block" id="CausalLearner.get_best_model_between_family"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner.get_best_model_between_family">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_family</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">admit_latent_variables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">assume_faithfulness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">is_output_mec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">accepts_missing_values</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the best model within a family of algorithms based on specified criteria.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        admit_latent_variables : bool, optional</span>
+<span class="sd">            Filter algorithms that admit latent variables.</span>
+<span class="sd">        assume_faithfulness : bool, optional</span>
+<span class="sd">            Filter algorithms based on faithfulness assumption.</span>
+<span class="sd">        is_output_mec : bool, optional</span>
+<span class="sd">            Filter algorithms that output MEC graphs.</span>
+<span class="sd">        accepts_missing_values : bool, optional</span>
+<span class="sd">            Filter algorithms that accept missing values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            The best configuration among the filtered algorithms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">algorithms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">causaldiscoveryalgorithms</span><span class="o">.</span><span class="n">cd_algorithms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">admit_latent_variables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">admit_latent_variables</span> <span class="o">!=</span> <span class="n">admit_latent_variables</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">assume_faithfulness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">assume_faithfulness</span> <span class="o">!=</span> <span class="n">assume_faithfulness</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">is_output_mec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">is_output_mec</span> <span class="o">!=</span> <span class="n">is_output_mec</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">accepts_missing_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">accepts_missing_values</span> <span class="o">!=</span> <span class="n">accepts_missing_values</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">algorithms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">best_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">find_best_config</span><span class="p">(</span><span class="n">algorithms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<span class="sa">f</span><span class="s1">&#39;Best configuration among filtered algorithms: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">best_config</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

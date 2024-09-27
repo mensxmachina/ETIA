@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA: A Comprehensive Automated Causal Discovery Library &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation Guide" href="installation_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ETIA: A Comprehensive Automated Causal Discovery Library</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="etia-a-comprehensive-automated-causal-discovery-library">
+<h1>ETIA: A Comprehensive Automated Causal Discovery Library<a class="headerlink" href="#etia-a-comprehensive-automated-causal-discovery-library" title="Permalink to this heading"></a></h1>
+<p>ETIA (Αιτία (pronounced etía): “cause” in Greek) is a cutting-edge automated causal discovery library that extends beyond traditional methods to tackle complex, real-world problems. It automates the entire causal discovery process, from feature selection and causal structure learning to causal reasoning validation, making it a comprehensive solution for both researchers and practitioners.</p>
+<section id="library-overview">
+<h2>Library Overview<a class="headerlink" href="#library-overview" title="Permalink to this heading"></a></h2>
+<p>ETIA provides:</p>
+<ul class="simple">
+<li><p><strong>Dimensionality Reduction</strong> through the <strong>Automated Feature Selection (AFS)</strong> module, ensuring that only the most relevant variables are used, even in high-dimensional datasets.</p></li>
+<li><p><strong>Causal Structure Learning</strong> via the <strong>Causal Learning (CL)</strong> module, automating the discovery of causal graphs that best fit the data.</p></li>
+<li><p><strong>Causal Reasoning Validation (CRV)</strong>, which offers tools to compute confidence in discovered relationships and visualize causal paths for easy interpretation.</p></li>
+</ul>
+<p>Unlike other causal discovery tools, <strong>ETIA</strong> offers a <strong>fully automated pipeline</strong> that optimizes each step of the process. This ensures that results are robust, interpretable, and reliable, whether you are a researcher exploring new hypotheses or an industrial practitioner making data-driven decisions.</p>
+</section>
+<section id="why-etia-is-unique">
+<h2>Why ETIA is Unique<a class="headerlink" href="#why-etia-is-unique" title="Permalink to this heading"></a></h2>
+<p>ETIA stands apart from other causal discovery libraries with the following key features:</p>
+<ul class="simple">
+<li><p><strong>End-to-End Automation</strong>: ETIA automates the entire causal discovery process, combining various algorithms to find the best configuration for your dataset, unlike other libraries that rely on manual selection and tuning of algorithms.</p></li>
+<li><p><strong>Out-of-Sample Causal Tuning</strong>: Developed specifically for ETIA, this method selects the best causal graph without the need for manually tuned parameters, making it highly suitable for unsupervised environments.</p></li>
+<li><p><strong>Confidence Estimation and Visualization</strong>: ETIA goes beyond discovering causal graphs by estimating the confidence of each causal relationship through bootstrapping, and providing visualization tools for interpreting results.</p></li>
+<li><p><strong>Dimensionality Reduction with Causal Insight</strong>: The AFS module applies advanced techniques to reduce the dimensionality of datasets without compromising on causal accuracy, even in high-dimensional data.</p></li>
+<li><p><strong>Handling Latent Variables</strong>: ETIA can identify causal relationships even in datasets with hidden confounders, using algorithms like FCI and GFCI that most other libraries cannot handle.</p></li>
+</ul>
+</section>
+<section id="core-features">
+<h2>Core Features<a class="headerlink" href="#core-features" title="Permalink to this heading"></a></h2>
+<p>### 1. Automated Feature Selection (AFS)</p>
+<p>The AFS module identifies the <strong>Markov Boundary</strong> of the outcome of interest, ensuring that only the most causally relevant features are selected. This reduces noise and redundancy, resulting in more accurate causal discovery.</p>
+<p><strong>Why It Matters</strong>: In datasets with hundreds of variables, AFS ensures that only the most important features are considered for causal analysis, making subsequent steps more efficient and accurate.</p>
+<p>### 2. Causal Learning (CL)</p>
+<p>ETIA’s CL module automates the discovery of causal structures using a variety of algorithms, which are automatically optimized to fit the dataset. Its <strong>causal tuning</strong> mechanism ensures the selection of the best causal structure without user intervention.</p>
+<p><strong>Why It Matters</strong>: ETIA’s automated pipeline selects the most appropriate algorithm for your dataset, saving time and ensuring the discovery of accurate causal structures, even in the presence of latent variables.</p>
+<p>### 3. Causal Reasoning Validation (CRV)</p>
+<p>CRV offers tools for evaluating the discovered causal graph, providing confidence estimates and comprehensive visualizations. It can answer specific causal queries, making it an invaluable tool for researchers and decision-makers.</p>
+<p><strong>Why It Matters</strong>: ETIA’s ability to compute confidence in causal relationships ensures that users can trust the discovered causal graphs, backed by statistical validation and clear visualizations.</p>
+</section>
+<section id="modules-overview">
+<h2>Modules Overview<a class="headerlink" href="#modules-overview" title="Permalink to this heading"></a></h2>
+<p>Explore the core modules of ETIA:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="AFS">Automated Feature Selection (AFS)</a></p></li>
+<li><p><a class="reference external" href="CausalLearning">Causal Learning (CL)</a></p></li>
+<li><p><a class="reference external" href="CRV">Causal Reasoning Validation (CRV)</a></p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation_guide.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_guide.html#etia-installation">ETIA Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_guide.html#java-and-r-configuration">Java and R Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_guide.html#verify-installation">Verify Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_guide.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="experiments.html#experimental-setup">Experimental Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="experiments.html#afs-evaluating-the-markov-blanket-identification">AFS: Evaluating the Markov Blanket Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="experiments.html#cl-evaluating-the-output-causal-structure">CL: Evaluating the Output Causal Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="experiments.html#crv-evaluating-the-adjustment-set-identification">CRV: Evaluating the Adjustment Set Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="experiments.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="afs_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="afs_index.html#how-afs-works">How AFS Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="afs_index.html#afs-output">AFS Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="afs_index.html#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="afs_index.html#main-class">Main Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="afs_index.html#helper-classes">Helper Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#how-cl-works">How CL Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-independence-tests">Available Independence Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-scoring-functions">Available Scoring Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#main-class">Main Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#helper-classes">Helper Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#available-functionalities">Available Functionalities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#main-classes">Main Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation_guide.html" class="btn btn-neutral float-right" title="Installation Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

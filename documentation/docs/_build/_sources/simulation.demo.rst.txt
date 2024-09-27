@@ -1,0 +1,26 @@
+ETIA.simulation.demo package
+============================
+
+.. automodule:: ETIA.simulation.demo
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+ETIA.simulation.demo.discrete\_example module
+---------------------------------------------
+
+.. automodule:: ETIA.simulation.demo.discrete_example
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ETIA.simulation.demo.linear\_example module
+-------------------------------------------
+
+.. automodule:: ETIA.simulation.demo.linear_example
+   :members:
+   :undoc-members:
+   :show-inheritance:

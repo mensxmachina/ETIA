@@ -1,0 +1,42 @@
+ETIA.simulation package
+=======================
+
+.. automodule:: ETIA.simulation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   ETIA.simulation.demo
+
+Submodules
+----------
+
+ETIA.simulation.base\_simulation module
+---------------------------------------
+
+.. automodule:: ETIA.simulation.base_simulation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ETIA.simulation.distributions module
+------------------------------------
+
+.. automodule:: ETIA.simulation.distributions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ETIA.simulation.sample\_data module
+-----------------------------------
+
+.. automodule:: ETIA.simulation.sample_data
+   :members:
+   :undoc-members:
+   :show-inheritance:

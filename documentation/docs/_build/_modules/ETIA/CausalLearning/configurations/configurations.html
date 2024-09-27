@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CausalLearning.configurations.configurations &mdash; ETIA 0.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ETIA.CausalLearning.configurations.configurations</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ETIA.CausalLearning.configurations.configurations</h1><div class="highlight"><pre>
+<span></span><span class="c1"># configurations/configurations.py</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">..data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>  <span class="c1"># Corrected import</span>
+<span class="kn">from</span> <span class="nn">.parameters</span> <span class="kn">import</span> <span class="n">CDHPO_Parameters</span>
+<span class="kn">from</span> <span class="nn">.default_parameters</span> <span class="kn">import</span> <span class="n">default_conf</span>
+<span class="kn">from</span> <span class="nn">.class_causal_configurator</span> <span class="kn">import</span> <span class="n">CausalDiscoveryConfigurator</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+
+<div class="viewcode-block" id="Configurations"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations">[docs]</a><span class="k">class</span> <span class="nc">Configurations</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configurations class for setting up the causal discovery experiment.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset : Dataset</span>
+<span class="sd">        The dataset object.</span>
+<span class="sd">    n_lags : int, optional</span>
+<span class="sd">        Number of lags (for time series).</span>
+<span class="sd">    time_lagged : bool, optional</span>
+<span class="sd">        Indicates if the data is time-lagged.</span>
+<span class="sd">    time_series : bool, optional</span>
+<span class="sd">        Indicates if the dataset is time series data.</span>
+<span class="sd">    conf_file : str, optional</span>
+<span class="sd">        JSON configuration file containing parameters for the causal discovery experiment.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cdhpo_params : CDHPOParameters</span>
+<span class="sd">        Parameters for the CDHPO algorithm.</span>
+<span class="sd">    results_folder : str</span>
+<span class="sd">        Folder path for storing results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span>
+        <span class="n">n_lags</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">time_lagged</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">time_series</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">conf_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span> <span class="o">=</span> <span class="n">n_lags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span> <span class="o">=</span> <span class="n">time_lagged</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span> <span class="o">=</span> <span class="n">time_series</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span> <span class="o">=</span> <span class="n">CDHPO_Parameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
+
+        <span class="c1"># If conf_file is provided, process it. Otherwise, set default configurations.</span>
+        <span class="k">if</span> <span class="n">conf_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">conf_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf_file</span> <span class="o">=</span> <span class="n">conf_file</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_conf_file</span><span class="p">()</span>  <span class="c1"># Process the JSON file</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_default_configuration</span><span class="p">()</span>  <span class="c1"># Set default configuration based on dataset</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Configurations object has been initialized&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Configurations.set_default_configuration"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations.set_default_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set default configurations based on the dataset when no JSON configuration file is provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;dataset_name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">dataset_name</span> <span class="ow">or</span> <span class="s1">&#39;Preloaded Dataset&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+            <span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span><span class="p">,</span>
+            <span class="s1">&#39;time_series&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+
+        <span class="c1"># Configure CDHPO parameters using default configurations</span>
+        <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">init_main_params</span><span class="p">(</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span>
+            <span class="n">n_permutations</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">],</span>
+            <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+            <span class="n">variables_type</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;variables_type&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_regressor</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_oos_protocol</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Configure causal discovery algorithms</span>
+        <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+        <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+            <span class="n">data_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+            <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+            <span class="n">assume_faithfulness</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+            <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+            <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Configurations.process_conf_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations.process_conf_file">[docs]</a>    <span class="k">def</span> <span class="nf">process_conf_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process the JSON file containing all vital information, such as algorithms, algorithm parameters, run mode, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="n">dataset_conf</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Dataset&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span> <span class="o">=</span> <span class="n">dataset_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;time_lagged&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span> <span class="o">=</span> <span class="n">dataset_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_lags&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span> <span class="o">=</span> <span class="n">dataset_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;time_series&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the dataset from the configuration file</span>
+        <span class="k">if</span> <span class="s1">&#39;dataset_name&#39;</span> <span class="ow">in</span> <span class="n">dataset_conf</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">dataset_conf</span><span class="p">[</span><span class="s1">&#39;dataset_name&#39;</span><span class="p">],</span>
+                <span class="n">data_time_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lags</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">},</span>
+                <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Configuration file must include &#39;dataset_name&#39; in &#39;Dataset&#39; section.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Results_folder_path&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="p">)</span>
+
+        <span class="c1"># Process CDHPO parameters</span>
+        <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">init_main_params</span><span class="p">(</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span>
+            <span class="n">n_permutations</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">],</span>
+            <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+            <span class="n">variables_type</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;variables_type&#39;</span><span class="p">],</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_regressor</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;Regressor_parameters&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_oos_protocol</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;out_of_sample_protocol&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_info</span><span class="p">()</span>
+
+        <span class="c1"># Configure causal discovery algorithms</span>
+        <span class="k">if</span> <span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">:</span>
+            <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+            <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+                <span class="n">data_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+                <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+                <span class="n">assume_faithfulness</span><span class="o">=</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+                <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+                <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Configurations.add_configurations_from_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add additional configurations to the experiment from a JSON file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            The filename of the JSON file containing configurations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="n">causal_algorithms</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">algo</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">causal_algorithms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">algo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">add_cd_algorithm</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">add_cd_algorithm_parameters</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Additional configurations added from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

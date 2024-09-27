@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Causal Learning (CL) &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Causal Learning (CL)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/causal_learning/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="causal-learning-cl">
+<h1>Causal Learning (CL)<a class="headerlink" href="#causal-learning-cl" title="Permalink to this heading"></a></h1>
+<p>The Causal Learning (CL) module is a core component of the <strong>ETIA</strong> framework, designed to automate the discovery of causal relationships in complex, high-dimensional datasets. It is responsible for learning a causal graph from the features selected by the Automated Feature Selection (AFS) module. This causal graph captures the directed dependencies between variables, facilitating further tasks such as causal reasoning and prediction.</p>
+<p>The CL module optimizes the entire causal discovery pipeline by exploring a configuration space of algorithms and hyperparameters. It searches for the best-fitting causal model based on the available data, ensuring that the discovered relationships are accurate and interpretable. By supporting a wide variety of causal discovery algorithms, independence tests, and scoring functions, CL can be adapted to different data types (continuous, mixed, categorical) and assumptions about the underlying system (e.g., causal sufficiency, latent confounders).</p>
+<p>### Core Objectives
+The main goals of the CL module include:</p>
+<ul class="simple">
+<li><p>Learning an accurate causal graph from the selected features.</p></li>
+<li><p>Optimizing the causal discovery process by searching over various algorithms and configurations.</p></li>
+<li><p>Supporting different data types, including continuous, categorical, and mixed variables.</p></li>
+<li><p>Handling both causally sufficient and insufficient systems (i.e., with or without latent confounders).</p></li>
+<li><p>Allowing flexible integration with downstream reasoning and visualization tasks.</p></li>
+</ul>
+<p>### How CL Works
+The CL module operates in three stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Causal Configuration Generator (CG)</strong>:
+The generator explores the configuration space of causal discovery algorithms, independence tests, and scoring functions. It selects appropriate configurations based on the characteristics of the input data, including the type (continuous, mixed, or categorical) and any assumptions regarding causal sufficiency.</p></li>
+<li><p><strong>Causal Discovery</strong>:
+Once the best configuration is selected, the CL module applies the causal discovery algorithm to the data. The output is a causal graph that captures the directed dependencies between variables. This graph can be further analyzed to identify key causal relationships, intervention points, or adjustment sets.</p></li>
+<li><p><strong>Causal Evaluation</strong>:
+The discovered causal graphs are evaluated using scoring functions to assess their fit to the data. The evaluation considers the accuracy of the learned structure in representing the true causal relationships.</p></li>
+</ol>
+<p>### Available Algorithms
+The CL module offers a variety of causal discovery algorithms, each suited for different data types and assumptions. These algorithms are listed below:</p>
+<p>### Available Independence Tests
+The CL module supports a range of conditional independence tests, enabling flexibility in testing relationships between variables across different data types:</p>
+<p>### Available Scoring Functions
+To evaluate the causal graphs, the CL module includes several scoring functions, allowing flexibility in selecting the most appropriate metric for the data:</p>
+<p>### CL Output
+The output of the CL module includes:</p>
+<ul class="simple">
+<li><p>A causal graph representing the learned structure between variables.</p></li>
+<li><p>The best-performing causal discovery configuration, including the selected algorithm, independence test, and scoring function.</p></li>
+</ul>
+<p>By providing an optimized causal discovery pipeline, the CL module ensures that the causal relationships discovered are both accurate and interpretable, facilitating further analysis and reasoning.</p>
+<p>### Main Class
+The main entry point for using the CL module is the <cite>CausalLearner</cite> class. This class allows users to configure and run the causal discovery process, selecting from a variety of algorithms, tests, and scoring functions. The causal graphs generated can then be passed on for downstream reasoning or visualization tasks.</p>
+<p>### Helper Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

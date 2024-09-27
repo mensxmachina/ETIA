@@ -1,0 +1,18 @@
+
+Installation Guide
+==================
+
+To install ETIA, follow the instructions below.
+
+1. Install via pip (coming soon):
+   .. code-block:: bash
+
+      pip install etia
+
+2. Install from source:
+
+   .. code-block:: bash
+
+      git clone <repository-url>
+      cd etia
+      pip install -r requirements.txt

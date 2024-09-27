@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CRV.confidence package &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ETIA.CRV.visualization package" href="CRV.visualization.html" />
+    <link rel="prev" title="ETIA.CRV.adjustment package" href="CRV.adjustment.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#available-functionalities">Available Functionalities</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="crv_index.html#main-classes">Main Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CRV.adjustment.html">ETIA.CRV.adjustment package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ETIA.CRV.confidence package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CRV.confidence.confidence">ETIA.CRV.confidence.confidence module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.visualization.html">ETIA.CRV.visualization package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.queries.html">ETIA.CRV.queries package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.utils.html">ETIA.CRV.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+      <li class="breadcrumb-item active">ETIA.CRV.confidence package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CRV.confidence.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ETIA.CRV.confidence">
+<span id="etia-crv-confidence-package"></span><h1>ETIA.CRV.confidence package<a class="headerlink" href="#module-ETIA.CRV.confidence" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ETIA.CRV.confidence.confidence">
+<span id="etia-crv-confidence-confidence-module"></span><h2>ETIA.CRV.confidence.confidence module<a class="headerlink" href="#module-ETIA.CRV.confidence.confidence" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.confidence.confidence.is_consistent_edge_L">
+<span class="sig-name descname"><span class="pre">is_consistent_edge_L</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m1_ij</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m1_ji</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2_ij</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2_ji</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/confidence/confidence.html#is_consistent_edge_L"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.confidence.confidence.is_consistent_edge_L" title="Permalink to this definition"></a></dt>
+<dd><p>Check if two edges are consistent based on their types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>m1_ij</strong> (<em>int</em>) – Type of edge from node i to node j in the first matrix.</p></li>
+<li><p><strong>m1_ji</strong> (<em>int</em>) – Type of edge from node j to node i in the first matrix.</p></li>
+<li><p><strong>m2_ij</strong> (<em>int</em>) – Type of edge from node i to node j in the second matrix.</p></li>
+<li><p><strong>m2_ji</strong> (<em>int</em>) – Type of edge from node j to node i in the second matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the edges are consistent, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.confidence.confidence.bootstrapping_causal_graph_parallel">
+<span class="sig-name descname"><span class="pre">bootstrapping_causal_graph_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_cat_var</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/confidence/confidence.html#bootstrapping_causal_graph_parallel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.confidence.confidence.bootstrapping_causal_graph_parallel" title="Permalink to this definition"></a></dt>
+<dd><p>Perform bootstrapping of causal graphs in parallel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The input data.</p></li>
+<li><p><strong>config</strong> – The configuration for the causal model.</p></li>
+<li><p><strong>tiers</strong> – Tiers for variable selection.</p></li>
+<li><p><strong>is_cat_var</strong> – Boolean array indicating if the variable is categorical.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Bootstrapped samples, matrix graphs, and matrix MEC graphs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.confidence.confidence.bootstrapping_causal_graph">
+<span class="sig-name descname"><span class="pre">bootstrapping_causal_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_bootstraps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_cat_var</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/confidence/confidence.html#bootstrapping_causal_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.confidence.confidence.bootstrapping_causal_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Perform bootstrapping of causal graphs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_bootstraps</strong> (<em>int</em>) – Number of bootstrap repetitions.</p></li>
+<li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The input data.</p></li>
+<li><p><strong>tiers</strong> – Tiers for variable selection.</p></li>
+<li><p><strong>best_config</strong> – The best causal configuration to estimate the bootstrapped graphs.</p></li>
+<li><p><strong>is_cat_var</strong> – Boolean array indicating if the variable is categorical.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Bootstrapped MEC matrix and bootstrapped graph matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.confidence.confidence.edge_metrics_on_bootstraps">
+<span class="sig-name descname"><span class="pre">edge_metrics_on_bootstraps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_mec_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isPAG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrapped_mec_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/confidence/confidence.html#edge_metrics_on_bootstraps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.confidence.confidence.edge_metrics_on_bootstraps" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate edge consistency and similarity based on bootstrapped MEC matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>best_mec_matrix</strong> – The best MEC matrix.</p></li>
+<li><p><strong>isPAG</strong> – True if the matrix is a PAG, False otherwise.</p></li>
+<li><p><strong>bootstrapped_mec_matrix</strong> – Bootstrapped MEC matrices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Edge consistency and edge similarity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.confidence.confidence.calculate_confidence">
+<span class="sig-name descname"><span class="pre">calculate_confidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt_conf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bootstraps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/confidence/confidence.html#calculate_confidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.confidence.confidence.calculate_confidence" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate edge consistency and similarity confidence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – The dataset.</p></li>
+<li><p><strong>opt_conf</strong> – The optimal configuration.</p></li>
+<li><p><strong>n_bootstraps</strong> (<em>int</em>) – Number of bootstrap repetitions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Edge consistency and edge similarity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CRV.adjustment.html" class="btn btn-neutral float-left" title="ETIA.CRV.adjustment package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CRV.visualization.html" class="btn btn-neutral float-right" title="ETIA.CRV.visualization package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

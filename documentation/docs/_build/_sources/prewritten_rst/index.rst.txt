@@ -1,0 +1,28 @@
+
+ETIA: A Comprehensive Automated Causal Discovery Library
+=========================================================
+
+Welcome to the documentation of ETIA, the automated causal discovery library.
+
+Below you can find an overview of the modules and functionalities available in ETIA.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Menu
+
+   installation_guide
+   example_usage
+   experiments
+   afs/index
+   causal_learning/index
+   crv/index
+
+Modules Overview
+-----------------
+
+- `Automated Feature Selection (AFS) <afs/index>`_
+- `Causal Learning (CL) <causal_learning/index>`_
+- `Causal Reasoning Validation (CRV) <crv/index>`_
+
+Each of these modules provides essential functionalities for automating causal discovery and reasoning.
+Click on the module names to learn more about them.

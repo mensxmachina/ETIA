@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation Guide &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example Usage" href="example_usage.html" />
+    <link rel="prev" title="ETIA: A Comprehensive Automated Causal Discovery Library" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#etia-installation">ETIA Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#java-and-r-configuration">Java and R Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation_guide.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this heading"></a></h1>
+<p>Welcome to the installation guide for ETIA, a comprehensive automated causal discovery library. Follow the steps below to install the library and its dependencies.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
+<p>Before installing ETIA, ensure that you have the following dependencies:</p>
+<ul class="simple">
+<li><p><strong>Python 3.8+</strong></p></li>
+<li><p><strong>Java 17</strong> (required for Tetrad algorithms in the Causal Learning module)</p></li>
+<li><p><strong>R 4+</strong> (required for some feature selection algorithms in the AFS module)</p></li>
+</ul>
+<p>You can download and install these dependencies from their official websites:</p>
+<ul class="simple">
+<li><p>[Python](<a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>)</p></li>
+<li><p>[Java](<a class="reference external" href="https://www.oracle.com/java/technologies/javase-jdk17-downloads.html">https://www.oracle.com/java/technologies/javase-jdk17-downloads.html</a>)</p></li>
+<li><p>[R](<a class="reference external" href="https://www.r-project.org/">https://www.r-project.org/</a>)</p></li>
+</ul>
+</section>
+<section id="etia-installation">
+<h2>ETIA Installation<a class="headerlink" href="#etia-installation" title="Permalink to this heading"></a></h2>
+<p>### Installing via PyPi (Upcoming)</p>
+<p>Once ETIA is available on PyPi, you will be able to install it directly using <cite>pip</cite>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>etia
+</pre></div>
+</div>
+<p>### Installing from Source</p>
+<p>To install ETIA from the source code, follow the steps below:</p>
+<ol class="arabic simple">
+<li><p>Clone the repository:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
+<span class="nb">cd</span><span class="w"> </span>etia
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Install the required dependencies:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Compile the necessary components:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>all
+</pre></div>
+</div>
+</section>
+<section id="java-and-r-configuration">
+<h2>Java and R Configuration<a class="headerlink" href="#java-and-r-configuration" title="Permalink to this heading"></a></h2>
+<p>For using Tetrad algorithms and certain feature selection algorithms, ensure that Java and R are correctly installed.</p>
+<p>### Setting up Java:</p>
+<ol class="arabic simple">
+<li><p>Install Java 17 from the [official website](<a class="reference external" href="https://www.oracle.com/java/technologies/javase-jdk17-downloads.html">https://www.oracle.com/java/technologies/javase-jdk17-downloads.html</a>).</p></li>
+<li><p>Ensure that the <cite>JAVA_HOME</cite> environment variable is set:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>/path/to/java
+</pre></div>
+</div>
+<p>### Setting up R:</p>
+<ol class="arabic simple">
+<li><p>Install R 4+ from the [official website](<a class="reference external" href="https://www.r-project.org/">https://www.r-project.org/</a>).</p></li>
+<li><p>Make sure that R is in your system’s PATH:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>R<span class="w"> </span>--version
+</pre></div>
+</div>
+</section>
+<section id="verify-installation">
+<h2>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this heading"></a></h2>
+<p>After installing the library, you can verify the installation by importing the ETIA modules:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ETIA.AFS</span> <span class="k">as</span> <span class="nn">AFS</span>
+<span class="kn">import</span> <span class="nn">ETIA.CausalLearning</span> <span class="k">as</span> <span class="nn">CL</span>
+
+<span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
+<span class="n">cl</span> <span class="o">=</span> <span class="n">CL</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If no errors occur, the installation was successful.</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading"></a></h2>
+<p>Once you have installed ETIA, you can proceed to explore its functionalities. Check out the <strong>Example Usage</strong> section to learn how to use the library effectively.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="ETIA: A Comprehensive Automated Causal Discovery Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="example_usage.html" class="btn btn-neutral float-right" title="Example Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

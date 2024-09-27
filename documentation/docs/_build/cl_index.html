@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Causal Learning (CL) &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ETIA.CausalLearning.algorithms.causalnex_algorithm package" href="CausalLearning.algorithms.causalnex_algorithm.html" />
+    <link rel="prev" title="ETIA.AFS.utils package" href="AFS.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Causal Learning (CL)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-cl-works">How CL Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-independence-tests">Available Independence Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-scoring-functions">Available Scoring Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-class">Main Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#helper-classes">Helper Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html">ETIA.CausalLearning.algorithms.causalnex_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.cdt_algorithms.html">ETIA.CausalLearning.algorithms.cdt_algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.jar_files.html">ETIA.CausalLearning.algorithms.jar_files package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.html">ETIA.CausalLearning.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.tetrad_algorithm.html">ETIA.CausalLearning.algorithms.tetrad_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.tigramite_algorithm.html">ETIA.CausalLearning.algorithms.tigramite_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CausalModel.html">ETIA.CausalLearning.CausalModel package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html">ETIA.CausalLearning.CDHPO.OCT package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.html">ETIA.CausalLearning.CDHPO package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.configurations.html">ETIA.CausalLearning.configurations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.data.html">ETIA.CausalLearning.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.kfold.html">ETIA.CausalLearning.model_validation_protocols.kfold package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.html">ETIA.CausalLearning.model_validation_protocols package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.regressors.html">ETIA.CausalLearning.regressors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.oct_functions.html">ETIA.CausalLearning.utils.oct_functions package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.html">ETIA.CausalLearning.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Causal Learning (CL)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cl_index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="causal-learning-cl">
+<h1>Causal Learning (CL)<a class="headerlink" href="#causal-learning-cl" title="Permalink to this heading"></a></h1>
+<p>The Causal Learning (CL) module is a core component of the <strong>ETIA</strong> framework, designed to automate the discovery of causal relationships in complex, high-dimensional datasets. It is responsible for learning a causal graph from the features selected by the Automated Feature Selection (AFS) module. This causal graph captures the directed dependencies between variables, facilitating further tasks such as causal reasoning and prediction.</p>
+<p>The CL module optimizes the entire causal discovery pipeline by exploring a configuration space of algorithms and hyperparameters. It searches for the best-fitting causal model based on the available data, ensuring that the discovered relationships are accurate and interpretable. By supporting a wide variety of causal discovery algorithms, independence tests, and scoring functions, CL can be adapted to different data types (continuous, mixed, categorical) and assumptions about the underlying system (e.g., causal sufficiency, latent confounders).</p>
+<section id="core-objectives">
+<h2>Core Objectives<a class="headerlink" href="#core-objectives" title="Permalink to this heading"></a></h2>
+<p>The main goals of the CL module include:</p>
+<ul class="simple">
+<li><p>Learning an accurate causal graph from the selected features.</p></li>
+<li><p>Optimizing the causal discovery process by searching over various algorithms and configurations.</p></li>
+<li><p>Supporting different data types, including continuous, categorical, and mixed variables.</p></li>
+<li><p>Handling both causally sufficient and insufficient systems (i.e., with or without latent confounders).</p></li>
+<li><p>Allowing flexible integration with downstream reasoning and visualization tasks.</p></li>
+</ul>
+</section>
+<section id="how-cl-works">
+<h2>How CL Works<a class="headerlink" href="#how-cl-works" title="Permalink to this heading"></a></h2>
+<p>The CL module operates in three stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Causal Configuration Generator (CG)</strong>:
+The generator explores the configuration space of causal discovery algorithms, independence tests, and scoring functions. It selects appropriate configurations based on the characteristics of the input data, including the type (continuous, mixed, or categorical) and any assumptions regarding causal sufficiency.</p></li>
+<li><p><strong>Causal Discovery</strong>:
+Once the best configuration is selected, the CL module applies the causal discovery algorithm to the data. The output is a causal graph that captures the directed dependencies between variables. This graph can be further analyzed to identify key causal relationships, intervention points, or adjustment sets.</p></li>
+<li><p><strong>Causal Evaluation</strong>:
+The discovered causal graphs are evaluated using scoring functions to assess their fit to the data. The evaluation considers the accuracy of the learned structure in representing the true causal relationships.</p></li>
+</ol>
+</section>
+<section id="available-algorithms">
+<h2>Available Algorithms<a class="headerlink" href="#available-algorithms" title="Permalink to this heading"></a></h2>
+<p>The CL module offers a variety of causal discovery algorithms, each suited for different data types and assumptions. These algorithms are listed below:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>PC</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>A constraint-based algorithm that uses
+conditional independence tests to learn
+the causal structure. Assumes causal sufficiency.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CPC</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>A variant of PC that improves stability by
+handling non-faithful distributions.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>FGES</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>A score-based algorithm that does not assume
+causal sufficiency. Suitable for high-
+dimensional data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GFCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>A hybrid algorithm combining constraint-based
+and score-based methods. Allows for latent
+confounders.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>LiNGAM</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>A linear non-Gaussian causal discovery method.
+Suitable for discovering linear causal
+relationships in continuous data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>DirectLiNGAM</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>A fast variant of the LiNGAM algorithm that
+performs well on high-dimensional datasets.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>NOTEARS</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>An optimization-based algorithm that learns
+causal structure using least squares and
+L1-regularization.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="available-independence-tests">
+<h2>Available Independence Tests<a class="headerlink" href="#available-independence-tests" title="Permalink to this heading"></a></h2>
+<p>The CL module supports a range of conditional independence tests, enabling flexibility in testing relationships between variables across different data types:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Test Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>FisherZ</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>A widely used test for continuous data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CG-LRT</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>Conditional Gaussian Likelihood Ratio Test for
+mixed data (continuous and categorical).</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>DG-LRT</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>Discrete Gaussian Likelihood Ratio Test for
+mixed data (discrete and Gaussian).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Chi-Square</strong></p></td>
+<td><p>Categorical</p></td>
+<td><p>Test for independence in categorical data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>G-Square</strong></p></td>
+<td><p>Categorical</p></td>
+<td><p>Another test for independence in categorical
+data, based on the G-statistic.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>ParCor</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>Test based on partial correlation.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>CMIknn</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>Conditional Mutual Information test using
+nearest neighbors.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="available-scoring-functions">
+<h2>Available Scoring Functions<a class="headerlink" href="#available-scoring-functions" title="Permalink to this heading"></a></h2>
+<p>To evaluate the causal graphs, the CL module includes several scoring functions, allowing flexibility in selecting the most appropriate metric for the data:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Score Name</p></th>
+<th class="head"><p>Data Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>SEM BIC Score</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>Bayesian Information Criterion for Structural
+Equation Models. Suitable for continuous data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>BDeu</strong></p></td>
+<td><p>Categorical</p></td>
+<td><p>Bayesian Dirichlet equivalent uniform score
+for categorical data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>CG-BIC</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>BIC score for mixed data models (continuous
+and categorical).</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>DG-BIC</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>BIC score for discrete Gaussian models.</p></td>
+</tr>
+</tbody>
+</table>
+<p>### CL Output
+The output of the CL module includes:</p>
+<ul class="simple">
+<li><p>A causal graph representing the learned structure between variables.</p></li>
+<li><p>The best-performing causal discovery configuration, including the selected algorithm, independence test, and scoring function.</p></li>
+</ul>
+<p>By providing an optimized causal discovery pipeline, the CL module ensures that the causal relationships discovered are both accurate and interpretable, facilitating further analysis and reasoning.</p>
+</section>
+<section id="main-class">
+<h2>Main Class<a class="headerlink" href="#main-class" title="Permalink to this heading"></a></h2>
+<p>The main entry point for using the CL module is the <cite>CausalLearner</cite> class. This class allows users to configure and run the causal discovery process, selecting from a variety of algorithms, tests, and scoring functions. The causal graphs generated can then be passed on for downstream reasoning or visualization tasks.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CausalLearner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset" title="ETIA.CausalLearning.data.Dataset.Dataset"><span class="pre">Dataset</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configurations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations" title="ETIA.CausalLearning.configurations.configurations.Configurations"><span class="pre">Configurations</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>CausalLearner class for automated causal discovery.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_input</strong> (<em>str</em><em> or </em><a class="reference internal" href="CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset" title="ETIA.CausalLearning.data.Dataset.Dataset"><em>Dataset</em></a>) – Either a file path to the dataset or a Dataset instance containing the data.</p></li>
+<li><p><strong>configurations</strong> (<a class="reference internal" href="CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations" title="ETIA.CausalLearning.configurations.configurations.Configurations"><em>Configurations</em></a><em>, </em><em>optional</em>) – A Configurations object containing experiment configurations. If None, default configurations are used.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prints detailed logs. Default is False.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of jobs for parallel processing. Default is the number of CPU cores.</p></li>
+<li><p><strong>random_seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for random number generator to ensure reproducibility. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.learn_model">
+<span class="sig-name descname"><span class="pre">learn_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.learn_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.learn_model" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the causal discovery process.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.print_results">
+<span class="sig-name descname"><span class="pre">print_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt_conf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.print_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.print_results" title="Permalink to this definition"></a></dt>
+<dd><p>Prints the results of the causal discovery process.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.set_dataset">
+<span class="sig-name descname"><span class="pre">set_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.set_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the dataset for the causal learner.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.set_configurations">
+<span class="sig-name descname"><span class="pre">set_configurations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configurations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_configurations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.set_configurations" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the configurations for the causal learner.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.save_progress">
+<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.save_progress" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the progress of the experiment to a file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.load_progress">
+<span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.load_progress" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the progress of the experiment from a file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.add_configurations_from_file">
+<span class="sig-name descname"><span class="pre">add_configurations_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.add_configurations_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.add_configurations_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Adds additional configurations to the experiment from a JSON file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.update_learnt_model">
+<span class="sig-name descname"><span class="pre">update_learnt_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.update_learnt_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.update_learnt_model" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the learnt model with new configurations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.get_best_model_between_algorithms">
+<span class="sig-name descname"><span class="pre">get_best_model_between_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.get_best_model_between_algorithms" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the best model between specified algorithms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalLearner.get_best_model_between_family">
+<span class="sig-name descname"><span class="pre">get_best_model_between_family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_family"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalLearner.get_best_model_between_family" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the best model within a family of algorithms based on specified criteria.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">learn_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.learn_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the causal discovery process using the OCT algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>opt_conf: The optimal configuration found.</p></li>
+<li><p>matrix_mec_graph: The MEC graph matrix.</p></li>
+<li><p>run_time: The runtime of the CDHPO process.</p></li>
+<li><p>library_results: Results from the causal discovery libraries.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">print_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt_conf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.print_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Prints the results of the causal discovery process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>opt_conf</strong> (<em>dict</em><em>, </em><em>optional</em>) – The optimal configuration to print. If None, uses self.opt_conf.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">set_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the dataset for the causal learner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset</strong> (<a class="reference internal" href="CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset" title="ETIA.CausalLearning.data.Dataset.Dataset"><em>Dataset</em></a>) – The Dataset object to set.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If dataset is not of type Dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">set_configurations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configurations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_configurations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the configurations for the causal learner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>configurations</strong> (<a class="reference internal" href="CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations" title="ETIA.CausalLearning.configurations.configurations.Configurations"><em>Configurations</em></a>) – The Configurations object to set.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If configurations is not of type Configurations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the progress of the experiment to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – The file path to save the progress to. If None, saves to ‘Experiment.pkl’ in results_folder.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the progress of the experiment from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The file path to load the progress from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded CausalLearner object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="CausalLearning.html#ETIA.CausalLearning.CausalLearner.CausalLearner" title="ETIA.CausalLearning.CausalLearner.CausalLearner">CausalLearner</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">add_configurations_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.add_configurations_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd><p>Adds additional configurations to the experiment from a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The filename of the JSON file containing configurations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">update_learnt_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.update_learnt_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the learnt model with the new configurations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">get_best_model_between_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the best model between specified algorithms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>algorithms</strong> (<em>list</em>) – A list of algorithm names to consider.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The best configuration among the specified algorithms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">get_best_model_between_family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">admit_latent_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_faithfulness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_output_mec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accepts_missing_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_family"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the best model within a family of algorithms based on specified criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>admit_latent_variables</strong> (<em>bool</em><em>, </em><em>optional</em>) – Filter algorithms that admit latent variables.</p></li>
+<li><p><strong>assume_faithfulness</strong> (<em>bool</em><em>, </em><em>optional</em>) – Filter algorithms based on faithfulness assumption.</p></li>
+<li><p><strong>is_output_mec</strong> (<em>bool</em><em>, </em><em>optional</em>) – Filter algorithms that output MEC graphs.</p></li>
+<li><p><strong>accepts_missing_values</strong> (<em>bool</em><em>, </em><em>optional</em>) – Filter algorithms that accept missing values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The best configuration among the filtered algorithms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="helper-classes">
+<h2>Helper Classes<a class="headerlink" href="#helper-classes" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html">ETIA.CausalLearning.algorithms.causalnex_algorithm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html#module-ETIA.CausalLearning.algorithms.causalnex_algorithm.NoTears">ETIA.CausalLearning.algorithms.causalnex_algorithm.NoTears module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.algorithms.cdt_algorithms.html">ETIA.CausalLearning.algorithms.cdt_algorithms package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.cdt_algorithms.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.cdt_algorithms.html#module-ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm">ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.algorithms.jar_files.html">ETIA.CausalLearning.algorithms.jar_files package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.algorithms.html">ETIA.CausalLearning.algorithms package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.html#module-ETIA.CausalLearning.algorithms.causaldiscoveryalgorithms">ETIA.CausalLearning.algorithms.causaldiscoveryalgorithms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.html#module-ETIA.CausalLearning.algorithms.utils">ETIA.CausalLearning.algorithms.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.algorithms.tetrad_algorithm.html">ETIA.CausalLearning.algorithms.tetrad_algorithm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.tetrad_algorithm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.tetrad_algorithm.html#module-ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm">ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.algorithms.tigramite_algorithm.html">ETIA.CausalLearning.algorithms.tigramite_algorithm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.tigramite_algorithm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.algorithms.tigramite_algorithm.html#module-ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm">ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.CausalModel.html">ETIA.CausalLearning.CausalModel package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.BayessianNetwork">ETIA.CausalLearning.CausalModel.BayessianNetwork module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.CPDAG">ETIA.CausalLearning.CausalModel.CPDAG module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.DAG">ETIA.CausalLearning.CausalModel.DAG module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.GraphWrapperBase">ETIA.CausalLearning.CausalModel.GraphWrapperBase module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.MAG">ETIA.CausalLearning.CausalModel.MAG module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.PAG">ETIA.CausalLearning.CausalModel.PAG module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CausalModel.html#module-ETIA.CausalLearning.CausalModel.utils">ETIA.CausalLearning.CausalModel.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.bidirected_path">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.bidirected_path module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-cpdag-to-dag-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.cpdag_to_dag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-create-sub-mag-pag-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.create_sub_mag_pag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-dag-to-cpdag-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.dag_to_cpdag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-dag-to-mag-removel-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.dag_to_mag_removeL module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.enforce_stationarity">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.enforce_stationarity module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.find_ancestors_nx">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.find_ancestors_nx module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.get_unshielded_triples">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.get_unshielded_triples module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-has-inducing-path-dag-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.has_inducing_path_dag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.is_collider">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.is_collider module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.is_dag">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.is_dag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-mag-to-pag-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.mag_to_pag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.markov_boundary module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_bidirected_path">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_bidirected_path module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_directed_path">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_directed_path module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_path_anytype">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_path_anytype module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_potentially_directed_path">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.one_potentially_directed_path module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-orientation-rules-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.orientation_rules module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#module-ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.orientation_rules_cpdag">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.orientation_rules_cpdag module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html#etia-causallearning-cdhpo-oct-causal-graph-utils-pag-to-mag-module">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils.pag_to_mag module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html">ETIA.CausalLearning.CDHPO.OCT package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html#module-ETIA.CausalLearning.CDHPO.OCT.OCT">ETIA.CausalLearning.CDHPO.OCT.OCT module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html#module-ETIA.CausalLearning.CDHPO.OCT.utils">ETIA.CausalLearning.CDHPO.OCT.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.CDHPO.html">ETIA.CausalLearning.CDHPO package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.CDHPO.html#module-ETIA.CausalLearning.CDHPO.CDHPOBase">ETIA.CausalLearning.CDHPO.CDHPOBase module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.configurations.html">ETIA.CausalLearning.configurations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.causal_configs">ETIA.CausalLearning.configurations.causal_configs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.ci_tests">ETIA.CausalLearning.configurations.ci_tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.class_causal_configurator">ETIA.CausalLearning.configurations.class_causal_configurator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.configurations">ETIA.CausalLearning.configurations.configurations module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.default_parameters">ETIA.CausalLearning.configurations.default_parameters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.parameters">ETIA.CausalLearning.configurations.parameters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.configurations.html#module-ETIA.CausalLearning.configurations.scores">ETIA.CausalLearning.configurations.scores module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.data.html">ETIA.CausalLearning.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.data.html#module-ETIA.CausalLearning.data.Dataset">ETIA.CausalLearning.data.Dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.data.html#module-ETIA.CausalLearning.data.utils">ETIA.CausalLearning.data.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.model_validation_protocols.kfold.html">ETIA.CausalLearning.model_validation_protocols.kfold package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.model_validation_protocols.kfold.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.model_validation_protocols.kfold.html#module-ETIA.CausalLearning.model_validation_protocols.kfold.kfold">ETIA.CausalLearning.model_validation_protocols.kfold.kfold module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.model_validation_protocols.html">ETIA.CausalLearning.model_validation_protocols package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#module-ETIA.CausalLearning.model_validation_protocols.MVP_ProtocolBase">ETIA.CausalLearning.model_validation_protocols.MVP_ProtocolBase module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.model_validation_protocols.html#module-ETIA.CausalLearning.model_validation_protocols.available_mvp_protocols">ETIA.CausalLearning.model_validation_protocols.available_mvp_protocols module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.regressors.html">ETIA.CausalLearning.regressors package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.regressors.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.regressors.html#module-ETIA.CausalLearning.regressors.LinearRegressor">ETIA.CausalLearning.regressors.LinearRegressor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.regressors.html#module-ETIA.CausalLearning.regressors.RandomForestRegressor">ETIA.CausalLearning.regressors.RandomForestRegressor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.regressors.html#module-ETIA.CausalLearning.regressors.regressors">ETIA.CausalLearning.regressors.regressors module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.utils.oct_functions.html">ETIA.CausalLearning.utils.oct_functions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#module-ETIA.CausalLearning.utils.oct_functions.function_run_tetrads_algorithms">ETIA.CausalLearning.utils.oct_functions.function_run_tetrads_algorithms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#module-ETIA.CausalLearning.utils.oct_functions.function_tetrad_algs">ETIA.CausalLearning.utils.oct_functions.function_tetrad_algs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#module-ETIA.CausalLearning.utils.oct_functions.functions_data_graph_utils">ETIA.CausalLearning.utils.oct_functions.functions_data_graph_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#module-ETIA.CausalLearning.utils.oct_functions.functions_prepData">ETIA.CausalLearning.utils.oct_functions.functions_prepData module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#module-ETIA.CausalLearning.utils.oct_functions.functions_tetrad">ETIA.CausalLearning.utils.oct_functions.functions_tetrad module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.oct_functions.html#module-ETIA.CausalLearning.utils.oct_functions.functions_tetrad_utils">ETIA.CausalLearning.utils.oct_functions.functions_tetrad_utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CausalLearning.utils.html">ETIA.CausalLearning.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.html#module-ETIA.CausalLearning.utils.dataset_util">ETIA.CausalLearning.utils.dataset_util module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.html#module-ETIA.CausalLearning.utils.logger">ETIA.CausalLearning.utils.logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CausalLearning.utils.html#module-ETIA.CausalLearning.utils.print_graph">ETIA.CausalLearning.utils.print_graph module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="AFS.utils.html" class="btn btn-neutral float-left" title="ETIA.AFS.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CausalLearning.algorithms.causalnex_algorithm.html" class="btn btn-neutral float-right" title="ETIA.CausalLearning.algorithms.causalnex_algorithm package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

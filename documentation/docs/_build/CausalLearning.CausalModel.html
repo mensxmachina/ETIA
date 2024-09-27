@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CausalLearning.CausalModel package &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html" />
+    <link rel="prev" title="ETIA.CausalLearning.algorithms.tigramite_algorithm package" href="CausalLearning.algorithms.tigramite_algorithm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#how-cl-works">How CL Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-independence-tests">Available Independence Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#available-scoring-functions">Available Scoring Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cl_index.html#main-class">Main Class</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="cl_index.html#helper-classes">Helper Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html">ETIA.CausalLearning.algorithms.causalnex_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.cdt_algorithms.html">ETIA.CausalLearning.algorithms.cdt_algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.jar_files.html">ETIA.CausalLearning.algorithms.jar_files package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.html">ETIA.CausalLearning.algorithms package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.tetrad_algorithm.html">ETIA.CausalLearning.algorithms.tetrad_algorithm package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.tigramite_algorithm.html">ETIA.CausalLearning.algorithms.tigramite_algorithm package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ETIA.CausalLearning.CausalModel package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.BayessianNetwork">ETIA.CausalLearning.CausalModel.BayessianNetwork module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.CPDAG">ETIA.CausalLearning.CausalModel.CPDAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.DAG">ETIA.CausalLearning.CausalModel.DAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.GraphWrapperBase">ETIA.CausalLearning.CausalModel.GraphWrapperBase module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.MAG">ETIA.CausalLearning.CausalModel.MAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.PAG">ETIA.CausalLearning.CausalModel.PAG module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CausalModel.utils">ETIA.CausalLearning.CausalModel.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.OCT.html">ETIA.CausalLearning.CDHPO.OCT package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.html">ETIA.CausalLearning.CDHPO package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.configurations.html">ETIA.CausalLearning.configurations package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.data.html">ETIA.CausalLearning.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.kfold.html">ETIA.CausalLearning.model_validation_protocols.kfold package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.model_validation_protocols.html">ETIA.CausalLearning.model_validation_protocols package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.regressors.html">ETIA.CausalLearning.regressors package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.oct_functions.html">ETIA.CausalLearning.utils.oct_functions package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CausalLearning.utils.html">ETIA.CausalLearning.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="cl_index.html">Causal Learning (CL)</a></li>
+      <li class="breadcrumb-item active">ETIA.CausalLearning.CausalModel package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CausalLearning.CausalModel.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ETIA.CausalLearning.CausalModel">
+<span id="etia-causallearning-causalmodel-package"></span><h1>ETIA.CausalLearning.CausalModel package<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.BayessianNetwork">
+<span id="etia-causallearning-causalmodel-bayessiannetwork-module"></span><h2>ETIA.CausalLearning.CausalModel.BayessianNetwork module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.BayessianNetwork" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BayesianNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Add a node to the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the node to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.remove_node">
+<span class="sig-name descname"><span class="pre">remove_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.remove_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.remove_node" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a node from the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the node to be removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.add_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add an edge between two nodes in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edge</strong> (<em>tuple</em>) – A tuple representing the directed edge between two nodes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.remove_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an edge between two nodes in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edge</strong> (<em>tuple</em>) – A tuple representing the directed edge between two nodes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_parents">
+<span class="sig-name descname"><span class="pre">get_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.get_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_parents" title="Permalink to this definition"></a></dt>
+<dd><p>Get the parents of a given node in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the node whose parents are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of parent nodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_children">
+<span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.get_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_children" title="Permalink to this definition"></a></dt>
+<dd><p>Get the children of a given node in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>str</em>) – The name of the node whose children are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of child nodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Get all the nodes in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of all nodes.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_edges">
+<span class="sig-name descname"><span class="pre">get_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.get_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Get all the edges in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of all edges.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_cpds">
+<span class="sig-name descname"><span class="pre">get_cpds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.get_cpds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_cpds" title="Permalink to this definition"></a></dt>
+<dd><p>Get all the Conditional Probability Distributions (CPDs) in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of CPDs.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_inference">
+<span class="sig-name descname"><span class="pre">get_inference</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.get_inference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.get_inference" title="Permalink to this definition"></a></dt>
+<dd><p>Get the VariableElimination object for inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Object for performing inference.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>VariableElimination</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.set_evidence">
+<span class="sig-name descname"><span class="pre">set_evidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.set_evidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.set_evidence" title="Permalink to this definition"></a></dt>
+<dd><p>Set the evidence for inference in the Bayesian Network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>evidence</strong> (<em>dict</em>) – Dictionary where keys are node names and values are observed states.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.query" title="Permalink to this definition"></a></dt>
+<dd><p>Perform inference and return the marginal probabilities for the given nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> (<em>str</em><em> or </em><em>list</em>) – Single node or list of nodes for which marginal probabilities are to be computed.</p></li>
+<li><p><strong>show_progress</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, display a progress bar during inference. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing marginal probabilities of the queried nodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.map_query">
+<span class="sig-name descname"><span class="pre">map_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show_progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.map_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.map_query" title="Permalink to this definition"></a></dt>
+<dd><p>Perform inference and return the most probable states of the nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>show_progress</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, display a progress bar during inference. Default is False.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the most probable states of the nodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.maximum_likelihood_estimation">
+<span class="sig-name descname"><span class="pre">maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.maximum_likelihood_estimation" title="Permalink to this definition"></a></dt>
+<dd><p>Estimate the parameters of the Bayesian Network using Maximum Likelihood Estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pandas DataFrame</em>) – The dataset for parameter estimation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.bayesian_parameter_estimation">
+<span class="sig-name descname"><span class="pre">bayesian_parameter_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/BayessianNetwork.html#BayesianNetwork.bayesian_parameter_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.BayessianNetwork.BayesianNetwork.bayesian_parameter_estimation" title="Permalink to this definition"></a></dt>
+<dd><p>Estimate the parameters of the Bayesian Network using Bayesian Parameter Estimation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pandas DataFrame</em>) – The dataset for parameter estimation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.CPDAG">
+<span id="etia-causallearning-causalmodel-cpdag-module"></span><h2>ETIA.CausalLearning.CausalModel.CPDAG module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.CPDAG" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CPDAGWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incoming_directed_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoming_undirected_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphWrapperBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Add a node to the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.remove_node">
+<span class="sig-name descname"><span class="pre">remove_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.remove_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.remove_node" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a node from the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.add_directed_edge">
+<span class="sig-name descname"><span class="pre">add_directed_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.add_directed_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.add_directed_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a directed edge to the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the directed edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the directed edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.add_undirected_edge">
+<span class="sig-name descname"><span class="pre">add_undirected_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.add_undirected_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.add_undirected_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add an undirected edge to the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the undirected edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the undirected edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.remove_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an edge from the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the edge to be removed.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the edge to be removed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.get_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Return the nodes of the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of nodes in the CPDAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.get_edges">
+<span class="sig-name descname"><span class="pre">get_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.get_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.get_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Return the edges of the CPDAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing directed and undirected edges of the CPDAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.possible_children">
+<span class="sig-name descname"><span class="pre">possible_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.possible_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.possible_children" title="Permalink to this definition"></a></dt>
+<dd><p>Return an iterator over possible children of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node whose possible children are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator over possible children of the given node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.possible_parents">
+<span class="sig-name descname"><span class="pre">possible_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.possible_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.possible_parents" title="Permalink to this definition"></a></dt>
+<dd><p>Return an iterator over possible parents of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node whose possible parents are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator over possible parents of the given node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.orient_uncertain_edge">
+<span class="sig-name descname"><span class="pre">orient_uncertain_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/CPDAG.html#CPDAGWrapper.orient_uncertain_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.CPDAG.CPDAGWrapper.orient_uncertain_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Orient an undirected edge into a directed edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>hashable object</em>) – One endpoint of the undirected edge.</p></li>
+<li><p><strong>v</strong> (<em>hashable object</em>) – The other endpoint of the undirected edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.DAG">
+<span id="etia-causallearning-causalmodel-dag-module"></span><h2>ETIA.CausalLearning.CausalModel.DAG module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.DAG" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DAGWrapper</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphWrapperBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Add a node to the DAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.remove_node">
+<span class="sig-name descname"><span class="pre">remove_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper.remove_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.remove_node" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a node from the DAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.add_directed_edge">
+<span class="sig-name descname"><span class="pre">add_directed_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper.add_directed_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.add_directed_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a directed edge to the DAG.
+Checks for cycles and raises an error if an edge creates a cycle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the directed edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the directed edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.remove_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an edge from the DAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the edge to be removed.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the edge to be removed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.get_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Return the nodes of the DAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of nodes in the DAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.get_edges">
+<span class="sig-name descname"><span class="pre">get_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/DAG.html#DAGWrapper.get_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.DAG.DAGWrapper.get_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Return the edges of the DAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of edges in the DAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.GraphWrapperBase">
+<span id="etia-causallearning-causalmodel-graphwrapperbase-module"></span><h2>ETIA.CausalLearning.CausalModel.GraphWrapperBase module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.GraphWrapperBase" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GraphWrapperBase</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Add a node to the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.remove_node">
+<span class="sig-name descname"><span class="pre">remove_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase.remove_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.remove_node" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a node from the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.add_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add an edge to the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.remove_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an edge from the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the edge to be removed.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the edge to be removed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.get_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Return the nodes of the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of nodes in the graph.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.get_edges">
+<span class="sig-name descname"><span class="pre">get_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/GraphWrapperBase.html#GraphWrapperBase.get_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase.get_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Return the edges of the graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of edges in the graph.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.MAG">
+<span id="etia-causallearning-causalmodel-mag-module"></span><h2>ETIA.CausalLearning.CausalModel.MAG module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.MAG" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MAGWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incoming_directed_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoming_bidirected_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphWrapperBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Add a node to the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.remove_node">
+<span class="sig-name descname"><span class="pre">remove_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.remove_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.remove_node" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a node from the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.add_directed_edge">
+<span class="sig-name descname"><span class="pre">add_directed_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.add_directed_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.add_directed_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a directed edge to the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the directed edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the directed edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.add_bidirected_edge">
+<span class="sig-name descname"><span class="pre">add_bidirected_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.add_bidirected_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.add_bidirected_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a bidirected edge to the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the bidirected edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the bidirected edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.remove_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an edge from the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the edge to be removed.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the edge to be removed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.get_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Return the nodes of the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of nodes in the MAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.get_edges">
+<span class="sig-name descname"><span class="pre">get_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/MAG.html#MAGWrapper.get_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.MAG.MAGWrapper.get_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Return the edges of the MAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing directed and bidirected edges of the MAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.PAG">
+<span id="etia-causallearning-causalmodel-pag-module"></span><h2>ETIA.CausalLearning.CausalModel.PAG module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.PAG" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PAGWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">incoming_directed_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoming_undirected_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoming_bidirected_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incoming_circle_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GraphWrapperBase</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_node">
+<span class="sig-name descname"><span class="pre">add_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.add_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_node" title="Permalink to this definition"></a></dt>
+<dd><p>Add a node to the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.remove_node">
+<span class="sig-name descname"><span class="pre">remove_node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.remove_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.remove_node" title="Permalink to this definition"></a></dt>
+<dd><p>Remove a node from the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node to be removed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_directed_edge">
+<span class="sig-name descname"><span class="pre">add_directed_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.add_directed_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_directed_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a directed edge to the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the directed edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the directed edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_bidirected_edge">
+<span class="sig-name descname"><span class="pre">add_bidirected_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.add_bidirected_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_bidirected_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a bidirected edge to the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the bidirected edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the bidirected edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_undirected_edge">
+<span class="sig-name descname"><span class="pre">add_undirected_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.add_undirected_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_undirected_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add an undirected edge to the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the undirected edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the undirected edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_circle_edge">
+<span class="sig-name descname"><span class="pre">add_circle_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.add_circle_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.add_circle_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add a circle edge (circle edge on one side) to the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – One side of the circle edge.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The other side of the circle edge.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.remove_edge">
+<span class="sig-name descname"><span class="pre">remove_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.remove_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.remove_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Remove an edge from the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>hashable object</em>) – The source node of the edge to be removed.</p></li>
+<li><p><strong>target</strong> (<em>hashable object</em>) – The target node of the edge to be removed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.get_nodes">
+<span class="sig-name descname"><span class="pre">get_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.get_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.get_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Return the nodes of the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of nodes in the PAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.get_edges">
+<span class="sig-name descname"><span class="pre">get_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.get_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.get_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Return the edges of the PAG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing directed, bidirected, undirected, and circle edges of the PAG.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.possible_children">
+<span class="sig-name descname"><span class="pre">possible_children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.possible_children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.possible_children" title="Permalink to this definition"></a></dt>
+<dd><p>Return an iterator over possible children of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node whose possible children are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator over possible children of the given node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.possible_parents">
+<span class="sig-name descname"><span class="pre">possible_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.possible_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.possible_parents" title="Permalink to this definition"></a></dt>
+<dd><p>Return an iterator over possible parents of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node whose possible parents are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Iterator over possible parents of the given node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.children">
+<span class="sig-name descname"><span class="pre">children</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.children"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.children" title="Permalink to this definition"></a></dt>
+<dd><p>Return the definite children of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node whose definite children are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of definite children of the given node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.parents">
+<span class="sig-name descname"><span class="pre">parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/PAG.html#PAGWrapper.parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.PAG.PAGWrapper.parents" title="Permalink to this definition"></a></dt>
+<dd><p>Return the definite parents of a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>hashable object</em>) – The node whose definite parents are to be retrieved.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of definite parents of the given node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CausalLearning.CausalModel.utils">
+<span id="etia-causallearning-causalmodel-utils-module"></span><h2>ETIA.CausalLearning.CausalModel.utils module<a class="headerlink" href="#module-ETIA.CausalLearning.CausalModel.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.utils.matrix_to_pywhy_graph">
+<span class="sig-name descname"><span class="pre">matrix_to_pywhy_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DAG'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/utils.html#matrix_to_pywhy_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.utils.matrix_to_pywhy_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a matrix representation to a pywhy-graphs graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>numpy.ndarray</em><em> or </em><em>pandas.DataFrame</em>) – The matrix representation of the graph.</p></li>
+<li><p><strong>graph_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The type of graph to be created. Default is ‘DAG’.
+Supported types are ‘DAG’, ‘CPDAG’, ‘PAG’, and ‘MAG’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The pywhy-graphs graph object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase">GraphWrapperBase</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.CausalModel.utils.pywhy_graph_to_matrix">
+<span class="sig-name descname"><span class="pre">pywhy_graph_to_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalModel/utils.html#pywhy_graph_to_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CausalModel.utils.pywhy_graph_to_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a pywhy-graphs graph to a matrix representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<a class="reference internal" href="#ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase" title="ETIA.CausalLearning.CausalModel.GraphWrapperBase.GraphWrapperBase"><em>GraphWrapperBase</em></a>) – The pywhy-graphs graph object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The matrix representation of the graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CausalLearning.algorithms.tigramite_algorithm.html" class="btn btn-neutral float-left" title="ETIA.CausalLearning.algorithms.tigramite_algorithm package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CausalLearning.CDHPO.OCT.causal_graph_utils.html" class="btn btn-neutral float-right" title="ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

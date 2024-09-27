@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CRV.visualization package &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ETIA.CRV.queries package" href="CRV.queries.html" />
+    <link rel="prev" title="ETIA.CRV.confidence package" href="CRV.confidence.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crv_index.html#available-functionalities">Available Functionalities</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="crv_index.html#main-classes">Main Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="CRV.adjustment.html">ETIA.CRV.adjustment package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.confidence.html">ETIA.CRV.confidence package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ETIA.CRV.visualization package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CRV.visualization.cytoscape_utils">ETIA.CRV.visualization.cytoscape_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CRV.visualization.visualization">ETIA.CRV.visualization.visualization module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.queries.html">ETIA.CRV.queries package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CRV.utils.html">ETIA.CRV.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+      <li class="breadcrumb-item active">ETIA.CRV.visualization package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CRV.visualization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ETIA.CRV.visualization">
+<span id="etia-crv-visualization-package"></span><h1>ETIA.CRV.visualization package<a class="headerlink" href="#module-ETIA.CRV.visualization" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ETIA.CRV.visualization.cytoscape_utils">
+<span id="etia-crv-visualization-cytoscape-utils-module"></span><h2>ETIA.CRV.visualization.cytoscape_utils module<a class="headerlink" href="#module-ETIA.CRV.visualization.cytoscape_utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.cytoscape_utils.cytoscape_ping">
+<span class="sig-name descname"><span class="pre">cytoscape_ping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/cytoscape_utils.html#cytoscape_ping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.cytoscape_utils.cytoscape_ping" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.cytoscape_utils.cytoscape_version_info">
+<span class="sig-name descname"><span class="pre">cytoscape_version_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/cytoscape_utils.html#cytoscape_version_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.cytoscape_utils.cytoscape_version_info" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.cytoscape_utils.create_network_from_data_frames">
+<span class="sig-name descname"><span class="pre">create_network_from_data_frames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/cytoscape_utils.html#create_network_from_data_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.cytoscape_utils.create_network_from_data_frames" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.cytoscape_utils.matrix_to_cyto">
+<span class="sig-name descname"><span class="pre">matrix_to_cyto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix_pd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/cytoscape_utils.html#matrix_to_cyto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.cytoscape_utils.matrix_to_cyto" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> – a pandas array of size N*N where N is the number of nodes in tetrad_graph
+matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj  should appear only in PAGs
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j  should appear only in MAGs and PAGs
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j  should appear only in PDAGs
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>a pandas dataframe of size (number of edges)*(3) which contains information about all edges</dt><dd><p>1st column : source
+2nd column : target
+3rd column : interaction_type</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>cyto_edges</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.visualization.visualization">
+<span id="etia-crv-visualization-visualization-module"></span><h2>ETIA.CRV.visualization.visualization module<a class="headerlink" href="#module-ETIA.CRV.visualization.visualization" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Visualization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">net_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.plot_cytoscape">
+<span class="sig-name descname"><span class="pre">plot_cytoscape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.plot_cytoscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.plot_cytoscape" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.create_visual_style">
+<span class="sig-name descname"><span class="pre">create_visual_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#FDD49E'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.create_visual_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.create_visual_style" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.set_node_color">
+<span class="sig-name descname"><span class="pre">set_node_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.set_node_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.set_node_color" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the color for a specified list of nodes by their names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.hide_nodes">
+<span class="sig-name descname"><span class="pre">hide_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.hide_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.hide_nodes" title="Permalink to this definition"></a></dt>
+<dd><p>Hides a group of nodes identified by a group name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.plot_edge_confidence">
+<span class="sig-name descname"><span class="pre">plot_edge_confidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_confidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.plot_edge_confidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.plot_edge_confidence" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.hide_edges">
+<span class="sig-name descname"><span class="pre">hide_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.hide_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.hide_edges" title="Permalink to this definition"></a></dt>
+<dd><p>Hides a group of edges based on a threshold value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.set_layout">
+<span class="sig-name descname"><span class="pre">set_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'force-directed'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.set_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.set_layout" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the layout for the network visualization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.export_to_png">
+<span class="sig-name descname"><span class="pre">export_to_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'network.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.export_to_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.export_to_png" title="Permalink to this definition"></a></dt>
+<dd><p>Exports the current network view to a PNG file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.matrix_to_cyto">
+<span class="sig-name descname"><span class="pre">matrix_to_cyto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix_pd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#matrix_to_cyto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.matrix_to_cyto" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>matrix</strong> – a pandas array of size N*N where N is the number of nodes in tetrad_graph
+matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj  should appear only in PAGs
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j  should appear only in MAGs and PAGs
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j  should appear only in PDAGs
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>a pandas dataframe of size (number of edges)*(3) which contains information about all edges</dt><dd><p>1st column : source
+2nd column : target
+3rd column : interaction_type</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>cyto_edges</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CRV.confidence.html" class="btn btn-neutral float-left" title="ETIA.CRV.confidence package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CRV.queries.html" class="btn btn-neutral float-right" title="ETIA.CRV.queries package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

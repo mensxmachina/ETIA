@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automated Feature Selection (AFS) &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ETIA.AFS.feature_selector module" href="AFS.feature_selector.html" />
+    <link rel="prev" title="Experiments" href="experiments.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Automated Feature Selection (AFS)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#core-objectives">Core Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-afs-works">How AFS Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#afs-output">AFS Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-class">Main Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#helper-classes">Helper Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="AFS.feature_selector.html">ETIA.AFS.feature_selector module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.oos.html">ETIA.AFS.oos module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.predictive_configurator.html">ETIA.AFS.predictive_configurator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.predictive_model.html">ETIA.AFS.predictive_model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.preprocessor.html">ETIA.AFS.preprocessor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="AFS.utils.html">ETIA.AFS.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Automated Feature Selection (AFS)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/afs_index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="automated-feature-selection-afs">
+<h1>Automated Feature Selection (AFS)<a class="headerlink" href="#automated-feature-selection-afs" title="Permalink to this heading"></a></h1>
+<p>The Automated Feature Selection (AFS) module plays a critical role in automating the selection of relevant features from large, high-dimensional datasets. Its primary purpose is to identify the <strong>Markov Boundary (Mb)</strong> of a target variable. This significantly reduces the complexity of subsequent causal modeling or prediction tasks by focusing only on the variables most relevant to the target. By automatically selecting features and configuring prediction models, AFS streamlines the data analysis process and supports researchers in efficiently building robust, interpretable models.</p>
+<p>AFS operates within the broader <strong>ETIA</strong> framework, designed for automated causal discovery and reasoning. It serves as the first step in a pipeline where dimensionality reduction is essential to improve the efficiency of downstream causal learning and predictive modeling tasks. The ability to handle various data types—continuous, categorical, and mixed—allows AFS to be adaptable to numerous problem domains. Its flexible architecture and seamless integration with different algorithms enable it to cater to both non-experts and experienced researchers.</p>
+<section id="core-objectives">
+<h2>Core Objectives<a class="headerlink" href="#core-objectives" title="Permalink to this heading"></a></h2>
+<p>The core objectives of AFS include:</p>
+<ul class="simple">
+<li><p>Identifying the Markov boundary of the target variable(s).</p></li>
+<li><p>Selecting and configuring predictive models to assess feature relevance.</p></li>
+<li><p>Optimizing predictive performance while ensuring minimal feature selection.</p></li>
+<li><p>Handling large datasets efficiently, leveraging parallel processing.</p></li>
+</ul>
+</section>
+<section id="how-afs-works">
+<h2>How AFS Works<a class="headerlink" href="#how-afs-works" title="Permalink to this heading"></a></h2>
+<p>AFS employs a two-stage process:</p>
+<ol class="arabic simple">
+<li><p><strong>Predictive Configuration Generator (CG)</strong>:
+This module generates multiple configurations of feature selection and predictive algorithms. It uses a predefined search space of hyperparameters tailored to each dataset and target. Feature selection algorithms like <strong>FBED</strong> and <strong>SES</strong> are configured and applied to identify features that are statistically equivalent or most relevant.</p></li>
+<li><p><strong>Predictive Configuration Evaluator (CE)</strong>:
+The CE assesses the performance of the generated configurations using cross-validation (5-fold by default). It measures the predictive performance based on metrics like the <strong>Area Under the Receiver Operating Characteristic (AUROC)</strong> for classification tasks or the <strong>coefficient of determination (R²)</strong> for regression tasks. The best-performing configuration is selected and applied to all data, returning the final set of selected features along with the optimal predictive model.</p></li>
+</ol>
+</section>
+<section id="afs-output">
+<h2>AFS Output<a class="headerlink" href="#afs-output" title="Permalink to this heading"></a></h2>
+<p>The output of AFS includes:</p>
+<ul class="simple">
+<li><p>A set of selected features, which are the Markov boundaries of the target(s).</p></li>
+<li><p>The best-performing predictive model.</p></li>
+<li><p>An evaluation of the model’s predictive performance.</p></li>
+<li><p>The reduced dataset</p></li>
+</ul>
+<p>AFS ensures that the selected features are not only statistically relevant but also optimized for prediction, improving both the efficiency and accuracy of subsequent analysis.</p>
+</section>
+<section id="available-algorithms">
+<h2>Available Algorithms<a class="headerlink" href="#available-algorithms" title="Permalink to this heading"></a></h2>
+<p>The AFS module includes several feature selection and prediction algorithms. Below is a table summarizing the available algorithms and their hyperparameters:</p>
+<p><strong>Feature Selection Algorithms</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Hyperparameters</p></th>
+<th class="head"><p>Default Values</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>FBED</p></td>
+<td><p>alpha
+k
+ind_test_name</p></td>
+<td><p>[0.05, 0.01]
+[3, 5]
+[‘testIndFisher’]</p></td>
+</tr>
+<tr class="row-odd"><td><p>SES</p></td>
+<td><p>alpha
+k
+ind_test_name</p></td>
+<td><p>[0.05, 0.01]
+[3, 5]
+[‘testIndFisher’]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Predictive Algorithms</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
+<th class="head"><p>Hyperparameters</p></th>
+<th class="head"><p>Default Values</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Random Forest</p></td>
+<td><p>n_estimators
+min_samples_leaf
+max_features</p></td>
+<td><p>[50, 100]
+[0.1]
+[‘sqrt’]</p></td>
+</tr>
+<tr class="row-odd"><td><p>Linear Regression</p></td>
+<td><p>None</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="main-class">
+<h2>Main Class<a class="headerlink" href="#main-class" title="Permalink to this heading"></a></h2>
+<p>The main entry point for using the AFS module is through the <cite>AFS</cite> class. This class provides methods to configure, execute feature selection, and manage results. It integrates preprocessing steps, feature selection, and predictive modeling in a seamless workflow.</p>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_processors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oos_protocol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/AFS.html#AFS"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Automated Feature Selection (AFS) class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>depth</strong> (<em>int</em><em>, </em><em>optional</em>) – The depth of the feature selection process. Default is 1.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prints detailed logs. Default is False.</p></li>
+<li><p><strong>num_processors</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of processors to use for parallel processing. Default is the number of CPU cores.</p></li>
+<li><p><strong>oos_protocol</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary specifying the out-of-sample protocol. Default is a 5-fold cross-validation.</p></li>
+<li><p><strong>random_seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for random number generator to ensure reproducibility. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">run_AFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dataset'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/AFS/AFS.html#AFS.run_AFS"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Runs the AFS process on the provided data and target features.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">run_AFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'dataset'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/AFS/AFS.html#AFS.run_AFS"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Runs the AFS process on the provided data and target features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>str</em><em> or </em><em>pd.DataFrame</em><em> or </em><em>np.ndarray</em>) – The dataset to use. Can be a filename (str), a pandas DataFrame, or a NumPy array.</p></li>
+<li><p><strong>target_features</strong> (<em>Union</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – A dictionary mapping feature names to their types, or a list of feature names (in which case the types are inferred).</p></li>
+<li><p><strong>pred_configs</strong> (<em>Union</em><em>[</em><em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em><em>, </em><em>float</em><em>]</em><em>, </em><em>optional</em>) – <ul>
+<li><p>If list, it is a list of predictive configurations provided by the user.</p></li>
+<li><p>If float (between 0 and 1), it indicates the percentage of default configurations to sample and run.</p></li>
+<li><p>If None, all default configurations are used.</p></li>
+</ul>
+</p></li>
+<li><p><strong>dataset_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the dataset (used for saving intermediate files). Default is ‘dataset’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing:
+- ‘original_data’: The original dataset
+- ‘reduced_data’: The dataset with only the selected features and target features
+- ‘best_config’: The configuration that led to the best feature selection
+- ‘selected_features’: The selected features for each target</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>To run feature selection on a dataset:
+&gt;&gt;&gt; afs = AFS()
+&gt;&gt;&gt; result = afs.run_AFS(data=”data.csv”, target_features=[“feature1”, “feature2”])
+&gt;&gt;&gt; print(result[“selected_features”])</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">recursive_fs_for_target</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred_configs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visited_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">set</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/AFS/AFS.html#AFS.recursive_fs_for_target"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Recursively runs feature selection for a specific target feature up to the specified depth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – The dataset as a pandas DataFrame.</p></li>
+<li><p><strong>target_feature</strong> (<em>str</em>) – The name of the target feature.</p></li>
+<li><p><strong>target_type</strong> (<em>str</em>) – The type of the target feature.</p></li>
+<li><p><strong>pred_configs</strong> (<em>list</em>) – A list of predictive configurations.</p></li>
+<li><p><strong>dataset_name</strong> (<em>str</em>) – The name of the dataset.</p></li>
+<li><p><strong>depth</strong> (<em>int</em>) – The remaining depth of the feature selection process.</p></li>
+<li><p><strong>visited_features</strong> (<em>set</em><em>, </em><em>optional</em>) – A set of features that have already been processed to avoid cycles.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with the results for the target feature.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">run_fs_for_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_inds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_inds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="AFS.preprocessor.html#ETIA.AFS.preprocessor.Preprocessor" title="ETIA.AFS.preprocessor.Preprocessor"><span class="pre">Preprocessor</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/AFS/AFS.html#AFS.run_fs_for_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Runs the feature selection process for a specific configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – The dataset as a pandas DataFrame.</p></li>
+<li><p><strong>target_feature</strong> (<em>str</em>) – The name of the target feature.</p></li>
+<li><p><strong>target_type</strong> (<em>str</em>) – The type of the target variable (‘categorical’ or ‘continuous’).</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – The predictive configuration.</p></li>
+<li><p><strong>dataset_name</strong> (<em>str</em>) – The name of the dataset.</p></li>
+<li><p><strong>train_inds</strong> (<em>list</em>) – Indices of the training samples.</p></li>
+<li><p><strong>test_inds</strong> (<em>list</em>) – Indices of the test samples.</p></li>
+<li><p><strong>feature_columns</strong> (<em>list</em>) – The list of feature columns to consider.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the scores, fold predictions, and selected features DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">bootstrap_bias_correction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fold_predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/AFS/AFS.html#AFS.bootstrap_bias_correction"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Applies bootstrap bias correction to the fold predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fold_predictions</strong> (<em>list</em>) – A list of tuples containing predictions and true values.</p></li>
+<li><p><strong>target_type</strong> (<em>str</em>) – The type of the target variable (‘categorical’ or ‘continuous’).</p></li>
+<li><p><strong>B</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of bootstrap samples. Default is 1000.</p></li>
+<li><p><strong>conf_interval</strong> (<em>float</em><em>, </em><em>optional</em>) – The confidence interval level. Default is 0.95.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The bias-corrected score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="helper-classes">
+<h2>Helper Classes<a class="headerlink" href="#helper-classes" title="Permalink to this heading"></a></h2>
+<p>Below is a list of available classes in the AFS module:</p>
+<p>### Helper Classes</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="AFS.feature_selector.html">ETIA.AFS.feature_selector module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.oos.html">ETIA.AFS.oos module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.predictive_configurator.html">ETIA.AFS.predictive_configurator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.predictive_model.html">ETIA.AFS.predictive_model module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.preprocessor.html">ETIA.AFS.preprocessor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AFS.utils.html">ETIA.AFS.utils package</a></li>
+</ul>
+</div>
+<p>Each class is responsible for different aspects of the feature selection and prediction pipeline, ensuring flexibility and modularity in the system.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="experiments.html" class="btn btn-neutral float-left" title="Experiments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="AFS.feature_selector.html" class="btn btn-neutral float-right" title="ETIA.AFS.feature_selector module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

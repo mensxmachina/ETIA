@@ -1,0 +1,42 @@
+Causal Reasoning and Visualization (CRV)
+=========================================
+
+The Causal Reasoning and Visualization (CRV) module is the final stage in the **ETIA** pipeline. It is designed to interpret, summarize, and visualize the causal structures learned by the Causal Learning (CL) module. The CRV module provides tools to compute adjustment sets, assess the confidence in causal discoveries, answer causal queries, and generate visual representations of the causal graphs.
+
+CRV helps researchers and analysts understand the discovered causal models and provides actionable insights into the relationships between variables. By supporting detailed visualizations, CRV allows users to explore complex causal graphs, focusing on key variables and relationships.
+
+### Core Objectives
+The main goals of the CRV module include:
+
+- **Visualizing causal graphs**: Displaying the causal structures learned by the CL module in a clear and interpretable way.
+- **Computing adjustment sets**: Identifying sets of variables that need to be adjusted to estimate causal effects.
+- **Evaluating confidence in causal findings**: Quantifying the uncertainty associated with the discovered causal relationships.
+- **Answering causal queries**: Providing answers to specific user-defined causal queries such as the effect of interventions.
+
+### Available Functionalities
+The CRV module offers a wide range of functionalities grouped into four main areas:
+
+1. **Visualization**:
+   The visualization functionality is responsible for generating visual representations of the causal graphs. This includes support for exporting graphs and interacting with external tools like Cytoscape for network visualization. Available features include:
+
+2. **Adjustment Sets**:
+   This functionality identifies adjustment sets needed for estimating causal effects. Adjustment sets are crucial for controlling confounding variables and ensuring accurate effect estimation. Available features include:
+
+   - **function_find_adjset_daggity.py**: Finds adjustment sets using the DAGitty package.
+
+3. **Confidence Calculations**:
+   This functionality assesses the confidence in the discovered causal relationships. Confidence is computed through bootstrapping methods, evaluating the stability of edges and paths in the learned graph. Available features include:
+
+   - **confidence.py**: Provides methods for calculating edge and path confidence through bootstrapping.
+
+4. **Causal Queries**:
+   The CRV module provides functionality for answering user-defined causal queries, such as identifying directed, bidirected, or potentially directed paths between variables. Available features include:
+
+   - **one_directed_path.py**: Answers queries about directed paths between variables.
+   - **one_bidirected_path.py**: Identifies bidirected paths between variables.
+   - **one_potentially_directed_path.py**: Provides information about potentially directed paths.
+   - **one_path_anytype.py**: Answers queries about any type of path between variables.
+
+
+By offering these tools, the CRV module helps users interpret and visualize the causal structures in their data, making complex causal models accessible and actionable.
+

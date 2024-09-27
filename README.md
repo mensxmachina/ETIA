@@ -65,7 +65,7 @@ CRV provides advanced tools to evaluate the discovered causal graph, offering co
 You can install ETIA directly from PyPi using pip:
 
 ```bash
-pip install etia
+pip install etia (not yet supported)
 ```
 
 Alternatively, clone the repository and install the dependencies:
@@ -79,9 +79,9 @@ make all
 
 ### Prerequisites
 
-- **Python 3.7+**
+- **Python 3.8+**
 - **Java 17** (required for Tetrad algorithms in the Causal Learning module)
-- **R 1.1+** (required for some feature selection algorithms in the AFS module)
+- **R 4+** (required for some feature selection algorithms in the AFS module)
 
 ## Usage
 

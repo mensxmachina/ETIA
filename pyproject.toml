@@ -8,7 +8,7 @@ authors = ["MensXMachina Lab, Comp. Science Department, University of Crete",
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.6"
 causalnex = ">=0.12.1"
 cdt = ">=0.6.0"
 joblib = ">=1.2.0"
