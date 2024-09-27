@@ -4,3 +4,4 @@ ETIA.egg-info/
 build/
 dist/
 logger.log
+*.zip
