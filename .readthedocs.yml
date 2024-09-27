@@ -6,7 +6,7 @@ version: 2
 # subproject: documentation
 
 build:
-  os: macos  # Choose 'linux', 'windows', or 'macos' based on your needs
+  os: ubuntu-20.04  # Choose 'linux', 'windows', or 'macos' based on your needs
 
 python:
   version: 3.9  # Specify the Python version you are using
