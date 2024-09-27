@@ -1,20 +1,35 @@
+# Read the Docs configuration file for Sphinx projects
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
 version: 2
 
-# Specify the documentation subdirectory if applicable
-# If your .readthedocs.yml is inside the 'documentation' folder, you can omit this
-# Otherwise, include the 'subproject' field
-# subproject: documentation
-
+# Set the OS, Python version and other tools you might need
 build:
-  os: ubuntu-20.04  # Choose 'linux', 'windows', or 'macos' based on your needs
+  os: ubuntu-22.04
+  tools:
+    python: "3.9"
+    # You can also specify other tool versions:
+    # nodejs: "20"
+    # rust: "1.70"
+    # golang: "1.20"
 
-python:
-  version: 3.9  # Specify the Python version you are using
-  install:
-    - method: pip
-      path: .  # Install the project in the root directory
-
+# Build documentation in the "docs/" directory with Sphinx
 sphinx:
-  configuration: documentation/docs/conf.py  # Path to your Sphinx config file
+  configuration: documentation/docs/conf.py
+  # You can configure Sphinx to use a different builder, for instance use the dirhtml builder for simpler URLs
+  # builder: "dirhtml"
+  # Fail on all warnings to avoid broken references
+  # fail_on_warning: true
 
-# Optional: Specify additional dependencies or build steps
+# Optionally build your docs in additional formats such as PDF and ePub
+# formats:
+#   - pdf
+#   - epub
+
+# Optional but recommended, declare the Python requirements required
+# to build your documentation
+# See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+# python:
+#   install:
+#     - requirements: docs/requirements.txt
