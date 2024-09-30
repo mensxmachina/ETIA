@@ -1,0 +1,28 @@
+{
+  "fbed": {
+    "alpha": [
+      0.05,
+      0.01
+    ],
+    "k": [
+      3,
+      5
+    ],
+    "ind_test_name": [
+      "testIndFisher"
+    ]
+  },
+  "ses": {
+    "alpha": [
+      0.05,
+      0.01
+    ],
+    "k": [
+      3,
+      5
+    ],
+    "ind_test_name": [
+      "testIndFisher"
+    ]
+  }
+}
