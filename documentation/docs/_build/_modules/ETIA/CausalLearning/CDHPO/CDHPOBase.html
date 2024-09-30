@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.CausalLearning.CDHPO.CDHPOBase &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.CausalLearning.CDHPO.CDHPOBase &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -77,55 +77,97 @@
              
   <h1>Source code for ETIA.CausalLearning.CDHPO.CDHPOBase</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">..utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
 <div class="viewcode-block" id="CDHPOBase"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase">[docs]</a><span class="k">class</span> <span class="nc">CDHPOBase</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A base class for Causal Discovery Hyperparameter Optimization (CDHPO) algorithms.</span>
+<span class="sd">    This class defines the basic structure for implementing hyperparameter optimization algorithms.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    run()</span>
+<span class="sd">        Runs the hyperparameter optimization process. This method should be overridden by subclasses.</span>
+<span class="sd">    run_new()</span>
+<span class="sd">        Re-runs the optimization process with new or updated configurations. This method should be overridden by subclasses.</span>
+<span class="sd">    find_best_config(algorithms)</span>
+<span class="sd">        Finds the best configuration from a list of algorithms. This method should be overridden by subclasses.</span>
+<span class="sd">    save_progress(path)</span>
+<span class="sd">        Saves the current progress of the optimization process.</span>
+<span class="sd">    load_progress(path)</span>
+<span class="sd">        Loads the progress of a previously run optimization from the specified path.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configurations</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the CDHPO algorithm with the provided configurations and dataset.</span>
 
-<span class="sd">        :param configurations: An instance of the configurations object.</span>
-<span class="sd">        :param dataset: The dataset to work with.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        configurations : object</span>
+<span class="sd">            An instance of the configurations object containing hyperparameters and settings.</span>
+<span class="sd">        dataset : object</span>
+<span class="sd">            The dataset to be used for hyperparameter optimization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">configurations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
+
 <div class="viewcode-block" id="CDHPOBase.run"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs the hyperparameter optimization process.</span>
 <span class="sd">        This method should be overridden by subclasses to provide the specific optimization algorithm.</span>
 
-<span class="sd">        :return: The optimal configuration.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The optimal configuration after the hyperparameter optimization process.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The run method should be implemented in subclasses.&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="CDHPOBase.run_new"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.run_new">[docs]</a>    <span class="k">def</span> <span class="nf">run_new</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Re-runs the optimization process, typically with new or updated configurations.</span>
+<span class="sd">        This method should be overridden by subclasses to define the behavior for restarting or continuing optimization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The run_new method should be implemented in subclasses.&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="CDHPOBase.find_best_config"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.find_best_config">[docs]</a>    <span class="k">def</span> <span class="nf">find_best_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finds the best configuration among the given algorithms.</span>
 
-<span class="sd">        :param algorithms: A list of algorithms to consider.</span>
-<span class="sd">        :return: The best configuration.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        algorithms : list</span>
+<span class="sd">            A list of algorithms to evaluate and choose the best configuration from.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        object</span>
+<span class="sd">            The best configuration determined from the list of algorithms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The find_best_config method should be implemented in subclasses.&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="CDHPOBase.save_progress"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Saves the progress of the optimization.</span>
+<span class="sd">        Saves the progress of the optimization process to a file.</span>
 
-<span class="sd">        :param path: The path to save the results.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The file path where the progress should be saved.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The save_results method should be implemented in subclasses.&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The save_progress method should be implemented in subclasses.&quot;</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="CDHPOBase.load_progress"><a class="viewcode-back" href="../../../../CausalLearning.CDHPO.html#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.load_progress">[docs]</a>    <span class="k">def</span> <span class="nf">load_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Loads the progress of a previously run optimization.</span>
+<span class="sd">        Loads the progress of a previously run optimization from a file.</span>
 
-<span class="sd">        :param path: The path to load the results from.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : str</span>
+<span class="sd">            The file path from where the progress should be loaded.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The load_results method should be implemented in subclasses.&quot;</span><span class="p">)</span></div></div>
-
-
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The load_progress method should be implemented in subclasses.&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

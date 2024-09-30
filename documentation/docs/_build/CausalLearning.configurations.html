@@ -134,10 +134,70 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CausalDiscoveryConfigurator</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/class_causal_configurator.html#CausalDiscoveryConfigurator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configurator for creating causal discovery algorithm configurations based on various parameters.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.causal_algs">
+<span class="sig-name descname"><span class="pre">causal_algs</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.causal_algs" title="Permalink to this definition"></a></dt>
+<dd><p>Dictionary of causal discovery algorithms and their parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.ci_tests">
+<span class="sig-name descname"><span class="pre">ci_tests</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.ci_tests" title="Permalink to this definition"></a></dt>
+<dd><p>Dictionary of conditional independence tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.scores">
+<span class="sig-name descname"><span class="pre">scores</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.scores" title="Permalink to this definition"></a></dt>
+<dd><p>Dictionary of scoring functions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.create_causal_configs">
 <span class="sig-name descname"><span class="pre">create_causal_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">causal_sufficiency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_faithfulness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_lagged</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_algs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_algs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/class_causal_configurator.html#CausalDiscoveryConfigurator.create_causal_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.class_causal_configurator.CausalDiscoveryConfigurator.create_causal_configs" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Generates a list of configurations for causal discovery algorithms based on input parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">create_causal_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">causal_sufficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_faithfulness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_lagged</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_algs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_algs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/class_causal_configurator.html#CausalDiscoveryConfigurator.create_causal_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Generates a list of causal discovery algorithm configurations based on input parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_type</strong> (<em>str</em>) – Type of data (e.g., ‘continuous’, ‘discrete’, ‘mixed’).</p></li>
+<li><p><strong>causal_sufficiency</strong> (<em>bool</em>) – Whether causal sufficiency is assumed in the dataset.</p></li>
+<li><p><strong>assume_faithfulness</strong> (<em>bool</em>) – Whether to assume the faithfulness condition.</p></li>
+<li><p><strong>time_series</strong> (<em>bool</em>) – Whether the dataset is time-series.</p></li>
+<li><p><strong>time_lagged</strong> (<em>bool</em>) – Whether time-lagged variables are included in the dataset.</p></li>
+<li><p><strong>include_algs</strong> (<em>list</em><em>, </em><em>optional</em>) – List of specific algorithms to include in the configuration. Default is None.</p></li>
+<li><p><strong>exclude_algs</strong> (<em>list</em><em>, </em><em>optional</em>) – List of algorithms to exclude from the configuration. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of causal discovery algorithm configurations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -157,6 +217,8 @@
 <li><p><strong>time_lagged</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if the data is time-lagged.</p></li>
 <li><p><strong>time_series</strong> (<em>bool</em><em>, </em><em>optional</em>) – Indicates if the dataset is time series data.</p></li>
 <li><p><strong>conf_file</strong> (<em>str</em><em>, </em><em>optional</em>) – JSON configuration file containing parameters for the causal discovery experiment.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of jobs to use for parallel processing.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print debug information.</p></li>
 </ul>
 </dd>
 </dl>
@@ -217,20 +279,53 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.MVP_Parameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MVP_Parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protocol_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'KFoldCV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'folds':</span> <span class="pre">10,</span> <span class="pre">'folds_to_run':</span> <span class="pre">1}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#MVP_Parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to manage the out-of-sample (OOS) protocol for model validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>protocol_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the OOS protocol. Default is ‘KFoldCV’.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameters for the chosen OOS protocol. Default is {‘folds’: 10, ‘folds_to_run’: 1}.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables detailed logging. Default is False.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.MVP_Parameters.protocol_name">
-<span class="sig-name descname"><span class="pre">protocol_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'KFoldCV'</span></em><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters.protocol_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.MVP_Parameters.parameters">
-<span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'folds_to_run':</span> <span class="pre">1}</span></em><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters.parameters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">protocol_name</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters.protocol_name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the chosen OOS protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.MVP_Parameters.protocol">
 <span class="sig-name descname"><span class="pre">protocol</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters.protocol" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Instance of the chosen OOS protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.MVP_Parameters.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters.parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for the OOS protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.MVP_Parameters.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protocol_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'KFoldCV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'folds':</span> <span class="pre">10,</span> <span class="pre">'folds_to_run':</span> <span class="pre">1}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#MVP_Parameters.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.MVP_Parameters.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the OOS protocol with the given or default parameters.</p>
 </dd></dl>
 
 </dd></dl>
@@ -239,20 +334,53 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.Regressor_parameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Regressor_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regressor_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RandomForestRegressor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'max_depth':</span> <span class="pre">10,</span> <span class="pre">'min_samples_leaf':</span> <span class="pre">0.1,</span> <span class="pre">'n_trees':</span> <span class="pre">100}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#Regressor_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to manage the configuration of regressors for the CDHPO process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>regressor_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the regressor. Default is ‘RandomForestRegressor’.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Parameters for the regressor. Default is {‘n_trees’: 100, ‘min_samples_leaf’: 0.1, ‘max_depth’: 10}.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables detailed logging. Default is False.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.Regressor_parameters.regressor_name">
-<span class="sig-name descname"><span class="pre">regressor_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'RandomForestRegressor'</span></em><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters.regressor_name" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.Regressor_parameters.parameters">
-<span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'max_depth':</span> <span class="pre">10,</span> <span class="pre">'min_samples_leaf':</span> <span class="pre">0.1,</span> <span class="pre">'n_trees':</span> <span class="pre">100}</span></em><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters.parameters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">regressor_name</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters.regressor_name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the chosen regressor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.Regressor_parameters.regressor">
 <span class="sig-name descname"><span class="pre">regressor</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters.regressor" title="Permalink to this definition"></a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Instance of the chosen regressor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.Regressor_parameters.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters.parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for the regressor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.Regressor_parameters.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regressor_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RandomForestRegressor'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'n_trees':</span> <span class="pre">100,</span> <span class="pre">'min_samples_leaf':</span> <span class="pre">0.1,</span> <span class="pre">'max_depth':</span> <span class="pre">10}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#Regressor_parameters.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.Regressor_parameters.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the regressor with the given or default parameters.</p>
 </dd></dl>
 
 </dd></dl>
@@ -261,45 +389,181 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CDHPO_Parameters</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.configs">
-<span class="sig-name descname"><span class="pre">configs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.configs" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
+<p>Class to manage the configuration of the CDHPO (Causal Discovery with Hyperparameter Optimization) process.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.init_main_params">
 <span class="sig-name descname"><span class="pre">init_main_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_permutations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">causal_sufficiency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mixed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.init_main_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.init_main_params" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Initializes the main parameters for CDHPO.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.set_regressor">
 <span class="sig-name descname"><span class="pre">set_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.set_regressor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.set_regressor" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the regressor used in the CDHPO process.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.set_oos_protocol">
 <span class="sig-name descname"><span class="pre">set_oos_protocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.set_oos_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.set_oos_protocol" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the out-of-sample (OOS) protocol for validation.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.set_cd_algorithms">
 <span class="sig-name descname"><span class="pre">set_cd_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.set_cd_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.set_cd_algorithms" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the causal discovery algorithms for CDHPO.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.check_configs">
 <span class="sig-name descname"><span class="pre">check_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.check_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.check_configs" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Verifies the configurations for the causal discovery algorithms.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.add_cd_algorithm">
 <span class="sig-name descname"><span class="pre">add_cd_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.add_cd_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.add_cd_algorithm" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Adds a new causal discovery algorithm with parameters.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.add_cd_algorithm_parameters">
 <span class="sig-name descname"><span class="pre">add_cd_algorithm_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.add_cd_algorithm_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.configurations.parameters.CDHPO_Parameters.add_cd_algorithm_parameters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Adds parameters to an existing causal discovery algorithm.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">init_main_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_permutations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">causal_sufficiency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mixed'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.init_main_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the main parameters for the CDHPO process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – The significance level. Default is 0.01.</p></li>
+<li><p><strong>n_permutations</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of permutations for statistical tests. Default is 200.</p></li>
+<li><p><strong>causal_sufficiency</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to assume causal sufficiency. Default is True.</p></li>
+<li><p><strong>variables_type</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of variables in the data (e.g., ‘mixed’, ‘discrete’, ‘continuous’). Default is ‘mixed’.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of parallel jobs. Default is 1.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables detailed logging. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">set_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.set_regressor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the regressor for the CDHPO process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the regressor.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – The parameters for the regressor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">set_oos_protocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.set_oos_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the out-of-sample (OOS) protocol for validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the OOS protocol.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – The parameters for the OOS protocol.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">set_cd_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.set_cd_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the causal discovery algorithms for CDHPO.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithms</strong> (<em>dict</em>) – Dictionary of algorithms and their configurations.</p></li>
+<li><p><strong>data_info</strong> (<em>dict</em>) – Information about the dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If an algorithm is not found in the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">check_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.check_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd><p>Verifies the configurations for the causal discovery algorithms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_info</strong> (<em>dict</em>) – Information about the dataset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If any algorithm has incorrect parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">add_cd_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.add_cd_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new causal discovery algorithm to the CDHPO configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithm</strong> (<em>str</em>) – Name of the algorithm to add.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – Configuration parameters for the algorithm.</p></li>
+<li><p><strong>data_info</strong> (<em>dict</em>) – Information about the dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the algorithm is not found in the database.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">add_cd_algorithm_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/configurations/parameters.html#CDHPO_Parameters.add_cd_algorithm_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dd><p>Adds parameters to an existing causal discovery algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithm</strong> (<em>str</em>) – Name of the algorithm.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – Additional parameters for the algorithm.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>RuntimeError</strong> – If the algorithm does not exist or the parameters are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

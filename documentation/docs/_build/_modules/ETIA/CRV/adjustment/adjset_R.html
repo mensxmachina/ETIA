@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CRV.adjustment.adjset_R &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ETIA.CRV.adjustment.adjset_R</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ETIA.CRV.adjustment.adjset_R</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="read_adjset"><a class="viewcode-back" href="../../../../CRV.adjustment.html#ETIA.CRV.adjustment.adjset_R.read_adjset">[docs]</a><span class="k">def</span> <span class="nf">read_adjset</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">path_</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Read the output csv file from R packages</span>
+<span class="sd">    Author: kbiza@csd.uoc.gr</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    csv_name (str): the name of the file</span>
+<span class="sd">    path_(str): the path of the file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    adj_set(list or None): list if adjustment set exists, None if no adjustment set exists</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">adjset_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_</span><span class="p">,</span> <span class="n">csv_name</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="s1">&#39;X1&#39;</span> <span class="ow">in</span> <span class="n">adjset_pd</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;adjustment set exists&#39;</span><span class="p">)</span>
+        <span class="n">adj_set</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">adjset_pd</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">cur_set</span> <span class="o">=</span> <span class="n">adjset_pd</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">adj_set</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_set</span><span class="p">)</span>
+            <span class="c1">#adj_set = adjset_pd.to_numpy().reshape(-1).tolist()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;no adjustment set exists&#39;</span><span class="p">)</span>
+        <span class="n">adj_set</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">adj_set</span></div>
+
+
+<div class="viewcode-block" id="adjset_pcalg"><a class="viewcode-back" href="../../../../CRV.adjustment.html#ETIA.CRV.adjustment.adjset_R.adjset_pcalg">[docs]</a><span class="k">def</span> <span class="nf">adjset_pcalg</span><span class="p">(</span><span class="n">graph_pd</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r_path</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Run the pcalg R package to identify the adjustment set of X and Y</span>
+<span class="sd">    Author: kbiza@csd.uoc.gr</span>
+<span class="sd">    Change R version in line 57 if needed</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    graph_pd(pandas Dataframe):</span>
+<span class="sd">    graph_type(str): {&#39;dag&#39;, &#39;cpdag&#39;, &#39;mag&#39;, &#39;pag&#39;}</span>
+<span class="sd">    x(list): list of variable names</span>
+<span class="sd">    y(list): list of variable names</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        canonical_set(list): the variable names of the canonical adj. set (if exists)</span>
+<span class="sd">        minimal_set(list):: the variable names of the minimal adj. set (if exists)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">r_path</span> <span class="o">=</span> <span class="n">r_path</span>
+    <span class="n">path_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">graph_name</span><span class="o">=</span><span class="s1">&#39;graph_r.csv&#39;</span>
+    <span class="n">graph_pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">graph_name</span><span class="p">)</span>
+
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">r_path</span><span class="p">,</span> <span class="s1">&#39;--vanilla&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_</span><span class="p">,</span> <span class="s1">&#39;run_adjset_pcalg_r.R&#39;</span><span class="p">),</span>
+                     <span class="n">graph_name</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">canonical_set</span> <span class="o">=</span> <span class="n">read_adjset</span><span class="p">(</span><span class="s1">&#39;canonical_pcalg.csv&#39;</span><span class="p">,</span> <span class="n">path_</span><span class="p">)</span>
+    <span class="n">minimal_set</span> <span class="o">=</span> <span class="n">read_adjset</span><span class="p">(</span><span class="s1">&#39;minimal_pcalg.csv&#39;</span><span class="p">,</span> <span class="n">path_</span><span class="p">)</span>
+
+    <span class="c1"># r indexing --&gt; we need to subtract 1</span>
+    <span class="n">canonical_set</span> <span class="o">=</span> <span class="p">[[</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">canonical_set</span><span class="p">]</span>
+    <span class="n">minimal_set</span> <span class="o">=</span> <span class="p">[[</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">minimal_set</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">canonical_set</span><span class="p">,</span> <span class="n">minimal_set</span></div>
+
+
+<div class="viewcode-block" id="adjset_dagitty"><a class="viewcode-back" href="../../../../CRV.adjustment.html#ETIA.CRV.adjustment.adjset_R.adjset_dagitty">[docs]</a><span class="k">def</span> <span class="nf">adjset_dagitty</span><span class="p">(</span><span class="n">graph_pd</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">x_name</span><span class="p">,</span> <span class="n">y_name</span><span class="p">,</span> <span class="n">r_path</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Run the dagitty R package to identify the adjustment set of X and Y</span>
+<span class="sd">    Author: kbiza@csd.uoc.gr</span>
+<span class="sd">    Change R version in line 92 if needed</span>
+<span class="sd">    Args:</span>
+<span class="sd">        graph_pd(pandas Dataframe): the graph as adjacency matrix</span>
+<span class="sd">        graph_type(str): the type of the graph : {&#39;dag&#39;, &#39;cpdag&#39;, &#39;mag&#39;, &#39;pag&#39;}</span>
+<span class="sd">        x_name(list): list of variable names</span>
+<span class="sd">        y_name(list): list of variable names</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        canonical_set(list): the variable names of the canonical adj. set (if exists)</span>
+<span class="sd">        minimal_set(list):: the variable names of the minimal adj. set (if exists)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">r_path</span> <span class="o">=</span> <span class="n">r_path</span>
+    <span class="n">path_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+    <span class="n">graph_name</span> <span class="o">=</span> <span class="s1">&#39;graph_r.csv&#39;</span>
+    <span class="n">exp_name</span> <span class="o">=</span> <span class="s1">&#39;exposures.csv&#39;</span>
+    <span class="n">out_name</span> <span class="o">=</span> <span class="s1">&#39;outcomes.csv&#39;</span>
+    <span class="n">graph_pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_</span><span class="p">,</span> <span class="n">graph_name</span><span class="p">))</span>
+
+    <span class="n">x_names_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_name</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x_names_dagitty&#39;</span><span class="p">])</span>
+    <span class="n">y_names_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_name</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;y_names_dagitty&#39;</span><span class="p">])</span>
+    <span class="n">x_names_pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_</span><span class="p">,</span> <span class="n">exp_name</span><span class="p">))</span>
+    <span class="n">y_names_pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_</span><span class="p">,</span> <span class="n">out_name</span><span class="p">))</span>
+
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">r_path</span><span class="p">,</span> <span class="s1">&#39;--vanilla&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_</span><span class="p">,</span> <span class="s1">&#39;run_adjset_dagitty_r.R&#39;</span><span class="p">),</span>
+                     <span class="n">graph_name</span><span class="p">,</span> <span class="n">graph_type</span><span class="p">,</span> <span class="n">exp_name</span> <span class="p">,</span> <span class="n">out_name</span><span class="p">],</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">canonical_set</span> <span class="o">=</span> <span class="n">read_adjset</span><span class="p">(</span><span class="s1">&#39;canonical_dagitty.csv&#39;</span><span class="p">,</span> <span class="n">path_</span><span class="p">)</span>
+    <span class="n">minimal_set</span> <span class="o">=</span> <span class="n">read_adjset</span><span class="p">(</span><span class="s1">&#39;minimal_dagitty.csv&#39;</span><span class="p">,</span><span class="n">path_</span><span class="p">)</span>
+
+    <span class="c1"># it returns variable names, not indexes</span>
+    <span class="k">return</span> <span class="n">canonical_set</span><span class="p">,</span> <span class="n">minimal_set</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

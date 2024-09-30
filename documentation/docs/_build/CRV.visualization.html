@@ -152,49 +152,202 @@ matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Visualization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">net_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to create and manage network visualizations in Cytoscape based on causal discovery results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix_pd</strong> (<em>pd.DataFrame</em>) – A pandas DataFrame containing the adjacency matrix of the graph to visualize.</p></li>
+<li><p><strong>net_name</strong> (<em>str</em>) – The name of the network to create in Cytoscape.</p></li>
+<li><p><strong>collection_name</strong> (<em>str</em>) – The name of the collection to store the network in Cytoscape.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.style_name">
+<span class="sig-name descname"><span class="pre">style_name</span></span><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.style_name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the visual style applied to the network in Cytoscape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.network_suid">
+<span class="sig-name descname"><span class="pre">network_suid</span></span><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.network_suid" title="Permalink to this definition"></a></dt>
+<dd><p>The unique identifier for the network in Cytoscape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.plot_cytoscape">
 <span class="sig-name descname"><span class="pre">plot_cytoscape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.plot_cytoscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.plot_cytoscape" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Plots the graph in Cytoscape based on the adjacency matrix.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.create_visual_style">
 <span class="sig-name descname"><span class="pre">create_visual_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#FDD49E'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.create_visual_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.create_visual_style" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Creates a visual style for the Cytoscape network.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.set_node_color">
 <span class="sig-name descname"><span class="pre">set_node_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.set_node_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.set_node_color" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the color for a specified list of nodes by their names.</p>
+<dd><p>Sets the color of specified nodes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.hide_nodes">
 <span class="sig-name descname"><span class="pre">hide_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.hide_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.hide_nodes" title="Permalink to this definition"></a></dt>
-<dd><p>Hides a group of nodes identified by a group name.</p>
+<dd><p>Hides specific nodes from the Cytoscape network.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.plot_edge_confidence">
 <span class="sig-name descname"><span class="pre">plot_edge_confidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_confidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.plot_edge_confidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.plot_edge_confidence" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Plots edge confidence by adjusting edge widths and opacities.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.hide_edges">
 <span class="sig-name descname"><span class="pre">hide_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.hide_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.hide_edges" title="Permalink to this definition"></a></dt>
-<dd><p>Hides a group of edges based on a threshold value.</p>
+<dd><p>Hides edges based on a specified confidence threshold.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.set_layout">
 <span class="sig-name descname"><span class="pre">set_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'force-directed'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.set_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.set_layout" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the layout for the network visualization.</p>
+<dd><p>Applies a layout to the network in Cytoscape.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.Visualization.export_to_png">
 <span class="sig-name descname"><span class="pre">export_to_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'network.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.export_to_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.Visualization.export_to_png" title="Permalink to this definition"></a></dt>
+<dd><p>Exports the network visualization as a PNG file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">plot_cytoscape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.plot_cytoscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Plots the graph in Cytoscape based on the adjacency matrix.</p>
+<p>This method converts the adjacency matrix into a Cytoscape-readable format and visualizes the graph
+in the Cytoscape application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">create_visual_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ellipse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#FDD49E'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.create_visual_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a visual style for the Cytoscape network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the nodes in the network. Default is 35.</p></li>
+<li><p><strong>node_shape</strong> (<em>str</em><em>, </em><em>optional</em>) – The shape of the nodes in the network. Default is ‘ellipse’.</p></li>
+<li><p><strong>node_color</strong> (<em>str</em><em>, </em><em>optional</em>) – The fill color of the nodes in the network. Default is ‘#FDD49E’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">set_node_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.set_node_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the color for a specified list of nodes by their names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_names</strong> (<em>list of str</em>) – List of node names to set the color for.</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – The color to apply to the nodes (e.g., ‘#ADD8E6’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">hide_nodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.hide_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Hides a group of nodes identified by their names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nodes</strong> (<em>list of str</em>) – List of node names to hide.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">plot_edge_confidence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_confidence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.plot_edge_confidence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Plots edge confidence by adjusting edge widths and opacities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>edge_confidence</strong> (<em>pd.DataFrame</em>) – A DataFrame containing edge confidence data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">hide_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.hide_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd><p>Hides a group of edges based on a threshold value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>threshold</strong> (<em>float</em>) – Threshold for edge confidence. Edges below this value will be hidden.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">set_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'force-directed'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.set_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the layout for the network visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layout_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the layout to apply (e.g., ‘force-directed’). Default is ‘force-directed’.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">export_to_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'network.png'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#Visualization.export_to_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
 <dd><p>Exports the current network view to a PNG file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the PNG file. Default is ‘network.png’.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -202,26 +355,16 @@ matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ETIA.CRV.visualization.visualization.matrix_to_cyto">
 <span class="sig-name descname"><span class="pre">matrix_to_cyto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix_pd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/visualization/visualization.html#matrix_to_cyto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.visualization.visualization.matrix_to_cyto" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Converts an adjacency matrix to a Cytoscape-readable format.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>matrix</strong> – a pandas array of size N*N where N is the number of nodes in tetrad_graph
-matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
-matrix(i, j) = 1 and matrix(j, i) = 1: io-oj  should appear only in PAGs
-matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j  should appear only in MAGs and PAGs
-matrix(i, j) = 3 and matrix(j, i) = 3: i—j  should appear only in PDAGs
-matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+<dd class="field-odd"><p><strong>matrix_pd</strong> (<em>pd.DataFrame</em>) – A pandas DataFrame representing an adjacency matrix.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>a pandas dataframe of size (number of edges)*(3) which contains information about all edges</dt><dd><p>1st column : source
-2nd column : target
-3rd column : interaction_type</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p><strong>cyto_edges</strong> – A DataFrame of edges with source, target, and interaction type for Cytoscape visualization.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>cyto_edges</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>

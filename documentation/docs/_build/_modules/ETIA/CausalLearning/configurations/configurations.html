@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.CausalLearning.configurations.configurations &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.CausalLearning.configurations.configurations &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -76,9 +76,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ETIA.CausalLearning.configurations.configurations</h1><div class="highlight"><pre>
-<span></span><span class="c1"># configurations/configurations.py</span>
-
-<span class="kn">import</span> <span class="nn">json</span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
@@ -92,7 +90,7 @@
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
 
 
-<div class="viewcode-block" id="Configurations"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations">[docs]</a><span class="k">class</span> <span class="nc">Configurations</span><span class="p">:</span>
+<div class="viewcode-block" id="Configurations"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.Configurations">[docs]</a><span class="k">class</span> <span class="nc">Configurations</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Configurations class for setting up the causal discovery experiment.</span>
 
@@ -108,6 +106,10 @@
 <span class="sd">        Indicates if the dataset is time series data.</span>
 <span class="sd">    conf_file : str, optional</span>
 <span class="sd">        JSON configuration file containing parameters for the causal discovery experiment.</span>
+<span class="sd">    n_jobs : int, optional</span>
+<span class="sd">        Number of jobs to use for parallel processing.</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        Whether to print debug information.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -146,7 +148,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Configurations object has been initialized&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Configurations.set_default_configuration"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations.set_default_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Configurations.set_default_configuration"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.Configurations.set_default_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">set_default_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set default configurations based on the dataset when no JSON configuration file is provided.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -188,7 +190,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Configurations.process_conf_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations.process_conf_file">[docs]</a>    <span class="k">def</span> <span class="nf">process_conf_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Configurations.process_conf_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.Configurations.process_conf_file">[docs]</a>    <span class="k">def</span> <span class="nf">process_conf_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Process the JSON file containing all vital information, such as algorithms, algorithm parameters, run mode, etc.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -244,7 +246,7 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Configurations.add_configurations_from_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.configurations.configurations.Configurations.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Configurations.add_configurations_from_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.Configurations.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add additional configurations to the experiment from a JSON file.</span>
 

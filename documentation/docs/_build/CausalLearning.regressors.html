@@ -124,10 +124,36 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.regressors.LinearRegressor.LinearRegression_">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LinearRegression_</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/regressors/LinearRegressor.html#LinearRegression_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.regressors.LinearRegressor.LinearRegression_" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wrapper class for setting up a LinearRegression model with custom parameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.regressors.LinearRegressor.LinearRegression_.set_regressor_params">
 <span class="sig-name descname"><span class="pre">set_regressor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/regressors/LinearRegressor.html#LinearRegression_.set_regressor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.regressors.LinearRegressor.LinearRegression_.set_regressor_params" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Configures and returns a LinearRegression object. Currently, LinearRegression does not require parameters in this method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">set_regressor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/regressors/LinearRegressor.html#LinearRegression_.set_regressor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Configures and returns a LinearRegression object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – A dictionary containing the model parameters (though LinearRegression does not currently use parameters in this implementation).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A LinearRegression object configured with default parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>LinearRegression</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regressor</span> <span class="o">=</span> <span class="n">LinearRegression_</span><span class="p">()</span><span class="o">.</span><span class="n">set_regressor_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">regressor</span><span class="p">)</span>
+<span class="go">LinearRegression()</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 
@@ -138,10 +164,44 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.regressors.RandomForestRegressor.RandomForestRegressor_">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RandomForestRegressor_</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/regressors/RandomForestRegressor.html#RandomForestRegressor_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.regressors.RandomForestRegressor.RandomForestRegressor_" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Wrapper class for setting up a RandomForestRegressor model with custom parameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.regressors.RandomForestRegressor.RandomForestRegressor_.set_regressor_params">
 <span class="sig-name descname"><span class="pre">set_regressor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/regressors/RandomForestRegressor.html#RandomForestRegressor_.set_regressor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.regressors.RandomForestRegressor.RandomForestRegressor_.set_regressor_params" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Configures and returns a RandomForestRegressor object with the specified parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">set_regressor_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/regressors/RandomForestRegressor.html#RandomForestRegressor_.set_regressor_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Configures and returns a RandomForestRegressor object with the specified parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – <dl class="simple">
+<dt>A dictionary containing the following keys:</dt><dd><ul class="simple">
+<li><p>’n_trees’: int, The number of trees in the forest.</p></li>
+<li><p>’min_samples_leaf’: int or float, The minimum number of samples required to be at a leaf node.</p></li>
+<li><p>’max_depth’: int, The maximum depth of the tree.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A RandomForestRegressor object configured with the specified parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>RandomForestRegressor</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_trees&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regressor</span> <span class="o">=</span> <span class="n">RandomForestRegressor_</span><span class="p">()</span><span class="o">.</span><span class="n">set_regressor_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">regressor</span><span class="p">)</span>
+<span class="go">RandomForestRegressor(max_depth=10, min_samples_leaf=0.1)</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 

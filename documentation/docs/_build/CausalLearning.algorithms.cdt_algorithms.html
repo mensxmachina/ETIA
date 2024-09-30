@@ -122,25 +122,114 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SAMAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sam'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that implements the SAM (Structural Agnostic Model) algorithm for causal discovery.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.check_parameters">
 <span class="sig-name descname"><span class="pre">check_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.check_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.check_parameters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Validates the parameters for running the SAM algorithm.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.prepare_data">
 <span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.prepare_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Prepares the data for the SAM algorithm by converting it to a pandas DataFrame.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.set_parameters">
 <span class="sig-name descname"><span class="pre">set_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.set_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.set_parameters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Sets the algorithm’s parameters from a provided dictionary, using defaults where necessary.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepare_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.cdt_algorithms.SAMAlgorithm.SAMAlgorithm.run" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Runs the SAM algorithm on the provided data and parameters, and returns the learned causal structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">check_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.check_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Validates the parameters required for running the SAM algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if all parameters are valid, raises ValueError otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If any parameter is out of the valid range or not of the expected type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares the data for the SAM algorithm by converting it to a pandas DataFrame if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>any</em>) – The dataset to be used. Can be a pandas DataFrame or an object that implements the <cite>get_dataset</cite> method.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – The prepared dataset as a pandas DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">set_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.set_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the parameters for the SAM algorithm, using default values where necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – A dictionary containing the parameters to set, such as learning rates, lambda values, number of hidden units, etc.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any of the parameters are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepare_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/cdt_algorithms/SAMAlgorithm.html#SAMAlgorithm.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the SAM algorithm on the provided data and parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>any</em>) – The dataset to be used, either as a pandas DataFrame or an object implementing <cite>get_dataset</cite>.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – The parameters to configure the SAM algorithm.</p></li>
+<li><p><strong>prepare_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the data will be prepared before running the algorithm. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>A tuple containing:
+- mec_graph : DAGWrapper</p>
+<blockquote>
+<div><p>The learned causal structure represented as a graph.</p>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt>library_results<span class="classifier">dict</span></dt><dd><p>A dictionary containing the resulting graph and additional results.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any of the parameters are invalid.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

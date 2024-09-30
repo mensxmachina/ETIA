@@ -128,56 +128,95 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CDHPOBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configurations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A base class for Causal Discovery Hyperparameter Optimization (CDHPO) algorithms.
+This class defines the basic structure for implementing hyperparameter optimization algorithms.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.run" title="Permalink to this definition"></a></dt>
-<dd><p>Runs the hyperparameter optimization process.
-This method should be overridden by subclasses to provide the specific optimization algorithm.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The optimal configuration.</p>
-</dd>
-</dl>
+<dd><p>Runs the hyperparameter optimization process. This method should be overridden by subclasses.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.run_new">
 <span class="sig-name descname"><span class="pre">run_new</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.run_new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.run_new" title="Permalink to this definition"></a></dt>
-<dd><p>Re-runs the optimization process, typically with new or updated configurations.</p>
+<dd><p>Re-runs the optimization process with new or updated configurations. This method should be overridden by subclasses.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.find_best_config">
 <span class="sig-name descname"><span class="pre">find_best_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.find_best_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.find_best_config" title="Permalink to this definition"></a></dt>
-<dd><p>Finds the best configuration among the given algorithms.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>algorithms</strong> – A list of algorithms to consider.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The best configuration.</p>
-</dd>
-</dl>
+<dd><p>Finds the best configuration from a list of algorithms. This method should be overridden by subclasses.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.save_progress">
 <span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.save_progress" title="Permalink to this definition"></a></dt>
-<dd><p>Saves the progress of the optimization.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> – The path to save the results.</p>
-</dd>
-</dl>
+<dd><p>Saves the current progress of the optimization process.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.load_progress">
 <span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.CDHPO.CDHPOBase.CDHPOBase.load_progress" title="Permalink to this definition"></a></dt>
-<dd><p>Loads the progress of a previously run optimization.</p>
+<dd><p>Loads the progress of a previously run optimization from the specified path.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the hyperparameter optimization process.
+This method should be overridden by subclasses to provide the specific optimization algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The optimal configuration after the hyperparameter optimization process.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">run_new</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.run_new"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Re-runs the optimization process, typically with new or updated configurations.
+This method should be overridden by subclasses to define the behavior for restarting or continuing optimization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">find_best_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.find_best_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the best configuration among the given algorithms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> – The path to load the results from.</p>
+<dd class="field-odd"><p><strong>algorithms</strong> (<em>list</em>) – A list of algorithms to evaluate and choose the best configuration from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The best configuration determined from the list of algorithms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the progress of the optimization process to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The file path where the progress should be saved.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CDHPO/CDHPOBase.html#CDHPOBase.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the progress of a previously run optimization from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The file path from where the progress should be loaded.</p>
 </dd>
 </dl>
 </dd></dl>

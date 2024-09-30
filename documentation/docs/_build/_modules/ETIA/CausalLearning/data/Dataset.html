@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.CausalLearning.data.Dataset &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.CausalLearning.data.Dataset &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -76,27 +76,86 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ETIA.CausalLearning.data.Dataset</h1><div class="highlight"><pre>
-<span></span><span class="c1"># data/Dataset.py</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">var_types_and_categorical_encoding</span><span class="p">,</span> <span class="n">get_data_info</span>
+<span></span><span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="o">*</span>
 
 <div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class for representing datasets and providing functionalities for loading and manipulating datasets.</span>
+<span class="sd">    A class for representing datasets and providing functionalities for loading, manipulating, and processing datasets.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str, optional</span>
+<span class="sd">        The name of the CSV file containing the dataset. Default is None.</span>
+<span class="sd">    data_time_info : dict, optional</span>
+<span class="sd">        Dictionary containing time-related information (lags, etc.). Default is None.</span>
+<span class="sd">    time_series : bool, optional</span>
+<span class="sd">        Boolean indicating if the dataset is time series data. Default is False.</span>
+<span class="sd">    data : pd.DataFrame, optional</span>
+<span class="sd">        A pandas DataFrame containing preloaded data (e.g., from AFS). Default is None.</span>
+<span class="sd">    dataset_name : str, optional</span>
+<span class="sd">        The name of the dataset. If not provided, it defaults to &#39;Preloaded Dataset&#39; or the filename.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataset_name : str</span>
+<span class="sd">        The name of the dataset.</span>
+<span class="sd">    data_time_info : dict</span>
+<span class="sd">        Information related to time and lags in the dataset.</span>
+<span class="sd">    time_series : bool</span>
+<span class="sd">        Boolean flag indicating if the data is a time series dataset.</span>
+<span class="sd">    n_lags : int</span>
+<span class="sd">        The number of time lags in the dataset.</span>
+<span class="sd">    data : pd.DataFrame</span>
+<span class="sd">        The loaded dataset.</span>
+<span class="sd">    data_type_info : dict</span>
+<span class="sd">        Information on the types of variables in the dataset.</span>
+<span class="sd">    data_type : str</span>
+<span class="sd">        General type of data (e.g., continuous, categorical).</span>
+<span class="sd">    data_general_info : dict</span>
+<span class="sd">        General information about the dataset.</span>
+<span class="sd">    processed_data : dict</span>
+<span class="sd">        Data after processing (currently empty).</span>
+<span class="sd">    annotations : dict</span>
+<span class="sd">        Annotations on the dataset (optional).</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    load_file(filename)</span>
+<span class="sd">        Loads a new dataset from a CSV file.</span>
+<span class="sd">    load_np_dataset(dataset, column_names)</span>
+<span class="sd">        Loads a new dataset from a NumPy array.</span>
+<span class="sd">    load_pd_dataset(dataset)</span>
+<span class="sd">        Loads a new dataset from a pandas DataFrame.</span>
+<span class="sd">    convert_to_time_lag(n_lags)</span>
+<span class="sd">        Converts the dataset into time-lagged data.</span>
+<span class="sd">    get_dataset()</span>
+<span class="sd">        Returns the dataset stored in the Dataset instance.</span>
+<span class="sd">    get_data_type_info()</span>
+<span class="sd">        Returns the data type information of the dataset.</span>
+<span class="sd">    get_data_time_info()</span>
+<span class="sd">        Returns the time-related information of the dataset.</span>
+<span class="sd">    get_info()</span>
+<span class="sd">        Returns all the general information of the dataset including type and time-related info.</span>
+<span class="sd">    annotate_dataset(annotations)</span>
+<span class="sd">        Stores annotations for the dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_time_info</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">time_series</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the Dataset object, either from a file or from a preloaded pandas DataFrame.</span>
 
-<span class="sd">        :param filename: Name of the CSV file containing the dataset.</span>
-<span class="sd">        :param data: A pandas DataFrame containing preloaded data (e.g., from AFS).</span>
-<span class="sd">        :param data_time_info: Dictionary containing time-related information (lags, etc.).</span>
-<span class="sd">        :param time_series: Boolean indicating if the dataset is time series data.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, optional</span>
+<span class="sd">            Name of the CSV file containing the dataset. Default is None.</span>
+<span class="sd">        data_time_info : dict, optional</span>
+<span class="sd">            Dictionary containing time-related information (lags, etc.). Default is None.</span>
+<span class="sd">        time_series : bool, optional</span>
+<span class="sd">            Boolean indicating if the dataset is time series data. Default is False.</span>
+<span class="sd">        data : pd.DataFrame, optional</span>
+<span class="sd">            A pandas DataFrame containing preloaded data (e.g., from AFS). Default is None.</span>
+<span class="sd">        dataset_name : str, optional</span>
+<span class="sd">            The name of the dataset. If not provided, defaults to &#39;Preloaded Dataset&#39; or the filename.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">data_time_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">data_time_info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
@@ -126,7 +185,12 @@
 
 <div class="viewcode-block" id="Dataset.load_file"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.load_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load a new dataset from a CSV file.</span>
+<span class="sd">        Loads a new dataset from a CSV file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Name of the CSV file to load the dataset from.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type</span> <span class="o">=</span> <span class="n">var_types_and_categorical_encoding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -134,7 +198,19 @@
 
 <div class="viewcode-block" id="Dataset.load_np_dataset"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.load_np_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">load_np_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">column_names</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load a new dataset from a NumPy array.</span>
+<span class="sd">        Loads a new dataset from a NumPy array.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataset : np.ndarray</span>
+<span class="sd">            The dataset as a NumPy array.</span>
+<span class="sd">        column_names : list</span>
+<span class="sd">            List of column names for the dataset.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If the input is not a NumPy array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;load_np_dataset requires numpy array as input&#39;</span><span class="p">)</span>
@@ -144,7 +220,17 @@
 
 <div class="viewcode-block" id="Dataset.load_pd_dataset"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.load_pd_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">load_pd_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load a new dataset from a pandas DataFrame.</span>
+<span class="sd">        Loads a new dataset from a pandas DataFrame.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataset : pd.DataFrame</span>
+<span class="sd">            The dataset as a pandas DataFrame.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            If the input is not a pandas DataFrame.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;load_pd_dataset requires pd.DataFrame as input&#39;</span><span class="p">)</span>
@@ -154,7 +240,17 @@
 
 <div class="viewcode-block" id="Dataset.convert_to_time_lag"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.convert_to_time_lag">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_time_lag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_lags</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convert dataset into time-lagged data.</span>
+<span class="sd">        Converts the dataset into time-lagged data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_lags : int</span>
+<span class="sd">            Number of time lags to add to the dataset.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            The dataset with added time lags (if applicable).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Placeholder for converting data</span>
         <span class="c1"># Implement the actual time-lagging logic here</span>
@@ -162,25 +258,50 @@
 
 <div class="viewcode-block" id="Dataset.get_dataset"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.get_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the dataset stored in the Dataset instance.</span>
+<span class="sd">        Returns the dataset stored in the Dataset instance.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            The loaded dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span></div>
 
 <div class="viewcode-block" id="Dataset.get_data_type_info"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.get_data_type_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_type_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the data type information.</span>
+<span class="sd">        Returns the data type information of the dataset.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing information about the variable types in the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span></div>
 
 <div class="viewcode-block" id="Dataset.get_data_time_info"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.get_data_time_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_time_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the time-related information of the dataset.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing time-related information such as lags and whether the dataset is time-lagged.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_time_info</span></div>
 
 <div class="viewcode-block" id="Dataset.get_info"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the data type information and the time-related information of the dataset.</span>
+<span class="sd">        Returns general information about the dataset, including data types and time-related information.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing:</span>
+<span class="sd">            - data_type_info: Information about variable types in the dataset.</span>
+<span class="sd">            - data_time_info: Time-related information about the dataset.</span>
+<span class="sd">            - data_type: General type of data (e.g., continuous, categorical).</span>
+<span class="sd">            - data_general_info: General information about the dataset.</span>
+<span class="sd">            - dataset_name: The name of the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;data_type_info&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span><span class="p">,</span>
@@ -192,7 +313,12 @@
 
 <div class="viewcode-block" id="Dataset.annotate_dataset"><a class="viewcode-back" href="../../../../CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset.annotate_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">annotate_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotations</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Store annotations for the dataset.</span>
+<span class="sd">        Stores annotations for the dataset.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        annotations : dict</span>
+<span class="sd">            Dictionary of annotations related to the dataset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span> <span class="o">=</span> <span class="n">annotations</span></div></div>
 </pre></div>

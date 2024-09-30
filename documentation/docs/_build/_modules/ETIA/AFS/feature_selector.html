@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.AFS.feature_selector &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.AFS.feature_selector &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -84,7 +84,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<div class="viewcode-block" id="FeatureSelector"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.feature_selector.FeatureSelector">[docs]</a><span class="k">class</span> <span class="nc">FeatureSelector</span><span class="p">:</span>
+<div class="viewcode-block" id="FeatureSelector"><a class="viewcode-back" href="../../../AFS.feature_selector.html#ETIA.AFS.FeatureSelector">[docs]</a><span class="k">class</span> <span class="nc">FeatureSelector</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Feature selection with the MXM R package.</span>
 
@@ -101,11 +101,11 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        data_pd : pandas.DataFrame</span>
-<span class="sd">            The dataset.</span>
+<span class="sd">            The dataset to be used for feature selection.</span>
 <span class="sd">        dataset_name : str</span>
-<span class="sd">            The name of the dataset.</span>
+<span class="sd">            The name of the dataset, used for saving intermediate files.</span>
 <span class="sd">        r_path : str</span>
-<span class="sd">            Path to the Rscript executable.</span>
+<span class="sd">            Path to the Rscript executable for running R-based feature selection algorithms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r_path</span> <span class="o">=</span> <span class="n">r_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
@@ -117,7 +117,7 @@
         <span class="c1"># Setup logging</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="FeatureSelector.run_r_script"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.feature_selector.FeatureSelector.run_r_script">[docs]</a>    <span class="k">def</span> <span class="nf">run_r_script</span><span class="p">(</span>
+<div class="viewcode-block" id="FeatureSelector.run_r_script"><a class="viewcode-back" href="../../../AFS.feature_selector.html#ETIA.AFS.FeatureSelector.run_r_script">[docs]</a>    <span class="k">def</span> <span class="nf">run_r_script</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">script_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -133,18 +133,18 @@
 <span class="sd">        script_name : str</span>
 <span class="sd">            The name of the R script to run.</span>
 <span class="sd">        target_name : str</span>
-<span class="sd">            The name of the target variable.</span>
+<span class="sd">            The name of the target variable in the dataset.</span>
 <span class="sd">        config : dict</span>
-<span class="sd">            The predictive configuration.</span>
+<span class="sd">            The configuration settings for the feature selection algorithm.</span>
 <span class="sd">        train_idx_name : str, optional</span>
-<span class="sd">            The name of the CSV file with the train indexes for a specific fold.</span>
+<span class="sd">            The name of the CSV file containing the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
-<span class="sd">            If True, prints detailed logs.</span>
+<span class="sd">            If True, prints detailed logs. Default is False.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pandas.DataFrame</span>
-<span class="sd">            DataFrame containing the selected features.</span>
+<span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="n">script_name</span><span class="p">)</span>
         <span class="n">data_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span>
@@ -178,7 +178,7 @@
         <span class="n">selected_features_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">selected_features_pd</span></div>
 
-<div class="viewcode-block" id="FeatureSelector.fbed"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.feature_selector.FeatureSelector.fbed">[docs]</a>    <span class="k">def</span> <span class="nf">fbed</span><span class="p">(</span>
+<div class="viewcode-block" id="FeatureSelector.fbed"><a class="viewcode-back" href="../../../AFS.feature_selector.html#ETIA.AFS.FeatureSelector.fbed">[docs]</a>    <span class="k">def</span> <span class="nf">fbed</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
@@ -193,16 +193,16 @@
 <span class="sd">        target_name : str</span>
 <span class="sd">            The name of the target variable.</span>
 <span class="sd">        config : dict</span>
-<span class="sd">            The predictive configuration.</span>
+<span class="sd">            The configuration settings for the FBED algorithm.</span>
 <span class="sd">        train_idx_name : str, optional</span>
-<span class="sd">            The name of the CSV file with the train indexes for a specific fold.</span>
+<span class="sd">            The name of the CSV file with the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
-<span class="sd">            If True, prints detailed logs.</span>
+<span class="sd">            If True, prints detailed logs. Default is False.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pandas.DataFrame</span>
-<span class="sd">            DataFrame containing the selected features.</span>
+<span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_r_script</span><span class="p">(</span>
             <span class="s1">&#39;feature_selectors/fbed_with_idx.R&#39;</span><span class="p">,</span>
@@ -212,7 +212,7 @@
             <span class="n">verbose</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="FeatureSelector.ses"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.feature_selector.FeatureSelector.ses">[docs]</a>    <span class="k">def</span> <span class="nf">ses</span><span class="p">(</span>
+<div class="viewcode-block" id="FeatureSelector.ses"><a class="viewcode-back" href="../../../AFS.feature_selector.html#ETIA.AFS.FeatureSelector.ses">[docs]</a>    <span class="k">def</span> <span class="nf">ses</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
@@ -227,16 +227,16 @@
 <span class="sd">        target_name : str</span>
 <span class="sd">            The name of the target variable.</span>
 <span class="sd">        config : dict</span>
-<span class="sd">            The predictive configuration.</span>
+<span class="sd">            The configuration settings for the SES algorithm.</span>
 <span class="sd">        train_idx_name : str, optional</span>
-<span class="sd">            The name of the CSV file with the train indexes for a specific fold.</span>
+<span class="sd">            The name of the CSV file with the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
-<span class="sd">            If True, prints detailed logs.</span>
+<span class="sd">            If True, prints detailed logs. Default is False.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pandas.DataFrame</span>
-<span class="sd">            DataFrame containing the selected features.</span>
+<span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_r_script</span><span class="p">(</span>
             <span class="s1">&#39;feature_selectors/ses_with_idx.R&#39;</span><span class="p">,</span>
@@ -246,7 +246,7 @@
             <span class="n">verbose</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="FeatureSelector.feature_selection"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.feature_selector.FeatureSelector.feature_selection">[docs]</a>    <span class="k">def</span> <span class="nf">feature_selection</span><span class="p">(</span>
+<div class="viewcode-block" id="FeatureSelector.feature_selection"><a class="viewcode-back" href="../../../AFS.feature_selector.html#ETIA.AFS.FeatureSelector.feature_selection">[docs]</a>    <span class="k">def</span> <span class="nf">feature_selection</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -259,18 +259,18 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        config : dict</span>
-<span class="sd">            The predictive configuration.</span>
+<span class="sd">            The configuration settings for feature selection.</span>
 <span class="sd">        target_name : str</span>
 <span class="sd">            The name of the target variable.</span>
 <span class="sd">        train_idx_name : str, optional</span>
-<span class="sd">            The name of the CSV file with the train indexes for a specific fold.</span>
+<span class="sd">            The name of the CSV file with the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
-<span class="sd">            If True, prints detailed logs.</span>
+<span class="sd">            If True, prints detailed logs. Default is False.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pandas.DataFrame</span>
-<span class="sd">            DataFrame containing the selected features.</span>
+<span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fs_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fs_name&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">fs_name</span> <span class="o">==</span> <span class="s1">&#39;fbed&#39;</span><span class="p">:</span>

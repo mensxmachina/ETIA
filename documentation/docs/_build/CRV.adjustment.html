@@ -57,8 +57,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="crv_index.html#main-classes">Main Classes</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">ETIA.CRV.adjustment package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#etia-crv-adjustment-adjset-r-module">ETIA.CRV.adjustment.adjset_R module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#etia-crv-adjustment-function-find-adjset-daggity-module">ETIA.CRV.adjustment.function_find_adjset_daggity module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CRV.adjustment.adjset_R">ETIA.CRV.adjustment.adjset_R module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CRV.adjustment.function_find_adjset_daggity">ETIA.CRV.adjustment.function_find_adjset_daggity module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="CRV.confidence.html">ETIA.CRV.confidence package</a></li>
@@ -96,16 +96,106 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="etia-crv-adjustment-package">
-<h1>ETIA.CRV.adjustment package<a class="headerlink" href="#etia-crv-adjustment-package" title="Permalink to this heading"></a></h1>
+  <section id="module-ETIA.CRV.adjustment">
+<span id="etia-crv-adjustment-package"></span><h1>ETIA.CRV.adjustment package<a class="headerlink" href="#module-ETIA.CRV.adjustment" title="Permalink to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
-<section id="etia-crv-adjustment-adjset-r-module">
-<h2>ETIA.CRV.adjustment.adjset_R module<a class="headerlink" href="#etia-crv-adjustment-adjset-r-module" title="Permalink to this heading"></a></h2>
+<section id="module-ETIA.CRV.adjustment.adjset_R">
+<span id="etia-crv-adjustment-adjset-r-module"></span><h2>ETIA.CRV.adjustment.adjset_R module<a class="headerlink" href="#module-ETIA.CRV.adjustment.adjset_R" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.adjustment.adjset_R.read_adjset">
+<span class="sig-name descname"><span class="pre">read_adjset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/adjustment/adjset_R.html#read_adjset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.adjustment.adjset_R.read_adjset" title="Permalink to this definition"></a></dt>
+<dd><p>Read the output csv file from R packages
+Author: <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+:param csv_name (str):
+:type csv_name (str): the name of the file
+:param path_(str):
+:type path_(str): the path of the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>adj_set(list or None)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list if adjustment set exists, None if no adjustment set exists</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.adjustment.adjset_R.adjset_pcalg">
+<span class="sig-name descname"><span class="pre">adjset_pcalg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'R'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/adjustment/adjset_R.html#adjset_pcalg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.adjustment.adjset_R.adjset_pcalg" title="Permalink to this definition"></a></dt>
+<dd><p>Run the pcalg R package to identify the adjustment set of X and Y
+Author: <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+Change R version in line 57 if needed
+:param graph_pd(pandas Dataframe):
+:param graph_type(str):
+:type graph_type(str): {‘dag’, ‘cpdag’, ‘mag’, ‘pag’}
+:param x(list):
+:type x(list): list of variable names
+:param y(list):
+:type y(list): list of variable names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>canonical_set(list)</strong> (<em>the variable names of the canonical adj. set (if exists)</em>)</p></li>
+<li><p><em>minimal_set(list):: the variable names of the minimal adj. set (if exists)</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.adjustment.adjset_R.adjset_dagitty">
+<span class="sig-name descname"><span class="pre">adjset_dagitty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'R'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/adjustment/adjset_R.html#adjset_dagitty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.adjustment.adjset_R.adjset_dagitty" title="Permalink to this definition"></a></dt>
+<dd><p>Run the dagitty R package to identify the adjustment set of X and Y
+Author: <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+Change R version in line 92 if needed
+:param graph_pd: the graph as adjacency matrix
+:type graph_pd: pandas Dataframe
+:param graph_type: the type of the graph : {‘dag’, ‘cpdag’, ‘mag’, ‘pag’}
+:type graph_type: str
+:param x_name: list of variable names
+:type x_name: list
+:param y_name: list of variable names
+:type y_name: list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the variable names of the canonical adj. set (if exists)
+minimal_set(list):: the variable names of the minimal adj. set (if exists)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>canonical_set(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="etia-crv-adjustment-function-find-adjset-daggity-module">
-<h2>ETIA.CRV.adjustment.function_find_adjset_daggity module<a class="headerlink" href="#etia-crv-adjustment-function-find-adjset-daggity-module" title="Permalink to this heading"></a></h2>
+<section id="module-ETIA.CRV.adjustment.function_find_adjset_daggity">
+<span id="etia-crv-adjustment-function-find-adjset-daggity-module"></span><h2>ETIA.CRV.adjustment.function_find_adjset_daggity module<a class="headerlink" href="#module-ETIA.CRV.adjustment.function_find_adjset_daggity" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.adjustment.function_find_adjset_daggity.find_adjset">
+<span class="sig-name descname"><span class="pre">find_adjset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exposure_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'R'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/adjustment/function_find_adjset_daggity.html#find_adjset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.adjustment.function_find_adjset_daggity.find_adjset" title="Permalink to this definition"></a></dt>
+<dd><p>Run the dagitty R package to identify the adjustment set of X and Y
+Author: <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+:param graph_pd: the graph as adjacency matrix
+:type graph_pd: pandas Dataframe
+:param graph_type: the type of the graph : {‘dag’, ‘cpdag’, ‘mag’, ‘pag’}
+:type graph_type: str
+:param target_name: list of one variable name
+:param exposure_names: list of one or more variable names</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the variable names of the canonical adj. set (if exists)
+adj_set_min(list):: the variable names of the minimal adj. set (if exists)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>adj_set_can(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

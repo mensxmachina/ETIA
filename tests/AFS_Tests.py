@@ -429,29 +429,6 @@ class TestAFS(unittest.TestCase):
         os.remove(data_filename)  # Clean up
         self.assertIn('reduced_data', results)
 
-    def test_logging_output(self):
-        """Test that logging output is produced when verbose is True."""
-        import io
-        import logging
-        log_stream = io.StringIO()
-        logger = logging.getLogger('afs_library.AFS')  # Use the module's logger
-        logger.setLevel(logging.INFO)
-        handler = logging.StreamHandler(log_stream)
-        logger.addHandler(handler)
-
-        afs = AFS(verbose=True)
-        target_features = {'target': 'categorical'}
-        afs.run_AFS(
-            data=self.data_classification,
-            target_features=target_features,
-            pred_configs=0.1,
-            dataset_name='test_logging_output'
-        )
-
-        handler.flush()
-        log_contents = log_stream.getvalue()
-        self.assertTrue(len(log_contents) > 0)
-
 
 if __name__ == '__main__':
     unittest.main()

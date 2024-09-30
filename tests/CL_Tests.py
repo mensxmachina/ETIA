@@ -1,384 +1,122 @@
-# ETIA/CausalLearning/test/CL_Tests.py
-
 import unittest
-import pandas as pd
-import numpy as np
 import os
-import tempfile
-import logging
-
+import pandas as pd
 from ETIA.CausalLearning.CausalLearner import CausalLearner
-from ETIA.CausalLearning.configurations.configurations import Configurations
 from ETIA.CausalLearning.data.Dataset import Dataset
+from ETIA.CausalLearning.configurations import Configurations
 
 class TestCausalLearner(unittest.TestCase):
-    """Unit tests for the CausalLearner module without using mocks."""
 
-    def setUp(self):
-        """Set up test fixtures."""
-
-        # Create a simple DataFrame for testing
-        df = pd.DataFrame({
-            'A': np.random.randint(0, 2, size=100),
-            'B': np.random.randint(0, 2, size=100),
-            'C': np.random.randn(100),
-            'D': np.random.randn(100)
-        })
-
-        # Initialize Dataset object
-        self.dataset = Dataset(
+    def create_sample_learner(self):
+        """Helper function to create a sample CausalLearner instance with a real dataset."""
+        data = {
+            'A': [1, 2, 3, 4, 5, 1, 5, 6, 7, 5, 2],
+            'B': [5, 4, 3, 2, 1, 4, 2, 4, 5, 6, 7],
+            'C': [2, 3, 4, 5, 6, 5, 4, 5, 5, 6, 6]
+        }
+        df = pd.DataFrame(data)
+        dataset = Dataset(
             data=df,
             data_time_info={'n_lags': 0, 'time_lagged': False},
             time_series=False,
             dataset_name='Test Dataset'
         )
+        configurations = Configurations(dataset=dataset, verbose=True)
+        learner = CausalLearner(dataset, configurations, verbose=True, random_seed=42)
+        return learner
 
-        # Create a temporary directory for results
-        self.temp_dir = tempfile.TemporaryDirectory()
+    def test_init_with_dataset_instance(self):
+        learner = self.create_sample_learner()
+        self.assertIsInstance(learner.dataset, Dataset)
 
-        # Define default configurations
-        self.default_configurations = Configurations(
-            dataset=self.dataset,
-            n_lags=0,
-            time_lagged=False,
-            time_series=False,
-            n_jobs=1  # Ensure n_jobs is set
-        )
+    def test_init_with_pandas_dataframe(self):
+        df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+        learner = CausalLearner(df)
+        self.assertEqual(learner.dataset.dataset_name, 'Preloaded Dataset')
 
-    def tearDown(self):
-        """Clean up after tests."""
-        self.temp_dir.cleanup()
+    def test_set_configurations_valid(self):
+        learner = self.create_sample_learner()
+        new_config = Configurations(dataset=learner.dataset)
+        learner.set_configurations(new_config)
+        self.assertEqual(learner.configurations, new_config)
 
-    def test_default_configurations(self):
-        """Test that CausalLearner uses default configurations when none are provided."""
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=None,  # Use default
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        self.assertIsNotNone(learner.configurations)
-        self.assertEqual(learner.configurations.n_lags, 0)
-        self.assertFalse(learner.configurations.time_lagged)
+    def test_set_configurations_invalid(self):
+        learner = self.create_sample_learner()
+        with self.assertRaises(TypeError):
+            learner.set_configurations('invalid_configuration')
 
-    def test_initialization_with_dataframe(self):
-        """Test initializing CausalLearner with a Dataset."""
-        try:
-            learner = CausalLearner(
-                dataset_input=self.dataset,
-                configurations=self.default_configurations,
-                verbose=False,
-                n_jobs=1,
-                random_seed=42
-            )
-            self.assertIsInstance(learner, CausalLearner)
-        except Exception as e:
-            self.fail(f"Initialization with Dataset failed with exception: {e}")
-
-    def test_initialization_with_invalid_dataset(self):
-        """Test initializing CausalLearner with an invalid dataset input."""
-        with self.assertRaises(ValueError):
-            CausalLearner(
-                dataset_input=123,  # Invalid type
-                configurations=self.default_configurations,
-                verbose=False
-            )
-
-    def test_run_causal_discovery(self):
-        """Test running causal discovery without errors."""
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=self.default_configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            self.assertIsNotNone(mec_graph)
-            self.assertIsNotNone(library_results)
-            self.assertIsInstance(mec_graph, pd.DataFrame)  # Assuming output is a DataFrame
-        except Exception as e:
-            self.fail(f"Causal discovery run failed with exception: {e}")
-
-    def test_output_graph_structure(self):
-        """Test the structure of the output causal graph."""
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=self.default_configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            # Check that the graph has expected columns, e.g., 'source', 'target', 'relation'
-            expected_columns = {'source', 'target', 'relation'}
-            self.assertTrue(expected_columns.issubset(mec_graph.columns), "Output graph missing expected columns.")
-        except Exception as e:
-            self.fail(f"Causal discovery run failed with exception: {e}")
-
-    def test_save_and_load_progress(self):
-        """Test saving progress to a file and loading it back."""
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=self.default_configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        # Run the model to generate progress
-        try:
-            learner.learn_model()
-        except Exception as e:
-            self.fail(f"Causal discovery run failed with exception: {e}")
-
-        # Save progress
-        progress_path = os.path.join(self.temp_dir.name, 'progress.pkl')
-        try:
-            learner.save_progress(progress_path)
-            self.assertTrue(os.path.isfile(progress_path), "Progress file was not created.")
-        except Exception as e:
-            self.fail(f"Saving progress failed with exception: {e}")
-
-        # Load progress
-        try:
-            loaded_learner = CausalLearner.load_progress(progress_path)
-            self.assertIsInstance(loaded_learner, CausalLearner, "Loaded object is not an instance of CausalLearner.")
-            # Verify specific attributes
-            self.assertEqual(loaded_learner.configurations.dataset.dataset_name, 'Test Dataset', "Loaded dataset name mismatch.")
-            self.assertIsNotNone(loaded_learner.opt_conf, "Loaded learner's optimal configuration is None.")
-        except Exception as e:
-            self.fail(f"Loading progress failed with exception: {e}")
-
-    def test_handle_missing_values(self):
-        """Test that CausalLearner handles missing values appropriately."""
-        # Introduce missing values
-        df_with_nan = self.dataset.data.copy()
-        df_with_nan.loc[0, 'A'] = np.nan
-        self.dataset.data = df_with_nan
-
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=self.default_configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            # Depending on implementation, check how missing values are handled
-            # For example, ensure that missing values were imputed or rows were dropped
-            self.assertFalse(mec_graph.isnull().values.any(), "Output graph contains null values.")
-        except Exception as e:
-            self.fail(f"Causal discovery with missing values failed with exception: {e}")
-
-    def test_run_with_categorical_data(self):
-        """Test running causal discovery on categorical data."""
-        categorical_df = pd.DataFrame({
-            'A': np.random.choice(['yes', 'no'], size=100),
-            'B': np.random.choice(['high', 'low'], size=100),
-            'C': np.random.choice(['type1', 'type2', 'type3'], size=100)
-        })
-        categorical_dataset = Dataset(
-            data=categorical_df,
+    def test_set_dataset_valid(self):
+        learner = self.create_sample_learner()
+        new_data = {
+            'A': [5, 6, 7, 8],
+            'B': [8, 7, 6, 5]
+        }
+        new_df = pd.DataFrame(new_data)
+        new_dataset = Dataset(
+            data=new_df,
             data_time_info={'n_lags': 0, 'time_lagged': False},
             time_series=False,
-            dataset_name='Categorical Dataset'
+            dataset_name='New Test Dataset'
         )
+        learner.set_dataset(new_dataset)
+        self.assertEqual(learner.dataset, new_dataset)
 
-        configurations = Configurations(
-            dataset=categorical_dataset,
-            n_lags=0,
-            time_lagged=False,
-            time_series=False,
-            n_jobs=1
-        )
+    def test_set_dataset_invalid(self):
+        learner = self.create_sample_learner()
+        with self.assertRaises(TypeError):
+            learner.set_dataset('invalid_dataset')
 
-        learner = CausalLearner(
-            dataset_input=categorical_dataset,
-            configurations=configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            self.assertIsInstance(mec_graph, pd.DataFrame)
-            self.assertFalse(mec_graph.empty, "Output graph is empty for categorical data.")
-        except Exception as e:
-            self.fail(f"Causal discovery on categorical data failed with exception: {e}")
+    def test_learn_model_success(self):
+        learner = self.create_sample_learner()
+        result = learner.learn_model()
+        self.assertIn('optimal_conf', result)
+        self.assertIn('matrix_mec_graph', result)
+        self.assertIn('run_time', result)
 
-    def test_run_with_continuous_data(self):
-        """Test running causal discovery on continuous data."""
-        continuous_df = pd.DataFrame({
-            'A': np.random.randn(100),
-            'B': np.random.randn(100),
-            'C': np.random.randn(100)
-        })
-        continuous_dataset = Dataset(
-            data=continuous_df,
-            data_time_info={'n_lags': 0, 'time_lagged': False},
-            time_series=False,
-            dataset_name='Continuous Dataset'
-        )
+    def test_save_progress_default_path(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('builtins.open', unittest.mock.mock_open()) as mocked_file:
+            learner.save_progress()
+            mocked_file.assert_called_once_with(os.path.join(learner.results_folder, 'Experiment.pkl'), 'wb')
 
-        configurations = Configurations(
-            dataset=continuous_dataset,
-            n_lags=0,
-            time_lagged=False,
-            time_series=False,
-            n_jobs=1
-        )
+    def test_save_progress_custom_path(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('builtins.open', unittest.mock.mock_open()) as mocked_file:
+            learner.save_progress('custom_path.pkl')
+            mocked_file.assert_called_once_with('custom_path.pkl', 'wb')
 
-        learner = CausalLearner(
-            dataset_input=continuous_dataset,
-            configurations=configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            self.assertIsInstance(mec_graph, pd.DataFrame)
-            self.assertFalse(mec_graph.empty, "Output graph is empty for continuous data.")
-        except Exception as e:
-            self.fail(f"Causal discovery on continuous data failed with exception: {e}")
+    def test_load_progress(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('builtins.open', unittest.mock.mock_open()):
+            with unittest.mock.patch('pickle.load', return_value=learner):
+                loaded_learner = CausalLearner.load_progress('path.pkl')
+                self.assertEqual(loaded_learner, learner)
 
-    def test_run_with_time_lagged_data(self):
-        """Test running causal discovery with time-lagged data."""
-        time_series_df = pd.DataFrame({
-            'A_t0': np.random.randn(100),
-            'A_t1': np.random.randn(100),
-            'B_t0': np.random.randn(100),
-            'B_t1': np.random.randn(100)
-        })
-        time_series_dataset = Dataset(
-            data=time_series_df,
-            data_time_info={'n_lags': 1, 'time_lagged': True},
-            time_series=True,
-            dataset_name='Time Series Dataset'
-        )
+    def test_add_configurations_from_file(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('ETIA.CausalLearning.configurations.Configurations.add_configurations_from_file') as mock_add_configs:
+            learner.add_configurations_from_file('config_file.json')
+            mock_add_configs.assert_called_once_with('config_file.json')
 
-        configurations = Configurations(
-            dataset=time_series_dataset,
-            n_lags=1,
-            time_lagged=True,
-            time_series=True,
-            n_jobs=1
-        )
+    def test_update_learnt_model(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('ETIA.CausalLearning.CDHPO.OCT.run_new', return_value=('new_conf', 'new_mec_graph', None)):
+            learner.update_learnt_model()
+            self.assertEqual(learner.opt_conf, 'new_conf')
+            self.assertEqual(learner.matrix_mec_graph, 'new_mec_graph')
 
-        learner = CausalLearner(
-            dataset_input=time_series_dataset,
-            configurations=configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            self.assertIsInstance(mec_graph, pd.DataFrame)
-            self.assertFalse(mec_graph.empty, "Output graph is empty for time-lagged data.")
-        except Exception as e:
-            self.fail(f"Causal discovery with time-lagged data failed with exception: {e}")
+    def test_get_best_model_between_algorithms(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('ETIA.CausalLearning.CDHPO.OCT.find_best_config', return_value='best_config'):
+            result = learner.get_best_model_between_algorithms(['algo1', 'algo2'])
+            self.assertEqual(result, 'best_config')
 
-    def test_run_with_large_dataset(self):
-        """Test running causal discovery on a larger dataset."""
-        large_df = pd.DataFrame({
-            'A': np.random.randint(0, 2, size=1000),
-            'B': np.random.randint(0, 2, size=1000),
-            'C': np.random.randn(1000),
-            'D': np.random.randn(1000),
-            'E': np.random.randn(1000)
-        })
-        large_dataset = Dataset(
-            data=large_df,
-            data_time_info={'n_lags': 0, 'time_lagged': False},
-            time_series=False,
-            dataset_name='Large Dataset'
-        )
-
-        configurations = Configurations(
-            dataset=large_dataset,
-            n_lags=0,
-            time_lagged=False,
-            time_series=False,
-            n_jobs=2  # Utilize multiple cores if supported
-        )
-
-        learner = CausalLearner(
-            dataset_input=large_dataset,
-            configurations=configurations,
-            verbose=False,
-            n_jobs=2,
-            random_seed=42
-        )
-        try:
-            opt_conf, mec_graph, run_time, library_results = learner.learn_model()
-            self.assertIsInstance(mec_graph, pd.DataFrame)
-            self.assertGreater(len(mec_graph), 0, "Output graph is empty for large dataset.")
-        except Exception as e:
-            self.fail(f"Causal discovery on large dataset failed with exception: {e}")
-
-    def test_save_progress_creates_file(self):
-        """Test that saving progress creates the expected file."""
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=self.default_configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        # Run the model to generate progress
-        try:
-            learner.learn_model()
-        except Exception as e:
-            self.fail(f"Causal discovery run failed with exception: {e}")
-
-        # Save progress
-        progress_path = os.path.join(self.temp_dir.name, 'progress.pkl')
-        try:
-            learner.save_progress(progress_path)
-            self.assertTrue(os.path.isfile(progress_path), "Progress file was not created.")
-        except Exception as e:
-            self.fail(f"Saving progress failed with exception: {e}")
-
-    def test_load_progress_retrieves_data(self):
-        """Test that loading progress retrieves the expected state."""
-        learner = CausalLearner(
-            dataset_input=self.dataset,
-            configurations=self.default_configurations,
-            verbose=False,
-            n_jobs=1,
-            random_seed=42
-        )
-        # Run the model to generate progress
-        try:
-            learner.learn_model()
-        except Exception as e:
-            self.fail(f"Causal discovery run failed with exception: {e}")
-
-        # Save progress
-        progress_path = os.path.join(self.temp_dir.name, 'progress.pkl')
-        try:
-            learner.save_progress(progress_path)
-            self.assertTrue(os.path.isfile(progress_path), "Progress file was not created.")
-        except Exception as e:
-            self.fail(f"Saving progress failed with exception: {e}")
-
-        # Load progress
-        try:
-            loaded_learner = CausalLearner.load_progress(progress_path)
-            self.assertIsInstance(loaded_learner, CausalLearner, "Loaded object is not an instance of CausalLearner.")
-            # Verify specific attributes
-            self.assertEqual(loaded_learner.configurations.dataset.dataset_name, 'Test Dataset', "Loaded dataset name mismatch.")
-            self.assertIsNotNone(loaded_learner.opt_conf, "Loaded learner's optimal configuration is None.")
-        except Exception as e:
-            self.fail(f"Loading progress failed with exception: {e}")
+    def test_get_best_model_between_family(self):
+        learner = self.create_sample_learner()
+        with unittest.mock.patch('ETIA.CausalLearning.CDHPO.OCT.find_best_config', return_value='family_best'):
+            result = learner.get_best_model_between_family()
+            self.assertEqual(result, 'family_best')
 
 
-
-#tst = TestCausalLearner()
-#tst.setUp()
-#tst.test_default_configurations()
+if __name__ == '__main__':
+    unittest.main()

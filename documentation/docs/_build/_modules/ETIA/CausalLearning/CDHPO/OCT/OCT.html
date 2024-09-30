@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.CausalLearning.CDHPO.OCT.OCT &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.CausalLearning.CDHPO.OCT.OCT &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -88,7 +88,6 @@
 
 <span class="kn">from</span> <span class="nn">...utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">mutual_info_continuous</span><span class="p">,</span> <span class="n">is_dict_in_array</span>
-
 <span class="kn">from</span> <span class="nn">.causal_graph_utils.markov_boundary</span> <span class="kn">import</span> <span class="n">markov_boundary</span>
 <span class="kn">from</span> <span class="nn">...CDHPO.CDHPOBase</span> <span class="kn">import</span> <span class="n">CDHPOBase</span>
 <span class="kn">from</span> <span class="nn">...CausalModel.utils</span> <span class="kn">import</span> <span class="n">pywhy_graph_to_matrix</span>
@@ -106,6 +105,8 @@
 <span class="sd">        Data to be used for the OCT procedure.</span>
 <span class="sd">    results_folder : str</span>
 <span class="sd">        Path to the folder where results will be saved.</span>
+<span class="sd">    verbose : bool, optional</span>
+<span class="sd">        If True, enables verbose logging. Default is False.</span>
 
 <span class="sd">    Methods</span>
 <span class="sd">    -------</span>
@@ -116,24 +117,49 @@
 <span class="sd">    find_best_config(algorithms)</span>
 <span class="sd">        Finds the best configuration among specified algorithms.</span>
 <span class="sd">    save_progress()</span>
-<span class="sd">        Saves the current state of the OCT object.</span>
+<span class="sd">        Saves the current state of the OCT object to a file.</span>
 <span class="sd">    load_progress(path)</span>
 <span class="sd">        Loads the OCT object state from a file.</span>
+<span class="sd">    fold_fit(target, c, mec_graphs_configs, train_indexes, test_indexes, fold)</span>
+<span class="sd">        Performs Markov boundary identification and predictive modeling for a specific fold.</span>
+<span class="sd">    nodes_parallel(target, c, mec_graphs_configs, train_indexes, test_indexes)</span>
+<span class="sd">        Calculates the mutual information between the true values and predicted values of a target node in parallel.</span>
+<span class="sd">    config_parallel(c, mec_graphs_configs, train_indexes, test_indexes)</span>
+<span class="sd">        Calculates the mutual information scores for all target nodes in parallel.</span>
+<span class="sd">    permutations(node, poolYhat_best, poolYhat_cur, idxs, poolY)</span>
+<span class="sd">        Calculates the mutual information scores after swapping predictions between best and current configurations.</span>
+<span class="sd">    permutations_nodes(node, c)</span>
+<span class="sd">        Performs permutations for a single node across all permutations.</span>
+<span class="sd">    calculate_pvalues(c)</span>
+<span class="sd">        Calculates p-values to compare the current configuration with the best one.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oct_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">results_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="c1"># Initialize parameters</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the OCT class.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        oct_params : CDHPOParameters</span>
+<span class="sd">            Object containing the parameters required for the OCT procedure.</span>
+<span class="sd">        data : Dataset</span>
+<span class="sd">            Data to be used for the OCT procedure.</span>
+<span class="sd">        results_folder : str</span>
+<span class="sd">            Path to the folder where results will be saved.</span>
+<span class="sd">        verbose : bool, optional</span>
+<span class="sd">            If True, enables verbose logging. Default is False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">oct_params</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span> <span class="o">=</span> <span class="n">oct_params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="n">results_folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
-        <span class="c1"># Initialize variables</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_type_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_data_type_info</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;OCT object has been initialized&#39;</span><span class="p">)</span>
-        <span class="c1"># Initialize storage structures</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mb_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{}</span>
@@ -193,7 +219,7 @@
         <span class="n">fold</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Performs Markov boundary identification and predictive modeling for a single fold of a target in a particular configuration.</span>
+<span class="sd">        Performs Markov boundary identification and predictive modeling for a specific fold of a target variable.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -219,7 +245,6 @@
 <span class="sd">        y_test : np.ndarray</span>
 <span class="sd">            Actual target values for the test data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Initialize saved configurations if not present</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">{})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">{})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="p">{})</span>
@@ -231,12 +256,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">],</span>
             <span class="p">)</span>
 
-        <span class="c1"># Markov boundary identification</span>
         <span class="n">mb</span> <span class="o">=</span> <span class="n">markov_boundary</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">mec_graphs_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">fold</span><span class="p">])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">fold</span><span class="p">,</span> <span class="n">target</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mb</span><span class="p">)</span>
 
-        <span class="c1"># Predictive modeling</span>
         <span class="n">data_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span>
         <span class="n">X_train</span> <span class="o">=</span> <span class="n">data_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:,</span> <span class="n">mb</span><span class="p">]</span>
         <span class="n">y_train</span> <span class="o">=</span> <span class="n">data_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[:,</span> <span class="n">target</span><span class="p">]</span>
@@ -261,7 +284,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fold </span><span class="si">{</span><span class="n">fold</span><span class="si">}</span><span class="s1"> for variable </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s1"> is fitted&#39;</span><span class="p">)</span>
 
-        <span class="c1"># Save results</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_mb_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">mb</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_pred_configs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">prediction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_y_test</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">target</span><span class="p">][</span><span class="n">fold</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span>
@@ -317,7 +339,6 @@
 
         <span class="n">mb_folds</span><span class="p">,</span> <span class="n">pred_folds</span><span class="p">,</span> <span class="n">y_test_folds</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">results</span><span class="p">)</span>
 
-        <span class="c1"># Predictive performance for pooled out-of-sample predictions</span>
         <span class="n">pred_folds_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">pred_folds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">y_test_folds_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y_test_folds</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
@@ -493,8 +514,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_val</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;P-value for configuration </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1"> calculated: </span><span class="si">{</span><span class="n">p_val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-
-        <span class="c1"># H0: the difference in performance is zero</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_val</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">alpha</span></div>
 
 <div class="viewcode-block" id="OCT.run"><a class="viewcode-back" href="../../../../../CausalLearning.CDHPO.OCT.html#ETIA.CausalLearning.CDHPO.OCT.OCT.OCT.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -557,7 +576,6 @@
         <span class="n">pred_co</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pred_configs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_co</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pred_co</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oct_params</span><span class="o">.</span><span class="n">n_permutations</span><span class="p">)]</span>
 
-        <span class="c1"># Permutation test</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_configs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_configs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -566,7 +584,6 @@
             <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculate_pvalues</span><span class="p">)(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="c1"># Select configuration</span>
         <span class="n">OCTs_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]:</span>
@@ -579,7 +596,6 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_progress</span><span class="p">()</span>
 
-        <span class="c1"># Save results</span>
         <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="p">,</span> <span class="s1">&#39;matrix_mec_graph.npy&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs_ran</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span></div>
 
@@ -648,7 +664,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mu_configs_np</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mu_configs</span><span class="p">))</span>
 
-        <span class="c1"># Permutation test</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">p_values</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_configs</span> <span class="o">-</span> <span class="n">initial_config_count</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_configs</span> <span class="o">-</span> <span class="n">initial_config_count</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mb_size</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span>
@@ -657,7 +672,6 @@
             <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calculate_pvalues</span><span class="p">)(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">initial_config_count</span><span class="p">,</span> <span class="n">num_configs</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="c1"># Select configuration</span>
         <span class="n">OCTs_c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_config</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_configs</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_equal</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_mb</span><span class="p">[</span><span class="n">OCTs_c</span><span class="p">]:</span>

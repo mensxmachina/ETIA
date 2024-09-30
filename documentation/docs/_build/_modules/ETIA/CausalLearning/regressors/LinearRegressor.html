@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.CausalLearning.regressors.LinearRegressor &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.CausalLearning.regressors.LinearRegressor &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -78,8 +78,38 @@
   <h1>Source code for ETIA.CausalLearning.regressors.LinearRegressor</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 
-<div class="viewcode-block" id="LinearRegression_"><a class="viewcode-back" href="../../../../CausalLearning.regressors.html#ETIA.CausalLearning.regressors.LinearRegressor.LinearRegression_">[docs]</a><span class="k">class</span> <span class="nc">LinearRegression_</span><span class="p">():</span>
-<div class="viewcode-block" id="LinearRegression_.set_regressor_params"><a class="viewcode-back" href="../../../../CausalLearning.regressors.html#ETIA.CausalLearning.regressors.LinearRegressor.LinearRegression_.set_regressor_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_regressor_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+
+<div class="viewcode-block" id="LinearRegression_"><a class="viewcode-back" href="../../../../CausalLearning.regressors.html#ETIA.CausalLearning.LinearRegression_">[docs]</a><span class="k">class</span> <span class="nc">LinearRegression_</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper class for setting up a LinearRegression model with custom parameters.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    set_regressor_params(parameters)</span>
+<span class="sd">        Configures and returns a LinearRegression object. Currently, LinearRegression does not require parameters in this method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LinearRegression_.set_regressor_params"><a class="viewcode-back" href="../../../../CausalLearning.regressors.html#ETIA.CausalLearning.LinearRegression_.set_regressor_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_regressor_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Configures and returns a LinearRegression object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            A dictionary containing the model parameters (though LinearRegression does not currently use parameters in this implementation).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        LinearRegression</span>
+<span class="sd">            A LinearRegression object configured with default parameters.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; params = {}</span>
+<span class="sd">        &gt;&gt;&gt; regressor = LinearRegression_().set_regressor_params(params)</span>
+<span class="sd">        &gt;&gt;&gt; print(regressor)</span>
+<span class="sd">        LinearRegression()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">LinearRegression</span><span class="p">()</span></div></div>
 </pre></div>
 

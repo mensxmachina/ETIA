@@ -122,65 +122,193 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TetradAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that implements various causal discovery algorithms using the Tetrad library.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.mute_java_output">
 <span class="sig-name descname"><span class="pre">mute_java_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.mute_java_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.mute_java_output" title="Permalink to this definition"></a></dt>
-<dd><p>Redirect Java’s System.out and System.err to null streams to suppress output.</p>
+<dd><p>Mutes Java’s standard output and error streams.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.configure_java_logging">
 <span class="sig-name descname"><span class="pre">configure_java_logging</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.configure_java_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.configure_java_logging" title="Permalink to this definition"></a></dt>
-<dd><p>Attempt to configure Java’s Log4j logging level for Tetrad.
-Note: This may not be effective if Tetrad prints directly to System.out/System.err.</p>
+<dd><p>Configures Java’s Log4j logging for the Tetrad package.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.init_algo">
 <span class="sig-name descname"><span class="pre">init_algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.init_algo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.init_algo" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Initializes algorithm-specific data, such as lags and time information.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.prepare_data">
 <span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.prepare_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Prepares the data in a format suitable for the Tetrad algorithms.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.time_knowledge">
 <span class="sig-name descname"><span class="pre">time_knowledge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.time_knowledge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.time_knowledge" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Defines the time-knowledge for time-lagged datasets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm._ci_test">
+<span class="sig-name descname"><span class="pre">_ci_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm._ci_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm._ci_test" title="Permalink to this definition"></a></dt>
+<dd><p>Configures the appropriate conditional independence test for the algorithm.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm._score">
+<span class="sig-name descname"><span class="pre">_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm._score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm._score" title="Permalink to this definition"></a></dt>
+<dd><p>Configures the appropriate score-based test for the algorithm.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm._algo">
+<span class="sig-name descname"><span class="pre">_algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm._algo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm._algo" title="Permalink to this definition"></a></dt>
+<dd><p>Configures and returns the specified causal discovery algorithm.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.output_to_array">
 <span class="sig-name descname"><span class="pre">output_to_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tetrad_graph_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.output_to_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.output_to_array" title="Permalink to this definition"></a></dt>
-<dd><p>Covert tetrad graph to numpy array
-update : Feb 17
-tetrad_graph : graph from tetrad (it can be static or time series graph)
-n_lags : the number of previous time lags in case of time series</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>matrix</strong> (<em>a numpy array of size N*N where N is the number of nodes in tetrad_graph</em>) – matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
-matrix(i, j) = 1 and matrix(j, i) = 1: io-oj  should appear only in PAGs
-matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j  should appear only in MAGs and PAGs
-matrix(i, j) = 3 and matrix(j, i) = 3: i—j  should appear only in PDAGs
-matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p></li>
-<li><p><em>if n_lags is not None then the first indexes of matrix correspond to the nodes of the time lag=0, then to time lag=1 etc</em></p></li>
-</ul>
-</p>
-</dd>
-</dl>
+<dd><p>Converts the Tetrad graph to a numpy array representing the causal structure.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.check_parameters">
 <span class="sig-name descname"><span class="pre">check_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.check_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.check_parameters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Validates the parameters required to run the Tetrad algorithm.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepare_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.run" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Runs the specified Tetrad algorithm on the provided data and returns the results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">mute_java_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.mute_java_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Mutes Java’s standard output and error streams to suppress logs and output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">configure_java_logging</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.configure_java_logging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Configures Java’s Log4j logging level for Tetrad algorithms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">init_algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.init_algo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the algorithm with data type and time information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_info</strong> (<em>dict</em>) – Dictionary containing information about data types and time lags.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares the dataset for use in the Tetrad algorithms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Data</strong> (<em>object</em>) – The dataset to be used in the algorithm.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional parameters for data preparation. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the prepared dataset and a mapping of variable names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">time_knowledge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.time_knowledge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Generates temporal knowledge for time-lagged data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ds</strong> (<em>object</em>) – The dataset in Tetrad format.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>knowledge</strong> – A Tetrad Knowledge object that encodes the temporal relationships in the data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">output_to_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tetrad_graph_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.output_to_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the Tetrad graph to a numpy array representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tetrad_graph</strong> (<em>object</em>) – The Tetrad graph object to be converted.</p></li>
+<li><p><strong>var_map</strong> (<em>pd.DataFrame</em>) – A DataFrame mapping Tetrad variable names to original variable names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>matrix_pd</strong> – A pandas DataFrame representing the adjacency matrix of the learned graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">check_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.check_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dd><p>Checks the validity of the parameters for running the Tetrad algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – The algorithm parameters.</p></li>
+<li><p><strong>data_info</strong> (<em>dict</em>) – Information about the dataset, such as variable types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if all parameters are valid, raises RuntimeError otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepare_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tetrad_algorithm/TetradAlgorithm.html#TetradAlgorithm.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the Tetrad algorithm on the provided data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>object</em>) – The dataset to be used in the algorithm.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – The parameters for running the algorithm.</p></li>
+<li><p><strong>prepare_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prepares the data before running the algorithm. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the learned MEC graph and a dictionary of results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

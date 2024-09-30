@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.AFS.AFS &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.AFS.AFS &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -93,7 +93,7 @@
 <span class="kn">from</span> <span class="nn">.preprocessor</span> <span class="kn">import</span> <span class="n">Preprocessor</span>
 
 
-<div class="viewcode-block" id="AFS"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.AFS">[docs]</a><span class="k">class</span> <span class="nc">AFS</span><span class="p">:</span>
+<div class="viewcode-block" id="AFS"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS">[docs]</a><span class="k">class</span> <span class="nc">AFS</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Automated Feature Selection (AFS) class.</span>
 
@@ -150,7 +150,7 @@
             <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AFS.run_AFS"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.AFS.run_AFS">[docs]</a>    <span class="k">def</span> <span class="nf">run_AFS</span><span class="p">(</span>
+<div class="viewcode-block" id="AFS.run_AFS"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.run_AFS">[docs]</a>    <span class="k">def</span> <span class="nf">run_AFS</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
         <span class="n">target_features</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
@@ -164,9 +164,9 @@
 <span class="sd">        ----------</span>
 <span class="sd">        data : str or pd.DataFrame or np.ndarray</span>
 <span class="sd">            The dataset to use. Can be a filename (str), a pandas DataFrame, or a NumPy array.</span>
-<span class="sd">        target_features : dict or list</span>
-<span class="sd">            A dictionary with target feature names and their types, or a list of feature names.</span>
-<span class="sd">        pred_configs : list or float, optional</span>
+<span class="sd">        target_features : Union[Dict[str, str], List[str]]</span>
+<span class="sd">            A dictionary mapping feature names to their types, or a list of feature names (in which case the types are inferred).</span>
+<span class="sd">        pred_configs : Union[List[Dict[str, Any]], float], optional</span>
 <span class="sd">            - If list, it is a list of predictive configurations provided by the user.</span>
 <span class="sd">            - If float (between 0 and 1), it indicates the percentage of default configurations to sample and run.</span>
 <span class="sd">            - If None, all default configurations are used.</span>
@@ -181,6 +181,13 @@
 <span class="sd">            - &#39;reduced_data&#39;: The dataset with only the selected features and target features</span>
 <span class="sd">            - &#39;best_config&#39;: The configuration that led to the best feature selection</span>
 <span class="sd">            - &#39;selected_features&#39;: The selected features for each target</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        To run feature selection on a dataset:</span>
+<span class="sd">        &gt;&gt;&gt; afs = AFS()</span>
+<span class="sd">        &gt;&gt;&gt; result = afs.run_AFS(data=&quot;data.csv&quot;, target_features=[&quot;feature1&quot;, &quot;feature2&quot;])</span>
+<span class="sd">        &gt;&gt;&gt; print(result[&quot;selected_features&quot;])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target_features</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;target_features must be a list or dictionary.&quot;</span><span class="p">)</span>
@@ -197,7 +204,6 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Need to get feature names from elsewhere or raise an error</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;When data is a NumPy array, it must have named columns.&quot;</span><span class="p">)</span>
-
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must be a filename (str), pandas DataFrame, or NumPy array.&quot;</span><span class="p">)</span>
 
@@ -266,7 +272,7 @@
             <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="n">selected_features</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="AFS.recursive_fs_for_target"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.AFS.recursive_fs_for_target">[docs]</a>    <span class="k">def</span> <span class="nf">recursive_fs_for_target</span><span class="p">(</span>
+<div class="viewcode-block" id="AFS.recursive_fs_for_target"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.recursive_fs_for_target">[docs]</a>    <span class="k">def</span> <span class="nf">recursive_fs_for_target</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">target_feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -421,7 +427,7 @@
             <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="n">best_config</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="AFS.run_fs_for_config"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.AFS.run_fs_for_config">[docs]</a>    <span class="k">def</span> <span class="nf">run_fs_for_config</span><span class="p">(</span>
+<div class="viewcode-block" id="AFS.run_fs_for_config"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.run_fs_for_config">[docs]</a>    <span class="k">def</span> <span class="nf">run_fs_for_config</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">target_feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -546,7 +552,7 @@
 
         <span class="k">return</span> <span class="n">scores</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span></div>
 
-<div class="viewcode-block" id="AFS.bootstrap_bias_correction"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.AFS.bootstrap_bias_correction">[docs]</a>    <span class="k">def</span> <span class="nf">bootstrap_bias_correction</span><span class="p">(</span>
+<div class="viewcode-block" id="AFS.bootstrap_bias_correction"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.bootstrap_bias_correction">[docs]</a>    <span class="k">def</span> <span class="nf">bootstrap_bias_correction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fold_predictions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]],</span>
         <span class="n">target_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>

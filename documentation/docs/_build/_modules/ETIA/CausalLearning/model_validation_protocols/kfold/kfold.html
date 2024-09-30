@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ETIA.CausalLearning.model_validation_protocols.kfold.kfold &mdash; ETIA 0.2 documentation</title>
+  <title>ETIA.CausalLearning.model_validation_protocols.kfold.kfold &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css" />
 
@@ -44,11 +44,11 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../example_usage.html">Example Usage: Full Pipeline from AFS to CL to CRV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../experiments.html">Experiments</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../afs/index.html">Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../causal_learning/index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../../crv/index.html">Causal Reasoning Validation (CRV)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
         </div>
@@ -76,135 +76,139 @@
            <div itemprop="articleBody">
              
   <h1>Source code for ETIA.CausalLearning.model_validation_protocols.kfold.kfold</h1><div class="highlight"><pre>
-<span></span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span>
 <span class="kn">from</span> <span class="nn">..MVP_ProtocolBase</span> <span class="kn">import</span> <span class="n">MVP_ProtocolBase</span><span class="p">,</span> <span class="n">get_logger</span>
 
 
-<div class="viewcode-block" id="KFoldCV"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV">[docs]</a><span class="k">class</span> <span class="nc">KFoldCV</span><span class="p">(</span><span class="n">MVP_ProtocolBase</span><span class="p">):</span>
+<div class="viewcode-block" id="KFoldCV"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.KFoldCV">[docs]</a><span class="k">class</span> <span class="nc">KFoldCV</span><span class="p">(</span><span class="n">MVP_ProtocolBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class implementing a K-Fold Cross-Validation protocol for running a causal discovery algorithm.</span>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">    -----------</span>
-<span class="sd">    folds: int</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    folds : int</span>
 <span class="sd">        Number of folds to be used in the cross-validation. Default is 10.</span>
-<span class="sd">    folds_to_run: int</span>
+<span class="sd">    folds_to_run : int</span>
 <span class="sd">        Number of folds to run the cross-validation for. Default is 1.</span>
-<span class="sd">    train_indexes: list of int</span>
+<span class="sd">    train_indexes : list of int</span>
 <span class="sd">        A list of indexes for the training samples.</span>
-<span class="sd">    test_indexes: list of int</span>
+<span class="sd">    test_indexes : list of int</span>
 <span class="sd">        A list of indexes for the test samples.</span>
-<span class="sd">    data_train: list of pd.DataFrame</span>
-<span class="sd">        A list of training data samples.</span>
-<span class="sd">    data_test: list of pd.DataFrame</span>
-<span class="sd">        A list of test data samples.</span>
+<span class="sd">    data_train : list of pd.DataFrame</span>
+<span class="sd">        A list of training data samples for each fold.</span>
+<span class="sd">    data_test : list of pd.DataFrame</span>
+<span class="sd">        A list of test data samples for each fold.</span>
 
-<span class="sd">    Methods:</span>
-<span class="sd">    --------</span>
-<span class="sd">    set_params(self, parameters)</span>
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    set_params(parameters, verbose=False)</span>
 <span class="sd">        Set the number of folds and the number of folds to run the protocol for.</span>
-<span class="sd">    run_cd_algorithm(self, data, algorithm, parameters, fold)</span>
+<span class="sd">    run_cd_algorithm(data, algorithm, parameters, fold)</span>
 <span class="sd">        Run the causal discovery algorithm on the specified fold.</span>
-<span class="sd">    init_protocol(self, data)</span>
+<span class="sd">    init_protocol(data)</span>
 <span class="sd">        Initialize the K-Fold protocol.</span>
-<span class="sd">    run_protocol(self, data, algorithm, parameters, n_jobs = 1)</span>
+<span class="sd">    run_protocol(data, algorithm, parameters, n_jobs=1)</span>
 <span class="sd">        Run the K-Fold cross-validation protocol.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the KFoldCV class with default values for folds and folds_to_run.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folds</span> <span class="o">=</span> <span class="mi">10</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folds_to_run</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_indexes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_indexes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_train</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_test</span> <span class="o">=</span> <span class="p">[]</span>
-<div class="viewcode-block" id="KFoldCV.set_params"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KFoldCV.set_params"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.KFoldCV.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the number of folds and the number of folds to run the protocol for.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        parameters: dict</span>
-<span class="sd">            A dictionary of parameters, including the number of folds and the number of folds to run the protocol for.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            A dictionary of parameters, including the number of folds and the number of folds to run.</span>
+<span class="sd">        verbose : bool, optional</span>
+<span class="sd">            If True, enables detailed logging. Default is False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folds</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;folds&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">folds_to_run</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;folds_to_run&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span></div>
-<div class="viewcode-block" id="KFoldCV.run_cd_algorithm"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.run_cd_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">run_cd_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">fold</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KFoldCV.run_cd_algorithm"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.KFoldCV.run_cd_algorithm">[docs]</a>    <span class="k">def</span> <span class="nf">run_cd_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">fold</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the causal discovery algorithm on the specified fold.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        data: pd.DataFrame</span>
-<span class="sd">            The data to be used for running the algorithm.</span>
-<span class="sd">        algorithm: object</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame</span>
+<span class="sd">            The dataset on which to run the causal discovery algorithm.</span>
+<span class="sd">        algorithm : object</span>
 <span class="sd">            The causal discovery algorithm to be used.</span>
-<span class="sd">        parameters: dict</span>
-<span class="sd">            A dictionary of parameters to be passed to the algorithm.</span>
-<span class="sd">        fold: int</span>
-<span class="sd">            The current fold to run the algorithm for.</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            A dictionary of parameters to pass to the algorithm.</span>
+<span class="sd">        fold : int</span>
+<span class="sd">            The current fold number for which to run the algorithm.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        [matrix_mec_graph, matrix_graph]: list of numpy arrays</span>
-<span class="sd">            The results of the causal discovery algorithm, including the matrix_mec_graph and matrix_graph.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of np.ndarray</span>
+<span class="sd">            A list containing the MEC graph and library results produced by the causal discovery algorithm.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Causal discovery</span>
         <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;indexes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_indexes</span><span class="p">[</span><span class="n">fold</span><span class="p">]</span>
         <span class="n">mec_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">prepare_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Causal discovery algorithm has been ran for fold &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fold</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Causal discovery algorithm has been run for fold &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fold</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="p">[</span><span class="n">mec_graph</span><span class="p">,</span> <span class="n">library_results</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="KFoldCV.init_protocol"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.init_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">init_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="KFoldCV.init_protocol"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.KFoldCV.init_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">init_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the K-Fold protocol.</span>
+<span class="sd">        Initialize the K-Fold protocol by splitting the data into training and test sets for each fold.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        data: pd.DataFrame</span>
-<span class="sd">            The data to be used for the cross-validation.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame</span>
+<span class="sd">            The dataset to be used for the cross-validation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span>
-        <span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folds</span><span class="p">)</span>
+        <span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">folds</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_indexes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_indexes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_index</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">test_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_index</span><span class="p">)</span></div>
-    
-<div class="viewcode-block" id="KFoldCV.run_protocol"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.run_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">run_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+
+<div class="viewcode-block" id="KFoldCV.run_protocol"><a class="viewcode-back" href="../../../../../CausalLearning.model_validation_protocols.kfold.html#ETIA.CausalLearning.KFoldCV.run_protocol">[docs]</a>    <span class="k">def</span> <span class="nf">run_protocol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run the causal discovery algorithm on the specified fold.</span>
+<span class="sd">        Run the K-Fold cross-validation protocol with the specified causal discovery algorithm.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        data: pd.DataFrame</span>
-<span class="sd">            The data to be used for running the algorithm.</span>
-<span class="sd">        algorithm: object</span>
-<span class="sd">            The causal discovery algorithm to be used.</span>
-<span class="sd">        parameters: dict</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pd.DataFrame</span>
+<span class="sd">            The dataset on which to run the algorithm.</span>
+<span class="sd">        algorithm : object</span>
+<span class="sd">            The causal discovery algorithm to use.</span>
+<span class="sd">        parameters : dict</span>
 <span class="sd">            A dictionary of parameters to be passed to the algorithm.</span>
-<span class="sd">        n_jobs: int</span>
-<span class="sd">            The number of CPU cores to run in parallel</span>
+<span class="sd">        n_jobs : int, optional</span>
+<span class="sd">            The number of CPU cores to use for parallel computation. Default is 1.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        [matrix_mec_graphs, matrix_graphs]: list of numpy arrays</span>
-<span class="sd">            The results of the protocol, including the matrix_mec_graph and matrix_graph.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of np.ndarray</span>
+<span class="sd">            A list containing the results of the protocol, with the MEC graphs and other results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_cd_algorithm</span><span class="p">)(</span><span class="n">data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">fold</span><span class="p">)</span> <span class="k">for</span> <span class="n">fold</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folds_to_run</span><span class="p">))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_cd_algorithm</span><span class="p">)(</span><span class="n">data</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">fold</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">fold</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folds_to_run</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="n">results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">[</span><span class="n">results</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">results</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span></div></div>
-
-
-
-
 </pre></div>
 
            </div>

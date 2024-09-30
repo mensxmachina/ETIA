@@ -115,18 +115,23 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>oos_protocol</strong> (<em>dict</em>) – Information about the out-of-sample protocol.</p></li>
-<li><p><strong>X</strong> (<em>array-like</em>) – The feature data.</p></li>
-<li><p><strong>y</strong> (<em>array-like</em><em>, </em><em>optional</em>) – The target vector in case of categorical target (for stratified k-fold).</p></li>
-<li><p><strong>target_type</strong> (<em>str</em>) – ‘continuous’ or ‘categorical’.</p></li>
+<li><p><strong>oos_protocol</strong> (<em>dict</em>) – A dictionary that specifies the out-of-sample protocol.
+The ‘name’ key should specify the type of protocol (e.g., ‘KFoldCV’, ‘Holdout’).
+The ‘folds’ or ‘test_size’ key specifies the number of folds or test size (for holdout).</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – The feature data (input variables).</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em>, </em><em>optional</em>) – The target vector (output variables). Required for stratified splits.</p></li>
+<li><p><strong>target_type</strong> (<em>str</em><em>, </em><em>optional</em>) – Indicates whether the target is ‘continuous’ or ‘categorical’. Default is ‘continuous’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><strong>train_inds</strong> (<em>list of np.ndarray</em>) – The training indices for each fold.</p></li>
-<li><p><strong>test_inds</strong> (<em>list of np.ndarray</em>) – The testing indices for each fold.</p></li>
+<li><p><strong>train_inds</strong> (<em>list of np.ndarray</em>) – A list containing the training indices for each fold or holdout split.</p></li>
+<li><p><strong>test_inds</strong> (<em>list of np.ndarray</em>) – A list containing the testing indices for each fold or holdout split.</p></li>
 </ul>
 </p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If an unsupported protocol name is provided.</p>
 </dd>
 </dl>
 </dd></dl>

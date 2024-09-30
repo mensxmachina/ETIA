@@ -123,86 +123,161 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">KFoldCV</span></span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="CausalLearning.model_validation_protocols.html#ETIA.CausalLearning.model_validation_protocols.MVP_ProtocolBase.MVP_ProtocolBase" title="ETIA.CausalLearning.model_validation_protocols.MVP_ProtocolBase.MVP_ProtocolBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MVP_ProtocolBase</span></code></a></p>
 <p>Class implementing a K-Fold Cross-Validation protocol for running a causal discovery algorithm.</p>
-<dl class="simple">
-<dt>folds: int</dt><dd><p>Number of folds to be used in the cross-validation. Default is 10.</p>
-</dd>
-<dt>folds_to_run: int</dt><dd><p>Number of folds to run the cross-validation for. Default is 1.</p>
-</dd>
-<dt>train_indexes: list of int</dt><dd><p>A list of indexes for the training samples.</p>
-</dd>
-<dt>test_indexes: list of int</dt><dd><p>A list of indexes for the test samples.</p>
-</dd>
-<dt>data_train: list of pd.DataFrame</dt><dd><p>A list of training data samples.</p>
-</dd>
-<dt>data_test: list of pd.DataFrame</dt><dd><p>A list of test data samples.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.folds">
+<span class="sig-name descname"><span class="pre">folds</span></span><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.folds" title="Permalink to this definition"></a></dt>
+<dd><p>Number of folds to be used in the cross-validation. Default is 10.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>set_params(self, parameters)</dt><dd><p>Set the number of folds and the number of folds to run the protocol for.</p>
-</dd>
-<dt>run_cd_algorithm(self, data, algorithm, parameters, fold)</dt><dd><p>Run the causal discovery algorithm on the specified fold.</p>
-</dd>
-<dt>init_protocol(self, data)</dt><dd><p>Initialize the K-Fold protocol.</p>
-</dd>
-<dt>run_protocol(self, data, algorithm, parameters, n_jobs = 1)</dt><dd><p>Run the K-Fold cross-validation protocol.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.folds_to_run">
+<span class="sig-name descname"><span class="pre">folds_to_run</span></span><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.folds_to_run" title="Permalink to this definition"></a></dt>
+<dd><p>Number of folds to run the cross-validation for. Default is 1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.train_indexes">
+<span class="sig-name descname"><span class="pre">train_indexes</span></span><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.train_indexes" title="Permalink to this definition"></a></dt>
+<dd><p>A list of indexes for the training samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.test_indexes">
+<span class="sig-name descname"><span class="pre">test_indexes</span></span><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.test_indexes" title="Permalink to this definition"></a></dt>
+<dd><p>A list of indexes for the test samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.data_train">
+<span class="sig-name descname"><span class="pre">data_train</span></span><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.data_train" title="Permalink to this definition"></a></dt>
+<dd><p>A list of training data samples for each fold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.data_test">
+<span class="sig-name descname"><span class="pre">data_test</span></span><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.data_test" title="Permalink to this definition"></a></dt>
+<dd><p>A list of test data samples for each fold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.set_params">
 <span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.set_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.set_params" title="Permalink to this definition"></a></dt>
 <dd><p>Set the number of folds and the number of folds to run the protocol for.</p>
-<dl class="simple">
-<dt>parameters: dict</dt><dd><p>A dictionary of parameters, including the number of folds and the number of folds to run the protocol for.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.run_cd_algorithm">
 <span class="sig-name descname"><span class="pre">run_cd_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.run_cd_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.run_cd_algorithm" title="Permalink to this definition"></a></dt>
 <dd><p>Run the causal discovery algorithm on the specified fold.</p>
-<dl class="simple">
-<dt>data: pd.DataFrame</dt><dd><p>The data to be used for running the algorithm.</p>
-</dd>
-<dt>algorithm: object</dt><dd><p>The causal discovery algorithm to be used.</p>
-</dd>
-<dt>parameters: dict</dt><dd><p>A dictionary of parameters to be passed to the algorithm.</p>
-</dd>
-<dt>fold: int</dt><dd><p>The current fold to run the algorithm for.</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>[matrix_mec_graph, matrix_graph]: list of numpy arrays</dt><dd><p>The results of the causal discovery algorithm, including the matrix_mec_graph and matrix_graph.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.init_protocol">
 <span class="sig-name descname"><span class="pre">init_protocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.init_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.init_protocol" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize the K-Fold protocol.</p>
-<dl class="simple">
-<dt>data: pd.DataFrame</dt><dd><p>The data to be used for the cross-validation.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.run_protocol">
 <span class="sig-name descname"><span class="pre">run_protocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.run_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.model_validation_protocols.kfold.kfold.KFoldCV.run_protocol" title="Permalink to this definition"></a></dt>
-<dd><p>Run the causal discovery algorithm on the specified fold.</p>
-<dl class="simple">
-<dt>data: pd.DataFrame</dt><dd><p>The data to be used for running the algorithm.</p>
-</dd>
-<dt>algorithm: object</dt><dd><p>The causal discovery algorithm to be used.</p>
-</dd>
-<dt>parameters: dict</dt><dd><p>A dictionary of parameters to be passed to the algorithm.</p>
-</dd>
-<dt>n_jobs: int</dt><dd><p>The number of CPU cores to run in parallel</p>
+<dd><p>Run the K-Fold cross-validation protocol.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.set_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Set the number of folds and the number of folds to run the protocol for.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – A dictionary of parameters, including the number of folds and the number of folds to run.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables detailed logging. Default is False.</p></li>
+</ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>[matrix_mec_graphs, matrix_graphs]: list of numpy arrays</dt><dd><p>The results of the protocol, including the matrix_mec_graph and matrix_graph.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">run_cd_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fold</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.run_cd_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Run the causal discovery algorithm on the specified fold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – The dataset on which to run the causal discovery algorithm.</p></li>
+<li><p><strong>algorithm</strong> (<em>object</em>) – The causal discovery algorithm to be used.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – A dictionary of parameters to pass to the algorithm.</p></li>
+<li><p><strong>fold</strong> (<em>int</em>) – The current fold number for which to run the algorithm.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing the MEC graph and library results produced by the causal discovery algorithm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">init_protocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.init_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the K-Fold protocol by splitting the data into training and test sets for each fold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>pd.DataFrame</em>) – The dataset to be used for the cross-validation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">run_protocol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/model_validation_protocols/kfold/kfold.html#KFoldCV.run_protocol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Run the K-Fold cross-validation protocol with the specified causal discovery algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>pd.DataFrame</em>) – The dataset on which to run the algorithm.</p></li>
+<li><p><strong>algorithm</strong> (<em>object</em>) – The causal discovery algorithm to use.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – A dictionary of parameters to be passed to the algorithm.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of CPU cores to use for parallel computation. Default is 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing the results of the protocol, with the MEC graphs and other results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of np.ndarray</p>
 </dd>
 </dl>
 </dd></dl>

@@ -122,43 +122,111 @@
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TigramiteAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that implements causal discovery using the Tigramite library.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.init_algo">
 <span class="sig-name descname"><span class="pre">init_algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.init_algo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.init_algo" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Initializes the algorithm with the data type and time information.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.prepare_data">
 <span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.prepare_data" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Prepares the dataset for Tigramite algorithms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm._ci_test">
+<span class="sig-name descname"><span class="pre">_ci_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm._ci_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm._ci_test" title="Permalink to this definition"></a></dt>
+<dd><p>Configures the conditional independence test to be used in the algorithm.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm._algo">
+<span class="sig-name descname"><span class="pre">_algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataframe_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ci_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm._algo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm._algo" title="Permalink to this definition"></a></dt>
+<dd><p>Configures and runs the selected causal discovery algorithm.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.output_to_array">
 <span class="sig-name descname"><span class="pre">output_to_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.output_to_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.output_to_array" title="Permalink to this definition"></a></dt>
-<dd><p>Covert tigramite graph to numpy array
-:param tigramite_graph:
-:type tigramite_graph: graph from tigramite (0time series graph)
-:param var_names:
-:type var_names: the variable names</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>matrix</strong> (<em>a numpy array of size N*N where N is the number of nodes</em>) – matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
-matrix(i, j) = 1 and matrix(j, i) = 1: io-oj  should appear only in PAGs
-matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j  should appear only in MAGs and PAGs
-matrix(i, j) = 3 and matrix(j, i) = 3: i—j  should appear only in PDAGs
-matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p></li>
-<li><p><em>if n_lags is not None then the first indexes of matrix correspond to the nodes of the time lag=0, then to time lag=1 etc</em></p></li>
-</ul>
-</p>
-</dd>
-</dl>
+<dd><p>Converts the Tigramite graph output into a numpy array representation.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepare_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CausalLearning.algorithms.tigramite_algorithm.TigramiteAlgorithm.TigramiteAlgorithm.run" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Runs the specified Tigramite algorithm on the provided data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">init_algo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.init_algo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the algorithm with data type and time lag information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_info</strong> (<em>dict</em>) – Dictionary containing the data type information and time lag details.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd><p>Prepares the dataset for use in the Tigramite algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Data</strong> (<em>object</em>) – The dataset to be prepared.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – Additional parameters for data preparation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Prepared dataset in Tigramite format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">output_to_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.output_to_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the Tigramite graph output to a numpy array representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output</strong> (<em>dict</em>) – The output of the Tigramite algorithm containing the graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas DataFrame representing the adjacency matrix of the learned graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prepare_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/algorithms/tigramite_algorithm/TigramiteAlgorithm.html#TigramiteAlgorithm.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the Tigramite algorithm on the provided data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>object</em>) – The dataset to be used in the algorithm.</p></li>
+<li><p><strong>parameters</strong> (<em>dict</em>) – The parameters for the algorithm (e.g., significance level, ci_test).</p></li>
+<li><p><strong>prepare_data</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, prepares the data before running the algorithm. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the learned graph and a dictionary of results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

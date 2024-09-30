@@ -132,9 +132,9 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The input data.</p></li>
-<li><p><strong>config</strong> – The configuration for the causal model.</p></li>
-<li><p><strong>tiers</strong> – Tiers for variable selection.</p></li>
-<li><p><strong>is_cat_var</strong> – Boolean array indicating if the variable is categorical.</p></li>
+<li><p><strong>config</strong> (<em>dict</em>) – The configuration for the causal model.</p></li>
+<li><p><strong>tiers</strong> (<em>list</em>) – Tiers for variable selection.</p></li>
+<li><p><strong>is_cat_var</strong> (<em>list of bool</em>) – Boolean array indicating if the variable is categorical.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -155,9 +155,9 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n_bootstraps</strong> (<em>int</em>) – Number of bootstrap repetitions.</p></li>
 <li><p><strong>input_data</strong> (<em>numpy.ndarray</em>) – The input data.</p></li>
-<li><p><strong>tiers</strong> – Tiers for variable selection.</p></li>
-<li><p><strong>best_config</strong> – The best causal configuration to estimate the bootstrapped graphs.</p></li>
-<li><p><strong>is_cat_var</strong> – Boolean array indicating if the variable is categorical.</p></li>
+<li><p><strong>tiers</strong> (<em>list</em>) – Tiers for variable selection.</p></li>
+<li><p><strong>best_config</strong> (<em>dict</em>) – The best causal configuration to estimate the bootstrapped graphs.</p></li>
+<li><p><strong>is_cat_var</strong> (<em>list of bool</em>) – Boolean array indicating if the variable is categorical.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -176,9 +176,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>best_mec_matrix</strong> – The best MEC matrix.</p></li>
-<li><p><strong>isPAG</strong> – True if the matrix is a PAG, False otherwise.</p></li>
-<li><p><strong>bootstrapped_mec_matrix</strong> – Bootstrapped MEC matrices.</p></li>
+<li><p><strong>best_mec_matrix</strong> (<em>numpy.ndarray</em>) – The best MEC matrix.</p></li>
+<li><p><strong>isPAG</strong> (<em>bool</em>) – True if the matrix is a PAG, False otherwise.</p></li>
+<li><p><strong>bootstrapped_mec_matrix</strong> (<em>list of numpy.ndarray</em>) – Bootstrapped MEC matrices.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -197,9 +197,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> – The dataset.</p></li>
-<li><p><strong>opt_conf</strong> – The optimal configuration.</p></li>
-<li><p><strong>n_bootstraps</strong> (<em>int</em>) – Number of bootstrap repetitions.</p></li>
+<li><p><strong>dataset</strong> (<em>object</em>) – The dataset.</p></li>
+<li><p><strong>opt_conf</strong> (<em>dict</em>) – The optimal configuration.</p></li>
+<li><p><strong>n_bootstraps</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of bootstrap repetitions. Default is 50.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
