@@ -53,9 +53,31 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Causal Learning (CL)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#core-objectives">Core Objectives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-cl-works">How CL Works</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#available-algorithms">Available Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#available-independence-tests">Available Independence Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#available-scoring-functions">Available Scoring Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#available-independence-tests">Available Independence Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#available-scoring-functions">Available Scoring Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#algorithm-parameters">Algorithm Parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pc-algorithm-parameters">PC Algorithm Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cpc-parameters">CPC Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fges-parameters">FGES Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fci-parameters">FCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fci-max-parameters">FCI-Max Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rfci-parameters">RFCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gfci-parameters">GFCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cfci-parameters">CFCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#svar-fci-parameters">sVAR-FCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#svargfci-parameters">svargFCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pcmci-parameters">PCMCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">PCMCI+ Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lpcmci-parameters">LPCMCI Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sam-parameters">SAM Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notears-parameters">NOTEARS Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#key-details">Key Details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#notes">Notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#main-class">Main Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#helper-classes">Helper Classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html">ETIA.CausalLearning.algorithms.causalnex_algorithm package</a></li>
@@ -133,72 +155,121 @@ Once the best configuration is selected, the CL module applies the causal discov
 The discovered causal graphs are evaluated using scoring functions to assess their fit to the data. The evaluation considers the accuracy of the learned structure in representing the true causal relationships.</p></li>
 </ol>
 </section>
+</section>
 <section id="available-algorithms">
-<h2>Available Algorithms<a class="headerlink" href="#available-algorithms" title="Permalink to this heading"></a></h2>
+<h1>Available Algorithms<a class="headerlink" href="#available-algorithms" title="Permalink to this heading"></a></h1>
 <p>The CL module offers a variety of causal discovery algorithms, each suited for different data types and assumptions. These algorithms are listed below:</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
-<th class="head"><p>Data Type</p></th>
-<th class="head"><p>Description</p></th>
+<tr class="row-odd"><th class="head"><p><strong>Algorithm</strong></p></th>
+<th class="head"><p><strong>Data Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>PC</strong></p></td>
 <td><p>Continuous, Mixed,
 Categorical</p></td>
-<td><p>A constraint-based algorithm that uses
-conditional independence tests to learn
-the causal structure. Assumes causal sufficiency.</p></td>
+<td><p>A constraint-based algorithm that uses conditional independence tests to learn the causal structure. Assumes causal sufficiency. Supports continuous,
+mixed, and categorical data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>CPC</strong></p></td>
 <td><p>Continuous, Mixed,
 Categorical</p></td>
-<td><p>A variant of PC that improves stability by
-handling non-faithful distributions.</p></td>
+<td><p>A variant of the PC algorithm that improves stability by handling non-faithful distributions. Assumes causal sufficiency. Supports continuous, mixed,
+and categorical data.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>FGES</strong></p></td>
 <td><p>Continuous, Mixed,
 Categorical</p></td>
-<td><p>A score-based algorithm that does not assume
-causal sufficiency. Suitable for high-
-dimensional data.</p></td>
+<td><p>A score-based algorithm that does not assume causal sufficiency. Suitable for high-dimensional data. Utilizes various scoring functions like SEM BIC
+Score, BDeu, Discrete BIC, CG BIC, and DG BIC.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>GFCI</strong></p></td>
+<tr class="row-odd"><td><p><strong>FCI</strong></p></td>
 <td><p>Continuous, Mixed,
 Categorical</p></td>
-<td><p>A hybrid algorithm combining constraint-based
-and score-based methods. Allows for latent
-confounders.</p></td>
+<td><p>A constraint-based algorithm that accounts for latent confounders. Uses conditional independence tests to infer the causal structure. Supports continuous,
+mixed, and categorical data.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>LiNGAM</strong></p></td>
-<td><p>Continuous</p></td>
-<td><p>A linear non-Gaussian causal discovery method.
-Suitable for discovering linear causal
-relationships in continuous data.</p></td>
+<tr class="row-even"><td><p><strong>FCI-Max</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>An extension of the FCI algorithm that maximizes certain criteria for improved causal discovery. Assumes the presence of latent variables. Supports
+continuous, mixed, and categorical data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>DirectLiNGAM</strong></p></td>
-<td><p>Continuous</p></td>
-<td><p>A fast variant of the LiNGAM algorithm that
-performs well on high-dimensional datasets.</p></td>
+<tr class="row-odd"><td><p><strong>RFCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>A relaxed version of the FCI algorithm that offers faster performance with slightly relaxed constraints. Assumes the presence of latent variables. Supports
+continuous, mixed, and categorical data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>GFCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>A hybrid algorithm combining constraint-based and score-based methods. Allows for latent confounders and utilizes various conditional independence tests.
+Supports continuous, mixed, and categorical data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CFCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>Combines features of the FCI and RFCI algorithms to enhance causal discovery in the presence of latent variables. Supports continuous, mixed, and
+categorical data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>sVAR-FCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical (Time Series)</p></td>
+<td><p>A time-series variant of the FCI algorithm that accounts for temporal dependencies. Supports time series data along with continuous, mixed, and
+categorical data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>svargFCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical (Time Series)</p></td>
+<td><p>An extension of sVAR-FCI that incorporates additional scoring functions like SEM BIC Score, BDeu, Discrete BIC, CG BIC, and DG BIC for enhanced causal
+discovery in time-series data.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>PCMCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical (Time Series)</p></td>
+<td><dl class="simple">
+<dt>A time-series causal discovery algorithm that does not assume causal sufficiency. Utilizes conditional mutual information tests and various</dt><dd><p>correlation-based methods like ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, and RegressionCI.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><strong>PCMCI+</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical (Time Series)</p></td>
+<td><p>An enhanced version of PCMCI with improved handling of time lags and dependencies. Utilizes the same set of conditional mutual information tests and
+correlation-based methods as PCMCI.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>LPCMCI</strong></p></td>
+<td><p>Continuous, Mixed,
+Categorical (Time Series)</p></td>
+<td><p>A latent-variable variant of PCMCI that accounts for unobserved confounders. Utilizes conditional mutual information tests and correlation-based
+methods similar to PCMCI.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SAM</strong></p></td>
+<td><p>Continuous, Mixed</p></td>
+<td><p>A neural network-based causal discovery algorithm that does not assume causal sufficiency. Includes parameters like learning rate, regularization,
+hidden neurons, training/testing epochs, batch size, and loss type.</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>NOTEARS</strong></p></td>
-<td><p>Continuous</p></td>
-<td><p>An optimization-based algorithm that learns
-causal structure using least squares and
-L1-regularization.</p></td>
+<td><p>Continuous, Mixed,
+Categorical</p></td>
+<td><p>An optimization-based algorithm that learns causal structures using least squares and L1-regularization. Assumes causal sufficiency. Supports continuous,
+mixed, and categorical data.</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="available-independence-tests">
-<h2>Available Independence Tests<a class="headerlink" href="#available-independence-tests" title="Permalink to this heading"></a></h2>
+<h1>Available Independence Tests<a class="headerlink" href="#available-independence-tests" title="Permalink to this heading"></a></h1>
 <p>The CL module supports a range of conditional independence tests, enabling flexibility in testing relationships between variables across different data types:</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Test Name</p></th>
-<th class="head"><p>Data Type</p></th>
-<th class="head"><p>Description</p></th>
+<tr class="row-odd"><th class="head"><p><strong>Test Name</strong></p></th>
+<th class="head"><p><strong>Data Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
 </tr>
 </thead>
 <tbody>
@@ -229,22 +300,47 @@ data, based on the G-statistic.</p></td>
 <td><p>Continuous</p></td>
 <td><p>Test based on partial correlation.</p></td>
 </tr>
+<tr class="row-even"><td><p><strong>RobustParCor</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>A robust version of the partial correlation test,
+less sensitive to outliers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GPDC</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>Gaussian Process-based Dependency Criterion.</p></td>
+</tr>
 <tr class="row-even"><td><p><strong>CMIknn</strong></p></td>
 <td><p>Continuous</p></td>
 <td><p>Conditional Mutual Information test using
 nearest neighbors.</p></td>
 </tr>
+<tr class="row-odd"><td><p><strong>ParCorrWLS</strong></p></td>
+<td><p>Continuous</p></td>
+<td><p>Partial Correlation with Weighted Least Squares.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Gsquared</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>G-squared test adapted for mixed data types.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CMIsymb</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>Symmetric Conditional Mutual Information test.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>RegressionCI</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>Regression-based Conditional Independence test.</p></td>
+</tr>
 </tbody>
 </table>
 </section>
 <section id="available-scoring-functions">
-<h2>Available Scoring Functions<a class="headerlink" href="#available-scoring-functions" title="Permalink to this heading"></a></h2>
+<h1>Available Scoring Functions<a class="headerlink" href="#available-scoring-functions" title="Permalink to this heading"></a></h1>
 <p>To evaluate the causal graphs, the CL module includes several scoring functions, allowing flexibility in selecting the most appropriate metric for the data:</p>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Score Name</p></th>
-<th class="head"><p>Data Type</p></th>
-<th class="head"><p>Description</p></th>
+<tr class="row-odd"><th class="head"><p><strong>Score Name</strong></p></th>
+<th class="head"><p><strong>Data Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
 </tr>
 </thead>
 <tbody>
@@ -258,17 +354,503 @@ Equation Models. Suitable for continuous data.</p></td>
 <td><p>Bayesian Dirichlet equivalent uniform score
 for categorical data.</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>CG-BIC</strong></p></td>
+<tr class="row-even"><td><p><strong>Discrete BIC</strong></p></td>
+<td><p>Categorical</p></td>
+<td><p>Bayesian Information Criterion for discrete
+data models.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CG-BIC</strong></p></td>
 <td><p>Mixed</p></td>
 <td><p>BIC score for mixed data models (continuous
 and categorical).</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>DG-BIC</strong></p></td>
+<tr class="row-even"><td><p><strong>DG-BIC</strong></p></td>
 <td><p>Mixed</p></td>
 <td><p>BIC score for discrete Gaussian models.</p></td>
 </tr>
+<tr class="row-odd"><td><p><strong>GFCI Score</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>Scoring function used by the GFCI algorithm to
+evaluate causal structures.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>svargFCI Score</strong></p></td>
+<td><p>Mixed</p></td>
+<td><p>Enhanced scoring function for svargFCI with
+additional metrics like SEM BIC Score, BDeu,
+Discrete BIC, CG BIC, and DG BIC.</p></td>
+</tr>
 </tbody>
 </table>
+</section>
+<section id="algorithm-parameters">
+<h1>Algorithm Parameters<a class="headerlink" href="#algorithm-parameters" title="Permalink to this heading"></a></h1>
+<p>Each algorithm may have specific parameters that can be tuned to optimize performance based on the dataset and requirements. Below are the parameters for each available algorithm:</p>
+<section id="pc-algorithm-parameters">
+<h2>PC Algorithm Parameters<a class="headerlink" href="#pc-algorithm-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id11">
+<caption><span class="caption-text"><strong>PC Algorithm Parameters</strong></span><a class="headerlink" href="#id11" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use the stable version of the PC algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cpc-parameters">
+<h2>CPC Parameters<a class="headerlink" href="#cpc-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-text"><strong>CPC Parameters</strong></span><a class="headerlink" href="#id12" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use the stable version of the CPC algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fges-parameters">
+<h2>FGES Parameters<a class="headerlink" href="#fges-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-text"><strong>FGES Parameters</strong></span><a class="headerlink" href="#id13" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>score</cite></p></td>
+<td><p>string</p></td>
+<td><p>Scoring function to use. Options: sem_bic_score, bdeu, discrete_bic, cg_bic, dg_bic.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fci-parameters">
+<h2>FCI Parameters<a class="headerlink" href="#fci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-text"><strong>FCI Parameters</strong></span><a class="headerlink" href="#id14" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the FCI algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fci-max-parameters">
+<h2>FCI-Max Parameters<a class="headerlink" href="#fci-max-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-text"><strong>FCI-Max Parameters</strong></span><a class="headerlink" href="#id15" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the FCI-Max algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rfci-parameters">
+<h2>RFCI Parameters<a class="headerlink" href="#rfci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id16">
+<caption><span class="caption-text"><strong>RFCI Parameters</strong></span><a class="headerlink" href="#id16" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the RFCI algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gfci-parameters">
+<h2>GFCI Parameters<a class="headerlink" href="#gfci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id17">
+<caption><span class="caption-text"><strong>GFCI Parameters</strong></span><a class="headerlink" href="#id17" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the GFCI algorithm.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>score</cite></p></td>
+<td><p>string</p></td>
+<td><p>Additional scoring functions (optional): sem_bic_score, bdeu, discrete_bic, cg_bic, dg_bic.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cfci-parameters">
+<h2>CFCI Parameters<a class="headerlink" href="#cfci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id18">
+<caption><span class="caption-text"><strong>CFCI Parameters</strong></span><a class="headerlink" href="#id18" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the CFCI algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="svar-fci-parameters">
+<h2>sVAR-FCI Parameters<a class="headerlink" href="#svar-fci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id19">
+<caption><span class="caption-text"><strong>sVAR-FCI Parameters</strong></span><a class="headerlink" href="#id19" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the sVAR-FCI algorithm.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>time_series</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Indicates if the data is a time series.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="svargfci-parameters">
+<h2>svargFCI Parameters<a class="headerlink" href="#svargfci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id20">
+<caption><span class="caption-text"><strong>svargFCI Parameters</strong></span><a class="headerlink" href="#id20" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: FisherZ, cg_lrt, dg_lrt, chisquare, gsquare.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>stable</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Whether to use a stable version of the svargFCI algorithm.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>score</cite></p></td>
+<td><p>string</p></td>
+<td><p>Additional scoring functions: sem_bic_score, bdeu, discrete_bic, cg_bic, dg_bic.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>time_series</cite></p></td>
+<td><p>boolean</p></td>
+<td><p>Indicates if the data is a time series.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pcmci-parameters">
+<h2>PCMCI Parameters<a class="headerlink" href="#pcmci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id21">
+<caption><span class="caption-text"><strong>PCMCI Parameters</strong></span><a class="headerlink" href="#id21" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id1">
+<h2>PCMCI+ Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id22">
+<caption><span class="caption-text"><strong>PCMCI+ Parameters</strong></span><a class="headerlink" href="#id22" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lpcmci-parameters">
+<h2>LPCMCI Parameters<a class="headerlink" href="#lpcmci-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id23">
+<caption><span class="caption-text"><strong>LPCMCI Parameters</strong></span><a class="headerlink" href="#id23" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>ci_test</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of conditional independence test to use. Options: ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sam-parameters">
+<h2>SAM Parameters<a class="headerlink" href="#sam-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id24">
+<caption><span class="caption-text"><strong>SAM Parameters</strong></span><a class="headerlink" href="#id24" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>lr</cite></p></td>
+<td><p>float</p></td>
+<td><p>Learning rate. Options: 0.001, 0.01, 0.1.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>dlr</cite></p></td>
+<td><p>float</p></td>
+<td><p>Decay learning rate. Options: 0.0001, 0.001, 0.01.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>lambda1</cite></p></td>
+<td><p>float</p></td>
+<td><p>Regularization parameter 1. Options: 1, 10, 100.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>lambda2</cite></p></td>
+<td><p>float</p></td>
+<td><p>Regularization parameter 2. Options: 0.0001, 0.001, 0.01.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>nh</cite></p></td>
+<td><p>int</p></td>
+<td><p>Number of hidden neurons. Options: 10, 20, 50.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>dnh</cite></p></td>
+<td><p>int</p></td>
+<td><p>Decay hidden neurons. Options: 100, 200, 300.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>train_epochs</cite></p></td>
+<td><p>int</p></td>
+<td><p>Number of training epochs. Options: 1000, 3000, 5000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>test_epochs</cite></p></td>
+<td><p>int</p></td>
+<td><p>Number of testing epochs. Options: 500, 1000, 1500.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>batch_size</cite></p></td>
+<td><p>int</p></td>
+<td><p>Batch size. Options: 50, 100, 200.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>losstype</cite></p></td>
+<td><p>string</p></td>
+<td><p>Type of loss function. Options: fgan, gan, mse.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notears-parameters">
+<h2>NOTEARS Parameters<a class="headerlink" href="#notears-parameters" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default" id="id25">
+<caption><span class="caption-text"><strong>NOTEARS Parameters</strong></span><a class="headerlink" href="#id25" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Parameter</strong></p></th>
+<th class="head"><p><strong>Type</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>max_iter</cite></p></td>
+<td><p>int</p></td>
+<td><p>Maximum number of iterations. Options: 100, 500, 1000.</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>h_tol</cite></p></td>
+<td><p>float</p></td>
+<td><p>Tolerance for convergence. Options: 1e-7, 1e-5, 1e-3.</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>threshold</cite></p></td>
+<td><p>float</p></td>
+<td><p>Threshold for edge inclusion. Options: 0.0, 0.5, 0.8.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="key-details">
+<h1>Key Details<a class="headerlink" href="#key-details" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>Latent Variables Supported:</strong>
+- <strong>✓</strong>: Supports latent (unobserved) variables.
+- <strong>✕</strong>: Does <strong>not</strong> support latent variables (causal sufficiency assumed).</p></li>
+<li><p><strong>Tests/Scores Used:</strong>
+- <strong>Conditional Independence Tests (`ci_test`):</strong> Methods like FisherZ, CG-LRT, DG-LRT, Chi-Square, G-Square, ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.
+- <strong>Scores (`score`):</strong> Metrics like SEM BIC Score, BDeu, Discrete BIC, CG-BIC, DG-BIC, GFCI Score, svargFCI Score.
+- <strong>Additional Parameters:</strong> Algorithms like SAM and NOTEARS have specific parameters relevant to their optimization and learning processes.</p></li>
+<li><p><strong>Data Type:</strong>
+- <strong>Continuous:</strong> Numeric data without discrete categories.
+- <strong>Mixed:</strong> Combination of continuous and categorical data.
+- <strong>Categorical:</strong> Data with discrete categories.
+- <strong>Time Series:</strong> Data that includes temporal dependencies.</p></li>
+</ul>
+</section>
+<section id="notes">
+<h1>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><strong>Assumptions:</strong>
+- <strong>Causal Sufficiency:</strong> If set to <cite>False</cite>, the algorithm accounts for potential latent variables.
+- <strong>Assume Faithfulness:</strong> Indicates whether the algorithm assumes the faithfulness condition holds, impacting its ability to recover the true causal graph.</p></li>
+</ul>
 <p>### CL Output
 The output of the CL module includes:</p>
 <ul class="simple">
@@ -276,7 +858,6 @@ The output of the CL module includes:</p>
 <li><p>The best-performing causal discovery configuration, including the selected algorithm, independence test, and scoring function.</p></li>
 </ul>
 <p>By providing an optimized causal discovery pipeline, the CL module ensures that the causal relationships discovered are both accurate and interpretable, facilitating further analysis and reasoning.</p>
-</section>
 <section id="main-class">
 <h2>Main Class<a class="headerlink" href="#main-class" title="Permalink to this heading"></a></h2>
 <p>The main entry point for using the CL module is the <cite>CausalLearner</cite> class. This class allows users to configure and run the causal discovery process, selecting from a variety of algorithms, tests, and scoring functions. The causal graphs generated can then be passed on for downstream reasoning or visualization tasks.</p>
@@ -377,8 +958,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">print_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt_conf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.print_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">print_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">opt_conf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.print_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
 <dd><p>Prints the results of the causal discovery process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -388,8 +969,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">set_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">set_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the dataset for the causal learner.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -402,8 +983,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">set_configurations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configurations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_configurations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">set_configurations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configurations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.set_configurations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the configurations for the causal learner.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -416,8 +997,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">save_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.save_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
 <dd><p>Saves the progress of the experiment to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -427,8 +1008,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id5">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id5" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id6">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.load_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
 <dd><p>Loads the progress of the experiment from a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -444,8 +1025,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id6">
-<span class="sig-name descname"><span class="pre">add_configurations_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.add_configurations_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id6" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">add_configurations_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.add_configurations_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
 <dd><p>Adds additional configurations to the experiment from a JSON file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -455,14 +1036,14 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id7">
-<span class="sig-name descname"><span class="pre">update_learnt_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.update_learnt_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id7" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">update_learnt_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.update_learnt_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Permalink to this definition"></a></dt>
 <dd><p>Updates the learnt model with the new configurations.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id8">
-<span class="sig-name descname"><span class="pre">get_best_model_between_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id8" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">get_best_model_between_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_algorithms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the best model between specified algorithms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -478,8 +1059,8 @@ The output of the CL module includes:</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id9">
-<span class="sig-name descname"><span class="pre">get_best_model_between_family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">admit_latent_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_faithfulness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_output_mec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accepts_missing_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_family"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id9" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">get_best_model_between_family</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">admit_latent_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assume_faithfulness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_output_mec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accepts_missing_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CausalLearning/CausalLearner.html#CausalLearner.get_best_model_between_family"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id10" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the best model within a family of algorithms based on specified criteria.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

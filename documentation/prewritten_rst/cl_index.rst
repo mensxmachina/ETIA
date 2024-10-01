@@ -35,54 +35,54 @@ Available Algorithms
 
 The CL module offers a variety of causal discovery algorithms, each suited for different data types and assumptions. These algorithms are listed below:
 
-+--------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Algorithm**      | **Data Type**              | **Description**                                                                                                                                         |
-+====================+============================+=========================================================================================================================================================+
-| **PC**             | Continuous, Mixed,         | A constraint-based algorithm that uses conditional independence tests to learn the causal structure. Assumes causal sufficiency. Supports continuous,   |
-|                    | Categorical                | mixed, and categorical data.                                                                                                                             |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **CPC**            | Continuous, Mixed,         | A variant of the PC algorithm that improves stability by handling non-faithful distributions. Assumes causal sufficiency. Supports continuous, mixed,  |
-|                    | Categorical                | and categorical data.                                                                                                                                   |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **FGES**           | Continuous, Mixed,         | A score-based algorithm that does not assume causal sufficiency. Suitable for high-dimensional data. Utilizes various scoring functions like SEM BIC      |
-|                    | Categorical                | Score, BDeu, Discrete BIC, CG BIC, and DG BIC.                                                                                                           |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **FCI**            | Continuous, Mixed,         | A constraint-based algorithm that accounts for latent confounders. Uses conditional independence tests to infer the causal structure. Supports continuous, |
-|                    | Categorical                | mixed, and categorical data.                                                                                                                             |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **FCI-Max**        | Continuous, Mixed,         | An extension of the FCI algorithm that maximizes certain criteria for improved causal discovery. Assumes the presence of latent variables. Supports      |
-|                    | Categorical                | continuous, mixed, and categorical data.                                                                                                                 |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **RFCI**           | Continuous, Mixed,         | A relaxed version of the FCI algorithm that offers faster performance with slightly relaxed constraints. Assumes the presence of latent variables. Supports |
-|                    | Categorical                | continuous, mixed, and categorical data.                                                                                                                 |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **GFCI**           | Continuous, Mixed,         | A hybrid algorithm combining constraint-based and score-based methods. Allows for latent confounders and utilizes various conditional independence tests. |
-|                    | Categorical                | Supports continuous, mixed, and categorical data.                                                                                                       |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **CFCI**           | Continuous, Mixed,         | Combines features of the FCI and RFCI algorithms to enhance causal discovery in the presence of latent variables. Supports continuous, mixed, and       |
-|                    | Categorical                | categorical data.                                                                                                                                         |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **sVAR-FCI**       | Continuous, Mixed,         | A time-series variant of the FCI algorithm that accounts for temporal dependencies. Supports time series data along with continuous, mixed, and          |
-|                    | Categorical (Time Series)  | categorical data.                                                                                                                                          |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **svargFCI**       | Continuous, Mixed,         | An extension of sVAR-FCI that incorporates additional scoring functions like SEM BIC Score, BDeu, Discrete BIC, CG BIC, and DG BIC for enhanced causal|
-|                    | Categorical (Time Series)  | discovery in time-series data.                                                                                                                            |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **PCMCI**          | Continuous, Mixed,         | A time-series causal discovery algorithm that does not assume causal sufficiency. Utilizes conditional mutual information tests and various correlation-based|
-|                    | Categorical (Time Series)  | methods like ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, and RegressionCI.                                                       |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **PCMCI+**         | Continuous, Mixed,         | An enhanced version of PCMCI with improved handling of time lags and dependencies. Utilizes the same set of conditional mutual information tests and           |
-|                    | Categorical (Time Series)  | correlation-based methods as PCMCI.                                                                                                                        |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **LPCMCI**         | Continuous, Mixed,         | A latent-variable variant of PCMCI that accounts for unobserved confounders. Utilizes conditional mutual information tests and correlation-based methods similar |
-|                    | Categorical (Time Series)  | to PCMCI.                                                                                                                                                 |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **SAM**            | Continuous, Mixed           | A neural network-based causal discovery algorithm that does not assume causal sufficiency. Includes parameters like learning rate, regularization, hidden neurons,|
-|                    |                            | training/testing epochs, batch size, and loss type.                                                                                                       |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **NOTEARS**        | Continuous, Mixed,         | An optimization-based algorithm that learns causal structures using least squares and L1-regularization. Assumes causal sufficiency. Supports continuous, mixed,|
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Algorithm**      | **Data Type**              | **Description**                                                                                                                                            |
++====================+============================+============================================================================================================================================================+
+| **PC**             | Continuous, Mixed,         | A constraint-based algorithm that uses conditional independence tests to learn the causal structure. Assumes causal sufficiency. Supports continuous,      |
+|                    | Categorical                | mixed, and categorical data.                                                                                                                               |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **CPC**            | Continuous, Mixed,         | A variant of the PC algorithm that improves stability by handling non-faithful distributions. Assumes causal sufficiency. Supports continuous, mixed,      |
 |                    | Categorical                | and categorical data.                                                                                                                                      |
-+--------------------+----------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **FGES**           | Continuous, Mixed,         | A score-based algorithm that does not assume causal sufficiency. Suitable for high-dimensional data. Utilizes various scoring functions like SEM BIC       |
+|                    | Categorical                | Score, BDeu, Discrete BIC, CG BIC, and DG BIC.                                                                                                             |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **FCI**            | Continuous, Mixed,         | A constraint-based algorithm that accounts for latent confounders. Uses conditional independence tests to infer the causal structure. Supports continuous, |
+|                    | Categorical                | mixed, and categorical data.                                                                                                                               |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **FCI-Max**        | Continuous, Mixed,         | An extension of the FCI algorithm that maximizes certain criteria for improved causal discovery. Assumes the presence of latent variables. Supports        |
+|                    | Categorical                | continuous, mixed, and categorical data.                                                                                                                   |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **RFCI**           | Continuous, Mixed,         | A relaxed version of the FCI algorithm that offers faster performance with slightly relaxed constraints. Assumes the presence of latent variables. Supports|
+|                    | Categorical                | continuous, mixed, and categorical data.                                                                                                                   |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **GFCI**           | Continuous, Mixed,         | A hybrid algorithm combining constraint-based and score-based methods. Allows for latent confounders and utilizes various conditional independence tests.  |
+|                    | Categorical                | Supports continuous, mixed, and categorical data.                                                                                                          |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **CFCI**           | Continuous, Mixed,         | Combines features of the FCI and RFCI algorithms to enhance causal discovery in the presence of latent variables. Supports continuous, mixed, and          |
+|                    | Categorical                | categorical data.                                                                                                                                          |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **sVAR-FCI**       | Continuous, Mixed,         | A time-series variant of the FCI algorithm that accounts for temporal dependencies. Supports time series data along with continuous, mixed, and            |
+|                    | Categorical (Time Series)  | categorical data.                                                                                                                                          |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **svargFCI**       | Continuous, Mixed,         | An extension of sVAR-FCI that incorporates additional scoring functions like SEM BIC Score, BDeu, Discrete BIC, CG BIC, and DG BIC for enhanced causal     |
+|                    | Categorical (Time Series)  | discovery in time-series data.                                                                                                                             |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **PCMCI**          | Continuous, Mixed,         | A time-series causal discovery algorithm that does not assume causal sufficiency. Utilizes conditional mutual information tests and various                |
+|                    | Categorical (Time Series)  |  correlation-based methods like ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, and RegressionCI.                                       |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **PCMCI+**         | Continuous, Mixed,         | An enhanced version of PCMCI with improved handling of time lags and dependencies. Utilizes the same set of conditional mutual information tests and       |
+|                    | Categorical (Time Series)  | correlation-based methods as PCMCI.                                                                                                                        |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **LPCMCI**         | Continuous, Mixed,         | A latent-variable variant of PCMCI that accounts for unobserved confounders. Utilizes conditional mutual information tests and correlation-based           |
+|                    | Categorical (Time Series)  | methods similar to PCMCI.                                                                                                                                  |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **SAM**            | Continuous, Mixed          | A neural network-based causal discovery algorithm that does not assume causal sufficiency. Includes parameters like learning rate, regularization,         |
+|                    |                            | hidden neurons, training/testing epochs, batch size, and loss type.                                                                                        |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **NOTEARS**        | Continuous, Mixed,         | An optimization-based algorithm that learns causal structures using least squares and L1-regularization. Assumes causal sufficiency. Supports continuous,  |
+|                    | Categorical                | mixed, and categorical data.                                                                                                                               |
++--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Available Independence Tests
 ===========================
@@ -107,21 +107,21 @@ The CL module supports a range of conditional independence tests, enabling flexi
 +--------------------+-------------------+--------------------------------------------------+
 | **ParCor**         | Continuous        | Test based on partial correlation.               |
 +--------------------+-------------------+--------------------------------------------------+
-| **RobustParCor**   | Continuous        | A robust version of the partial correlation test, |
-|                    |                   | less sensitive to outliers.                       |
+| **RobustParCor**   | Continuous        | A robust version of the partial correlation test,|
+|                    |                   | less sensitive to outliers.                      |
 +--------------------+-------------------+--------------------------------------------------+
 | **GPDC**           | Continuous        | Gaussian Process-based Dependency Criterion.     |
 +--------------------+-------------------+--------------------------------------------------+
 | **CMIknn**         | Continuous        | Conditional Mutual Information test using        |
 |                    |                   | nearest neighbors.                               |
 +--------------------+-------------------+--------------------------------------------------+
-| **ParCorrWLS**     | Continuous        | Partial Correlation with Weighted Least Squares.  |
+| **ParCorrWLS**     | Continuous        | Partial Correlation with Weighted Least Squares. |
 +--------------------+-------------------+--------------------------------------------------+
 | **Gsquared**       | Mixed             | G-squared test adapted for mixed data types.     |
 +--------------------+-------------------+--------------------------------------------------+
-| **CMIsymb**        | Mixed             | Symmetric Conditional Mutual Information test.    |
+| **CMIsymb**        | Mixed             | Symmetric Conditional Mutual Information test.   |
 +--------------------+-------------------+--------------------------------------------------+
-| **RegressionCI**   | Mixed             | Regression-based Conditional Independence test.   |
+| **RegressionCI**   | Mixed             | Regression-based Conditional Independence test.  |
 +--------------------+-------------------+--------------------------------------------------+
 
 Available Scoring Functions
@@ -146,12 +146,12 @@ To evaluate the causal graphs, the CL module includes several scoring functions,
 +--------------------+-------------------+------------------------------------------------+
 | **DG-BIC**         | Mixed             | BIC score for discrete Gaussian models.        |
 +--------------------+-------------------+------------------------------------------------+
-| **GFCI Score**     | Mixed             | Scoring function used by the GFCI algorithm to  |
+| **GFCI Score**     | Mixed             | Scoring function used by the GFCI algorithm to |
 |                    |                   | evaluate causal structures.                    |
 +--------------------+-------------------+------------------------------------------------+
-| **svargFCI Score** | Mixed             | Enhanced scoring function for svargFCI with     |
-|                    |                   | additional metrics like SEM BIC Score, BDeu,     |
-|                    |                   | Discrete BIC, CG BIC, and DG BIC.               |
+| **svargFCI Score** | Mixed             | Enhanced scoring function for svargFCI with    |
+|                    |                   | additional metrics like SEM BIC Score, BDeu,   |
+|                    |                   | Discrete BIC, CG BIC, and DG BIC.              |
 +--------------------+-------------------+------------------------------------------------+
 
 Algorithm Parameters
@@ -440,36 +440,6 @@ NOTEARS Parameters
    * - `threshold`
      - float
      - Threshold for edge inclusion. Options: 0.0, 0.5, 0.8.
-
-Available Scoring Functions
-===========================
-
-To evaluate the causal graphs, the CL module includes several scoring functions, allowing flexibility in selecting the most appropriate metric for the data:
-
-+--------------------+-------------------+------------------------------------------------+
-| **Score Name**     | **Data Type**     | **Description**                                |
-+====================+===================+================================================+
-| **SEM BIC Score**  | Continuous        | Bayesian Information Criterion for Structural  |
-|                    |                   | Equation Models. Suitable for continuous data. |
-+--------------------+-------------------+------------------------------------------------+
-| **BDeu**           | Categorical       | Bayesian Dirichlet equivalent uniform score    |
-|                    |                   | for categorical data.                          |
-+--------------------+-------------------+------------------------------------------------+
-| **Discrete BIC**   | Categorical       | Bayesian Information Criterion for discrete    |
-|                    |                   | data models.                                   |
-+--------------------+-------------------+------------------------------------------------+
-| **CG-BIC**         | Mixed             | BIC score for mixed data models (continuous    |
-|                    |                   | and categorical).                              |
-+--------------------+-------------------+------------------------------------------------+
-| **DG-BIC**         | Mixed             | BIC score for discrete Gaussian models.        |
-+--------------------+-------------------+------------------------------------------------+
-| **GFCI Score**     | Mixed             | Scoring function used by the GFCI algorithm to  |
-|                    |                   | evaluate causal structures.                    |
-+--------------------+-------------------+------------------------------------------------+
-| **svargFCI Score** | Mixed             | Enhanced scoring function for svargFCI with     |
-|                    |                   | additional metrics like SEM BIC Score, BDeu,     |
-|                    |                   | Discrete BIC, CG BIC, and DG BIC.               |
-+--------------------+-------------------+------------------------------------------------+
 
 Key Details
 ===========
