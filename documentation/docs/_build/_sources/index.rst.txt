@@ -20,7 +20,7 @@ Why ETIA is Unique
 ETIA stands apart from other causal discovery libraries with the following key features:
 
 - **End-to-End Automation**: ETIA automates the entire causal discovery process, combining various algorithms to find the best configuration for your dataset, unlike other libraries that rely on manual selection and tuning of algorithms.
-- **Out-of-Sample Causal Tuning**: Developed specifically for ETIA, this method selects the best causal graph without the need for manually tuned parameters, making it highly suitable for unsupervised environments.
+- **Out-of-Sample Causal Tuning**: This method selects the best causal graph without the need for manually tuned parameters, making it highly suitable for unsupervised environments.
 - **Confidence Estimation and Visualization**: ETIA goes beyond discovering causal graphs by estimating the confidence of each causal relationship through bootstrapping, and providing visualization tools for interpreting results.
 - **Dimensionality Reduction with Causal Insight**: The AFS module applies advanced techniques to reduce the dimensionality of datasets without compromising on causal accuracy, even in high-dimensional data.
 - **Handling Latent Variables**: ETIA can identify causal relationships even in datasets with hidden confounders, using algorithms like FCI and GFCI that most other libraries cannot handle.
