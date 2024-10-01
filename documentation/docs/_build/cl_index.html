@@ -53,12 +53,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Causal Learning (CL)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#core-objectives">Core Objectives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#how-cl-works">How CL Works</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#available-algorithms">Available Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#available-independence-tests">Available Independence Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#available-scoring-functions">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#algorithm-parameters">Algorithm Parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#available-algorithms">Available Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-independence-tests">Available Independence Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-scoring-functions">Available Scoring Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algorithm-parameters">Algorithm Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pc-algorithm-parameters">PC Algorithm Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cpc-parameters">CPC Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fges-parameters">FGES Parameters</a></li>
@@ -74,10 +72,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#lpcmci-parameters">LPCMCI Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sam-parameters">SAM Parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#notears-parameters">NOTEARS Parameters</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#key-details">Key Details</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#notes">Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#key-details">Key Details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#main-class">Main Class</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#helper-classes">Helper Classes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="CausalLearning.algorithms.causalnex_algorithm.html">ETIA.CausalLearning.algorithms.causalnex_algorithm package</a></li>
@@ -155,9 +151,8 @@ Once the best configuration is selected, the CL module applies the causal discov
 The discovered causal graphs are evaluated using scoring functions to assess their fit to the data. The evaluation considers the accuracy of the learned structure in representing the true causal relationships.</p></li>
 </ol>
 </section>
-</section>
 <section id="available-algorithms">
-<h1>Available Algorithms<a class="headerlink" href="#available-algorithms" title="Permalink to this heading"></a></h1>
+<h2>Available Algorithms<a class="headerlink" href="#available-algorithms" title="Permalink to this heading"></a></h2>
 <p>The CL module offers a variety of causal discovery algorithms, each suited for different data types and assumptions. These algorithms are listed below:</p>
 <table class="docutils align-default">
 <thead>
@@ -263,7 +258,7 @@ mixed, and categorical data.</p></td>
 </table>
 </section>
 <section id="available-independence-tests">
-<h1>Available Independence Tests<a class="headerlink" href="#available-independence-tests" title="Permalink to this heading"></a></h1>
+<h2>Available Independence Tests<a class="headerlink" href="#available-independence-tests" title="Permalink to this heading"></a></h2>
 <p>The CL module supports a range of conditional independence tests, enabling flexibility in testing relationships between variables across different data types:</p>
 <table class="docutils align-default">
 <thead>
@@ -334,7 +329,7 @@ nearest neighbors.</p></td>
 </table>
 </section>
 <section id="available-scoring-functions">
-<h1>Available Scoring Functions<a class="headerlink" href="#available-scoring-functions" title="Permalink to this heading"></a></h1>
+<h2>Available Scoring Functions<a class="headerlink" href="#available-scoring-functions" title="Permalink to this heading"></a></h2>
 <p>To evaluate the causal graphs, the CL module includes several scoring functions, allowing flexibility in selecting the most appropriate metric for the data:</p>
 <table class="docutils align-default">
 <thead>
@@ -383,8 +378,9 @@ Discrete BIC, CG BIC, and DG BIC.</p></td>
 </table>
 </section>
 <section id="algorithm-parameters">
-<h1>Algorithm Parameters<a class="headerlink" href="#algorithm-parameters" title="Permalink to this heading"></a></h1>
+<h2>Algorithm Parameters<a class="headerlink" href="#algorithm-parameters" title="Permalink to this heading"></a></h2>
 <p>Each algorithm may have specific parameters that can be tuned to optimize performance based on the dataset and requirements. Below are the parameters for each available algorithm:</p>
+</section>
 <section id="pc-algorithm-parameters">
 <h2>PC Algorithm Parameters<a class="headerlink" href="#pc-algorithm-parameters" title="Permalink to this heading"></a></h2>
 <table class="docutils align-default" id="id11">
@@ -826,9 +822,8 @@ Discrete BIC, CG BIC, and DG BIC.</p></td>
 </tbody>
 </table>
 </section>
-</section>
 <section id="key-details">
-<h1>Key Details<a class="headerlink" href="#key-details" title="Permalink to this heading"></a></h1>
+<h2>Key Details<a class="headerlink" href="#key-details" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Latent Variables Supported:</strong>
 - <strong>✓</strong>: Supports latent (unobserved) variables.
@@ -845,7 +840,7 @@ Discrete BIC, CG BIC, and DG BIC.</p></td>
 </ul>
 </section>
 <section id="notes">
-<h1>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h1>
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Assumptions:</strong>
 - <strong>Causal Sufficiency:</strong> If set to <cite>False</cite>, the algorithm accounts for potential latent variables.
@@ -858,6 +853,7 @@ The output of the CL module includes:</p>
 <li><p>The best-performing causal discovery configuration, including the selected algorithm, independence test, and scoring function.</p></li>
 </ul>
 <p>By providing an optimized causal discovery pipeline, the CL module ensures that the causal relationships discovered are both accurate and interpretable, facilitating further analysis and reasoning.</p>
+</section>
 <section id="main-class">
 <h2>Main Class<a class="headerlink" href="#main-class" title="Permalink to this heading"></a></h2>
 <p>The main entry point for using the CL module is the <cite>CausalLearner</cite> class. This class allows users to configure and run the causal discovery process, selecting from a variety of algorithms, tests, and scoring functions. The causal graphs generated can then be passed on for downstream reasoning or visualization tasks.</p>

@@ -31,7 +31,7 @@ The CL module operates in three stages:
    The discovered causal graphs are evaluated using scoring functions to assess their fit to the data. The evaluation considers the accuracy of the learned structure in representing the true causal relationships.
 
 Available Algorithms
-====================
+-----------------------
 
 The CL module offers a variety of causal discovery algorithms, each suited for different data types and assumptions. These algorithms are listed below:
 
@@ -85,7 +85,7 @@ The CL module offers a variety of causal discovery algorithms, each suited for d
 +--------------------+----------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Available Independence Tests
-===========================
+--------------------------------
 
 The CL module supports a range of conditional independence tests, enabling flexibility in testing relationships between variables across different data types:
 
@@ -125,7 +125,7 @@ The CL module supports a range of conditional independence tests, enabling flexi
 +--------------------+-------------------+--------------------------------------------------+
 
 Available Scoring Functions
-===========================
+--------------------------------
 
 To evaluate the causal graphs, the CL module includes several scoring functions, allowing flexibility in selecting the most appropriate metric for the data:
 
@@ -155,7 +155,8 @@ To evaluate the causal graphs, the CL module includes several scoring functions,
 +--------------------+-------------------+------------------------------------------------+
 
 Algorithm Parameters
-====================
+--------------------------------
+
 
 Each algorithm may have specific parameters that can be tuned to optimize performance based on the dataset and requirements. Below are the parameters for each available algorithm:
 
@@ -442,7 +443,8 @@ NOTEARS Parameters
      - Threshold for edge inclusion. Options: 0.0, 0.5, 0.8.
 
 Key Details
-===========
+--------------------------------
+
 
 - **Latent Variables Supported:**
   - **✓**: Supports latent (unobserved) variables.
@@ -460,7 +462,8 @@ Key Details
   - **Time Series:** Data that includes temporal dependencies.
 
 Notes
-=====
+--------------------------------
+
 
 - **Assumptions:**
   - **Causal Sufficiency:** If set to `False`, the algorithm accounts for potential latent variables.
