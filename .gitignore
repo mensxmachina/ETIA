@@ -5,3 +5,4 @@ build/
 dist/
 logger.log
 *.zip
+ETIA/__pychache__

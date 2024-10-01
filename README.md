@@ -37,14 +37,46 @@ AFS goes beyond standard feature selection by targeting the **Markov Boundary** 
 ### 2. Causal Learning (CL)
 
 The CL module identifies causal relationships using a variety of algorithms that are automatically optimized to your data. ETIA's **causal tuning** mechanism guarantees the selection of the best possible causal structure without the need for user intervention.
+| **Algorithm**  | **Latent Variables Supported** | **Tests/Scores Used**                                                                                                                                                  | **Data Type**                              |
+|----------------|---------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
+| **PC Algorithm** | ✕                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **CPC**          | ✕                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **FGES**         | ✓                               | SEM BIC Score, BDeu, Discrete BIC, CG BIC, DG BIC                                                                                                                     | Continuous, Mixed, Categorical             |
+| **FCI**          | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **FCI-Max**      | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **RFCI**         | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **GFCI**         | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **CFCI**         | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical             |
+| **sVAR-FCI**     | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square                                                                                                                         | Continuous, Mixed, Categorical (Time Series) |
+| **svargFCI**     | ✓                               | FisherZ, CG LRT, DG LRT, Chi-square, G-square, SEM BIC Score, BDeu, Discrete BIC, CG BIC, DG BIC                                                                 | Continuous, Mixed, Categorical (Time Series) |
+| **PCMCI**        | ✕                               | ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI                                                                                       | Continuous, Mixed, Categorical (Time Series) |
+| **PCMCI+**       | ✕                               | ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI                                                                                       | Continuous, Mixed, Categorical (Time Series) |
+| **LPCMCI**       | ✓                               | ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI                                                                                       | Continuous, Mixed, Categorical (Time Series) |
+| **SAM**          | ✕                               | Learning Rate (`lr`), Decay Learning Rate (`dlr`), Regularization (`lambda1`, `lambda2`), Hidden Neurons (`nh`, `dnh`), Training Epochs (`train_epochs`), Testing Epochs (`test_epochs`), Batch Size (`batch_size`), Loss Type (`losstype`) | Continuous, Mixed                          |
+| **NOTEARS**      | ✕                               | Max Iterations (`max_iter`), Tolerance (`h_tol`), Threshold (`threshold`)                                                                                                | Continuous, Mixed, Categorical             |
 
-| Algorithm                | Latent Variables Supported | Tests/Scores Used                           | Data Type |
-|--------------------------|----------------------------|---------------------------------------------|-----------|
-| `PC Algorithm`           | ✕                          | FisherZ, BIC                               | Continuous|
-| `FCI`                    | ✓                          | Conditional independence tests, G2, Chi2   | Mixed     |
-| `GFCI`                   | ✓                          | Conditional independence tests, CG         | Mixed     |
-| `FGES`                   | ✕                          | BDeu, G2, Chi2                             | Discrete  |
-| `DirectLiNGAM`           | ✕                          | ICA-based causality tests                  | Continuous|
+### **Key Details:**
+
+- **Latent Variables Supported:**
+  - **✓**: Supports latent (unobserved) variables.
+  - **✕**: Does **not** support latent variables (causal sufficiency assumed).
+
+- **Tests/Scores Used:**
+  - **Conditional Independence Tests (`ci_test`):** Methods like FisherZ, CG LRT, DG LRT, Chi-square, G-square.
+  - **Scores (`score`):** Metrics like SEM BIC Score, BDeu, Discrete BIC, CG BIC, DG BIC.
+  - **Additional Parameters:** Algorithms like SAM and NOTEARS have specific parameters relevant to their optimization and learning processes.
+
+- **Data Type:**
+  - **Continuous:** Numeric data without discrete categories.
+  - **Mixed:** Combination of continuous and categorical data.
+  - **Categorical:** Data with discrete categories.
+  - **Time Series:** Data that includes temporal dependencies.
+
+### **Notes:**
+
+- **Assumptions:**
+  - **Causal Sufficiency:** If set to `False`, the algorithm accounts for potential latent variables.
+  - **Assume Faithfulness:** Indicates whether the algorithm assumes the faithfulness condition holds, impacting its ability to recover the true causal graph.
 
 **Why It Matters**: Traditional causal discovery libraries expect users to manually choose an algorithm. ETIA’s **automated pipeline selects the best algorithm** for your dataset, saving time and reducing the risk of suboptimal results. Additionally, it can handle datasets with latent variables, which most other systems cannot do.
 
@@ -52,11 +84,12 @@ The CL module identifies causal relationships using a variety of algorithms that
 
 CRV provides advanced tools to evaluate the discovered causal graph, offering confidence estimates and comprehensive visualizations. It can answer specific causal queries, making it an invaluable tool for decision-makers and researchers alike.
 
-| Functionality            | Description                                                  |
-|--------------------------|--------------------------------------------------------------|
-| `Edge Confidence`         | Compute confidence for causal edges using bootstrapping      |
-| `Path Discovery`          | Discover and validate causal paths                          |
-| `Visualization`           | Visualize graphs and causal relations using Cytoscape        |
+| **Functionality**         | **Description**                                                                                             |
+|---------------------------|-------------------------------------------------------------------------------------------------------------|
+| `Visualization`           | Visualize graphs and causal relations using Cytoscape.                                                     |
+| `Adjustment Sets`         | Identify adjustment sets needed for estimating causal effects.                               |
+| `Confidence Calculations` | Assess confidence in discovered causal relationships through bootstrapping methods.                        |
+| `Causal Queries`          | Answer user-defined causal queries, including directed, bidirected, and potentially directed paths between variables. |
 
 **Why It Matters**: The ability to **compute and visualize confidence in causal relationships** sets ETIA apart from other libraries. Users can trust that the discovered causal graph is not just a hypothesis but a statistically backed structure with clearly defined confidence levels.
 
