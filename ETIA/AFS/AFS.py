@@ -411,19 +411,21 @@ class AFS:
                 test_data_preprocessed_df = test_data[feature_columns + [target_feature]].copy()
                 preprocessor = None
 
-            # Feature Selection
-            fs = FeatureSelector(
-                train_data_preprocessed_df,
-                f"{dataset_name}_{target_feature}",
-                r_path=config.get('r_path', 'Rscript'),
-            )
+            # Initialize the FeatureSelector with the path to Rscript
+            fs = FeatureSelector(r_path=config.get('r_path', 'Rscript'))
+
+            # Perform feature selection
             try:
                 selected_features_fold_df = fs.feature_selection(
-                    config, target_feature, verbose=self.verbose
+                    config=config,
+                    target_name=target_feature,
+                    data_pd=train_data_preprocessed_df,
+                    dataset_name=f"{dataset_name}_{target_feature}",
+                    verbose=self.verbose
                 )
             except RuntimeError as e:
                 self.logger.error(f"Feature selection failed for target '{target_feature}' with config {config}: {e}")
-                continue
+                # Handle the exception as needed
 
             if selected_features_fold_df.empty:
                 self.logger.warning(

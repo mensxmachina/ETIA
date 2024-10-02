@@ -212,7 +212,7 @@ class Visualization:
         -------
         None
         """
-        p4c.export_image(file_path=file_path, type='PNG', network=self.network_suid)
+        p4c.export_image(filename=file_path, type='PNG', network=self.network_suid)
         print(f'Network exported to {file_path}')
 
 

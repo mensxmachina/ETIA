@@ -12,36 +12,30 @@ class FeatureSelector:
 
     Methods
     -------
-    feature_selection(config, target_name, train_idx_name=None, verbose=False)
+    feature_selection(config, target_name, data_pd, dataset_name, train_idx_name=None, verbose=False)
         Runs the feature selection process based on the provided configuration.
     """
 
-    def __init__(self, data_pd: pd.DataFrame, dataset_name: str, r_path: str):
+    def __init__(self, r_path: str):
         """
         Initializes the FeatureSelector.
 
         Parameters
         ----------
-        data_pd : pandas.DataFrame
-            The dataset to be used for feature selection.
-        dataset_name : str
-            The name of the dataset, used for saving intermediate files.
         r_path : str
             Path to the Rscript executable for running R-based feature selection algorithms.
         """
         self.r_path = r_path
         self.path_ = os.path.dirname(__file__)
-        self.dataset_name = dataset_name + '.csv'
-        self.output_file = os.path.join(self.path_, 'selected_features.csv')
-        data_file_path = os.path.join(self.path_, self.dataset_name)
-        data_pd.to_csv(data_file_path, index=False)
 
         # Setup logging
         self.logger = logging.getLogger(__name__)
+        self.output_file = os.path.join(self.path_, 'selected_features.csv')
 
     def run_r_script(
         self,
-        script_name: str,
+        script_path: str,
+        data_file_path: str,
         target_name: str,
         config: Dict[str, Any],
         train_idx_name: Optional[str] = None,
@@ -52,8 +46,10 @@ class FeatureSelector:
 
         Parameters
         ----------
-        script_name : str
-            The name of the R script to run.
+        script_path : str
+            The path to the R script to run.
+        data_file_path : str
+            The path to the CSV file containing the data.
         target_name : str
             The name of the target variable in the dataset.
         config : dict
@@ -68,8 +64,6 @@ class FeatureSelector:
         pandas.DataFrame
             A DataFrame containing the selected features.
         """
-        script_path = os.path.join(self.path_, script_name)
-        data_file_path = os.path.join(self.path_, self.dataset_name)
         args = [
             self.r_path, '--vanilla', script_path,
             data_file_path,
@@ -93,9 +87,9 @@ class FeatureSelector:
             self.logger.info(result.stderr)
 
         if result.returncode != 0:
-            self.logger.error(f"R script {script_name} failed with return code {result.returncode}")
+            self.logger.error(f"R script {script_path} failed with return code {result.returncode}")
             self.logger.error(f"R script stderr: {result.stderr}")
-            raise RuntimeError(f"R script {script_name} failed with return code {result.returncode}")
+            raise RuntimeError(f"R script {script_path} failed with return code {result.returncode}")
 
         selected_features_pd = pd.read_csv(self.output_file)
         return selected_features_pd
@@ -104,6 +98,7 @@ class FeatureSelector:
         self,
         target_name: str,
         config: Dict[str, Any],
+        data_file_path: str,
         train_idx_name: Optional[str] = None,
         verbose: bool = False
     ) -> pd.DataFrame:
@@ -116,6 +111,8 @@ class FeatureSelector:
             The name of the target variable.
         config : dict
             The configuration settings for the FBED algorithm.
+        data_file_path : str
+            The path to the CSV file containing the data.
         train_idx_name : str, optional
             The name of the CSV file with the training indexes for a specific fold.
         verbose : bool, optional
@@ -126,8 +123,10 @@ class FeatureSelector:
         pandas.DataFrame
             A DataFrame containing the selected features.
         """
+        script_path = os.path.join(self.path_, 'feature_selectors', 'fbed_with_idx.R')
         return self.run_r_script(
-            'feature_selectors/fbed_with_idx.R',
+            script_path,
+            data_file_path,
             target_name,
             config,
             train_idx_name,
@@ -138,6 +137,7 @@ class FeatureSelector:
         self,
         target_name: str,
         config: Dict[str, Any],
+        data_file_path: str,
         train_idx_name: Optional[str] = None,
         verbose: bool = False
     ) -> pd.DataFrame:
@@ -150,6 +150,8 @@ class FeatureSelector:
             The name of the target variable.
         config : dict
             The configuration settings for the SES algorithm.
+        data_file_path : str
+            The path to the CSV file containing the data.
         train_idx_name : str, optional
             The name of the CSV file with the training indexes for a specific fold.
         verbose : bool, optional
@@ -160,8 +162,10 @@ class FeatureSelector:
         pandas.DataFrame
             A DataFrame containing the selected features.
         """
+        script_path = os.path.join(self.path_, 'feature_selectors', 'ses_with_idx.R')
         return self.run_r_script(
-            'feature_selectors/ses_with_idx.R',
+            script_path,
+            data_file_path,
             target_name,
             config,
             train_idx_name,
@@ -172,6 +176,8 @@ class FeatureSelector:
         self,
         config: Dict[str, Any],
         target_name: str,
+        data_pd: pd.DataFrame,
+        dataset_name: str,
         train_idx_name: Optional[str] = None,
         verbose: bool = False
     ) -> pd.DataFrame:
@@ -184,6 +190,10 @@ class FeatureSelector:
             The configuration settings for feature selection.
         target_name : str
             The name of the target variable.
+        data_pd : pandas.DataFrame
+            The dataset to be used for feature selection.
+        dataset_name : str
+            The name of the dataset, used for saving intermediate files.
         train_idx_name : str, optional
             The name of the CSV file with the training indexes for a specific fold.
         verbose : bool, optional
@@ -194,12 +204,20 @@ class FeatureSelector:
         pandas.DataFrame
             A DataFrame containing the selected features.
         """
-        fs_name = config.get('fs_name')
-        if fs_name == 'fbed':
-            features = self.fbed(target_name, config, train_idx_name, verbose)
-        elif fs_name == 'ses':
-            features = self.ses(target_name, config, train_idx_name, verbose)
-        else:
-            raise ValueError(f"Unsupported feature selection algorithm: {fs_name}")
-
-        return features
+        data_file_path = os.path.join(self.path_, dataset_name + '.csv')
+        data_pd.to_csv(data_file_path, index=False)
+        try:
+            fs_name = config.get('fs_name')
+            if fs_name == 'fbed':
+                features = self.fbed(target_name, config, data_file_path, train_idx_name, verbose)
+            elif fs_name == 'ses':
+                features = self.ses(target_name, config, data_file_path, train_idx_name, verbose)
+            else:
+                raise ValueError(f"Unsupported feature selection algorithm: {fs_name}")
+            return features
+        finally:
+            # Ensure the CSV file is deleted after feature selection
+            if os.path.exists(data_file_path):
+                os.remove(data_file_path)
+            if os.path.exists(self.output_file):
+                os.remove(self.output_file)

@@ -149,7 +149,7 @@ class CausalLearner:
         self.print_results()
         return {
             'optimal_conf': self.opt_conf,
-            'matrix_mec_graph': self.matrix_mec_graph,
+            'matrix_mec_graph': pd.DataFrame(pywhy_graph_to_matrix(self.matrix_mec_graph), columns=self.dataset.get_dataset().columns),
             'run_time': self.run_time,
             'library_results': library_results
         }
