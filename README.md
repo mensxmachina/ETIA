@@ -1,6 +1,8 @@
 
 # ETIA: A Comprehensive Automated Causal Discovery Library
 
+Find the complete Documentantion [here]((https://etia.readthedocs.io/en/latest/index.html#))
+
 ## Library Overview
 
 ETIA (Αιτία (pronounced etía): "cause" in Greek) is a cutting-edge automated causal discovery library that takes causal analysis beyond traditional methods. It is designed to tackle complex, real-world problems by automating the entire causal discovery process, offering a combination of feature selection, causal structure learning, and causal reasoning validation that is unmatched in other libraries.
@@ -114,7 +116,7 @@ make all
 
 - **Python 3.8+**
 - **Java 17** (required for Tetrad algorithms in the Causal Learning module)
-- **R 4+** (required for some feature selection algorithms in the AFS module)
+- **R 4.4+** (required for some feature selection algorithms in the AFS module)
 
 ## Usage
 
@@ -126,11 +128,11 @@ from ETIA.CausalLearning import CausalLearner
 
 # Feature selection
 afs = AFS()
-selected_features = afs.select_features(dataset)
+selected_features = afs.select_features(dataset, targets)
 
 # Causal discovery
-cl = CausalLearner()
-causal_graph = cl.learn(dataset)
+cl = CausalLearner(dataset)
+results = cl.learn_model()
 ```
 
 ## Testing

@@ -8,9 +8,9 @@ Prerequisites
 -------------
 Before installing ETIA, ensure that you have the following dependencies:
 
-- **Python 3.8+**
+- **Python 3.8++**
 - **Java 17** (required for Tetrad algorithms in the Causal Learning module)
-- **R 4+** (required for some feature selection algorithms in the AFS module)
+- **R 4.4+++** (required for some feature selection algorithms in the AFS module)
 
 You can download and install these dependencies from their official websites:
 
@@ -67,12 +67,19 @@ For using Tetrad algorithms and certain feature selection algorithms, ensure tha
 
 ### Setting up R:
 
-1. Install R 4+ from the [official website](https://www.r-project.org/).
+1. Install R 4.4+ from the [official website](https://www.r-project.org/).
 2. Make sure that R is in your system’s PATH:
 
 .. code-block:: bash
 
     R --version
+
+3. Install MxM package (this part may take a while)
+Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)
+
+.. code-block:: bash
+
+    Rscipt --vanilla "install.packages("MXM", repos = "http://cran.us.r-project.org")"
 
 Verify Installation
 -------------------
@@ -81,10 +88,9 @@ After installing the library, you can verify the installation by importing the E
 .. code-block:: python
 
     import ETIA.AFS as AFS
-    import ETIA.CausalLearning as CL
 
     afs = AFS()
-    cl = CL()
+
 
 If no errors occur, the installation was successful.
 

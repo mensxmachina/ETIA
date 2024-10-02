@@ -28,5 +28,7 @@ setup(
         'pywhy-graphs',
         'scikit-learn',
         'tigramite>=5.2.3.1',
+        'matplotlib',
+        'dcor'
     ],
 )

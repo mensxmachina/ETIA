@@ -92,9 +92,9 @@
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
 <p>Before installing ETIA, ensure that you have the following dependencies:</p>
 <ul class="simple">
-<li><p><strong>Python 3.8+</strong></p></li>
+<li><p><strong>Python 3.8++</strong></p></li>
 <li><p><strong>Java 17</strong> (required for Tetrad algorithms in the Causal Learning module)</p></li>
-<li><p><strong>R 4+</strong> (required for some feature selection algorithms in the AFS module)</p></li>
+<li><p><strong>R 4.4+++</strong> (required for some feature selection algorithms in the AFS module)</p></li>
 </ul>
 <p>You can download and install these dependencies from their official websites:</p>
 <ul class="simple">
@@ -145,10 +145,15 @@
 </div>
 <p>### Setting up R:</p>
 <ol class="arabic simple">
-<li><p>Install R 4+ from the [official website](<a class="reference external" href="https://www.r-project.org/">https://www.r-project.org/</a>).</p></li>
+<li><p>Install R 4.4+ from the [official website](<a class="reference external" href="https://www.r-project.org/">https://www.r-project.org/</a>).</p></li>
 <li><p>Make sure that R is in your system’s PATH:</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>R<span class="w"> </span>--version
+</pre></div>
+</div>
+<p>3. Install MxM package (this part may take a while)
+Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>MXM<span class="s2">&quot;, repos = &quot;</span>http://cran.us.r-project.org<span class="s2">&quot;)&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -156,10 +161,8 @@
 <h2>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this heading"></a></h2>
 <p>After installing the library, you can verify the installation by importing the ETIA modules:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ETIA.AFS</span> <span class="k">as</span> <span class="nn">AFS</span>
-<span class="kn">import</span> <span class="nn">ETIA.CausalLearning</span> <span class="k">as</span> <span class="nn">CL</span>
 
 <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">()</span>
-<span class="n">cl</span> <span class="o">=</span> <span class="n">CL</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>If no errors occur, the installation was successful.</p>
