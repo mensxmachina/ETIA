@@ -48,13 +48,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-algorithms">Available Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-independence-tests">Available Independence Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-scoring-functions">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#algorithm-parameters">Algorithm Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#id2">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#key-details">Key Details</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#notes">Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
@@ -496,19 +489,21 @@
                 <span class="n">test_data_preprocessed_df</span> <span class="o">=</span> <span class="n">test_data</span><span class="p">[</span><span class="n">feature_columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_feature</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
                 <span class="n">preprocessor</span> <span class="o">=</span> <span class="kc">None</span>
 
-            <span class="c1"># Feature Selection</span>
-            <span class="n">fs</span> <span class="o">=</span> <span class="n">FeatureSelector</span><span class="p">(</span>
-                <span class="n">train_data_preprocessed_df</span><span class="p">,</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">r_path</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;r_path&#39;</span><span class="p">,</span> <span class="s1">&#39;Rscript&#39;</span><span class="p">),</span>
-            <span class="p">)</span>
+            <span class="c1"># Initialize the FeatureSelector with the path to Rscript</span>
+            <span class="n">fs</span> <span class="o">=</span> <span class="n">FeatureSelector</span><span class="p">(</span><span class="n">r_path</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;r_path&#39;</span><span class="p">,</span> <span class="s1">&#39;Rscript&#39;</span><span class="p">))</span>
+
+            <span class="c1"># Perform feature selection</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">selected_features_fold_df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">feature_selection</span><span class="p">(</span>
-                    <span class="n">config</span><span class="p">,</span> <span class="n">target_feature</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
+                    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                    <span class="n">target_name</span><span class="o">=</span><span class="n">target_feature</span><span class="p">,</span>
+                    <span class="n">data_pd</span><span class="o">=</span><span class="n">train_data_preprocessed_df</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature selection failed for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39; with config </span><span class="si">{</span><span class="n">config</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="k">continue</span>
+                <span class="c1"># Handle the exception as needed</span>
 
             <span class="k">if</span> <span class="n">selected_features_fold_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>

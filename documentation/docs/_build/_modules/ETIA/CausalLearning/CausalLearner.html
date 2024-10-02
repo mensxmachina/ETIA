@@ -48,13 +48,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-algorithms">Available Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-independence-tests">Available Independence Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-scoring-functions">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#algorithm-parameters">Algorithm Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#id2">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#key-details">Key Details</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#notes">Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
@@ -234,7 +227,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;optimal_conf&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span>
-            <span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span>
+            <span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pywhy_graph_to_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
             <span class="s1">&#39;run_time&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_time</span><span class="p">,</span>
             <span class="s1">&#39;library_results&#39;</span><span class="p">:</span> <span class="n">library_results</span>
         <span class="p">}</span></div>

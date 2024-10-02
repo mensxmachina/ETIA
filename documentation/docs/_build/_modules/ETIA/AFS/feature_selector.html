@@ -48,13 +48,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html">Causal Learning (CL)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-algorithms">Available Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-independence-tests">Available Independence Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#available-scoring-functions">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#algorithm-parameters">Algorithm Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#id2">Available Scoring Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#key-details">Key Details</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html#notes">Notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
 </ul>
 
@@ -97,36 +90,30 @@
 
 <span class="sd">    Methods</span>
 <span class="sd">    -------</span>
-<span class="sd">    feature_selection(config, target_name, train_idx_name=None, verbose=False)</span>
+<span class="sd">    feature_selection(config, target_name, data_pd, dataset_name, train_idx_name=None, verbose=False)</span>
 <span class="sd">        Runs the feature selection process based on the provided configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_pd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">r_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the FeatureSelector.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        data_pd : pandas.DataFrame</span>
-<span class="sd">            The dataset to be used for feature selection.</span>
-<span class="sd">        dataset_name : str</span>
-<span class="sd">            The name of the dataset, used for saving intermediate files.</span>
 <span class="sd">        r_path : str</span>
 <span class="sd">            Path to the Rscript executable for running R-based feature selection algorithms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r_path</span> <span class="o">=</span> <span class="n">r_path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">=</span> <span class="n">dataset_name</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="s1">&#39;selected_features.csv&#39;</span><span class="p">)</span>
-        <span class="n">data_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span>
-        <span class="n">data_pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Setup logging</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="s1">&#39;selected_features.csv&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FeatureSelector.run_r_script"><a class="viewcode-back" href="../../../AFS.feature_selector.html#ETIA.AFS.FeatureSelector.run_r_script">[docs]</a>    <span class="k">def</span> <span class="nf">run_r_script</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">script_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">script_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">data_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">train_idx_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -137,8 +124,10 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        script_name : str</span>
-<span class="sd">            The name of the R script to run.</span>
+<span class="sd">        script_path : str</span>
+<span class="sd">            The path to the R script to run.</span>
+<span class="sd">        data_file_path : str</span>
+<span class="sd">            The path to the CSV file containing the data.</span>
 <span class="sd">        target_name : str</span>
 <span class="sd">            The name of the target variable in the dataset.</span>
 <span class="sd">        config : dict</span>
@@ -153,8 +142,6 @@
 <span class="sd">        pandas.DataFrame</span>
 <span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="n">script_name</span><span class="p">)</span>
-        <span class="n">data_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">r_path</span><span class="p">,</span> <span class="s1">&#39;--vanilla&#39;</span><span class="p">,</span> <span class="n">script_path</span><span class="p">,</span>
             <span class="n">data_file_path</span><span class="p">,</span>
@@ -178,9 +165,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R script </span><span class="si">{</span><span class="n">script_name</span><span class="si">}</span><span class="s2"> failed with return code </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R script </span><span class="si">{</span><span class="n">script_path</span><span class="si">}</span><span class="s2"> failed with return code </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R script stderr: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R script </span><span class="si">{</span><span class="n">script_name</span><span class="si">}</span><span class="s2"> failed with return code </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R script </span><span class="si">{</span><span class="n">script_path</span><span class="si">}</span><span class="s2"> failed with return code </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="n">selected_features_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">selected_features_pd</span></div>
@@ -189,6 +176,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">data_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">train_idx_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -201,6 +189,8 @@
 <span class="sd">            The name of the target variable.</span>
 <span class="sd">        config : dict</span>
 <span class="sd">            The configuration settings for the FBED algorithm.</span>
+<span class="sd">        data_file_path : str</span>
+<span class="sd">            The path to the CSV file containing the data.</span>
 <span class="sd">        train_idx_name : str, optional</span>
 <span class="sd">            The name of the CSV file with the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
@@ -211,8 +201,10 @@
 <span class="sd">        pandas.DataFrame</span>
 <span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="s1">&#39;feature_selectors&#39;</span><span class="p">,</span> <span class="s1">&#39;fbed_with_idx.R&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_r_script</span><span class="p">(</span>
-            <span class="s1">&#39;feature_selectors/fbed_with_idx.R&#39;</span><span class="p">,</span>
+            <span class="n">script_path</span><span class="p">,</span>
+            <span class="n">data_file_path</span><span class="p">,</span>
             <span class="n">target_name</span><span class="p">,</span>
             <span class="n">config</span><span class="p">,</span>
             <span class="n">train_idx_name</span><span class="p">,</span>
@@ -223,6 +215,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">data_file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">train_idx_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -235,6 +228,8 @@
 <span class="sd">            The name of the target variable.</span>
 <span class="sd">        config : dict</span>
 <span class="sd">            The configuration settings for the SES algorithm.</span>
+<span class="sd">        data_file_path : str</span>
+<span class="sd">            The path to the CSV file containing the data.</span>
 <span class="sd">        train_idx_name : str, optional</span>
 <span class="sd">            The name of the CSV file with the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
@@ -245,8 +240,10 @@
 <span class="sd">        pandas.DataFrame</span>
 <span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="s1">&#39;feature_selectors&#39;</span><span class="p">,</span> <span class="s1">&#39;ses_with_idx.R&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_r_script</span><span class="p">(</span>
-            <span class="s1">&#39;feature_selectors/ses_with_idx.R&#39;</span><span class="p">,</span>
+            <span class="n">script_path</span><span class="p">,</span>
+            <span class="n">data_file_path</span><span class="p">,</span>
             <span class="n">target_name</span><span class="p">,</span>
             <span class="n">config</span><span class="p">,</span>
             <span class="n">train_idx_name</span><span class="p">,</span>
@@ -257,6 +254,8 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">target_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">data_pd</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">train_idx_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -269,6 +268,10 @@
 <span class="sd">            The configuration settings for feature selection.</span>
 <span class="sd">        target_name : str</span>
 <span class="sd">            The name of the target variable.</span>
+<span class="sd">        data_pd : pandas.DataFrame</span>
+<span class="sd">            The dataset to be used for feature selection.</span>
+<span class="sd">        dataset_name : str</span>
+<span class="sd">            The name of the dataset, used for saving intermediate files.</span>
 <span class="sd">        train_idx_name : str, optional</span>
 <span class="sd">            The name of the CSV file with the training indexes for a specific fold.</span>
 <span class="sd">        verbose : bool, optional</span>
@@ -279,15 +282,23 @@
 <span class="sd">        pandas.DataFrame</span>
 <span class="sd">            A DataFrame containing the selected features.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fs_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fs_name&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">fs_name</span> <span class="o">==</span> <span class="s1">&#39;fbed&#39;</span><span class="p">:</span>
-            <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbed</span><span class="p">(</span><span class="n">target_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">train_idx_name</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">fs_name</span> <span class="o">==</span> <span class="s1">&#39;ses&#39;</span><span class="p">:</span>
-            <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ses</span><span class="p">(</span><span class="n">target_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">train_idx_name</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported feature selection algorithm: </span><span class="si">{</span><span class="n">fs_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">features</span></div></div>
+        <span class="n">data_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="o">+</span> <span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+        <span class="n">data_pd</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fs_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fs_name&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fs_name</span> <span class="o">==</span> <span class="s1">&#39;fbed&#39;</span><span class="p">:</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbed</span><span class="p">(</span><span class="n">target_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">data_file_path</span><span class="p">,</span> <span class="n">train_idx_name</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">fs_name</span> <span class="o">==</span> <span class="s1">&#39;ses&#39;</span><span class="p">:</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ses</span><span class="p">(</span><span class="n">target_name</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">data_file_path</span><span class="p">,</span> <span class="n">train_idx_name</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported feature selection algorithm: </span><span class="si">{</span><span class="n">fs_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">features</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># Ensure the CSV file is deleted after feature selection</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">data_file_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

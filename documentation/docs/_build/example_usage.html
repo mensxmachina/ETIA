@@ -97,14 +97,13 @@ and finally use CRV for causal reasoning and validation on the learned causal mo
 <section id="step-1-import-required-modules">
 <h2>Step 1: Import Required Modules<a class="headerlink" href="#step-1-import-required-modules" title="Permalink to this heading"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">AFS</span> <span class="kn">import</span> <span class="n">AFS</span>
-<span class="kn">from</span> <span class="nn">CausalLearner</span> <span class="kn">import</span> <span class="n">CausalLearner</span>
-<span class="kn">from</span> <span class="nn">CRV</span> <span class="kn">import</span> <span class="n">CausalReasoningValidator</span>  <span class="c1"># Assuming this is how CRV is imported</span>
+<span class="kn">from</span> <span class="nn">ETIA.AFS</span> <span class="kn">import</span> <span class="n">AFS</span>
+<span class="kn">from</span> <span class="nn">ETIA.CausalLearning</span> <span class="kn">import</span> <span class="n">CausalLearner</span>
 
 <span class="c1"># Additional imports for visualization and path finding</span>
-<span class="kn">from</span> <span class="nn">Visualization</span> <span class="kn">import</span> <span class="n">Visualization</span>  <span class="c1"># Visualization class provided</span>
-<span class="kn">from</span> <span class="nn">path_finding</span> <span class="kn">import</span> <span class="n">one_potentially_directed_path</span>  <span class="c1"># Function provided</span>
-<span class="kn">from</span> <span class="nn">adjustment_set</span> <span class="kn">import</span> <span class="n">find_adjset</span>  <span class="c1"># Function provided</span>
+<span class="kn">from</span> <span class="nn">ETIA.CRV.visualization</span> <span class="kn">import</span> <span class="n">Visualization</span>  <span class="c1"># Visualization class provided</span>
+<span class="kn">from</span> <span class="nn">ETIA.CRV.queries</span> <span class="kn">import</span> <span class="n">one_potentially_directed_path</span>  <span class="c1"># Function provided</span>
+<span class="kn">from</span> <span class="nn">ETIA.CRV</span> <span class="kn">import</span> <span class="n">find_adjset</span>  <span class="c1"># Function provided</span>
 </pre></div>
 </div>
 </section>
@@ -133,7 +132,7 @@ and finally use CRV for causal reasoning and validation on the learned causal mo
 <span class="n">afs_instance</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># Run AFS to select features for the target variables</span>
-<span class="n">afs_result</span> <span class="o">=</span> <span class="n">afs_instance</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span><span class="n">data_object</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">)</span>
+<span class="n">afs_result</span> <span class="o">=</span> <span class="n">afs_instance</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">)</span>
 
 <span class="c1"># Display the selected features and the best configuration found</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected Features by AFS:&quot;</span><span class="p">)</span>

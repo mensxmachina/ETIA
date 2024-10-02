@@ -13,14 +13,13 @@ Step 1: Import Required Modules
 .. code-block:: python
 
     import pandas as pd
-    from AFS import AFS
-    from CausalLearner import CausalLearner
-    from CRV import CausalReasoningValidator  # Assuming this is how CRV is imported
+    from ETIA.AFS import AFS
+    from ETIA.CausalLearning import CausalLearner
 
     # Additional imports for visualization and path finding
-    from Visualization import Visualization  # Visualization class provided
-    from path_finding import one_potentially_directed_path  # Function provided
-    from adjustment_set import find_adjset  # Function provided
+    from ETIA.CRV.visualization import Visualization  # Visualization class provided
+    from ETIA.CRV.queries import one_potentially_directed_path  # Function provided
+    from ETIA.CRV import find_adjset  # Function provided
 
 Step 2: Load Example Dataset
 ----------------------------
@@ -55,7 +54,7 @@ Now, we initialize the AFS module and run it on the dataset to select the most r
     afs_instance = AFS(depth=1)
 
     # Run AFS to select features for the target variables
-    afs_result = afs_instance.run_AFS(data_object=data, target_features=target_features)
+    afs_result = afs_instance.run_AFS(data=data, target_features=target_features)
 
     # Display the selected features and the best configuration found
     print("Selected Features by AFS:")

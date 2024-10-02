@@ -13,13 +13,13 @@ Step 1: Import Required Modules
 .. code-block:: python
 
     import pandas as pd
-    from AFS import AFS
-    from CausalLearner import CausalLearner
+    from ETIA.AFS import AFS
+    from ETIA.CausalLearning import CausalLearner
 
     # Additional imports for visualization and path finding
-    from CRV.Visualization import Visualization  # Visualization class provided
-    from CRV.queries import one_potentially_directed_path  # Function provided
-    from CRV import find_adjset  # Function provided
+    from ETIA.CRV.visualization import Visualization  # Visualization class provided
+    from ETIA.CRV.queries import one_potentially_directed_path  # Function provided
+    from ETIA.CRV import find_adjset  # Function provided
 
 Step 2: Load Example Dataset
 ----------------------------
