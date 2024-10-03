@@ -1,7 +1,7 @@
 
 # ETIA: A Comprehensive Automated Causal Discovery Library
 
-Find the complete Documentantion [here]((https://etia.readthedocs.io/en/latest/index.html#))
+Find the complete Documentantion <https://etia.readthedocs.io/en/latest/index.html#>
 
 ## Library Overview
 
