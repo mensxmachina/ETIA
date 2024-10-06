@@ -1,12 +1,15 @@
 import os
 import random
-from multiprocessing import Pool, cpu_count
+import uuid
+from multiprocessing import cpu_count
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
 from sklearn.metrics import r2_score, roc_auc_score
 import logging
+
+from joblib import Parallel, delayed
 
 from .feature_selector import FeatureSelector
 from .oos import OOS
@@ -52,7 +55,7 @@ class AFS:
         self.oos_protocol = oos_protocol if oos_protocol else {
             "name": "KFoldCV",
             "folds": 5,
-            "folds_to_run": 5,
+            "folds_to_run": 2,
         }
         self.csv_path = os.path.dirname(__file__)
         self.depth = depth
@@ -162,21 +165,42 @@ class AFS:
         selected_features = {}
         reduced_data = original_data.copy()
 
-        # Start the recursive feature selection
-        for target_feature, target_type in target_features.items():
-            self.logger.info(f"Starting feature selection for target '{target_feature}'")
-            result = self.recursive_fs_for_target(
-                data=original_data,
-                target_feature=target_feature,
-                target_type=target_type,
-                pred_configs=pred_configs,
-                dataset_name=dataset_name,
-                depth=self.depth,
+        # Prepare arguments for parallel processing
+        target_items = list(target_features.items())
+        args_list = [
+            (
+                original_data,
+                target_feature,
+                target_type,
+                pred_configs,
+                dataset_name,
+                self.depth,
+                None  # visited_features
             )
-            # Update selected features and best config
+            for target_feature, target_type in target_items
+        ]
+
+        # Use joblib's Parallel to process targets in parallel
+        results = Parallel(n_jobs=self.num_processors)(
+            delayed(self._process_target)(
+                data=arg[0],
+                target_feature=arg[1],
+                target_type=arg[2],
+                pred_configs=arg[3],
+                dataset_name=arg[4],
+                depth=arg[5],
+                visited_features=arg[6],
+            ) for arg in args_list
+        )
+
+        main_target = next(iter(target_features))
+
+        # Process results
+        for (target_feature, _), result in zip(target_items, results):
             selected_features[target_feature] = result['selected_features']
-            if result['bbc_score'] > best_score:
+            if target_feature == main_target:
                 best_score = result['bbc_score']
+                best_ci = result['ci']
                 best_config = result['best_config']
 
         # Collect all selected features across all targets and depths
@@ -186,13 +210,51 @@ class AFS:
         # Add target features to the selected features
         all_selected_features.update(target_features.keys())
         reduced_data = reduced_data[list(all_selected_features)]
+        reduced_without_target = reduced_data.loc[:, reduced_data.columns != main_target]
+
+        pm = PredictiveModel()
+        pm.fit(
+                best_config,
+                reduced_without_target.values,
+                reduced_data[main_target].values,
+                None,
+                None,
+                target_features[main_target],
+        )
 
         return {
             'original_data': original_data,
             'reduced_data': reduced_data,
             'best_config': best_config,
+            'bbc_score': best_score,
+            'ci': best_ci,
+            'trained_model': pm,
             'selected_features': selected_features,
         }
+
+    def _process_target(
+        self,
+        data: pd.DataFrame,
+        target_feature: str,
+        target_type: str,
+        pred_configs: List[Dict[str, Any]],
+        dataset_name: str,
+        depth: int,
+        visited_features: Optional[set] = None,
+    ) -> Dict[str, Any]:
+        """
+        Helper function to process each target in parallel.
+        """
+        self.logger.info(f"Starting feature selection for target '{target_feature}'")
+        return self.recursive_fs_for_target(
+            data=data,
+            target_feature=target_feature,
+            target_type=target_type,
+            pred_configs=pred_configs,
+            dataset_name=dataset_name,
+            depth=depth,
+            visited_features=visited_features,
+        )
 
     def recursive_fs_for_target(
         self,
@@ -206,28 +268,6 @@ class AFS:
     ) -> Dict[str, Any]:
         """
         Recursively runs feature selection for a specific target feature up to the specified depth.
-
-        Parameters
-        ----------
-        data : pd.DataFrame
-            The dataset as a pandas DataFrame.
-        target_feature : str
-            The name of the target feature.
-        target_type : str
-            The type of the target feature.
-        pred_configs : list
-            A list of predictive configurations.
-        dataset_name : str
-            The name of the dataset.
-        depth : int
-            The remaining depth of the feature selection process.
-        visited_features : set, optional
-            A set of features that have already been processed to avoid cycles.
-
-        Returns
-        -------
-        dict
-            A dictionary with the results for the target feature.
         """
         if depth == 0:
             return {
@@ -268,24 +308,27 @@ class AFS:
             self.oos_protocol, X.values, y.values, target_type=target_type
         )
 
-        # Run feature selection and model training for each configuration
+        # Run feature selection and model training for each configuration in parallel
+        results = Parallel(n_jobs=self.num_processors)(
+            delayed(self._process_config)(
+                data=data,
+                target_feature=target_feature,
+                target_type=target_type,
+                config=config,
+                dataset_name=dataset_name,
+                train_inds=train_inds,
+                test_inds=test_inds,
+                feature_columns=feature_columns,
+            ) for config in pred_configs
+        )
+
         all_scores = []
         all_fold_predictions = []
         configs_tried = []
 
-        for config in pred_configs:
-            scores, fold_predictions, selected_features_df = self.run_fs_for_config(
-                data,
-                target_feature,
-                target_type,
-                config,
-                dataset_name,
-                train_inds,
-                test_inds,
-                feature_columns,
-            )
-            if scores:
-                mean_score = np.mean(scores)
+        for result in results:
+            if result is not None:
+                config, mean_score, fold_predictions, selected_features_df = result
                 all_scores.append(mean_score)
                 all_fold_predictions.append((config, fold_predictions, selected_features_df))
                 configs_tried.append(config)
@@ -312,7 +355,7 @@ class AFS:
         self.logger.info(f"Target: {target_feature} with optimal config: {best_config}")
 
         # Apply bootstrap bias correction to the best configuration
-        bbc_score = self.bootstrap_bias_correction(best_conf_predictions, target_type)
+        bbc_score, ci = self.bootstrap_bias_correction(best_conf_predictions, target_type)
 
         # Collect selected features (assuming features may vary across folds)
         selected_features_sets = [
@@ -345,9 +388,40 @@ class AFS:
 
         return {
             'bbc_score': bbc_score,
+            'ci': ci,
             'selected_features': list(all_selected_features),
             'best_config': best_config,
         }
+
+    def _process_config(
+        self,
+        data: pd.DataFrame,
+        target_feature: str,
+        target_type: str,
+        config: Dict[str, Any],
+        dataset_name: str,
+        train_inds: List[np.ndarray],
+        test_inds: List[np.ndarray],
+        feature_columns: List[str],
+    ) -> Optional[Tuple[Dict[str, Any], float, List[Tuple[np.ndarray, np.ndarray, Dict[str, Any], Any, Optional[Preprocessor]]], pd.DataFrame]]:
+        """
+        Helper function to process each configuration in parallel.
+        """
+        scores, fold_predictions, selected_features_df = self.run_fs_for_config(
+            data,
+            target_feature,
+            target_type,
+            config,
+            dataset_name,
+            train_inds,
+            test_inds,
+            feature_columns,
+        )
+        if scores:
+            mean_score = np.mean(scores)
+            return (config, mean_score, fold_predictions, selected_features_df)
+        else:
+            return None
 
     def run_fs_for_config(
         self,
@@ -362,34 +436,11 @@ class AFS:
     ) -> Tuple[List[float], List[Tuple[np.ndarray, np.ndarray, Dict[str, Any], Any, Optional[Preprocessor]]], pd.DataFrame]:
         """
         Runs the feature selection process for a specific configuration.
-
-        Parameters
-        ----------
-        data : pd.DataFrame
-            The dataset as a pandas DataFrame.
-        target_feature : str
-            The name of the target feature.
-        target_type : str
-            The type of the target variable ('categorical' or 'continuous').
-        config : dict
-            The predictive configuration.
-        dataset_name : str
-            The name of the dataset.
-        train_inds : list
-            Indices of the training samples.
-        test_inds : list
-            Indices of the test samples.
-        feature_columns : list
-            The list of feature columns to consider.
-
-        Returns
-        -------
-        tuple
-            A tuple containing the scores, fold predictions, and selected features DataFrame.
         """
         scores = []
         fold_predictions = []
         selected_features_df = None
+        config_id = str(uuid.uuid4())
 
         for fold_num, (train_index, test_index) in enumerate(zip(train_inds, test_inds)):
             train_data = data.iloc[train_index]
@@ -416,16 +467,17 @@ class AFS:
 
             # Perform feature selection
             try:
+                unique_dataset_name = f"{dataset_name}_{target_feature}_{config_id}_fold{fold_num}"
                 selected_features_fold_df = fs.feature_selection(
                     config=config,
                     target_name=target_feature,
                     data_pd=train_data_preprocessed_df,
-                    dataset_name=f"{dataset_name}_{target_feature}",
+                    dataset_name=unique_dataset_name,
                     verbose=self.verbose
                 )
             except RuntimeError as e:
                 self.logger.error(f"Feature selection failed for target '{target_feature}' with config {config}: {e}")
-                # Handle the exception as needed
+                continue  # Skip this fold due to error
 
             if selected_features_fold_df.empty:
                 self.logger.warning(
@@ -448,7 +500,7 @@ class AFS:
                 config,
                 train_X.values,
                 train_y.values,
-                selected_feature_indices,
+                None,
                 preprocessor,
                 target_type,
             )
@@ -485,22 +537,6 @@ class AFS:
     ) -> float:
         """
         Applies bootstrap bias correction to the fold predictions.
-
-        Parameters
-        ----------
-        fold_predictions : list
-            A list of tuples containing predictions and true values.
-        target_type : str
-            The type of the target variable ('categorical' or 'continuous').
-        B : int, optional
-            Number of bootstrap samples. Default is 1000.
-        conf_interval : float, optional
-            The confidence interval level. Default is 0.95.
-
-        Returns
-        -------
-        float
-            The bias-corrected score.
         """
         if not fold_predictions:
             return float('nan')
@@ -532,4 +568,4 @@ class AFS:
         self.logger.info(f'Confidence interval: {ci}')
 
         bbc_score = np.mean(b_scores)
-        return bbc_score
+        return bbc_score, ci

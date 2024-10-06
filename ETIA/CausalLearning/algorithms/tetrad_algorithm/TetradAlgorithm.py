@@ -345,7 +345,7 @@ class TetradAlgorithm:
             elif jToi in ['Tail', 'TAIL']:
                 matrix[j, i] = 3
 
-        matrix_pd = pd.DataFrame(matrix, columns=var_map['var_name'])
+        matrix_pd = pd.DataFrame(matrix, columns=var_map['var_name'], index=var_map['var_name'])
         return matrix_pd
 
     def check_parameters(self, parameters, data_info):
@@ -407,7 +407,6 @@ class TetradAlgorithm:
             A tuple containing the learned MEC graph and a dictionary of results.
         """
         graph = jpype.JPackage("edu.cmu.tetrad.graph")
-
         if prepare_data:
             ds, var_map = self.prepare_data(data, parameters)
         else:
@@ -448,7 +447,9 @@ class TetradAlgorithm:
 
         if parameters['causal_sufficiency']:
             mec_graph = matrix_to_pywhy_graph(mec_graph_pd, 'CPDAG')
+            graph = matrix_to_pywhy_graph(graph_pd, 'DAG')
         else:
             mec_graph = matrix_to_pywhy_graph(mec_graph_pd, 'PAG')
+            graph = matrix_to_pywhy_graph(graph_pd, 'MAG')
 
-        return mec_graph, library_results
+        return mec_graph_pd, graph_pd, library_results

@@ -1,11 +1,10 @@
 # ETIA/algorithms/utils.py
 
-import jpype
 import numpy as np
 import pandas as pd
 from tigramite import data_processing as pp
 from jpype import JArray, JDouble, JInt, JPackage
-from ..data.Dataset import Dataset
+from ...data.Dataset import Dataset
 from ...utils.jvm_manager import *
 from ...utils.logger import get_logger
 

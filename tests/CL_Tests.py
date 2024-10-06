@@ -2,7 +2,7 @@ import unittest
 import os
 import pandas as pd
 from ETIA.CausalLearning.CausalLearner import CausalLearner
-from ETIA.CausalLearning.data.Dataset import Dataset
+from ETIA.data import Dataset
 from ETIA.CausalLearning.configurations import Configurations
 
 class TestCausalLearner(unittest.TestCase):

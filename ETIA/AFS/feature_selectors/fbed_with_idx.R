@@ -1,6 +1,7 @@
 #! /usr/bin/Rscript
 #install.packages("MXM", repos = "http://cran.us.r-project.org")
 library("MXM")
+Sys.setlocale("LC_ALL", "C")
 
 # arguments
 args = commandArgs(trailingOnly=TRUE)
@@ -32,14 +33,18 @@ feature_data <- train_data[, colnames(dataset) != target_name]
 
 # Ensure feature_data is a matrix
 feature_data <- as.matrix(feature_data)
-
-# Check for missing values and convert to numeric matrix if necessary
-if (any(is.na(feature_data))) {
-    stop("feature_data contains missing values")
-}
 if (!is.matrix(feature_data)) {
     stop("feature_data is not a matrix")
 }
+
+# Debug prints
+cat("Feature data structure: \n")
+print(dim(feature_data))
+cat("First few rows of feature data:\n")
+print(head(feature_data))
+cat("Target data structure: \n")
+print(length(target_data))
+print(head(target_data))
 
 if (verbose) {
     cat("Arguments:\n")
@@ -52,19 +57,10 @@ if (verbose) {
     if (length(args) == 8) {
         cat("train_idx_name: ", train_idx_name, "\n")
     }
-    cat("Dataset loaded:\n")
-    print(head(dataset))
-    cat("Train data:\n")
-    print(head(train_data))
-    cat("Target data:\n")
-    print(head(target_data))
-    cat("Feature data:\n")
-    print(head(feature_data))
 }
 
 fbed_object <- fbed.reg(target_data, feature_data, threshold = alpha, test = ind_test_name, K = k)
 selectedVars <- fbed_object$res[, 'sel']
-
 
 # Adjust the selectedVars to match the original dataset indexes
 original_columns <- colnames(dataset)

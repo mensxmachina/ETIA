@@ -38,5 +38,5 @@ class RandomForestRegressor_:
         return RandomForestRegressor(
             n_estimators=parameters['n_trees'],
             min_samples_leaf=parameters['min_samples_leaf'],
-            max_depth=parameters['max_depth']
+            max_depth=parameters['max_depth'], n_jobs=-1
         )

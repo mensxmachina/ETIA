@@ -95,9 +95,10 @@ def stop_jvm():
         logger.info("JVM is not running.")
 '''
 # Example Usage
-if __name__ == "__main__":
+def example():
     try:
         start_jvm()
+        print(jpype.JPackage('org').apache.commons.lang3.tuple)
         # Your code that interacts with Java classes goes here
 
     except Exception as e:

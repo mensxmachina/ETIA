@@ -2,7 +2,7 @@ ci_tests = {
 
     "FisherZ": {
         "data_type": ["continuous"],
-        "significance_level": [0.01, 0.05]
+        "significance_level": [0.01, 0.05, 0.1]
     },
 
     "cci": {

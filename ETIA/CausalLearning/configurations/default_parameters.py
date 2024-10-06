@@ -6,8 +6,8 @@ default_conf = {
                 "n_lags": 2
         },
     "Results_folder_path": "res/",
-    "causal_sufficiency": True,
-    "assume_faithfulness": False,
+    "causal_sufficiency": False,
+    "assume_faithfulness": True,
     "OCT":
         {
                 "alpha": 0.01,
@@ -19,7 +19,7 @@ default_conf = {
                         "parameters":
                         {
                             "folds": 10,
-                            "folds_to_run": 5
+                            "folds_to_run": 3
                         }
                     },
                 "Regressor_parameters":
@@ -27,8 +27,8 @@ default_conf = {
                         "name": "RandomForestRegressor",
                         "parameters":
                             {
-                                "n_trees": 5,
-                                "min_samples_leaf": 0.1,
+                                "n_trees": 100,
+                                "min_samples_leaf": 0.01,
                                 "max_depth": 10
                             }
                     },

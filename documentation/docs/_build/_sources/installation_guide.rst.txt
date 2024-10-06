@@ -8,9 +8,9 @@ Prerequisites
 -------------
 Before installing ETIA, ensure that you have the following dependencies:
 
-- **Python 3.8++**
+- **Python 3.8+**
 - **Java 17** (required for Tetrad algorithms in the Causal Learning module)
-- **R 4.4+++** (required for some feature selection algorithms in the AFS module)
+- **R 4.4+** (required for some feature selection algorithms in the AFS module)
 
 You can download and install these dependencies from their official websites:
 

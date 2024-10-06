@@ -75,7 +75,7 @@ Main Class
 
 The main entry point for using the AFS module is through the `AFS` class. This class provides methods to configure, execute feature selection, and manage results. It integrates preprocessing steps, feature selection, and predictive modeling in a seamless workflow.
 
-.. autoclass:: AFS.AFS
+.. autoclass:: ETIA.AFS.AFS
     :members:
     :undoc-members:
     :show-inheritance:

@@ -4,6 +4,7 @@ import logging
 from typing import Dict, Optional, Any
 
 import pandas as pd
+import uuid
 
 
 class FeatureSelector:
@@ -30,7 +31,6 @@ class FeatureSelector:
 
         # Setup logging
         self.logger = logging.getLogger(__name__)
-        self.output_file = os.path.join(self.path_, 'selected_features.csv')
 
     def run_r_script(
         self,
@@ -38,31 +38,12 @@ class FeatureSelector:
         data_file_path: str,
         target_name: str,
         config: Dict[str, Any],
+        output_file: str,
         train_idx_name: Optional[str] = None,
         verbose: bool = False
     ) -> pd.DataFrame:
         """
         Runs the specified R script for feature selection.
-
-        Parameters
-        ----------
-        script_path : str
-            The path to the R script to run.
-        data_file_path : str
-            The path to the CSV file containing the data.
-        target_name : str
-            The name of the target variable in the dataset.
-        config : dict
-            The configuration settings for the feature selection algorithm.
-        train_idx_name : str, optional
-            The name of the CSV file containing the training indexes for a specific fold.
-        verbose : bool, optional
-            If True, prints detailed logs. Default is False.
-
-        Returns
-        -------
-        pandas.DataFrame
-            A DataFrame containing the selected features.
         """
         args = [
             self.r_path, '--vanilla', script_path,
@@ -71,7 +52,7 @@ class FeatureSelector:
             config['ind_test_name'],
             str(config['alpha']),
             str(config['k']),
-            self.output_file,
+            output_file,
             'TRUE' if verbose else 'FALSE'
         ]
         if train_idx_name:
@@ -91,7 +72,7 @@ class FeatureSelector:
             self.logger.error(f"R script stderr: {result.stderr}")
             raise RuntimeError(f"R script {script_path} failed with return code {result.returncode}")
 
-        selected_features_pd = pd.read_csv(self.output_file)
+        selected_features_pd = pd.read_csv(output_file)
         return selected_features_pd
 
     def fbed(
@@ -99,29 +80,12 @@ class FeatureSelector:
         target_name: str,
         config: Dict[str, Any],
         data_file_path: str,
+        output_file: str,
         train_idx_name: Optional[str] = None,
         verbose: bool = False
     ) -> pd.DataFrame:
         """
         Runs the FBED feature selection algorithm.
-
-        Parameters
-        ----------
-        target_name : str
-            The name of the target variable.
-        config : dict
-            The configuration settings for the FBED algorithm.
-        data_file_path : str
-            The path to the CSV file containing the data.
-        train_idx_name : str, optional
-            The name of the CSV file with the training indexes for a specific fold.
-        verbose : bool, optional
-            If True, prints detailed logs. Default is False.
-
-        Returns
-        -------
-        pandas.DataFrame
-            A DataFrame containing the selected features.
         """
         script_path = os.path.join(self.path_, 'feature_selectors', 'fbed_with_idx.R')
         return self.run_r_script(
@@ -129,6 +93,7 @@ class FeatureSelector:
             data_file_path,
             target_name,
             config,
+            output_file,
             train_idx_name,
             verbose
         )
@@ -138,29 +103,12 @@ class FeatureSelector:
         target_name: str,
         config: Dict[str, Any],
         data_file_path: str,
+        output_file: str,
         train_idx_name: Optional[str] = None,
         verbose: bool = False
     ) -> pd.DataFrame:
         """
         Runs the SES feature selection algorithm.
-
-        Parameters
-        ----------
-        target_name : str
-            The name of the target variable.
-        config : dict
-            The configuration settings for the SES algorithm.
-        data_file_path : str
-            The path to the CSV file containing the data.
-        train_idx_name : str, optional
-            The name of the CSV file with the training indexes for a specific fold.
-        verbose : bool, optional
-            If True, prints detailed logs. Default is False.
-
-        Returns
-        -------
-        pandas.DataFrame
-            A DataFrame containing the selected features.
         """
         script_path = os.path.join(self.path_, 'feature_selectors', 'ses_with_idx.R')
         return self.run_r_script(
@@ -168,6 +116,7 @@ class FeatureSelector:
             data_file_path,
             target_name,
             config,
+            output_file,
             train_idx_name,
             verbose
         )
@@ -183,41 +132,26 @@ class FeatureSelector:
     ) -> pd.DataFrame:
         """
         Runs the feature selection process based on the provided configuration.
-
-        Parameters
-        ----------
-        config : dict
-            The configuration settings for feature selection.
-        target_name : str
-            The name of the target variable.
-        data_pd : pandas.DataFrame
-            The dataset to be used for feature selection.
-        dataset_name : str
-            The name of the dataset, used for saving intermediate files.
-        train_idx_name : str, optional
-            The name of the CSV file with the training indexes for a specific fold.
-        verbose : bool, optional
-            If True, prints detailed logs. Default is False.
-
-        Returns
-        -------
-        pandas.DataFrame
-            A DataFrame containing the selected features.
         """
-        data_file_path = os.path.join(self.path_, dataset_name + '.csv')
+        # Generate unique file names
+        unique_id = str(uuid.uuid4())
+        data_file_name = f"{dataset_name}_{unique_id}.csv"
+        data_file_path = os.path.join(self.path_, data_file_name)
+        output_file = os.path.join(self.path_, f"selected_features_{unique_id}.csv")
+
         data_pd.to_csv(data_file_path, index=False)
         try:
             fs_name = config.get('fs_name')
             if fs_name == 'fbed':
-                features = self.fbed(target_name, config, data_file_path, train_idx_name, verbose)
+                features = self.fbed(target_name, config, data_file_path, output_file, train_idx_name, verbose)
             elif fs_name == 'ses':
-                features = self.ses(target_name, config, data_file_path, train_idx_name, verbose)
+                features = self.ses(target_name, config, data_file_path, output_file, train_idx_name, verbose)
             else:
                 raise ValueError(f"Unsupported feature selection algorithm: {fs_name}")
             return features
         finally:
-            # Ensure the CSV file is deleted after feature selection
+            # Ensure the CSV files are deleted after feature selection
             if os.path.exists(data_file_path):
                 os.remove(data_file_path)
-            if os.path.exists(self.output_file):
-                os.remove(self.output_file)
+            if os.path.exists(output_file):
+                os.remove(output_file)

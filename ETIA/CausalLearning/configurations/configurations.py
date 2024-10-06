@@ -1,11 +1,7 @@
 import json
-import os
-import logging
-from typing import Optional, Union
+from typing import Optional
 
-import pandas as pd
-
-from ..data.Dataset import Dataset  # Corrected import
+from ...data.Dataset import Dataset  # Corrected import
 from .parameters import CDHPO_Parameters
 from .default_parameters import default_conf
 from .class_causal_configurator import CausalDiscoveryConfigurator
@@ -108,6 +104,7 @@ class Configurations:
             assume_faithfulness=default_conf['assume_faithfulness'],
             time_lagged=self.time_lagged,
             time_series=self.time_series,
+            exclude_algs=['gfci','rfci']
         )
 
         self.cdhpo_params.set_cd_algorithms(oct_json_params['CausalDiscoveryAlgorithms'], self.dataset_info)

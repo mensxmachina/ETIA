@@ -1,15 +1,12 @@
 # ETIA/CausalLearning/CausalLearner.py
 
-import os
 import pickle
 import time
-from typing import Any, Dict, List, Optional, Union
+from typing import Optional, Union
 import pandas as pd
-import logging
-from joblib import Parallel, delayed
 
 from .algorithms import causaldiscoveryalgorithms
-from .data.Dataset import Dataset
+from ..data.Dataset import Dataset
 from .configurations import Configurations
 from .CDHPO import OCT
 from ..utils import get_logger
@@ -129,6 +126,7 @@ class CausalLearner:
         Tuple containing:
             - opt_conf: The optimal configuration found.
             - matrix_mec_graph: The MEC graph matrix.
+            - matrix_graph: The graph matrix
             - run_time: The runtime of the CDHPO process.
             - library_results: Results from the causal discovery libraries.
         """
@@ -136,7 +134,7 @@ class CausalLearner:
 'Starting OCT Run')
         start_time = time.time()
         try:
-            self.opt_conf, self.matrix_mec_graph, library_results = self.cdhpo.run()
+            self.opt_conf, self.matrix_mec_graph, self.matrix_graph, library_results = self.cdhpo.run()
         except AttributeError as e:
             self.logger.error(f"Attribute error during CDHPO run: {e}")
             raise
@@ -149,7 +147,8 @@ class CausalLearner:
         self.print_results()
         return {
             'optimal_conf': self.opt_conf,
-            'matrix_mec_graph': pd.DataFrame(pywhy_graph_to_matrix(self.matrix_mec_graph), columns=self.dataset.get_dataset().columns),
+            'matrix_mec_graph': self.matrix_mec_graph,
+            'matrix_graph' : self.matrix_graph,
             'run_time': self.run_time,
             'library_results': library_results
         }
@@ -173,7 +172,7 @@ class CausalLearner:
                 print(f'{par}: {val}')
 
         print('The MEC matrix graph is:')
-        print(pywhy_graph_to_matrix(self.matrix_mec_graph))
+        print(self.matrix_mec_graph)
 
     def set_dataset(self, dataset):
         """

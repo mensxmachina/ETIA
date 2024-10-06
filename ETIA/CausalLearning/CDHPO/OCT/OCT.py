@@ -10,10 +10,9 @@ from sklearn.model_selection import ParameterGrid
 
 from ...utils import get_logger
 from .utils import mutual_info_continuous, is_dict_in_array
-from .causal_graph_utils.markov_boundary import markov_boundary
 from ...CDHPO.CDHPOBase import CDHPOBase
 from ...CausalModel.utils import pywhy_graph_to_matrix
-
+from ....CRV.causal_graph_utils.markov_boundary import markov_boundary
 
 class OCT(CDHPOBase):
     """
@@ -178,7 +177,7 @@ class OCT(CDHPOBase):
                 self.saved_y_test[c][target][fold],
             )
 
-        mb = markov_boundary(target, mec_graphs_configs[c][fold])
+        mb = markov_boundary(target, self.graphs_configs[c][fold])
 
         self.mb_size[c, fold, target] = len(mb)
 
@@ -202,7 +201,7 @@ class OCT(CDHPOBase):
                 clf.fit(X_train, y_train)
                 prediction = clf.predict(X_test)
             else:
-                prediction = np.full(y_test.shape, np.mean(y_train))
+                prediction = np.random.uniform(np.min(y_train), np.max(y_train), y_test.shape)
 
         self.logger.debug(f'Fold {fold} for variable {target} is fitted')
 
@@ -448,6 +447,8 @@ class OCT(CDHPOBase):
             The optimal configuration found.
         matrix_mec_graph : np.ndarray
             The MEC graph matrix of the optimal configuration.
+        matrix_graph : nd.nd.array
+            The graph matrix of optimal configuration
         library_results : Any
             Results from the causal discovery library.
         """
@@ -456,24 +457,28 @@ class OCT(CDHPOBase):
             raise RuntimeError('Cannot run OCT when previous configurations have already been run.')
 
         self.oct_params.oos_protocol.protocol.init_protocol(self.data)
-        results = []
-
+        mec_graphs_ = []
+        graphs_ = []
         for algo, algo_configs in self.oct_params.configs.items():
             cd_configs = list(ParameterGrid(algo_configs))
             self.logger.info(f'Running algorithm: {algo}')
             for params in cd_configs:
                 params['var_type'] = self.data_type_info['var_type']
-                config_result = self.oct_params.oos_protocol.protocol.run_protocol(
+                matrix_mec_graph, matrix_graph, _ = self.oct_params.oos_protocol.protocol.run_protocol(
                     self.data, params['model'], params
                 )
-                mec_graphs = [pywhy_graph_to_matrix(mec_graph) for mec_graph in config_result[0]]
-                results.append(mec_graphs)
+                mec_graphs = [mec_graph.to_numpy()
+                              for mec_graph in matrix_mec_graph]
+                graphs = [graph.to_numpy() for graph in matrix_graph]
+                mec_graphs_.append(mec_graphs)
+                graphs_.append(graphs)
                 self.save_progress()
                 self.logger.debug(f'Protocol for params {params} has been run')
                 params['name'] = algo
                 self.configs_ran.append(params)
 
-        self.mec_graphs_configs = results
+        self.mec_graphs_configs = mec_graphs_
+        self.graphs_configs = graphs_
         num_configs = len(self.configs_ran)
         num_folds = self.oct_params.oos_protocol.protocol.folds_to_run
         self.mb_size = np.zeros((num_configs, num_folds, self.n_nodes))
@@ -513,13 +518,13 @@ class OCT(CDHPOBase):
 
         self.logger.debug(f'Best causal configuration is {self.configs_ran[OCTs_c]}')
 
-        self.matrix_mec_graph, library_results = self.configs_ran[OCTs_c]['model'].run(
+        self.matrix_mec_graph, self.graph, library_results = self.configs_ran[OCTs_c]['model'].run(
             self.data, self.configs_ran[OCTs_c]
         )
         self.save_progress()
 
         np.save(os.path.join(self.results_folder, 'matrix_mec_graph.npy'), self.matrix_mec_graph)
-        return self.configs_ran[OCTs_c], self.matrix_mec_graph, library_results
+        return self.configs_ran[OCTs_c], self.matrix_mec_graph, self.graph, library_results
 
     def run_new(self) -> Tuple[Dict[str, Any], np.ndarray, Any]:
         """
@@ -540,8 +545,8 @@ class OCT(CDHPOBase):
 
         self.oct_params.oos_protocol.protocol.init_protocol(self.data)
         initial_config_count = len(self.configs_ran)
-        new_results = []
-
+        mec_graphs_ = []
+        graphs_ = []
         for algo, algo_configs in self.oct_params.configs.items():
             cd_configs = list(ParameterGrid(algo_configs))
             self.logger.debug(f'Running new configurations for algorithm: {algo}')
@@ -552,19 +557,22 @@ class OCT(CDHPOBase):
                 if is_dict_in_array(params, self.configs_ran):
                     continue
 
-                config_result = self.oct_params.oos_protocol.protocol.run_protocol(
+                matrix_mec_graph, matrix_graph, _ = self.oct_params.oos_protocol.protocol.run_protocol(
                     self.data, params['model'], params
                 )
-                mec_graphs = [pywhy_graph_to_matrix(mec_graph) for mec_graph in config_result[0]]
-                new_results.append(mec_graphs)
+                mec_graphs = [mec_graph.to_numpy() for mec_graph in matrix_mec_graph]
+                graphs = [graph.to_numpy() for graph in matrix_graph]
+                mec_graphs_.append(mec_graphs)
+                graphs_.append(graphs)
                 self.save_progress()
                 self.configs_ran.append(params)
 
-        if not new_results:
+        if not mec_graphs_:
             self.logger.warning('No new configurations to run.')
             return self.configs_ran[self.opt_config], self.matrix_mec_graph, None
 
-        self.mec_graphs_configs.extend(new_results)
+        self.mec_graphs_configs.extend(mec_graphs_)
+        self.graphs_configs.extend(graphs_)
         num_configs = len(self.configs_ran)
         num_folds = self.oct_params.oos_protocol.protocol.folds_to_run
         self.mb_size = np.zeros((num_configs, num_folds, self.n_nodes))

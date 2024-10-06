@@ -82,10 +82,10 @@ class KFoldCV(MVP_ProtocolBase):
         """
         # Causal discovery
         parameters['indexes'] = self.train_indexes[fold]
-        mec_graph, library_results = algorithm.run(data, parameters, prepare_data=True)
+        mec_graph, graph, library_results = algorithm.run(data, parameters, prepare_data=True)
         self.logger.debug('Causal discovery algorithm has been run for fold ' + str(fold))
 
-        return [mec_graph, library_results]
+        return [mec_graph, graph, library_results]
 
     def init_protocol(self, data):
         """
@@ -130,4 +130,4 @@ class KFoldCV(MVP_ProtocolBase):
         )
         results = np.array(results)
 
-        return [results[:, 0], results[:, 1]]
+        return [results[:, 0], results[:, 1], results[:, 2]]

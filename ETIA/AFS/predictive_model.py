@@ -119,6 +119,8 @@ class PredictiveModel:
             self.model = self.linear_regression()
         else:
             raise ValueError(f"Unsupported model type: {model_name}")
+        if(selected_features is not None):
+            train_X = train_X[:, selected_features]
 
         self.model.fit(train_X, train_y)
 

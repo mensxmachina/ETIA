@@ -1,3 +1,5 @@
+from .utils import *
+
 class Dataset:
     """
     A class for representing datasets and providing functionalities for loading, manipulating, and processing datasets.

@@ -29,7 +29,6 @@ def mutual_info_continuous(y, y_hat):
         Returns:
             mutual_info (float) : mutual information of y and y_hat
         """
-
         if stdev(y) == 0 or stdev(y_hat) == 0:
             raise ValueError("MutualInfo: zero st_dev")
 

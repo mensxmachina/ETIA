@@ -1,4 +1,4 @@
-ETIA.AFS.feature\_selector module
+ETIA.AFS.feature\_selector
 ---------------------------------
 
 .. automodule:: ETIA.AFS.feature_selector
