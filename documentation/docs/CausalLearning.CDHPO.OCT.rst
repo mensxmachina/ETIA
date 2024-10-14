@@ -6,14 +6,6 @@ ETIA.CausalLearning.CDHPO.OCT package
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils
-
 Submodules
 ----------
 

@@ -13,6 +13,7 @@ Subpackages
    :maxdepth: 4
 
    ETIA.CRV.adjustment
+   ETIA.CRV.causal_graph_utils
    ETIA.CRV.confidence
    ETIA.CRV.queries
    ETIA.CRV.utils

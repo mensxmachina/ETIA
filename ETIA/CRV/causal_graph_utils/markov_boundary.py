@@ -20,7 +20,7 @@ def markov_boundary(target, matrix):
         markov_boundary (list) : list of indexes for the markov boundary ot the target
 
     '''
-    if matrix is pd.DataFrame:
+    if type(matrix) is pd.DataFrame:
         matrix = matrix.to_numpy()
     else:
         matrix = matrix

@@ -92,7 +92,7 @@ class CausalLearner:
 
         # Initialize configurations
         if configurations is None:
-            self.configurations = Configurations(dataset=self.dataset, verbose=self.verbose)
+            self.configurations = Configurations(dataset=self.dataset, verbose=self.verbose, n_jobs=n_jobs)
         elif not isinstance(configurations, Configurations):
             self.logger.error('Configurations must be of type Configurations.')
             raise TypeError('Configurations must be of type Configurations.')

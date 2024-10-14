@@ -1,5 +1,6 @@
 #! /usr/bin/Rscript
 #install.packages("MXM", repos = "http://cran.us.r-project.org")
+
 library("MXM")
 Sys.setlocale("LC_ALL", "C")
 

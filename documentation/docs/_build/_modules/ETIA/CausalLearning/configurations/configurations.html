@@ -78,12 +78,9 @@
   <h1>Source code for ETIA.CausalLearning.configurations.configurations</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="kn">from</span> <span class="nn">..data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>  <span class="c1"># Corrected import</span>
+<span class="kn">from</span> <span class="nn">...data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>  <span class="c1"># Corrected import</span>
 <span class="kn">from</span> <span class="nn">.parameters</span> <span class="kn">import</span> <span class="n">CDHPO_Parameters</span>
 <span class="kn">from</span> <span class="nn">.default_parameters</span> <span class="kn">import</span> <span class="n">default_conf</span>
 <span class="kn">from</span> <span class="nn">.class_causal_configurator</span> <span class="kn">import</span> <span class="n">CausalDiscoveryConfigurator</span>
@@ -126,7 +123,7 @@
         <span class="n">time_lagged</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">time_series</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">conf_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">n_jobs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
@@ -167,6 +164,7 @@
             <span class="n">alpha</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span>
             <span class="n">n_permutations</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">],</span>
             <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
             <span class="n">variables_type</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;variables_type&#39;</span><span class="p">],</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_regressor</span><span class="p">(</span>
@@ -179,14 +177,39 @@
         <span class="p">)</span>
 
         <span class="c1"># Configure causal discovery algorithms</span>
-        <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
-        <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
-            <span class="n">data_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
-            <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
-            <span class="n">assume_faithfulness</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
-            <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
-            <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">:</span>
+            <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+            <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+                <span class="n">data_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+                <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+                <span class="n">assume_faithfulness</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+                <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+                <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;include_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;exclude_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span>
+                <span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]):</span>
+                <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+                <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;exclude_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;include_algs&#39;</span> <span class="ow">in</span>
+                        <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]):</span>
+                    <span class="n">exlcude_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;exclude_algs&#39;</span><span class="p">]</span>
+                    <span class="n">include_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;include_algs&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="s1">&#39;exclude_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]):</span>
+                    <span class="n">exlcude_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;exclude_algs&#39;</span><span class="p">]</span>
+                    <span class="n">include_algs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">exlcude_algs</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">include_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;include_algs&#39;</span><span class="p">]</span>
+
+                <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+                    <span class="n">data_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+                    <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+                    <span class="n">assume_faithfulness</span><span class="o">=</span><span class="n">default_conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+                    <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+                    <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+                    <span class="n">include_algs</span><span class="o">=</span><span class="n">include_algs</span><span class="p">,</span>
+                    <span class="n">exclude_algs</span><span class="o">=</span><span class="n">exlcude_algs</span>
+                <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
 
@@ -216,11 +239,16 @@
 
         <span class="c1"># Process CDHPO parameters</span>
         <span class="n">oct_json_params</span> <span class="o">=</span> <span class="n">conf</span><span class="p">[</span><span class="s1">&#39;OCT&#39;</span><span class="p">]</span>
+        <span class="k">if</span><span class="p">(</span><span class="s1">&#39;n_jobs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">init_main_params</span><span class="p">(</span>
             <span class="n">alpha</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span>
             <span class="n">n_permutations</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;n_permutations&#39;</span><span class="p">],</span>
             <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
             <span class="n">variables_type</span><span class="o">=</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;variables_type&#39;</span><span class="p">],</span>
+            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_regressor</span><span class="p">(</span>
@@ -244,6 +272,29 @@
                 <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
                 <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
             <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="s1">&#39;include_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="s1">&#39;exclude_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]):</span>
+                <span class="n">configurator</span> <span class="o">=</span> <span class="n">CausalDiscoveryConfigurator</span><span class="p">()</span>
+                <span class="k">if</span><span class="p">(</span><span class="s1">&#39;exclude_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;include_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]):</span>
+                    <span class="n">exlcude_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;exclude_algs&#39;</span><span class="p">]</span>
+                    <span class="n">include_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;include_algs&#39;</span><span class="p">]</span>
+                <span class="k">elif</span><span class="p">(</span><span class="s1">&#39;exclude_algs&#39;</span> <span class="ow">in</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]):</span>
+                    <span class="n">exlcude_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;exclude_algs&#39;</span><span class="p">]</span>
+                    <span class="n">include_algs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">exlcude_algs</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">include_algs</span> <span class="o">=</span> <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">][</span><span class="s1">&#39;include_algs&#39;</span><span class="p">]</span>
+
+                <span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">configurator</span><span class="o">.</span><span class="n">create_causal_configs</span><span class="p">(</span>
+                    <span class="n">data_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">[</span><span class="s1">&#39;data_type&#39;</span><span class="p">],</span>
+                    <span class="n">causal_sufficiency</span><span class="o">=</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">],</span>
+                    <span class="n">assume_faithfulness</span><span class="o">=</span><span class="n">conf</span><span class="p">[</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">],</span>
+                    <span class="n">time_lagged</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_lagged</span><span class="p">,</span>
+                    <span class="n">time_series</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">time_series</span><span class="p">,</span>
+                    <span class="n">include_algs</span><span class="o">=</span><span class="n">include_algs</span><span class="p">,</span>
+                    <span class="n">exclude_algs</span><span class="o">=</span><span class="n">exlcude_algs</span>
+                <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo_params</span><span class="o">.</span><span class="n">set_cd_algorithms</span><span class="p">(</span><span class="n">oct_json_params</span><span class="p">[</span><span class="s1">&#39;CausalDiscoveryAlgorithms&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Configurations.add_configurations_from_file"><a class="viewcode-back" href="../../../../CausalLearning.configurations.html#ETIA.CausalLearning.Configurations.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

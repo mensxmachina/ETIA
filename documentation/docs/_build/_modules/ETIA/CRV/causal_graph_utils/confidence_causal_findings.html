@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CRV.causal_graph_utils.confidence_causal_findings &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ETIA.CRV.causal_graph_utils.confidence_causal_findings</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ETIA.CRV.causal_graph_utils.confidence_causal_findings</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+
+<span class="c1"># Functions for computing edge/path consistency and similarity using bootstrapped graphs</span>
+<span class="c1"># Author: kbiza@csd.uoc.gr</span>
+
+
+
+<div class="viewcode-block" id="is_consistent_edge"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.confidence_causal_findings.is_consistent_edge">[docs]</a><span class="k">def</span> <span class="nf">is_consistent_edge</span><span class="p">(</span><span class="n">m1_ij</span><span class="p">,</span> <span class="n">m1_ji</span><span class="p">,</span> <span class="n">m2_ij</span><span class="p">,</span> <span class="n">m2_ji</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Checks if two edges are consistent</span>
+<span class="sd">    Args:</span>
+<span class="sd">        m1_ij(int):  notation of matrix1[i,j]</span>
+<span class="sd">        m1_ji(int):  notation of matrix1[j,i]</span>
+<span class="sd">        m2_ij(int):  notation of matrix2[i,j]</span>
+<span class="sd">        m2_ji(int):  notation of matrix2[j,i]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        is consistent(bool) : True or False</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># identical edges (or identical absence of edge)</span>
+    <span class="k">if</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="n">m2_ij</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="n">m2_ji</span><span class="p">:</span>
+        <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># consistent edges</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># i o-o j  is consistent with  io-&gt;j, i&lt;-&gt;j, i--&gt;j,  i&lt;--j, i&lt;-oj</span>
+        <span class="k">if</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ij</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># i o-&gt; j  is consistent with  i&lt;-&gt;j, i--&gt;j, i o-o j</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># i &lt;-o j  is consistent with  i&lt;-&gt;j, i&lt;--j, i o-o j</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_consistent</span><span class="o">=</span><span class="kc">False</span>
+
+        <span class="c1"># i --&gt; j is consistent with  io-&gt;j, i o-o j</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># i &lt;-- j  is consistent with  i&lt;-oj, i o-o j</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># i &lt;-&gt; j  is consistent with  io-oj  io-&gt;j, i&lt;-oj</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m1_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m2_ji</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># no edge in m1, edge in m2</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">m2_ij</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># edge in m1, no edge in m2</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># no edge in m1, no edge in m2</span>
+        <span class="k">elif</span> <span class="n">m1_ij</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">m2_ij</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;problem with notation&quot;</span><span class="p">)</span>
+            <span class="n">is_consistent</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">is_consistent</span></div>
+
+
+<div class="viewcode-block" id="compute_edge_weights"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.confidence_causal_findings.compute_edge_weights">[docs]</a><span class="k">def</span> <span class="nf">compute_edge_weights</span><span class="p">(</span><span class="n">best_mec_matrix</span><span class="p">,</span> <span class="n">bootstrapped_mec_matrices</span><span class="p">,</span> <span class="n">all_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">true_graph</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Compute edge consistency and edge frequency for each edge</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        best_mec_matrix</span>
+<span class="sd">        bootstrapped_mec_matrices(list):</span>
+<span class="sd">        all_edges(bool): if True it checks all possible edges n(n-1)/2  and evaluates missing edges</span>
+<span class="sd">                         if False it evaluates only the edges that appear in best_mec_matrix</span>
+<span class="sd">        true_graph</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">n_bootstraps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bootstrapped_mec_matrices</span><span class="p">)</span>
+
+    <span class="n">row_names</span> <span class="o">=</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="n">column_names</span> <span class="o">=</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+
+    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">all_edges</span><span class="p">:</span>
+        <span class="n">n_edges</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_nodes</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_nodes</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_edges</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">best_mec_matrix</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">weight_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_edges</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+    <span class="n">label_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_edges</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">all_edges</span> <span class="ow">and</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">edge_consistency</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">edge_discovery</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">nb</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstraps</span><span class="p">):</span>
+
+                <span class="c1"># consistent edges</span>
+                <span class="k">if</span> <span class="n">is_consistent_edge</span><span class="p">(</span><span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span>
+                                      <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
+                                      <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]):</span>
+                    <span class="n">edge_consistency</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c1"># same edges</span>
+                <span class="k">if</span> <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="ow">and</span> \
+                        <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]:</span>
+                    <span class="n">edge_discovery</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">weight_data</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">row_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">column_names</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
+                              <span class="n">edge_consistency</span> <span class="o">/</span> <span class="n">n_bootstraps</span><span class="p">,</span>
+                             <span class="n">edge_discovery</span> <span class="o">/</span> <span class="n">n_bootstraps</span><span class="p">]</span>
+
+
+            <span class="c1"># Compare estimated graph with true</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">true_graph</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">is_consistent_edge</span><span class="p">(</span><span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span>
+                                      <span class="n">true_graph</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">true_graph</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]):</span>
+                    <span class="n">label_consistency</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">label_consistency</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="k">if</span> <span class="n">true_graph</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="ow">and</span> \
+                        <span class="n">true_graph</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]:</span>
+                    <span class="n">label_discovery</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">label_discovery</span> <span class="o">=</span> <span class="mi">0</span>
+
+                <span class="n">label_data</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">row_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">column_names</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">label_consistency</span><span class="p">,</span> <span class="n">label_discovery</span><span class="p">]</span>
+
+            <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">weight_data_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">weight_data</span><span class="p">,</span>
+                                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;edge_consistency&#39;</span><span class="p">,</span> <span class="s1">&#39;edge_discovery&#39;</span><span class="p">])</span>
+
+    <span class="n">label_data_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">label_data</span><span class="p">,</span>
+                                  <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;edge_consistency&#39;</span><span class="p">,</span> <span class="s1">&#39;edge_discovery&#39;</span><span class="p">])</span>
+
+
+    <span class="k">return</span> <span class="n">weight_data_pd</span><span class="p">,</span> <span class="n">label_data_pd</span></div>
+
+
+
+<div class="viewcode-block" id="compute_path_weight"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.confidence_causal_findings.compute_path_weight">[docs]</a><span class="k">def</span> <span class="nf">compute_path_weight</span><span class="p">(</span><span class="n">bootstrapped_mec_matrices</span><span class="p">,</span> <span class="n">best_mec_matrix</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+
+    <span class="n">n_bootstraps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bootstrapped_mec_matrices</span><span class="p">)</span>
+    <span class="n">path_consistency</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">path_discovery</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">nb</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_bootstraps</span><span class="p">):</span>
+
+        <span class="n">is_consistent_path</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">is_similar_path</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">node_i</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">node_j</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># if at least one edge is not consistent -- &gt; the path is not consistent nor similar</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_consistent_edge</span><span class="p">(</span><span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_i</span><span class="p">,</span> <span class="n">node_j</span><span class="p">],</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_j</span><span class="p">,</span> <span class="n">node_i</span><span class="p">],</span>
+                                  <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_i</span><span class="p">,</span> <span class="n">node_j</span><span class="p">],</span>
+                                  <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_j</span><span class="p">,</span> <span class="n">node_i</span><span class="p">]):</span>
+
+                <span class="n">is_consistent_path</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">is_similar_path</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if at least one edge is consistent but not similar --&gt; the path is not similar</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_i</span><span class="p">,</span> <span class="n">node_j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_i</span><span class="p">,</span> <span class="n">node_j</span><span class="p">]</span> <span class="ow">or</span>
+                        <span class="n">bootstrapped_mec_matrices</span><span class="p">[</span><span class="n">nb</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_j</span><span class="p">,</span> <span class="n">node_i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">best_mec_matrix</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">node_j</span><span class="p">,</span> <span class="n">node_i</span><span class="p">]):</span>
+                    <span class="n">is_similar_path</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">break</span>
+
+
+        <span class="k">if</span> <span class="n">is_consistent_path</span><span class="p">:</span>
+            <span class="n">path_consistency</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">is_similar_path</span><span class="p">:</span>
+            <span class="n">path_discovery</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">path_consistency</span> <span class="o">/</span> <span class="n">n_bootstraps</span><span class="p">,</span> <span class="n">path_discovery</span> <span class="o">/</span> <span class="n">n_bootstraps</span></div>
+
+
+<div class="viewcode-block" id="paths_metrics"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.confidence_causal_findings.paths_metrics">[docs]</a><span class="k">def</span> <span class="nf">paths_metrics</span><span class="p">(</span><span class="n">best_mec_matrix</span><span class="p">,</span> <span class="n">bootstrapped_mec_matrices</span><span class="p">,</span> <span class="n">paths</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Compute path consistency and path discovery for each path</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        paths(dictionary): dictionary with lists of paths</span>
+<span class="sd">        bootstrapped_graphs(list): bootstrapped graphs</span>
+<span class="sd">        opt_graph(pandas Dataframe): adjacency matrix of graph</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        path_consistency(dictionary): consistency values based on the input paths dictionary</span>
+<span class="sd">        path_discovery(dictionary) : discovery values based on the input paths dictionary</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="c1"># Compute path metrics</span>
+    <span class="n">path_consistency</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">path_discovery</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key_path</span> <span class="ow">in</span> <span class="n">paths</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">key_path</span><span class="p">)</span>
+        <span class="n">consistency_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="n">key_path</span><span class="p">]))</span>
+        <span class="n">discovery_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="n">key_path</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="n">key_path</span><span class="p">]):</span>
+            <span class="n">consistency_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">discovery_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">compute_path_weight</span><span class="p">(</span><span class="n">bootstrapped_mec_matrices</span><span class="p">,</span> <span class="n">best_mec_matrix</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+
+        <span class="n">path_consistency</span><span class="p">[</span><span class="n">key_path</span><span class="p">]</span> <span class="o">=</span> <span class="n">consistency_</span>
+        <span class="n">path_discovery</span><span class="p">[</span><span class="n">key_path</span><span class="p">]</span> <span class="o">=</span> <span class="n">discovery_</span>
+
+    <span class="k">return</span> <span class="n">path_consistency</span><span class="p">,</span> <span class="n">path_discovery</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

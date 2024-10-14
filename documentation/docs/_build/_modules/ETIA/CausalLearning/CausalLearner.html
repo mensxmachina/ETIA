@@ -78,16 +78,13 @@
   <h1>Source code for ETIA.CausalLearning.CausalLearner</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ETIA/CausalLearning/CausalLearner.py</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 
 <span class="kn">from</span> <span class="nn">.algorithms</span> <span class="kn">import</span> <span class="n">causaldiscoveryalgorithms</span>
-<span class="kn">from</span> <span class="nn">.data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">..data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
 <span class="kn">from</span> <span class="nn">.configurations</span> <span class="kn">import</span> <span class="n">Configurations</span>
 <span class="kn">from</span> <span class="nn">.CDHPO</span> <span class="kn">import</span> <span class="n">OCT</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
@@ -173,7 +170,7 @@
 
         <span class="c1"># Initialize configurations</span>
         <span class="k">if</span> <span class="n">configurations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">Configurations</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">Configurations</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span> <span class="n">Configurations</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
@@ -207,6 +204,7 @@
 <span class="sd">        Tuple containing:</span>
 <span class="sd">            - opt_conf: The optimal configuration found.</span>
 <span class="sd">            - matrix_mec_graph: The MEC graph matrix.</span>
+<span class="sd">            - matrix_graph: The graph matrix</span>
 <span class="sd">            - run_time: The runtime of the CDHPO process.</span>
 <span class="sd">            - library_results: Results from the causal discovery libraries.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -214,7 +212,7 @@
 <span class="s1">&#39;Starting OCT Run&#39;</span><span class="p">)</span>
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_graph</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attribute error during CDHPO run: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">raise</span>
@@ -227,7 +225,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">print_results</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;optimal_conf&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span>
-            <span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pywhy_graph_to_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dataset</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+            <span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span>
+            <span class="s1">&#39;matrix_graph&#39;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_graph</span><span class="p">,</span>
             <span class="s1">&#39;run_time&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_time</span><span class="p">,</span>
             <span class="s1">&#39;library_results&#39;</span><span class="p">:</span> <span class="n">library_results</span>
         <span class="p">}</span></div>
@@ -251,7 +250,7 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">par</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The MEC matrix graph is:&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">pywhy_graph_to_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">))</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CausalLearner.set_dataset"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

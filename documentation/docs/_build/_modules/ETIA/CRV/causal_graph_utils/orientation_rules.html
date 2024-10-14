@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CRV.causal_graph_utils.orientation_rules &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">ETIA.CRV.causal_graph_utils.orientation_rules</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for ETIA.CRV.causal_graph_utils.orientation_rules</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">from</span> <span class="nn">.one_directed_path</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.find_ancestors_nx</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">#  Orientation rules</span>
+<span class="c1">#  Author: kbiza@csd.uoc.gr, based on the matlab code by striant@csd.uoc.gr</span>
+
+
+<div class="viewcode-block" id="R0"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R0">[docs]</a><span class="k">def</span> <span class="nf">R0</span><span class="p">(</span><span class="n">pag</span><span class="p">,</span> <span class="n">unshielded_triples</span><span class="p">,</span> <span class="n">mag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+
+    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">pag</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dnc</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">):</span>
+        <span class="n">curtriples</span> <span class="o">=</span> <span class="n">unshielded_triples</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+        <span class="n">ntriples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">ntriples</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sep</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntriples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntriples</span><span class="p">):</span>
+                <span class="n">triple</span> <span class="o">=</span> <span class="p">[</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">curtriples</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span>
+
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">mag</span><span class="p">[</span><span class="n">triple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">c</span><span class="p">]</span><span class="o">!=</span><span class="mi">2</span> <span class="p">,</span> <span class="n">mag</span><span class="p">[</span><span class="n">triple</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="p">]</span><span class="o">!=</span><span class="mi">2</span><span class="p">):</span>
+                    <span class="n">sep</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="kc">True</span>
+
+            <span class="n">dnc</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">sep</span><span class="p">],</span> <span class="n">curtriples</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">sep</span><span class="p">]]</span>
+
+            <span class="n">pag</span><span class="p">[</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">~</span><span class="n">sep</span><span class="p">],</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">pag</span><span class="p">[</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">~</span><span class="n">sep</span><span class="p">],</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="n">idx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">sep</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R0: Orienting </span><span class="si">%d</span><span class="s1">*-&gt;</span><span class="si">%d</span><span class="s1">&lt;-*</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">],</span><span class="n">c</span><span class="p">,</span><span class="n">curtriples</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dnc</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+
+    <span class="k">return</span> <span class="n">pag</span><span class="p">,</span> <span class="n">dnc</span></div>
+
+<div class="viewcode-block" id="R1"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R1">[docs]</a><span class="k">def</span> <span class="nf">R1</span><span class="p">(</span><span class="n">Pag</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+
+    <span class="c1"># If a*-&gt;bo-*c and a,c not adjacent ==&gt; a*-&gt;b-&gt;c</span>
+    <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Pag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nb">len</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">Pag</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">Pag</span><span class="p">[:,</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Pag</span><span class="p">[:,</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R1: Orienting </span><span class="si">%d</span><span class="s1">-&gt;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+            <span class="n">Pag</span><span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">Pag</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">Pag</span><span class="p">,</span> <span class="n">flag</span></div>
+
+
+<div class="viewcode-block" id="R2_"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R2_">[docs]</a><span class="k">def</span> <span class="nf">R2_</span><span class="p">(</span><span class="n">Pag</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+    <span class="c1">#If a-&gt;b*-&gt;c or a*-&gt;b-&gt;c, and a*-oc ==&gt; a*-&gt;c</span>
+
+    <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Pag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nb">len</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">):</span>
+        <span class="n">r0</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[:,</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">r3</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[:,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">3</span>
+        <span class="n">r4</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">3</span>
+
+        <span class="k">if</span> <span class="n">r0</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span><span class="n">r4</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R2: Orienting </span><span class="si">%d</span><span class="s1">*-&gt;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">Pag</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">Pag</span><span class="p">,</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="R3"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R3">[docs]</a><span class="k">def</span> <span class="nf">R3</span><span class="p">(</span><span class="n">Pag</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+    <span class="c1">#If a*-&gt;b&lt;-*c, a*-o8o-*c, a,c not adjacent, 8*-ob ==&gt; 8*-&gt;b</span>
+
+
+    <span class="p">[</span><span class="n">th</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Pag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">nedges</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nedges</span><span class="p">):</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[:,</span> <span class="n">th</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[:,</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">len_</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">len_</span><span class="p">):</span>
+                <span class="n">r3</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="n">r4</span> <span class="o">=</span> <span class="n">Pag</span><span class="p">[</span><span class="n">th</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="n">r4</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R3: Orienting </span><span class="si">%d</span><span class="s1">*-&gt;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">th</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">Pag</span><span class="p">[</span><span class="n">th</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">2</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">Pag</span><span class="p">,</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="R4"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R4">[docs]</a><span class="k">def</span> <span class="nf">R4</span><span class="p">(</span><span class="n">pag</span><span class="p">,</span> <span class="n">mag</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Start from some node X, for node Y</span>
+<span class="sd">    Visit all possible nodes X*-&gt;V &amp; V-&gt;Y</span>
+<span class="sd">    For every neighbour that is bi-directed and a parent of Y, continue</span>
+<span class="sd">    For every neighbour that is bi-directed and o-*Y, orient and if parent continue</span>
+<span class="sd">    Total: n*n*(n+m)</span>
+
+<span class="sd">     For each node Y, find all orientable neighbours W</span>
+<span class="sd">     For each node X, non-adjacent to Y, see if there is a path to some node in W</span>
+<span class="sd">     Create graph as follows:</span>
+<span class="sd">     for X,Y</span>
+<span class="sd">     edges X*-&gt;V &amp; V -&gt; Y --&gt; X -&gt; V</span>
+<span class="sd">     edges A &lt;-&gt; B &amp; A -&gt; Y --&gt; A -&gt; B</span>
+<span class="sd">     edges A &lt;-* W &amp; A -&gt; Y --&gt; A-&gt;W</span>
+<span class="sd">     discriminating: if path from X to W</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">pag</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pag_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">pag</span><span class="p">)</span>
+    <span class="nb">dir</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">pag_t</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">bidir</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">pag_t</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">curc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pag</span><span class="p">[</span><span class="n">curc</span><span class="p">,:]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pag</span><span class="p">[</span><span class="n">curc</span><span class="p">,:]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">th</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">cur_dir</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">[:,</span> <span class="n">curc</span><span class="p">]</span>
+
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">curth</span> <span class="ow">in</span> <span class="n">th</span><span class="p">:</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pag</span><span class="p">[</span><span class="n">curth</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cur_dir</span><span class="p">)</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+            <span class="n">G</span><span class="p">[</span><span class="n">curth</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">cur_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">bidir</span><span class="p">[</span><span class="n">d</span><span class="p">,:])</span>
+            <span class="n">G</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">Gnx</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_numpy_array</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">create_using</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">MultiDiGraph</span><span class="p">())</span>
+        <span class="n">TC</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">transitive_closure</span><span class="p">(</span><span class="n">Gnx</span><span class="p">)</span>
+        <span class="n">closure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">):</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">TC</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+                <span class="n">closure</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">closure</span><span class="p">[</span><span class="n">th</span><span class="p">,:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">for</span> <span class="n">curb</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">cura</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">pag</span><span class="p">[</span><span class="n">curb</span><span class="p">,</span> <span class="n">cura</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">r1</span> <span class="o">=</span> <span class="n">closure</span><span class="p">[</span><span class="n">th</span><span class="p">,</span> <span class="n">cura</span><span class="p">]</span>
+                    <span class="n">r2</span> <span class="o">=</span> <span class="n">mag</span><span class="p">[</span><span class="n">curb</span><span class="p">,</span> <span class="n">curc</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+                    <span class="n">r3</span> <span class="o">=</span> <span class="n">mag</span><span class="p">[</span><span class="n">curc</span><span class="p">,</span> <span class="n">curb</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">),</span><span class="n">r3</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R4: Orienting </span><span class="si">%d</span><span class="s1">-&gt;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">curb</span><span class="p">,</span><span class="n">curc</span><span class="p">))</span>
+
+                        <span class="n">pag</span><span class="p">[</span><span class="n">curb</span><span class="p">,</span> <span class="n">curc</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+                        <span class="n">pag</span><span class="p">[</span><span class="n">curc</span><span class="p">,</span> <span class="n">curb</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R4: Orienting </span><span class="si">%d</span><span class="s1">&lt;-&gt;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">curb</span><span class="p">,</span> <span class="n">curc</span><span class="p">))</span>
+
+                        <span class="n">pag</span><span class="p">[</span><span class="n">curb</span><span class="p">,</span> <span class="n">curc</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+                        <span class="n">pag</span><span class="p">[</span><span class="n">curc</span><span class="p">,</span> <span class="n">curb</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+                        <span class="n">pag</span><span class="p">[</span><span class="n">cura</span><span class="p">,</span> <span class="n">curb</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+                    <span class="n">flag</span><span class="o">=</span><span class="kc">True</span>
+                    <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">pag</span><span class="p">,</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="R8"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R8">[docs]</a><span class="k">def</span> <span class="nf">R8</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+
+    <span class="n">G_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">G</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">G_t</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">n_edges</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_edges</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">G</span><span class="p">[:,</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">==</span><span class="mi">3</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="n">out</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">G</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">out</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R8: Orienting </span><span class="si">%d</span><span class="s1">-&gt;</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">G</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">G</span><span class="p">,</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="R9_R10"><a class="viewcode-back" href="../../../../CRV.causal_graph_utils.html#ETIA.CRV.causal_graph_utils.orientation_rules.R9_R10">[docs]</a><span class="k">def</span> <span class="nf">R9_R10</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">dnc</span><span class="p">,</span> <span class="n">flag</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+
+    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">G_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">G</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">G_t</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">n_edges</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+    <span class="c1"># R9: Equivalent to orienting X &lt;-o Y as X &lt;-&gt; Y and checking if Y is an</span>
+    <span class="c1"># ancestor of X (i.e. there is an almost directed cycle)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_edges</span><span class="p">):</span>
+        <span class="c1"># Can it be bidirected? (R9)</span>
+        <span class="n">G_</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">G_</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="c1"># isReachablePag : assume that we consider only &#39;--&gt;&#39; edges</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">one_directed_path</span><span class="p">(</span><span class="n">G_</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R9: Orienting </span><span class="si">%d</span><span class="s1">*--</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">G</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+    <span class="c1"># R10: Equivalent to checking if for some definite non collider V - X - W</span>
+    <span class="c1"># and edge X o-&gt; Y, X-&gt;V and X-&gt;W both create a directed path to Y after</span>
+    <span class="c1"># oriented</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">G</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">G_t</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">G</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">G_t</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">r3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+
+    <span class="n">G_ones</span> <span class="o">=</span> <span class="n">r3</span> <span class="o">*</span> <span class="mi">1</span>
+    <span class="n">Gnx</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">from_numpy_array</span><span class="p">(</span><span class="n">G_ones</span><span class="p">,</span> <span class="n">create_using</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">MultiDiGraph</span><span class="p">())</span>
+    <span class="n">TC</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">transitive_closure</span><span class="p">(</span><span class="n">Gnx</span><span class="p">)</span>
+    <span class="n">possible_closure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">):</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">TC</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+            <span class="n">possible_closure</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">closures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">tested</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">tested</span><span class="p">[:]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">curdnc</span> <span class="o">=</span> <span class="n">dnc</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">curdnc</span><span class="p">:</span>
+            <span class="n">ndnc</span> <span class="o">=</span> <span class="n">curdnc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ndnc</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">tt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">G</span><span class="p">[:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">G</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tt</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndnc</span><span class="p">):</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">curdnc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">curdnc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+
+                <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">possible_closure</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">possible_closure</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">G</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">r3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">t</span><span class="p">,</span> <span class="n">b</span> <span class="o">==</span> <span class="n">t</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">),</span> <span class="n">r3</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">tested</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                    <span class="n">G_</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="n">G_</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+                    <span class="n">G_</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+                    <span class="n">G_t_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">G_</span><span class="p">)</span>
+                    <span class="n">anc</span> <span class="o">=</span> <span class="n">find_ancestors_nx</span><span class="p">(</span><span class="n">G_t_</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+                    <span class="n">closures</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">anc</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">tested</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">if</span> <span class="n">closures</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">tested</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">G_</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="n">G_</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+                    <span class="n">G_</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+                    <span class="n">G_t_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">G_</span><span class="p">)</span>
+                    <span class="n">anc</span> <span class="o">=</span> <span class="n">find_ancestors_nx</span><span class="p">(</span><span class="n">G_t_</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+                    <span class="n">closures</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">anc</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">tested</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">if</span> <span class="n">closures</span><span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R10: Orienting </span><span class="si">%d</span><span class="s1">*--</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+
+                <span class="n">G</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">G</span><span class="p">,</span> <span class="n">flag</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

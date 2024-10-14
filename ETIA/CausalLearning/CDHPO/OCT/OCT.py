@@ -71,8 +71,8 @@ class OCT(CDHPOBase):
             If True, enables verbose logging. Default is False.
         """
         super().__init__(oct_params, data)
-        self.oct_params = oct_params
-        self.data = data
+        self.oct_params = copy.deepcopy(oct_params)
+        self.data = copy.deepcopy(data)
         self.results_folder = results_folder
         self.verbose = verbose
         self.logger = get_logger(__name__, verbose=self.verbose)
@@ -81,26 +81,26 @@ class OCT(CDHPOBase):
         self.data_type_info = self.data.get_data_type_info()
         self.logger.debug('OCT object has been initialized')
 
-        self.results: List[Any] = []
-        self.mb_configs: List[Any] = []
-        self.saved_mb_configs: Dict[int, Dict[int, Dict[int, Any]]] = {}
-        self.pred_configs: List[Any] = []
-        self.saved_pred_configs: Dict[int, Dict[int, Dict[int, Any]]] = {}
-        self.mu_configs: List[Any] = []
-        self.mb_size: np.ndarray = np.array([])
-        self.total_configs_run: int = 0
-        self.configs_ran: List[Dict[str, Any]] = []
-        self.saved_y_test: Dict[int, Dict[int, Dict[int, Any]]] = {}
-        self.matrix_mec_graph: Optional[np.ndarray] = None
-        self.matrix_graph: Optional[np.ndarray] = None
-        self.var_map: Optional[np.ndarray] = None
-        self.mec_graphs_configs: List[Any] = []
-        self.p_values: np.ndarray = np.array([])
-        self.is_equal: np.ndarray = np.array([])
-        self.mean_mb: np.ndarray = np.array([])
-        self.y_test_nodes: List[Any] = []
-        self.idxs: List[np.ndarray] = []
-
+        # Instance-level attributes to ensure no shared references
+        self.results = []
+        self.mb_configs = []
+        self.saved_mb_configs = {}
+        self.pred_configs = []
+        self.saved_pred_configs = {}
+        self.mu_configs = []
+        self.mb_size = np.array([])
+        self.total_configs_run = 0
+        self.configs_ran = []
+        self.saved_y_test = {}
+        self.matrix_mec_graph = None
+        self.matrix_graph = None
+        self.var_map = None
+        self.mec_graphs_configs = []
+        self.p_values = np.array([])
+        self.is_equal = np.array([])
+        self.mean_mb = np.array([])
+        self.y_test_nodes = []
+        self.idxs = []
     def save_progress(self):
         """
         Saves the current state of the OCT object to a file.
@@ -246,7 +246,7 @@ class OCT(CDHPOBase):
         y_test_folds : list
             List of true values for each fold.
         """
-        results = Parallel(n_jobs=1)(
+        results = Parallel(n_jobs=self.oct_params.n_jobs)(
             delayed(self.fold_fit)(
                 target,
                 c,

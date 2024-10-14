@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Optional
 
 from ...data.Dataset import Dataset  # Corrected import
@@ -44,7 +45,7 @@ class Configurations:
         time_lagged: bool = False,
         time_series: bool = False,
         conf_file: Optional[str] = None,
-        n_jobs: Optional[int] = 1,
+        n_jobs: Optional[int] = -1,
         verbose=False
     ):
         self.n_jobs = n_jobs
@@ -85,6 +86,7 @@ class Configurations:
             alpha=oct_json_params['alpha'],
             n_permutations=oct_json_params['n_permutations'],
             causal_sufficiency=default_conf['causal_sufficiency'],
+            n_jobs=self.n_jobs,
             variables_type=oct_json_params['variables_type'],
         )
         self.cdhpo_params.set_regressor(
@@ -97,15 +99,39 @@ class Configurations:
         )
 
         # Configure causal discovery algorithms
-        configurator = CausalDiscoveryConfigurator()
-        oct_json_params['CausalDiscoveryAlgorithms'] = configurator.create_causal_configs(
-            data_type=self.dataset_info['data_type'],
-            causal_sufficiency=default_conf['causal_sufficiency'],
-            assume_faithfulness=default_conf['assume_faithfulness'],
-            time_lagged=self.time_lagged,
-            time_series=self.time_series,
-            exclude_algs=['gfci','rfci']
-        )
+        if 'CausalDiscoveryAlgorithms' not in oct_json_params:
+            configurator = CausalDiscoveryConfigurator()
+            oct_json_params['CausalDiscoveryAlgorithms'] = configurator.create_causal_configs(
+                data_type=self.dataset_info['data_type'],
+                causal_sufficiency=default_conf['causal_sufficiency'],
+                assume_faithfulness=default_conf['assume_faithfulness'],
+                time_lagged=self.time_lagged,
+                time_series=self.time_series,
+            )
+        else:
+            if ('include_algs' in oct_json_params['CausalDiscoveryAlgorithms'] or 'exclude_algs' in oct_json_params[
+                'CausalDiscoveryAlgorithms']):
+                configurator = CausalDiscoveryConfigurator()
+                if ('exclude_algs' in oct_json_params['CausalDiscoveryAlgorithms'] and 'include_algs' in
+                        oct_json_params['CausalDiscoveryAlgorithms']):
+                    exlcude_algs = oct_json_params['CausalDiscoveryAlgorithms']['exclude_algs']
+                    include_algs = oct_json_params['CausalDiscoveryAlgorithms']['include_algs']
+                elif ('exclude_algs' in oct_json_params['CausalDiscoveryAlgorithms']):
+                    exlcude_algs = oct_json_params['CausalDiscoveryAlgorithms']['exclude_algs']
+                    include_algs = []
+                else:
+                    exlcude_algs = []
+                    include_algs = oct_json_params['CausalDiscoveryAlgorithms']['include_algs']
+
+                oct_json_params['CausalDiscoveryAlgorithms'] = configurator.create_causal_configs(
+                    data_type=self.dataset_info['data_type'],
+                    causal_sufficiency=default_conf['causal_sufficiency'],
+                    assume_faithfulness=default_conf['assume_faithfulness'],
+                    time_lagged=self.time_lagged,
+                    time_series=self.time_series,
+                    include_algs=include_algs,
+                    exclude_algs=exlcude_algs
+                )
 
         self.cdhpo_params.set_cd_algorithms(oct_json_params['CausalDiscoveryAlgorithms'], self.dataset_info)
 
@@ -135,11 +161,16 @@ class Configurations:
 
         # Process CDHPO parameters
         oct_json_params = conf['OCT']
+        if('n_jobs' in oct_json_params):
+            self.n_jobs = oct_json_params['n_jobs']
+        else:
+            self.n_jobs = os.cpu_count()
         self.cdhpo_params.init_main_params(
             alpha=oct_json_params['alpha'],
             n_permutations=oct_json_params['n_permutations'],
             causal_sufficiency=conf['causal_sufficiency'],
             variables_type=oct_json_params['variables_type'],
+            n_jobs=self.n_jobs,
             verbose=self.verbose,
         )
         self.cdhpo_params.set_regressor(
@@ -163,6 +194,29 @@ class Configurations:
                 time_lagged=self.time_lagged,
                 time_series=self.time_series,
             )
+        else:
+            if('include_algs' in oct_json_params['CausalDiscoveryAlgorithms'] or 'exclude_algs' in oct_json_params['CausalDiscoveryAlgorithms']):
+                configurator = CausalDiscoveryConfigurator()
+                if('exclude_algs' in oct_json_params['CausalDiscoveryAlgorithms'] and 'include_algs' in oct_json_params['CausalDiscoveryAlgorithms']):
+                    exlcude_algs = oct_json_params['CausalDiscoveryAlgorithms']['exclude_algs']
+                    include_algs = oct_json_params['CausalDiscoveryAlgorithms']['include_algs']
+                elif('exclude_algs' in oct_json_params['CausalDiscoveryAlgorithms']):
+                    exlcude_algs = oct_json_params['CausalDiscoveryAlgorithms']['exclude_algs']
+                    include_algs = []
+                else:
+                    exlcude_algs = []
+                    include_algs = oct_json_params['CausalDiscoveryAlgorithms']['include_algs']
+
+                oct_json_params['CausalDiscoveryAlgorithms'] = configurator.create_causal_configs(
+                    data_type=self.dataset_info['data_type'],
+                    causal_sufficiency=conf['causal_sufficiency'],
+                    assume_faithfulness=conf['assume_faithfulness'],
+                    time_lagged=self.time_lagged,
+                    time_series=self.time_series,
+                    include_algs=include_algs,
+                    exclude_algs=exlcude_algs
+                )
+
         self.cdhpo_params.set_cd_algorithms(oct_json_params['CausalDiscoveryAlgorithms'], self.dataset_info)
 
     def add_configurations_from_file(self, filename: str) -> None:

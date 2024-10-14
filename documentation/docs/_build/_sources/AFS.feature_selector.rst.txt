@@ -1,7 +1,7 @@
-ETIA.AFS.feature\_selector module
+ETIA.AFS.feature\_selector
 ---------------------------------
 
-.. autoclass:: ETIA.AFS.feature_selector
+.. automodule:: ETIA.AFS.feature_selector
    :members:
    :undoc-members:
    :show-inheritance:

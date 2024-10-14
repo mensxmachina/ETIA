@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETIA.CRV.causal_graph_utils package &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ETIA.CRV.causal_graph_utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CRV.causal_graph_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ETIA.CRV.causal_graph_utils">
+<span id="etia-crv-causal-graph-utils-package"></span><h1>ETIA.CRV.causal_graph_utils package<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.bidirected_path">
+<span id="etia-crv-causal-graph-utils-bidirected-path-module"></span><h2>ETIA.CRV.causal_graph_utils.bidirected_path module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.bidirected_path" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.bidirected_path.bidirected_path">
+<span class="sig-name descname"><span class="pre">bidirected_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/bidirected_path.html#bidirected_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.bidirected_path.bidirected_path" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive function to find the nodes that are reachable in any bidirected path starting from the node i
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+:param i: the starting node (not a list of integer!!)
+:type i: int
+:param matrix: matrix of size N*N where N is the number of nodes in tetrad_graph</p>
+<blockquote>
+<div><p>matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the nodes that are reachable in any bidirected path starting from node i</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list_nodes (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.confidence_causal_findings">
+<span id="etia-crv-causal-graph-utils-confidence-causal-findings-module"></span><h2>ETIA.CRV.causal_graph_utils.confidence_causal_findings module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.confidence_causal_findings" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.confidence_causal_findings.is_consistent_edge">
+<span class="sig-name descname"><span class="pre">is_consistent_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m1_ij</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m1_ji</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2_ij</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2_ji</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/confidence_causal_findings.html#is_consistent_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.confidence_causal_findings.is_consistent_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if two edges are consistent
+:param m1_ij: notation of matrix1[i,j]
+:type m1_ij: int
+:param m1_ji: notation of matrix1[j,i]
+:type m1_ji: int
+:param m2_ij: notation of matrix2[i,j]
+:type m2_ij: int
+:param m2_ji: notation of matrix2[j,i]
+:type m2_ji: int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True or False</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>is consistent(bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.confidence_causal_findings.compute_edge_weights">
+<span class="sig-name descname"><span class="pre">compute_edge_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_mec_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrapped_mec_matrices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/confidence_causal_findings.html#compute_edge_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.confidence_causal_findings.compute_edge_weights" title="Permalink to this definition"></a></dt>
+<dd><p>Compute edge consistency and edge frequency for each edge
+:param best_mec_matrix:
+:param bootstrapped_mec_matrices(list):
+:param all_edges(bool): if False it evaluates only the edges that appear in best_mec_matrix
+:type all_edges(bool): if True it checks all possible edges n(n-1)/2  and evaluates missing edges
+:param true_graph:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.confidence_causal_findings.compute_path_weight">
+<span class="sig-name descname"><span class="pre">compute_path_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bootstrapped_mec_matrices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_mec_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/confidence_causal_findings.html#compute_path_weight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.confidence_causal_findings.compute_path_weight" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.confidence_causal_findings.paths_metrics">
+<span class="sig-name descname"><span class="pre">paths_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_mec_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrapped_mec_matrices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/confidence_causal_findings.html#paths_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.confidence_causal_findings.paths_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Compute path consistency and path discovery for each path
+:param paths(dictionary):
+:type paths(dictionary): dictionary with lists of paths
+:param bootstrapped_graphs(list):
+:type bootstrapped_graphs(list): bootstrapped graphs
+:param opt_graph(pandas Dataframe):
+:type opt_graph(pandas Dataframe): adjacency matrix of graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>path_consistency(dictionary)</strong> (<em>consistency values based on the input paths dictionary</em>)</p></li>
+<li><p><strong>path_discovery(dictionary)</strong> (<em>discovery values based on the input paths dictionary</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.cpdag_to_dag">
+<span id="etia-crv-causal-graph-utils-cpdag-to-dag-module"></span><h2>ETIA.CRV.causal_graph_utils.cpdag_to_dag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.cpdag_to_dag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.cpdag_to_dag.FCI_rules_apply">
+<span class="sig-name descname"><span class="pre">FCI_rules_apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/cpdag_to_dag.html#FCI_rules_apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.cpdag_to_dag.FCI_rules_apply" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.cpdag_to_dag.cpdag_to_dag">
+<span class="sig-name descname"><span class="pre">cpdag_to_dag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpdag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/cpdag_to_dag.html#cpdag_to_dag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.cpdag_to_dag.cpdag_to_dag" title="Permalink to this definition"></a></dt>
+<dd><p>Converts CPDAG to DAG
+:param cpdag_pd (pandas Dataframe):
+:type cpdag_pd (pandas Dataframe): the matrix of the CPDAG
+:param verbose (bool):
+:param n_lags (int):
+:type n_lags (int): the maximum number of previous time lags in case of time-lagged graphs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dag_pd (pandas Dataframe)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the matrix of the DAG</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.create_sub_mag_pag">
+<span id="etia-crv-causal-graph-utils-create-sub-mag-pag-module"></span><h2>ETIA.CRV.causal_graph_utils.create_sub_mag_pag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.create_sub_mag_pag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.create_sub_mag_pag.create_sub_mag_pag">
+<span class="sig-name descname"><span class="pre">create_sub_mag_pag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_vars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/create_sub_mag_pag.html#create_sub_mag_pag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.create_sub_mag_pag.create_sub_mag_pag" title="Permalink to this definition"></a></dt>
+<dd><p>Given a DAG and a set of latent variables,
+we marginalize out the latent variables and
+create the corresponding MAG and PAG.
+For time-lagged causal DAGs, we enforce the stationarity assumption.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Dataframe</strong><strong>)</strong> (<em>dag_pd</em><em> (</em><em>pandas</em>) – </p></li>
+<li><p><strong>(</strong><strong>list</strong><strong>)</strong> (<em>selected_vars</em>) – </p></li>
+<li><p><strong>int</strong><strong>)</strong> (<em>n_lags</em><em> (</em><em>None or</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mag_noL_pd (pandas Dataframe)</strong> (<em>the matrix of the MAG (the latent variables are removed)</em>)</p></li>
+<li><p><strong>pag_noL_pd (pandas Dataframe)</strong> (<em>the matrix of the PAG (the latent variables are removed)</em>)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.dag_to_cpdag">
+<span id="etia-crv-causal-graph-utils-dag-to-cpdag-module"></span><h2>ETIA.CRV.causal_graph_utils.dag_to_cpdag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.dag_to_cpdag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.dag_to_cpdag.FCI_rules_dag">
+<span class="sig-name descname"><span class="pre">FCI_rules_dag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/dag_to_cpdag.html#FCI_rules_dag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.dag_to_cpdag.FCI_rules_dag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.dag_to_cpdag.dag_to_cpdag">
+<span class="sig-name descname"><span class="pre">dag_to_cpdag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/dag_to_cpdag.html#dag_to_cpdag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.dag_to_cpdag.dag_to_cpdag" title="Permalink to this definition"></a></dt>
+<dd><p>Converts DAG to CPDAG
+:param dag_pd (pandas Dataframe):
+:type dag_pd (pandas Dataframe): the matrix of the DAG
+:param verbose (bool):
+:param n_lags(int or None): if int, the dag_pd must be a time-lagged graph
+:type n_lags(int or None): the maximum number of previous time lags</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cpdag_pd (pandas Dataframe)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the matrix of the CPDAG</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.dag_to_mag_removeL">
+<span id="etia-crv-causal-graph-utils-dag-to-mag-removel-module"></span><h2>ETIA.CRV.causal_graph_utils.dag_to_mag_removeL module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.dag_to_mag_removeL" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.dag_to_mag_removeL.dag_to_mag_removeL">
+<span class="sig-name descname"><span class="pre">dag_to_mag_removeL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_latent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/dag_to_mag_removeL.html#dag_to_mag_removeL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.dag_to_mag_removeL.dag_to_mag_removeL" title="Permalink to this definition"></a></dt>
+<dd><p>Converts a DAG into a MAG after marginalizing out latent variables
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a> based on matlab code by <a class="reference external" href="mailto:striant&#37;&#52;&#48;csd&#46;uoc&#46;gr">striant<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dag_pd</strong> (<em>pandas Dataframe</em>) – the DAG matrix
+dag(i, j) = 2 and dag(j, i) = 3: i–&gt;j</p></li>
+<li><p><strong>is_latent</strong> (<em>numpy vector</em>) – True if variable will be marginalized out</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>the MAG matrix</dt><dd><p>mag(i, j) = 2 and mag(j, i) = 3: i–&gt;j
+mag(i, j) = 2 and mag(j, i) = 2: i&lt;-&gt;j
+mag(i, j) = 2 and mag(j, i) = 1: io-&gt;j</p>
+</dd>
+<dt>mag_removeL_pd (pandas Dataframe)<span class="classifier">the MAG matrix where we drop the columns and rows</span></dt><dd><p>that correspond to the latent variables</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mag_pd (pandas Dataframe)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.data_functions">
+<span id="etia-crv-causal-graph-utils-data-functions-module"></span><h2>ETIA.CRV.causal_graph_utils.data_functions module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.data_functions" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.get_data_type">
+<span class="sig-name descname"><span class="pre">get_data_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#get_data_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.get_data_type" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the type of each variable in the dataset (continuous or categorical)
+:param data_pd(pandas dataframe):
+:type data_pd(pandas dataframe): the dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p><strong>data_type_info(pandas dataframe)</strong> –</p>
+<ul class="simple">
+<li><p>‘var_type’ for the type of the variable</p></li>
+<li><p>’n_domain’ for the number of categories in case of categorical variable</p></li>
+</ul>
+<ul class="simple">
+<li><p>each row corresponds to a variable</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>with two columns,</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.apply_ordinal_encoding">
+<span class="sig-name descname"><span class="pre">apply_ordinal_encoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type_info</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#apply_ordinal_encoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.apply_ordinal_encoding" title="Permalink to this definition"></a></dt>
+<dd><p>Applies ordinal encoding with sklearn
+:param data_pd(pandas dataframe):
+:type data_pd(pandas dataframe): the dataset
+:param data_type_info(pandas dataframe):
+:type data_type_info(pandas dataframe): information for the type of each variable (continuous or categorical)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_pd(pandas dataframe)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the transformed dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.timeseries_to_timelagged">
+<span class="sig-name descname"><span class="pre">timeseries_to_timelagged</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#timeseries_to_timelagged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.timeseries_to_timelagged" title="Permalink to this definition"></a></dt>
+<dd><p>Converts time-series data to time-lagged data
+:param data_pd (pandas dataframe): e.g. V1, V2
+:type data_pd (pandas dataframe): time-series dataset
+:param n_lags(int):
+:type n_lags(int): number fo previous lags
+:param window(bool):
+:type window(bool): True for non-overlapped windows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_pd_tl(pandas dataframe)</strong> – e.g. V1, V2, V1:1, V2:1</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>time-lagged dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.timelagged_to_timeseries">
+<span class="sig-name descname"><span class="pre">timelagged_to_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#timelagged_to_timeseries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.timelagged_to_timeseries" title="Permalink to this definition"></a></dt>
+<dd><p>Converts time-lagged data to time-series data
+:param data_pd(pandas dataframe): e.g. V1, V2, V1:1, V2:1
+:type data_pd(pandas dataframe): time-lagged dataset
+:param n_lags(int):
+:type n_lags(int): number fo previous lags</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ts_data(pandas dataframe)</strong> – e.g. V1, V2</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>time-series dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.logMp">
+<span class="sig-name descname"><span class="pre">logMp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xpd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#logMp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.logMp" title="Permalink to this definition"></a></dt>
+<dd><p>For data transformation with sklearn</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.transform_data">
+<span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.transform_data" title="Permalink to this definition"></a></dt>
+<dd><p>Data transfomation with sklearn
+:param data_pd(pandas dataframe):
+:type data_pd(pandas dataframe): dataset
+:param data_type_info(pandas dataframe):
+:param transform_type(str):
+:type transform_type(str): {qgaussian, log, minmax, standardize}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>transformed_data(pandas dataframe)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.names_from_lag">
+<span class="sig-name descname"><span class="pre">names_from_lag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">varnames_lag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#names_from_lag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.names_from_lag" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>varnames_lag</strong><strong>(</strong><strong>list</strong><strong>)</strong> (<em>the variable names with information about time-lag</em>) – e.g [‘V1’, ‘V2’, ‘V1:1’, ‘V2:1’]</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>varnames(list)</strong> – e.g. [‘V1’,’V2’]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the variable names without lag info</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.data_functions.lagnames_from_names">
+<span class="sig-name descname"><span class="pre">lagnames_from_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">varnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/data_functions.html#lagnames_from_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.data_functions.lagnames_from_names" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>varnames</strong><strong>(</strong><strong>list</strong><strong>)</strong> (<em>the variable names without lag info</em>) – e.g. [‘V1’,’V2’]</p></li>
+<li><p><strong>n_lags</strong><strong>(</strong><strong>int</strong><strong>)</strong> (<em>the maximum number of previous time lags</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>varnames_lag(list)</strong> – e.g [‘V1’, ‘V2’, ‘V1:1’, ‘V2:1’]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the variable names with information about time-lag</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.enforce_stationarity">
+<span id="etia-crv-causal-graph-utils-enforce-stationarity-module"></span><h2>ETIA.CRV.causal_graph_utils.enforce_stationarity module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.enforce_stationarity" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.enforce_stationarity.enforce_stationarity_arrowheads">
+<span class="sig-name descname"><span class="pre">enforce_stationarity_arrowheads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/enforce_stationarity.html#enforce_stationarity_arrowheads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.enforce_stationarity.enforce_stationarity_arrowheads" title="Permalink to this definition"></a></dt>
+<dd><p># Adds arrowheads on edges that end to future time lags, e.g. Xt-1 <a href="#id1"><span class="problematic" id="id2">*</span></a>–&gt; Xt
+:param G(numpy array):
+:type G(numpy array): the matrix of the time-lagged graph to change
+:param graph_pd(pandas Dataframe):
+:type graph_pd(pandas Dataframe): the original matrix of the time-lagged graph
+:param n_lags(int):
+:type n_lags(int): the maximum number of previous lags
+:param verbose (bool):</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>G(numpy array)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the changed matrix of the time-lagged graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.enforce_stationarity.enforce_stationarity_tails_and_orientation">
+<span class="sig-name descname"><span class="pre">enforce_stationarity_tails_and_orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/enforce_stationarity.html#enforce_stationarity_tails_and_orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.enforce_stationarity.enforce_stationarity_tails_and_orientation" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Adds tails on the edges that start from the oldest time lag</dt><dd><dl class="simple">
+<dt>e.g. for n_lags=2,  if X2_t-1 —&gt; X2_t  and  X2_t-2 o–&gt; X2_t-1</dt><dd><p>we set X2_t-2 —&gt; X2_t-1</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>It also enforces stationarity inside each time lag regarding the orientation of existing edges
+:param G(numpy array):
+:type G(numpy array): the matrix of the graph
+:param mag_pd(pandas Dataframe):
+:param n_lags (int):
+:type n_lags (int): the maximum number of previous lags
+:param verbose (bool):</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>G(numpy array)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the matrix of the graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.enforce_stationarity.enforce_stationarity_add_edge">
+<span class="sig-name descname"><span class="pre">enforce_stationarity_add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/enforce_stationarity.html#enforce_stationarity_add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.enforce_stationarity.enforce_stationarity_add_edge" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Enforces stationarity assumption on the time-lagged graph</dt><dd><p>If At –&gt; Bt then A_t-1 –&gt; B_t-1  (add edge between nodes in the same time lag)
+If At-1 –&gt; B_t then A_t-2 –&gt; B_t-1 (add egde between nodes across time lags)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong><strong>)</strong> (<em>G</em><em>(</em><em>numpy</em>) – </p></li>
+<li><p><strong>Dataframe</strong><strong>)</strong> (<em>mag_pd</em><em>(</em><em>pandas</em>) – </p></li>
+<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>n_lags</em>) – </p></li>
+<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>verbose</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>G(numpy array)</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the matrix of the graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.find_ancestors_nx">
+<span id="etia-crv-causal-graph-utils-find-ancestors-nx-module"></span><h2>ETIA.CRV.causal_graph_utils.find_ancestors_nx module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.find_ancestors_nx" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.find_ancestors_nx.find_ancestors_nx">
+<span class="sig-name descname"><span class="pre">find_ancestors_nx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/find_ancestors_nx.html#find_ancestors_nx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.find_ancestors_nx.find_ancestors_nx" title="Permalink to this definition"></a></dt>
+<dd><p>A is an ancestor of B if graph(i,j)=2 and graph(j,i)=3
+for every edge i–&gt;j in the path from A to B
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+:param graph: matrix of the causal graph</p>
+<blockquote>
+<div><p>graph(i, j) = 2 and graph(j, i) = 3: i–&gt;j
+graph(i, j) = 2 and graph(j, i) = 2: i&lt;-&gt;j
+graph(i, j) = 2 and graph(j, i) = 1: io-&gt;j</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>node</strong> (<em>int</em>) – the node of interest to find its ancestors
+if None it returns the ancestors of all nodes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>(list) : if a node is given it returns the indexes of its ancestors
+(numpy array): if no node is given it finds the ancestors of all nodes</p>
+<blockquote>
+<div><p>and returns logical matrix</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>is_ancestor</p>
+</dd>
+</dl>
+<p>Note: the node under study is not in the set of its ancestors</p>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.get_unshielded_triples">
+<span id="etia-crv-causal-graph-utils-get-unshielded-triples-module"></span><h2>ETIA.CRV.causal_graph_utils.get_unshielded_triples module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.get_unshielded_triples" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.get_unshielded_triples.get_unshielded_triples">
+<span class="sig-name descname"><span class="pre">get_unshielded_triples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/get_unshielded_triples.html#get_unshielded_triples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.get_unshielded_triples.get_unshielded_triples" title="Permalink to this definition"></a></dt>
+<dd><p>Find the unshielded triples of each node in a graph G
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a> based on matlab code by <a class="reference external" href="mailto:striant&#37;&#52;&#48;csd&#46;uoc&#46;gr">striant<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+:param G(numpy array):
+:type G(numpy array): the matrix of the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>unshielded_triples(dictionary of list)</strong> – each value contains two lists with the matrix coordinates (x,y)
+of the unshielded triples</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>each key corresponds to a node and</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.has_inducing_path_dag">
+<span id="etia-crv-causal-graph-utils-has-inducing-path-dag-module"></span><h2>ETIA.CRV.causal_graph_utils.has_inducing_path_dag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.has_inducing_path_dag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.has_inducing_path_dag.has_inducing_path_dag">
+<span class="sig-name descname"><span class="pre">has_inducing_path_dag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_ancestor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_latent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/has_inducing_path_dag.html#has_inducing_path_dag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.has_inducing_path_dag.has_inducing_path_dag" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if nodes X and Y are connected in the dag
+with an inducing path wrt a set of latent variables L.</p>
+<dl>
+<dt>A path is inducing relative to a set of nodes L if (Borbudakis et al 2012):</dt><dd><ul class="simple">
+<li><p>every non-endpoint vertex on p is either in L or a collider</p></li>
+</ul>
+<p>AND
+- every collider on p is an ancestor of an end-point vertex of the path</p>
+</dd>
+</dl>
+<p>Author: <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>, based on matlab code by <a class="reference external" href="mailto:striant&#37;&#52;&#48;csd&#46;uoc&#46;gr">striant<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>int</em>) – the node X</p></li>
+<li><p><strong>Y</strong> (<em>int</em>) – the node Y</p></li>
+<li><p><strong>dag</strong> (<em>numpy array</em>) – the matrix of the DAG
+dag(i, j) = 2 and dag(j, i) = 3: i–&gt;j</p></li>
+<li><p><strong>is_ancestor</strong> (<em>numpy array</em>) – boolean array
+is_ancestor(i,j)=True if i is ancestor of j in a dag</p></li>
+<li><p><strong>is_latent</strong> (<em>numpy vector</em>) – boolean
+is_latent[i]=True if i is latent variable</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – print if True</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if X and Y are connected in the DAG with an inducing path</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>has_ind_path (bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.is_collider">
+<span id="etia-crv-causal-graph-utils-is-collider-module"></span><h2>ETIA.CRV.causal_graph_utils.is_collider module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.is_collider" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.is_collider.is_collider">
+<span class="sig-name descname"><span class="pre">is_collider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/is_collider.html#is_collider"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.is_collider.is_collider" title="Permalink to this definition"></a></dt>
+<dd><p>Check if Y is a collider in the triplet X -Y - Z
+:param X: node X
+:type X: int
+:param Y: node Y
+:type Y: int
+:param Z: node Z
+:type Z: int
+:param matrix: the matrix of the causal graph
+:type matrix: numpy array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True (if X <a href="#id3"><span class="problematic" id="id4">*</span></a>-&gt;Y &lt;-<a href="#id5"><span class="problematic" id="id6">*</span></a>Z ),  False otherwise</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>is_collider (bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.is_dag">
+<span id="etia-crv-causal-graph-utils-is-dag-module"></span><h2>ETIA.CRV.causal_graph_utils.is_dag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.is_dag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.is_dag.is_dag">
+<span class="sig-name descname"><span class="pre">is_dag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dag_pd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/is_dag.html#is_dag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.is_dag.is_dag" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if the input graph is a DAG
+:param dag_pd(pandas Dataframe):
+:type dag_pd(pandas Dataframe): the matrix of the graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>is_dag(bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.mag_to_pag">
+<span id="etia-crv-causal-graph-utils-mag-to-pag-module"></span><h2>ETIA.CRV.causal_graph_utils.mag_to_pag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.mag_to_pag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.mag_to_pag.FCI_rules_mag">
+<span class="sig-name descname"><span class="pre">FCI_rules_mag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/mag_to_pag.html#FCI_rules_mag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.mag_to_pag.FCI_rules_mag" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the FCI rules on the given graph
+:param G(numpy matrix):
+:type G(numpy matrix): the matrix of the graph
+:param mag(numpy matrix):
+:type mag(numpy matrix): the matrix of the mag
+:param verbose (bool):</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>G(numpy matrix)</strong> (<em>the matrix of the graph</em>)</p></li>
+<li><p><em>dnc (dictionary)</em></p></li>
+<li><p><em>flagcount (int)</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.mag_to_pag.mag_to_pag">
+<span class="sig-name descname"><span class="pre">mag_to_pag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/mag_to_pag.html#mag_to_pag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.mag_to_pag.mag_to_pag" title="Permalink to this definition"></a></dt>
+<dd><p>Converts MAG to PAG
+:param mag_pd (pandas Dataframe):
+:type mag_pd (pandas Dataframe): the matrix of the MAG
+:param verbose (bool):
+:param n_lags (int):
+:type n_lags (int): the maximum number of previous time lags in case of time-lagged graphs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pag_pd (pandas Dataframe)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the matrix of the PAG</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.markov_boundary">
+<span id="etia-crv-causal-graph-utils-markov-boundary-module"></span><h2>ETIA.CRV.causal_graph_utils.markov_boundary module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.markov_boundary" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.markov_boundary.markov_boundary">
+<span class="sig-name descname"><span class="pre">markov_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/markov_boundary.html#markov_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.markov_boundary.markov_boundary" title="Permalink to this definition"></a></dt>
+<dd><p>Identify the markov boundary of the target node.
+Function for DAGs and MAGs
+Author:kbiza&#64;csd.uoc.gr
+:param target: index of the target node in the matrix (not a list of int!!)
+:type target: int
+:param matrix: an array of size N*N where N is the number of nodes in tetrad_graph</p>
+<blockquote>
+<div><p>matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j    in DAGs and MAGs
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j    in MAGs</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of indexes for the markov boundary ot the target</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>markov_boundary (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.one_bidirected_path">
+<span id="etia-crv-causal-graph-utils-one-bidirected-path-module"></span><h2>ETIA.CRV.causal_graph_utils.one_bidirected_path module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.one_bidirected_path" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.one_bidirected_path.one_bidirected_path_from_to">
+<span class="sig-name descname"><span class="pre">one_bidirected_path_from_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/one_bidirected_path.html#one_bidirected_path_from_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.one_bidirected_path.one_bidirected_path_from_to" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive function to search for at least one bidirected path  between ‘start’ node and ‘end’ node
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a></p>
+<blockquote>
+<div><dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>matrix(numpy array)<span class="classifier">matrix of size N*N where N is the number of nodes in tetrad_graph</span></dt><dd><p>matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</dd>
+</dl>
+<p>start (int):  the first node in the path
+end (int):  the last node in the path
+<a href="#id9"><span class="problematic" id="id10">path_</span></a> (list): only needed for the recursive call (the path under search)</p>
+</dd>
+<dt>Returns:</dt><dd><p>path(list) : a list of nodes we visit from start node to end node in a bidirected path</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.one_directed_path">
+<span id="etia-crv-causal-graph-utils-one-directed-path-module"></span><h2>ETIA.CRV.causal_graph_utils.one_directed_path module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.one_directed_path" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.one_directed_path.one_directed_path">
+<span class="sig-name descname"><span class="pre">one_directed_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/one_directed_path.html#one_directed_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.one_directed_path.one_directed_path" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive function to search for at least one directed path from ‘start’ node to ‘end’ node
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a></p>
+<blockquote>
+<div><p>Args:
+matrix(numpy array): matrix of size N*N where N is the number of nodes in tetrad_graph</p>
+<blockquote>
+<div><p>matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</div></blockquote>
+<p>start(int):  the first node in the path
+end(int):  the last node in the path
+<a href="#id11"><span class="problematic" id="id12">path_</span></a> (list): the path under search through the recursive functions</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>path(list) : a list of nodes we visit from start node to end node in a directed path</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.one_path_anytype">
+<span id="etia-crv-causal-graph-utils-one-path-anytype-module"></span><h2>ETIA.CRV.causal_graph_utils.one_path_anytype module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.one_path_anytype" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.one_path_anytype.one_path_anytype">
+<span class="sig-name descname"><span class="pre">one_path_anytype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/one_path_anytype.html#one_path_anytype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.one_path_anytype.one_path_anytype" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive function to search for at least one path of any type from ‘start’ node to ‘end’ node
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a></p>
+<blockquote>
+<div><p>Args:
+matrix(numpy array): matrix of size N*N where N is the number of nodes in tetrad_graph</p>
+<blockquote>
+<div><p>matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</div></blockquote>
+<p>start(int):  the first node in the path
+end(int):  the last node in the path
+<a href="#id13"><span class="problematic" id="id14">path_</span></a> (list): the path under search through the recursive functions</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>path(list) : a list of nodes we visit from start node to end node in a path</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.one_potentially_directed_path">
+<span id="etia-crv-causal-graph-utils-one-potentially-directed-path-module"></span><h2>ETIA.CRV.causal_graph_utils.one_potentially_directed_path module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.one_potentially_directed_path" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.one_potentially_directed_path.one_potentially_directed_path">
+<span class="sig-name descname"><span class="pre">one_potentially_directed_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/one_potentially_directed_path.html#one_potentially_directed_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.one_potentially_directed_path.one_potentially_directed_path" title="Permalink to this definition"></a></dt>
+<dd><p>Recursive function to search for at least one potentially directed path from ‘start’ node to ‘end’ node
+Author : <a class="reference external" href="mailto:kbiza&#37;&#52;&#48;csd&#46;uoc&#46;gr">kbiza<span>&#64;</span>csd<span>&#46;</span>uoc<span>&#46;</span>gr</a>
+:param matrix: matrix of size N*N where N is the number of nodes in tetrad_graph</p>
+<blockquote>
+<div><p>matrix(i, j) = 2 and matrix(j, i) = 3: i–&gt;j
+matrix(i, j) = 1 and matrix(j, i) = 1: io-oj
+matrix(i, j) = 2 and matrix(j, i) = 2: i&lt;-&gt;j
+matrix(i, j) = 3 and matrix(j, i) = 3: i—j
+matrix(i, j) = 2 and matrix(j, i) = 1: io-&gt;j</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>int</em>) – the first node in the path</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – the last node in the path</p></li>
+<li><p><strong>path</strong> (<em>list</em>) – the path under search through the recursive functions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl>
+<dt>a list of nodes that appear in one potentially directed path from start node to end node</dt><dd><ul class="simple">
+<li><p>the path has not necessarily the minimum length</p></li>
+</ul>
+</dd>
+<dt>Zhang Phd, 2007, page 108 :</dt><dd><p>for every 0&lt;=i&lt;=n-1 the edge between Vi and Vi+1 is not into Vi nor is out of Vi+1
+intuitively : a path that could be oriented into a directed path by changing the</p>
+<blockquote>
+<div><p>circles on the path into appropriate tails or arrowheads</p>
+</div></blockquote>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>path(list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.orientation_rules">
+<span id="etia-crv-causal-graph-utils-orientation-rules-module"></span><h2>ETIA.CRV.causal_graph_utils.orientation_rules module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.orientation_rules" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R0">
+<span class="sig-name descname"><span class="pre">R0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unshielded_triples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R0" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R1">
+<span class="sig-name descname"><span class="pre">R1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Pag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R2_">
+<span class="sig-name descname"><span class="pre">R2_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Pag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R2_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R2_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R3">
+<span class="sig-name descname"><span class="pre">R3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Pag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R4">
+<span class="sig-name descname"><span class="pre">R4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R4" title="Permalink to this definition"></a></dt>
+<dd><p>Start from some node X, for node Y
+Visit all possible nodes X*-&gt;V &amp; V-&gt;Y
+For every neighbour that is bi-directed and a parent of Y, continue
+For every neighbour that is bi-directed and o-<a href="#id7"><span class="problematic" id="id8">*</span></a>Y, orient and if parent continue
+Total: n*n*(n+m)</p>
+<blockquote>
+<div><p>For each node Y, find all orientable neighbours W
+For each node X, non-adjacent to Y, see if there is a path to some node in W
+Create graph as follows:
+for X,Y
+edges X*-&gt;V &amp; V -&gt; Y –&gt; X -&gt; V
+edges A &lt;-&gt; B &amp; A -&gt; Y –&gt; A -&gt; B
+edges A &lt;-* W &amp; A -&gt; Y –&gt; A-&gt;W
+discriminating: if path from X to W</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R8">
+<span class="sig-name descname"><span class="pre">R8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R8" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules.R9_R10">
+<span class="sig-name descname"><span class="pre">R9_R10</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dnc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules.html#R9_R10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules.R9_R10" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.orientation_rules_cpdag">
+<span id="etia-crv-causal-graph-utils-orientation-rules-cpdag-module"></span><h2>ETIA.CRV.causal_graph_utils.orientation_rules_cpdag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.orientation_rules_cpdag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R0">
+<span class="sig-name descname"><span class="pre">R0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpdag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unshielded_triples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules_cpdag.html#R0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R0" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R1">
+<span class="sig-name descname"><span class="pre">R1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpdag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules_cpdag.html#R1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R2">
+<span class="sig-name descname"><span class="pre">R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpdag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules_cpdag.html#R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R3">
+<span class="sig-name descname"><span class="pre">R3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpdag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/orientation_rules_cpdag.html#R3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.orientation_rules_cpdag.R3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-ETIA.CRV.causal_graph_utils.pag_to_mag">
+<span id="etia-crv-causal-graph-utils-pag-to-mag-module"></span><h2>ETIA.CRV.causal_graph_utils.pag_to_mag module<a class="headerlink" href="#module-ETIA.CRV.causal_graph_utils.pag_to_mag" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.pag_to_mag.FCI_rules_apply_">
+<span class="sig-name descname"><span class="pre">FCI_rules_apply_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/pag_to_mag.html#FCI_rules_apply_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.pag_to_mag.FCI_rules_apply_" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ETIA.CRV.causal_graph_utils.pag_to_mag.pag_to_mag">
+<span class="sig-name descname"><span class="pre">pag_to_mag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pag_pd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ETIA/CRV/causal_graph_utils/pag_to_mag.html#pag_to_mag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ETIA.CRV.causal_graph_utils.pag_to_mag.pag_to_mag" title="Permalink to this definition"></a></dt>
+<dd><p>Converts PAG to MAG
+:param pag_pd (pandas Dataframe):
+:type pag_pd (pandas Dataframe): the matrix of the PAG
+:param verbose (bool):
+:param n_lags (int):
+:type n_lags (int): the maximum number of previous time lags in case of time-lagged graphs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mag_pd (pandas Dataframe)</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>the matrix of the MAG</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

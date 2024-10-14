@@ -79,6 +79,7 @@
 <span></span><span class="kn">import</span> <span class="nn">jpype</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">....utils.jvm_manager</span> <span class="kn">import</span> <span class="n">start_jvm</span>
 <span class="kn">from</span> <span class="nn">jpype</span> <span class="kn">import</span> <span class="n">JPackage</span><span class="p">,</span> <span class="n">JProxy</span>
 <span class="kn">from</span> <span class="nn">...utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">prepare_data_tetrad</span>
@@ -423,7 +424,7 @@
             <span class="k">elif</span> <span class="n">jToi</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Tail&#39;</span><span class="p">,</span> <span class="s1">&#39;TAIL&#39;</span><span class="p">]:</span>
                 <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
 
-        <span class="n">matrix_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">var_map</span><span class="p">[</span><span class="s1">&#39;var_name&#39;</span><span class="p">])</span>
+        <span class="n">matrix_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">var_map</span><span class="p">[</span><span class="s1">&#39;var_name&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">var_map</span><span class="p">[</span><span class="s1">&#39;var_name&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">matrix_pd</span></div>
 
 <div class="viewcode-block" id="TetradAlgorithm.check_parameters"><a class="viewcode-back" href="../../../../../CausalLearning.algorithms.tetrad_algorithm.html#ETIA.CausalLearning.algorithms.tetrad_algorithm.TetradAlgorithm.TetradAlgorithm.check_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">check_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">data_info</span><span class="p">):</span>
@@ -484,8 +485,9 @@
 <span class="sd">        tuple</span>
 <span class="sd">            A tuple containing the learned MEC graph and a dictionary of results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">graph</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JPackage</span><span class="p">(</span><span class="s2">&quot;edu.cmu.tetrad.graph&quot;</span><span class="p">)</span>
+        <span class="n">start_jvm</span><span class="p">()</span>
 
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">jpype</span><span class="o">.</span><span class="n">JPackage</span><span class="p">(</span><span class="s2">&quot;edu.cmu.tetrad.graph&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">prepare_data</span><span class="p">:</span>
             <span class="n">ds</span><span class="p">,</span> <span class="n">var_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -526,10 +528,12 @@
 
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">]:</span>
             <span class="n">mec_graph</span> <span class="o">=</span> <span class="n">matrix_to_pywhy_graph</span><span class="p">(</span><span class="n">mec_graph_pd</span><span class="p">,</span> <span class="s1">&#39;CPDAG&#39;</span><span class="p">)</span>
+            <span class="n">graph</span> <span class="o">=</span> <span class="n">matrix_to_pywhy_graph</span><span class="p">(</span><span class="n">graph_pd</span><span class="p">,</span> <span class="s1">&#39;DAG&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mec_graph</span> <span class="o">=</span> <span class="n">matrix_to_pywhy_graph</span><span class="p">(</span><span class="n">mec_graph_pd</span><span class="p">,</span> <span class="s1">&#39;PAG&#39;</span><span class="p">)</span>
+            <span class="n">graph</span> <span class="o">=</span> <span class="n">matrix_to_pywhy_graph</span><span class="p">(</span><span class="n">graph_pd</span><span class="p">,</span> <span class="s1">&#39;MAG&#39;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">mec_graph</span><span class="p">,</span> <span class="n">library_results</span></div></div>
+        <span class="k">return</span> <span class="n">mec_graph_pd</span><span class="p">,</span> <span class="n">graph_pd</span><span class="p">,</span> <span class="n">library_results</span></div></div>
 </pre></div>
 
            </div>

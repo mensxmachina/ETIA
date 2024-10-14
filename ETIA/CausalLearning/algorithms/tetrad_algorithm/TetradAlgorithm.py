@@ -1,6 +1,7 @@
 import jpype
 import numpy as np
 import pandas as pd
+from ....utils.jvm_manager import start_jvm
 from jpype import JPackage, JProxy
 from ...utils.logger import get_logger
 from ..utils import prepare_data_tetrad
@@ -406,6 +407,8 @@ class TetradAlgorithm:
         tuple
             A tuple containing the learned MEC graph and a dictionary of results.
         """
+        start_jvm()
+
         graph = jpype.JPackage("edu.cmu.tetrad.graph")
         if prepare_data:
             ds, var_map = self.prepare_data(data, parameters)

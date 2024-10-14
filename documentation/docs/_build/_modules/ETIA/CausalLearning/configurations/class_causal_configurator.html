@@ -170,13 +170,14 @@
                 <span class="k">if</span> <span class="n">exclude_algs</span> <span class="ow">and</span> <span class="n">alg_name</span> <span class="ow">in</span> <span class="n">exclude_algs</span><span class="p">:</span>
                     <span class="k">continue</span>
 
+
                 <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">alg_info</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="k">if</span> <span class="n">param</span> <span class="o">==</span> <span class="s1">&#39;ci_test&#39;</span><span class="p">:</span>
                         <span class="n">ci_names</span> <span class="o">=</span> <span class="p">[]</span>
                         <span class="n">ci_params</span> <span class="o">=</span> <span class="p">{}</span>
                         <span class="k">for</span> <span class="n">test_name</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="n">test_name</span> <span class="ow">in</span> <span class="n">ci_touse</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">test_name</span> <span class="ow">in</span> <span class="n">ci_touse</span> <span class="ow">and</span> <span class="n">test_name</span> <span class="o">==</span> <span class="s1">&#39;FisherZ&#39;</span><span class="p">:</span>
                                 <span class="n">ci_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_name</span><span class="p">)</span>
                                 <span class="n">ci_params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ci_touse</span><span class="p">[</span><span class="n">test_name</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;data_type&#39;</span><span class="p">})</span>
                         <span class="k">if</span> <span class="n">ci_names</span><span class="p">:</span>

@@ -6,7 +6,7 @@ import importlib.resources
 import logging
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger(__name__)
 
 def start_jvm(package='ETIA.CausalLearning.algorithms.jar_files'):

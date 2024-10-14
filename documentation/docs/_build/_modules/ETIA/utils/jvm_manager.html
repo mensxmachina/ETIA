@@ -84,7 +84,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="c1"># Configure logging</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="start_jvm"><a class="viewcode-back" href="../../../utils.html#ETIA.utils.jvm_manager.start_jvm">[docs]</a><span class="k">def</span> <span class="nf">start_jvm</span><span class="p">(</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;ETIA.CausalLearning.algorithms.jar_files&#39;</span><span class="p">):</span>
@@ -173,9 +173,10 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;JVM is not running.&quot;</span><span class="p">)</span></div>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd"># Example Usage</span>
-<span class="sd">if __name__ == &quot;__main__&quot;:</span>
+<span class="sd">def example():</span>
 <span class="sd">    try:</span>
 <span class="sd">        start_jvm()</span>
+<span class="sd">        print(jpype.JPackage(&#39;org&#39;).apache.commons.lang3.tuple)</span>
 <span class="sd">        # Your code that interacts with Java classes goes here</span>
 
 <span class="sd">    except Exception as e:</span>

@@ -32,6 +32,9 @@ default_conf = {
                                 "max_depth": 10
                             }
                     },
+                "CausalDiscoveryAlgorithms": {
+                    "include_algs": ['fci']
+                }
 
         }
 

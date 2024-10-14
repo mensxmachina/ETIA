@@ -78,13 +78,16 @@
   <h1>Source code for ETIA.AFS.AFS</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">cpu_count</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">cpu_count</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 
 <span class="kn">from</span> <span class="nn">.feature_selector</span> <span class="kn">import</span> <span class="n">FeatureSelector</span>
 <span class="kn">from</span> <span class="nn">.oos</span> <span class="kn">import</span> <span class="n">OOS</span>
@@ -93,7 +96,7 @@
 <span class="kn">from</span> <span class="nn">.preprocessor</span> <span class="kn">import</span> <span class="n">Preprocessor</span>
 
 
-<div class="viewcode-block" id="AFS"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS">[docs]</a><span class="k">class</span> <span class="nc">AFS</span><span class="p">:</span>
+<div class="viewcode-block" id="AFS"><a class="viewcode-back" href="../../../afs_index.html#ETIA.AFS.AFS">[docs]</a><span class="k">class</span> <span class="nc">AFS</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Automated Feature Selection (AFS) class.</span>
 
@@ -130,7 +133,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">oos_protocol</span> <span class="o">=</span> <span class="n">oos_protocol</span> <span class="k">if</span> <span class="n">oos_protocol</span> <span class="k">else</span> <span class="p">{</span>
             <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;KFoldCV&quot;</span><span class="p">,</span>
             <span class="s2">&quot;folds&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-            <span class="s2">&quot;folds_to_run&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s2">&quot;folds_to_run&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">csv_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span>
@@ -150,7 +153,7 @@
             <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
 
-<div class="viewcode-block" id="AFS.run_AFS"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.run_AFS">[docs]</a>    <span class="k">def</span> <span class="nf">run_AFS</span><span class="p">(</span>
+<div class="viewcode-block" id="AFS.run_AFS"><a class="viewcode-back" href="../../../afs_index.html#ETIA.AFS.AFS.run_AFS">[docs]</a>    <span class="k">def</span> <span class="nf">run_AFS</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
         <span class="n">target_features</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
@@ -240,21 +243,42 @@
         <span class="n">selected_features</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">reduced_data</span> <span class="o">=</span> <span class="n">original_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-        <span class="c1"># Start the recursive feature selection</span>
-        <span class="k">for</span> <span class="n">target_feature</span><span class="p">,</span> <span class="n">target_type</span> <span class="ow">in</span> <span class="n">target_features</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting feature selection for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recursive_fs_for_target</span><span class="p">(</span>
-                <span class="n">data</span><span class="o">=</span><span class="n">original_data</span><span class="p">,</span>
-                <span class="n">target_feature</span><span class="o">=</span><span class="n">target_feature</span><span class="p">,</span>
-                <span class="n">target_type</span><span class="o">=</span><span class="n">target_type</span><span class="p">,</span>
-                <span class="n">pred_configs</span><span class="o">=</span><span class="n">pred_configs</span><span class="p">,</span>
-                <span class="n">dataset_name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span>
-                <span class="n">depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span>
+        <span class="c1"># Prepare arguments for parallel processing</span>
+        <span class="n">target_items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">target_features</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="n">args_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span>
+                <span class="n">original_data</span><span class="p">,</span>
+                <span class="n">target_feature</span><span class="p">,</span>
+                <span class="n">target_type</span><span class="p">,</span>
+                <span class="n">pred_configs</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">,</span>
+                <span class="kc">None</span>  <span class="c1"># visited_features</span>
             <span class="p">)</span>
-            <span class="c1"># Update selected features and best config</span>
+            <span class="k">for</span> <span class="n">target_feature</span><span class="p">,</span> <span class="n">target_type</span> <span class="ow">in</span> <span class="n">target_items</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Use joblib&#39;s Parallel to process targets in parallel</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_processors</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_target</span><span class="p">)(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">target_feature</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">target_type</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">pred_configs</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                <span class="n">depth</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                <span class="n">visited_features</span><span class="o">=</span><span class="n">arg</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+            <span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args_list</span>
+        <span class="p">)</span>
+
+        <span class="n">main_target</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">target_features</span><span class="p">))</span>
+
+        <span class="c1"># Process results</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">target_feature</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">target_items</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
             <span class="n">selected_features</span><span class="p">[</span><span class="n">target_feature</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;bbc_score&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target_feature</span> <span class="o">==</span> <span class="n">main_target</span><span class="p">:</span>
                 <span class="n">best_score</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;bbc_score&#39;</span><span class="p">]</span>
+                <span class="n">best_ci</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;ci&#39;</span><span class="p">]</span>
                 <span class="n">best_config</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;best_config&#39;</span><span class="p">]</span>
 
         <span class="c1"># Collect all selected features across all targets and depths</span>
@@ -264,15 +288,53 @@
         <span class="c1"># Add target features to the selected features</span>
         <span class="n">all_selected_features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">target_features</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">reduced_data</span> <span class="o">=</span> <span class="n">reduced_data</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">all_selected_features</span><span class="p">)]</span>
+        <span class="n">reduced_without_target</span> <span class="o">=</span> <span class="n">reduced_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">reduced_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="n">main_target</span><span class="p">]</span>
+
+        <span class="n">pm</span> <span class="o">=</span> <span class="n">PredictiveModel</span><span class="p">()</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                <span class="n">best_config</span><span class="p">,</span>
+                <span class="n">reduced_without_target</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">reduced_data</span><span class="p">[</span><span class="n">main_target</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
+                <span class="n">target_features</span><span class="p">[</span><span class="n">main_target</span><span class="p">],</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;original_data&#39;</span><span class="p">:</span> <span class="n">original_data</span><span class="p">,</span>
             <span class="s1">&#39;reduced_data&#39;</span><span class="p">:</span> <span class="n">reduced_data</span><span class="p">,</span>
             <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="n">best_config</span><span class="p">,</span>
+            <span class="s1">&#39;bbc_score&#39;</span><span class="p">:</span> <span class="n">best_score</span><span class="p">,</span>
+            <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="n">best_ci</span><span class="p">,</span>
+            <span class="s1">&#39;trained_model&#39;</span><span class="p">:</span> <span class="n">pm</span><span class="p">,</span>
             <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="n">selected_features</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="AFS.recursive_fs_for_target"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.recursive_fs_for_target">[docs]</a>    <span class="k">def</span> <span class="nf">recursive_fs_for_target</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_process_target</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">target_feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">target_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">pred_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">visited_features</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">set</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to process each target in parallel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting feature selection for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">recursive_fs_for_target</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">target_feature</span><span class="o">=</span><span class="n">target_feature</span><span class="p">,</span>
+            <span class="n">target_type</span><span class="o">=</span><span class="n">target_type</span><span class="p">,</span>
+            <span class="n">pred_configs</span><span class="o">=</span><span class="n">pred_configs</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span>
+            <span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
+            <span class="n">visited_features</span><span class="o">=</span><span class="n">visited_features</span><span class="p">,</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="AFS.recursive_fs_for_target"><a class="viewcode-back" href="../../../afs_index.html#ETIA.AFS.AFS.recursive_fs_for_target">[docs]</a>    <span class="k">def</span> <span class="nf">recursive_fs_for_target</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">target_feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -284,28 +346,6 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Recursively runs feature selection for a specific target feature up to the specified depth.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : pd.DataFrame</span>
-<span class="sd">            The dataset as a pandas DataFrame.</span>
-<span class="sd">        target_feature : str</span>
-<span class="sd">            The name of the target feature.</span>
-<span class="sd">        target_type : str</span>
-<span class="sd">            The type of the target feature.</span>
-<span class="sd">        pred_configs : list</span>
-<span class="sd">            A list of predictive configurations.</span>
-<span class="sd">        dataset_name : str</span>
-<span class="sd">            The name of the dataset.</span>
-<span class="sd">        depth : int</span>
-<span class="sd">            The remaining depth of the feature selection process.</span>
-<span class="sd">        visited_features : set, optional</span>
-<span class="sd">            A set of features that have already been processed to avoid cycles.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict</span>
-<span class="sd">            A dictionary with the results for the target feature.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span>
@@ -346,24 +386,27 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">oos_protocol</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">target_type</span><span class="o">=</span><span class="n">target_type</span>
         <span class="p">)</span>
 
-        <span class="c1"># Run feature selection and model training for each configuration</span>
+        <span class="c1"># Run feature selection and model training for each configuration in parallel</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_processors</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_config</span><span class="p">)(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                <span class="n">target_feature</span><span class="o">=</span><span class="n">target_feature</span><span class="p">,</span>
+                <span class="n">target_type</span><span class="o">=</span><span class="n">target_type</span><span class="p">,</span>
+                <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                <span class="n">dataset_name</span><span class="o">=</span><span class="n">dataset_name</span><span class="p">,</span>
+                <span class="n">train_inds</span><span class="o">=</span><span class="n">train_inds</span><span class="p">,</span>
+                <span class="n">test_inds</span><span class="o">=</span><span class="n">test_inds</span><span class="p">,</span>
+                <span class="n">feature_columns</span><span class="o">=</span><span class="n">feature_columns</span><span class="p">,</span>
+            <span class="p">)</span> <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">pred_configs</span>
+        <span class="p">)</span>
+
         <span class="n">all_scores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">all_fold_predictions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">configs_tried</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">pred_configs</span><span class="p">:</span>
-            <span class="n">scores</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_fs_for_config</span><span class="p">(</span>
-                <span class="n">data</span><span class="p">,</span>
-                <span class="n">target_feature</span><span class="p">,</span>
-                <span class="n">target_type</span><span class="p">,</span>
-                <span class="n">config</span><span class="p">,</span>
-                <span class="n">dataset_name</span><span class="p">,</span>
-                <span class="n">train_inds</span><span class="p">,</span>
-                <span class="n">test_inds</span><span class="p">,</span>
-                <span class="n">feature_columns</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">scores</span><span class="p">:</span>
-                <span class="n">mean_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">config</span><span class="p">,</span> <span class="n">mean_score</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span> <span class="o">=</span> <span class="n">result</span>
                 <span class="n">all_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_score</span><span class="p">)</span>
                 <span class="n">all_fold_predictions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">config</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span><span class="p">))</span>
                 <span class="n">configs_tried</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -390,7 +433,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target: </span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2"> with optimal config: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Apply bootstrap bias correction to the best configuration</span>
-        <span class="n">bbc_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_bias_correction</span><span class="p">(</span><span class="n">best_conf_predictions</span><span class="p">,</span> <span class="n">target_type</span><span class="p">)</span>
+        <span class="n">bbc_score</span><span class="p">,</span> <span class="n">ci</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bootstrap_bias_correction</span><span class="p">(</span><span class="n">best_conf_predictions</span><span class="p">,</span> <span class="n">target_type</span><span class="p">)</span>
 
         <span class="c1"># Collect selected features (assuming features may vary across folds)</span>
         <span class="n">selected_features_sets</span> <span class="o">=</span> <span class="p">[</span>
@@ -423,11 +466,42 @@
 
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;bbc_score&#39;</span><span class="p">:</span> <span class="n">bbc_score</span><span class="p">,</span>
+            <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="n">ci</span><span class="p">,</span>
             <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_selected_features</span><span class="p">),</span>
             <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="n">best_config</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="AFS.run_fs_for_config"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.run_fs_for_config">[docs]</a>    <span class="k">def</span> <span class="nf">run_fs_for_config</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_process_config</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">target_feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">target_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">train_inds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">test_inds</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">feature_columns</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Preprocessor</span><span class="p">]]],</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to process each configuration in parallel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scores</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_fs_for_config</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="n">target_feature</span><span class="p">,</span>
+            <span class="n">target_type</span><span class="p">,</span>
+            <span class="n">config</span><span class="p">,</span>
+            <span class="n">dataset_name</span><span class="p">,</span>
+            <span class="n">train_inds</span><span class="p">,</span>
+            <span class="n">test_inds</span><span class="p">,</span>
+            <span class="n">feature_columns</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scores</span><span class="p">:</span>
+            <span class="n">mean_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">mean_score</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="AFS.run_fs_for_config"><a class="viewcode-back" href="../../../afs_index.html#ETIA.AFS.AFS.run_fs_for_config">[docs]</a>    <span class="k">def</span> <span class="nf">run_fs_for_config</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">target_feature</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -440,34 +514,11 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Preprocessor</span><span class="p">]]],</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs the feature selection process for a specific configuration.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        data : pd.DataFrame</span>
-<span class="sd">            The dataset as a pandas DataFrame.</span>
-<span class="sd">        target_feature : str</span>
-<span class="sd">            The name of the target feature.</span>
-<span class="sd">        target_type : str</span>
-<span class="sd">            The type of the target variable (&#39;categorical&#39; or &#39;continuous&#39;).</span>
-<span class="sd">        config : dict</span>
-<span class="sd">            The predictive configuration.</span>
-<span class="sd">        dataset_name : str</span>
-<span class="sd">            The name of the dataset.</span>
-<span class="sd">        train_inds : list</span>
-<span class="sd">            Indices of the training samples.</span>
-<span class="sd">        test_inds : list</span>
-<span class="sd">            Indices of the test samples.</span>
-<span class="sd">        feature_columns : list</span>
-<span class="sd">            The list of feature columns to consider.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        tuple</span>
-<span class="sd">            A tuple containing the scores, fold predictions, and selected features DataFrame.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">fold_predictions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">selected_features_df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">config_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
 
         <span class="k">for</span> <span class="n">fold_num</span><span class="p">,</span> <span class="p">(</span><span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">train_inds</span><span class="p">,</span> <span class="n">test_inds</span><span class="p">)):</span>
             <span class="n">train_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_index</span><span class="p">]</span>
@@ -494,16 +545,17 @@
 
             <span class="c1"># Perform feature selection</span>
             <span class="k">try</span><span class="p">:</span>
+                <span class="n">unique_dataset_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">config_id</span><span class="si">}</span><span class="s2">_fold</span><span class="si">{</span><span class="n">fold_num</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="n">selected_features_fold_df</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">feature_selection</span><span class="p">(</span>
                     <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
                     <span class="n">target_name</span><span class="o">=</span><span class="n">target_feature</span><span class="p">,</span>
                     <span class="n">data_pd</span><span class="o">=</span><span class="n">train_data_preprocessed_df</span><span class="p">,</span>
-                    <span class="n">dataset_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="n">unique_dataset_name</span><span class="p">,</span>
                     <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature selection failed for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39; with config </span><span class="si">{</span><span class="n">config</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="c1"># Handle the exception as needed</span>
+                <span class="k">continue</span>  <span class="c1"># Skip this fold due to error</span>
 
             <span class="k">if</span> <span class="n">selected_features_fold_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
@@ -526,7 +578,7 @@
                 <span class="n">config</span><span class="p">,</span>
                 <span class="n">train_X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
                 <span class="n">train_y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                <span class="n">selected_feature_indices</span><span class="p">,</span>
+                <span class="kc">None</span><span class="p">,</span>
                 <span class="n">preprocessor</span><span class="p">,</span>
                 <span class="n">target_type</span><span class="p">,</span>
             <span class="p">)</span>
@@ -554,7 +606,7 @@
 
         <span class="k">return</span> <span class="n">scores</span><span class="p">,</span> <span class="n">fold_predictions</span><span class="p">,</span> <span class="n">selected_features_df</span></div>
 
-<div class="viewcode-block" id="AFS.bootstrap_bias_correction"><a class="viewcode-back" href="../../../AFS.html#ETIA.AFS.AFS.bootstrap_bias_correction">[docs]</a>    <span class="k">def</span> <span class="nf">bootstrap_bias_correction</span><span class="p">(</span>
+<div class="viewcode-block" id="AFS.bootstrap_bias_correction"><a class="viewcode-back" href="../../../afs_index.html#ETIA.AFS.AFS.bootstrap_bias_correction">[docs]</a>    <span class="k">def</span> <span class="nf">bootstrap_bias_correction</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">fold_predictions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]],</span>
         <span class="n">target_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -563,22 +615,6 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Applies bootstrap bias correction to the fold predictions.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        fold_predictions : list</span>
-<span class="sd">            A list of tuples containing predictions and true values.</span>
-<span class="sd">        target_type : str</span>
-<span class="sd">            The type of the target variable (&#39;categorical&#39; or &#39;continuous&#39;).</span>
-<span class="sd">        B : int, optional</span>
-<span class="sd">            Number of bootstrap samples. Default is 1000.</span>
-<span class="sd">        conf_interval : float, optional</span>
-<span class="sd">            The confidence interval level. Default is 0.95.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        float</span>
-<span class="sd">            The bias-corrected score.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">fold_predictions</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
@@ -610,7 +646,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Confidence interval: </span><span class="si">{</span><span class="n">ci</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">bbc_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">b_scores</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">bbc_score</span></div></div>
+        <span class="k">return</span> <span class="n">bbc_score</span><span class="p">,</span> <span class="n">ci</span></div></div>
 </pre></div>
 
            </div>

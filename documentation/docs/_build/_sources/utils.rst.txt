@@ -32,3 +32,11 @@ ETIA.utils.logger module
    :members:
    :undoc-members:
    :show-inheritance:
+
+ETIA.utils.timeout module
+-------------------------
+
+.. automodule:: ETIA.utils.timeout
+   :members:
+   :undoc-members:
+   :show-inheritance:

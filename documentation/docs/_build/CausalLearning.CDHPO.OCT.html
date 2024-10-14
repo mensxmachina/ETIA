@@ -85,7 +85,6 @@
 <li class="toctree-l3"><a class="reference internal" href="CausalLearning.CausalModel.html">ETIA.CausalLearning.CausalModel package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="CausalLearning.CDHPO.OCT.causal_graph_utils.html">ETIA.CausalLearning.CDHPO.OCT.causal_graph_utils package</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">ETIA.CausalLearning.CDHPO.OCT package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CDHPO.OCT.OCT">ETIA.CausalLearning.CDHPO.OCT.OCT module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#module-ETIA.CausalLearning.CDHPO.OCT.utils">ETIA.CausalLearning.CDHPO.OCT.utils module</a></li>
@@ -133,11 +132,6 @@
              
   <section id="module-ETIA.CausalLearning.CDHPO.OCT">
 <span id="etia-causallearning-cdhpo-oct-package"></span><h1>ETIA.CausalLearning.CDHPO.OCT package<a class="headerlink" href="#module-ETIA.CausalLearning.CDHPO.OCT" title="Permalink to this heading"></a></h1>
-<section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-</div>
-</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
@@ -152,7 +146,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>oct_params</strong> (<em>CDHPOParameters</em>) – Object containing the parameters required for the OCT procedure.</p></li>
-<li><p><strong>data</strong> (<a class="reference internal" href="CausalLearning.data.html#ETIA.CausalLearning.data.Dataset.Dataset" title="ETIA.CausalLearning.data.Dataset.Dataset"><em>Dataset</em></a>) – Data to be used for the OCT procedure.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="data.html#ETIA.data.Dataset.Dataset" title="ETIA.data.Dataset.Dataset"><em>Dataset</em></a>) – Data to be used for the OCT procedure.</p></li>
 <li><p><strong>results_folder</strong> (<em>str</em>) – Path to the folder where results will be saved.</p></li>
 <li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, enables verbose logging. Default is False.</p></li>
 </ul>
@@ -389,6 +383,7 @@
 <dd class="field-odd"><p><ul class="simple">
 <li><p><strong>opt_config</strong> (<em>dict</em>) – The optimal configuration found.</p></li>
 <li><p><strong>matrix_mec_graph</strong> (<em>np.ndarray</em>) – The MEC graph matrix of the optimal configuration.</p></li>
+<li><p><strong>matrix_graph</strong> (<em>nd.nd.array</em>) – The graph matrix of optimal configuration</p></li>
 <li><p><strong>library_results</strong> (<em>Any</em>) – Results from the causal discovery library.</p></li>
 </ul>
 </p>
