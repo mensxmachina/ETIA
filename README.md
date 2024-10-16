@@ -100,7 +100,7 @@ CRV provides advanced tools to evaluate the discovered causal graph, offering co
 You can install ETIA directly from PyPi using pip:
 
 ```bash
-pip install etia (not yet supported)
+pip install etia
 ```
 
 Alternatively, clone the repository and install the dependencies:
@@ -112,11 +112,85 @@ pip install -r requirements.txt
 make all
 ```
 
-### Prerequisites
+Prerequisites
+-------------
+Before installing ETIA, ensure that you have the following dependencies:
 
 - **Python 3.8+**
 - **Java 17** (required for Tetrad algorithms in the Causal Learning module)
 - **R 4.4+** (required for some feature selection algorithms in the AFS module)
+- **Cytoscape** (required for the visualization)
+- **MxM package in R** (required for AFS, more information on that follows)
+- **daggity package in R** (required for CRV.adjustment_set, more information on that follows)
+
+You can download and install these dependencies from their official websites:
+
+- [Python](https://www.python.org/downloads/)
+- [Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+- [R](https://www.r-project.org/)
+- [Cytoscape](https://cytoscape.org/download.html)
+
+ETIA Installation
+-----------------
+
+### Installing via PyPi (Upcoming)
+
+Once ETIA is available on PyPi, you will be able to install it directly using `pip`:
+
+```bash
+ pip install etia
+```
+
+### Installing from Source
+
+To install ETIA from the source code, follow the steps below:
+
+1. Clone the repository:
+
+```bash
+ git clone <repository-url>
+ cd etia
+```
+2. Install the required dependencies:
+
+```bash  
+ pip install -r requirements.txt
+```
+
+3. Compile the necessary components:
+
+```bash
+make all
+```
+Java and R Configuration
+------------------------
+For using Tetrad algorithms and certain feature selection algorithms, ensure that Java and R are correctly installed.
+
+### Setting up Java:
+
+1. Install Java 17 from the [official website](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html).
+2. Ensure that the `JAVA_HOME` environment variable is set:
+
+```bash
+ export JAVA_HOME=/path/to/java   
+```
+### Setting up R:
+
+1. Install R 4.4+ from the [official website](https://www.r-project.org/).
+2. Make sure that R is in your system’s PATH:
+
+```bash
+R --version
+```
+
+3. Install MxM package (this part may take a while), and the daggity package. MxM package is necessary for
+AFS while daggity is only used in CRV to find the adjustment sets.
+Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)
+
+```bash
+Rscipt --vanilla "install.packages("MXM", repos = "http://cran.us.r-project.org")"
+Rscipt --vanilla "install.packages("daggity", repos = "http://cran.us.r-project.org")"
+```
 
 ## Usage
 
@@ -128,14 +202,15 @@ from ETIA.CausalLearning import CausalLearner
 
 # Feature selection
 afs = AFS()
-selected_features = afs.select_features(dataset, targets)
+results = afs.select_features(dataset_file_path, targets)
+reduced_datset = results['reduced_data']
 
 # Causal discovery
-cl = CausalLearner(dataset)
+cl = CausalLearner(reduced_datset)
 results = cl.learn_model()
 ```
 
-## Testing
+## Testing (under development)
 
 You can run the test suite using:
 

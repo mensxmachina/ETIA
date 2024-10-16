@@ -11,12 +11,16 @@ Before installing ETIA, ensure that you have the following dependencies:
 - **Python 3.8+**
 - **Java 17** (required for Tetrad algorithms in the Causal Learning module)
 - **R 4.4+** (required for some feature selection algorithms in the AFS module)
+- **Cytoscape** (required for the visualization)
+- **MxM package in R** (required for AFS, more information on that follows)
+- **daggity package in R** (required for CRV.adjustment_set, more information on that follows)
 
 You can download and install these dependencies from their official websites:
 
 - [Python](https://www.python.org/downloads/)
 - [Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
 - [R](https://www.r-project.org/)
+- [Cytoscape](https://cytoscape.org/download.html)
 
 ETIA Installation
 -----------------
@@ -74,12 +78,14 @@ For using Tetrad algorithms and certain feature selection algorithms, ensure tha
 
     R --version
 
-3. Install MxM package (this part may take a while)
+3. Install MxM package (this part may take a while), and the daggity package. MxM package is necessary for
+AFS while daggity is only used in CRV to find the adjustment sets.
 Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)
 
 .. code-block:: bash
 
     Rscipt --vanilla "install.packages("MXM", repos = "http://cran.us.r-project.org")"
+    Rscipt --vanilla "install.packages("daggity", repos = "http://cran.us.r-project.org")"
 
 Verify Installation
 -------------------

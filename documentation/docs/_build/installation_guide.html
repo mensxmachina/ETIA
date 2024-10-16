@@ -95,12 +95,16 @@
 <li><p><strong>Python 3.8+</strong></p></li>
 <li><p><strong>Java 17</strong> (required for Tetrad algorithms in the Causal Learning module)</p></li>
 <li><p><strong>R 4.4+</strong> (required for some feature selection algorithms in the AFS module)</p></li>
+<li><p><strong>Cytoscape</strong> (required for the visualization)</p></li>
+<li><p><strong>MxM package in R</strong> (required for AFS, more information on that follows)</p></li>
+<li><p><strong>daggity package in R</strong> (required for CRV.adjustment_set, more information on that follows)</p></li>
 </ul>
 <p>You can download and install these dependencies from their official websites:</p>
 <ul class="simple">
 <li><p>[Python](<a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>)</p></li>
 <li><p>[Java](<a class="reference external" href="https://www.oracle.com/java/technologies/javase-jdk17-downloads.html">https://www.oracle.com/java/technologies/javase-jdk17-downloads.html</a>)</p></li>
 <li><p>[R](<a class="reference external" href="https://www.r-project.org/">https://www.r-project.org/</a>)</p></li>
+<li><p>[Cytoscape](<a class="reference external" href="https://cytoscape.org/download.html">https://cytoscape.org/download.html</a>)</p></li>
 </ul>
 </section>
 <section id="etia-installation">
@@ -151,9 +155,11 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>R<span class="w"> </span>--version
 </pre></div>
 </div>
-<p>3. Install MxM package (this part may take a while)
+<p>3. Install MxM package (this part may take a while), and the daggity package. MxM package is necessary for
+AFS while daggity is only used in CRV to find the adjustment sets.
 Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>MXM<span class="s2">&quot;, repos = &quot;</span>http://cran.us.r-project.org<span class="s2">&quot;)&quot;</span>
+Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>daggity<span class="s2">&quot;, repos = &quot;</span>http://cran.us.r-project.org<span class="s2">&quot;)&quot;</span>
 </pre></div>
 </div>
 </section>
