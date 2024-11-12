@@ -1,7 +1,7 @@
-ETIA.AFS.feature_selector
+ETIA.AFS.predictive_model
 ======================
 
-.. automodule:: ETIA.AFS.feature_selector
+.. automodule:: ETIA.AFS.predictive_model
     :members:
     :undoc-members:
     :show-inheritance:

@@ -481,7 +481,7 @@ Main Class
 ---------------
 The main entry point for using the CL module is the `CausalLearner` class. This class allows users to configure and run the causal discovery process, selecting from a variety of algorithms, tests, and scoring functions. The causal graphs generated can then be passed on for downstream reasoning or visualization tasks.
 
-.. autoclass:: CausalLearning.CausalLearner
+.. autoclass:: ETIA.CausalLearning.CausalLearner
    :members:
    :undoc-members:
    :inherited-members:
@@ -498,16 +498,13 @@ Helper Classes
 
    CausalLearning.algorithms.causalnex_algorithm.rst
    CausalLearning.algorithms.cdt_algorithms.rst
-   CausalLearning.algorithms.jar_files.rst
    CausalLearning.algorithms.rst
    CausalLearning.algorithms.tetrad_algorithm.rst
    CausalLearning.algorithms.tigramite_algorithm.rst
-   CausalLearning.CausalModel.rst
    CausalLearning.CDHPO.OCT.causal_graph_utils.rst
    CausalLearning.CDHPO.OCT.rst
    CausalLearning.CDHPO.rst
    CausalLearning.configurations.rst
-   CausalLearning.data.rst
    CausalLearning.model_validation_protocols.kfold.rst
    CausalLearning.model_validation_protocols.rst
    CausalLearning.regressors.rst

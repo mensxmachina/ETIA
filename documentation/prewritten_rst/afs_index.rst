@@ -79,7 +79,7 @@ The main entry point for using the AFS module is through the `AFS` class. This c
     :members:
     :undoc-members:
     :show-inheritance:
-    :noindex:
+
 
 
 Helper Classes
