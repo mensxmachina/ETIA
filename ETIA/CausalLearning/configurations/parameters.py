@@ -276,11 +276,11 @@ class CDHPO_Parameters:
         """
         if algorithm not in self.configs:
             if algorithm in cd_algorithms['tetrad']['algorithms']:
-                parameters['model'] = [TetradAlgorithm.TetradAlgorithm(algorithm)]
+                parameters['model'] = [TetradAlgorithm(algorithm)]
                 parameters['model'][0].init_algo(data_info)
                 parameters['library'] = ['tetrad']
             elif algorithm in cd_algorithms['tigramite']['algorithms']:
-                parameters['model'] = [TigramiteAlgorithm.TigramiteAlgorithm(algorithm)]
+                parameters['model'] = [TigramiteAlgorithm(algorithm)]
                 parameters['model'][0].init_algo(data_info)
                 parameters['library'] = ['tigramite']
             elif algorithm in cd_algorithms['causalnex']['algorithms']:

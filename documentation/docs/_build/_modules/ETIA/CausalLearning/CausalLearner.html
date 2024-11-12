@@ -85,13 +85,14 @@
 
 <span class="kn">from</span> <span class="nn">.algorithms</span> <span class="kn">import</span> <span class="n">causaldiscoveryalgorithms</span>
 <span class="kn">from</span> <span class="nn">..data.Dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
-<span class="kn">from</span> <span class="nn">.configurations</span> <span class="kn">import</span> <span class="n">Configurations</span>
+<span class="kn">from</span> <span class="nn">.configurations</span> <span class="kn">import</span> <span class="n">Configurations</span><span class="p">,</span> <span class="n">configurations</span>
+<span class="kn">from</span> <span class="nn">.configurations.causal_configs</span> <span class="kn">import</span> <span class="n">causal_configs</span>
 <span class="kn">from</span> <span class="nn">.CDHPO</span> <span class="kn">import</span> <span class="n">OCT</span>
 <span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">.CausalModel.utils</span> <span class="kn">import</span> <span class="n">pywhy_graph_to_matrix</span>
 <span class="kn">from</span> <span class="nn">..utils.jvm_manager</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># Import the JVMManager</span>
 
-<div class="viewcode-block" id="CausalLearner"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner">[docs]</a><span class="k">class</span> <span class="nc">CausalLearner</span><span class="p">:</span>
+<div class="viewcode-block" id="CausalLearner"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner">[docs]</a><span class="k">class</span> <span class="nc">CausalLearner</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CausalLearner class for automated causal discovery.</span>
 
@@ -195,7 +196,7 @@
             <span class="kn">import</span> <span class="nn">random</span>
             <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
-<div class="viewcode-block" id="CausalLearner.learn_model"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.learn_model">[docs]</a>    <span class="k">def</span> <span class="nf">learn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.learn_model"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.learn_model">[docs]</a>    <span class="k">def</span> <span class="nf">learn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs the causal discovery process using the OCT algorithm.</span>
 
@@ -231,7 +232,7 @@
             <span class="s1">&#39;library_results&#39;</span><span class="p">:</span> <span class="n">library_results</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="CausalLearner.print_results"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.print_results">[docs]</a>    <span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_conf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.print_results"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.print_results">[docs]</a>    <span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_conf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Prints the results of the causal discovery process.</span>
 
@@ -252,7 +253,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The MEC matrix graph is:&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.set_dataset"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.set_dataset"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the dataset for the causal learner.</span>
 
@@ -270,7 +271,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Dataset must be of type Dataset.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
 
-<div class="viewcode-block" id="CausalLearner.set_configurations"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.set_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">set_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configurations</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.set_configurations"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.set_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">set_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configurations</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the configurations for the causal learner.</span>
 
@@ -289,7 +290,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">configurations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.save_progress"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.save_progress"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves the progress of the experiment to a file.</span>
 
@@ -305,7 +306,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
 <span class="sa">f</span><span class="s1">&#39;Progress saved to </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.load_progress"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.load_progress">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="CausalLearner.load_progress"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.load_progress">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">load_progress</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads the progress of the experiment from a file.</span>
@@ -326,7 +327,7 @@
 <span class="sa">f</span><span class="s1">&#39;Progress loaded from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">learner</span></div>
 
-<div class="viewcode-block" id="CausalLearner.add_configurations_from_file"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.add_configurations_from_file"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds additional configurations to the experiment from a JSON file.</span>
 
@@ -338,14 +339,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">add_configurations_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Configurations added from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.update_learnt_model"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.update_learnt_model">[docs]</a>    <span class="k">def</span> <span class="nf">update_learnt_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.update_learnt_model"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.update_learnt_model">[docs]</a>    <span class="k">def</span> <span class="nf">update_learnt_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the learnt model with the new configurations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating learnt model with new configurations&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">run_new</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CausalLearner.get_best_model_between_algorithms"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_algorithms">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_algorithms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.get_best_model_between_algorithms"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_algorithms">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_algorithms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the best model between specified algorithms.</span>
 
@@ -363,9 +364,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best configuration among specified algorithms: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">best_config</span></div>
 
-<div class="viewcode-block" id="CausalLearner.get_best_model_between_family"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_family">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_family</span><span class="p">(</span>
+<div class="viewcode-block" id="CausalLearner.get_best_model_between_family"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_family">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_family</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">admit_latent_variables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">causal_sufficiency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">assume_faithfulness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">is_output_mec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">accepts_missing_values</span><span class="o">=</span><span class="kc">None</span>
@@ -375,7 +376,7 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        admit_latent_variables : bool, optional</span>
+<span class="sd">        causal_sufficiency : bool, optional</span>
 <span class="sd">            Filter algorithms that admit latent variables.</span>
 <span class="sd">        assume_faithfulness : bool, optional</span>
 <span class="sd">            Filter algorithms based on faithfulness assumption.</span>
@@ -390,16 +391,14 @@
 <span class="sd">            The best configuration among the filtered algorithms.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">algorithms</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">causaldiscoveryalgorithms</span><span class="o">.</span><span class="n">cd_algorithms</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">admit_latent_variables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">admit_latent_variables</span> <span class="o">!=</span> <span class="n">admit_latent_variables</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">algo</span> <span class="ow">in</span> <span class="n">causal_configs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">causal_sufficiency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">causal_configs</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;causal_sufficiency&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">causal_sufficiency</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">assume_faithfulness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">assume_faithfulness</span> <span class="o">!=</span> <span class="n">assume_faithfulness</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">assume_faithfulness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">causal_configs</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;assume_faithfulness&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">assume_faithfulness</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">is_output_mec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">is_output_mec</span> <span class="o">!=</span> <span class="n">is_output_mec</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">accepts_missing_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">causal_configs</span><span class="p">[</span><span class="n">algo</span><span class="p">][</span><span class="s1">&#39;missing_values&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">accepts_missing_values</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">accepts_missing_values</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">algo</span><span class="o">.</span><span class="n">accepts_missing_values</span> <span class="o">!=</span> <span class="n">accepts_missing_values</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="n">algorithms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">algorithms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
 
         <span class="n">best_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">find_best_config</span><span class="p">(</span><span class="n">algorithms</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best configuration among filtered algorithms: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>

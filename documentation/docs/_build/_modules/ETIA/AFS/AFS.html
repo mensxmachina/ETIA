@@ -210,6 +210,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must be a filename (str), pandas DataFrame, or NumPy array.&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span><span class="p">(</span><span class="n">original_data</span><span class="o">.</span><span class="n">empty</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Dataframe is empty.&quot;</span><span class="p">)</span>
+
         <span class="c1"># Handle target features being either a list or a dictionary</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target_features</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="n">feature</span><span class="p">:</span> <span class="s1">&#39;unknown&#39;</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">target_features</span><span class="p">}</span>
@@ -289,7 +292,17 @@
         <span class="n">all_selected_features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">target_features</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">reduced_data</span> <span class="o">=</span> <span class="n">reduced_data</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">all_selected_features</span><span class="p">)]</span>
         <span class="n">reduced_without_target</span> <span class="o">=</span> <span class="n">reduced_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">reduced_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="n">main_target</span><span class="p">]</span>
-
+        <span class="k">if</span><span class="p">(</span><span class="n">reduced_without_target</span><span class="o">.</span><span class="n">empty</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No features selected for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;original_data&#39;</span><span class="p">:</span> <span class="n">original_data</span><span class="p">,</span>
+                <span class="s1">&#39;reduced_data&#39;</span><span class="p">:</span> <span class="n">reduced_data</span><span class="p">,</span>
+                <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="n">best_config</span><span class="p">,</span>
+                <span class="s1">&#39;bbc_score&#39;</span><span class="p">:</span> <span class="n">best_score</span><span class="p">,</span>
+                <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="n">best_ci</span><span class="p">,</span>
+                <span class="s1">&#39;trained_model&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="n">selected_features</span><span class="p">[</span><span class="n">target_feature</span><span class="p">],</span>
+            <span class="p">}</span>
         <span class="n">pm</span> <span class="o">=</span> <span class="n">PredictiveModel</span><span class="p">()</span>
         <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
                 <span class="n">best_config</span><span class="p">,</span>
@@ -350,6 +363,7 @@
         <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;bbc_score&#39;</span><span class="p">:</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+                <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="p">[],</span>
                 <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="p">}</span>
@@ -366,10 +380,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No features left to select for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39; at depth </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;bbc_score&#39;</span><span class="p">:</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+                <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="p">[],</span>
                 <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="p">}</span>
-
         <span class="c1"># Generate the folds once and use them for every configuration</span>
         <span class="n">oos</span> <span class="o">=</span> <span class="n">OOS</span><span class="p">()</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">feature_columns</span><span class="p">]</span>
@@ -415,6 +429,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No valid configurations for target &#39;</span><span class="si">{</span><span class="n">target_feature</span><span class="si">}</span><span class="s2">&#39; at depth </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{</span>
                 <span class="s1">&#39;bbc_score&#39;</span><span class="p">:</span> <span class="o">-</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+                <span class="s1">&#39;ci&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
                 <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="p">[],</span>
                 <span class="s1">&#39;best_config&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="p">}</span>

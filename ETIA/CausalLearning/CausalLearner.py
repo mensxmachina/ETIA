@@ -7,7 +7,8 @@ import pandas as pd
 
 from .algorithms import causaldiscoveryalgorithms
 from ..data.Dataset import Dataset
-from .configurations import Configurations
+from .configurations import Configurations, configurations
+from .configurations.causal_configs import causal_configs
 from .CDHPO import OCT
 from ..utils import get_logger
 from .CausalModel.utils import pywhy_graph_to_matrix
@@ -287,7 +288,7 @@ f'Progress loaded from {path}')
 
     def get_best_model_between_family(
         self,
-        admit_latent_variables=None,
+        causal_sufficiency=None,
         assume_faithfulness=None,
         is_output_mec=None,
         accepts_missing_values=None
@@ -297,7 +298,7 @@ f'Progress loaded from {path}')
 
         Parameters
         ----------
-        admit_latent_variables : bool, optional
+        causal_sufficiency : bool, optional
             Filter algorithms that admit latent variables.
         assume_faithfulness : bool, optional
             Filter algorithms based on faithfulness assumption.
@@ -312,16 +313,14 @@ f'Progress loaded from {path}')
             The best configuration among the filtered algorithms.
         """
         algorithms = []
-        for name, algo in causaldiscoveryalgorithms.cd_algorithms.items():
-            if admit_latent_variables is not None and algo.admit_latent_variables != admit_latent_variables:
+        for algo in causal_configs:
+            if causal_sufficiency is not None and causal_configs[algo]['causal_sufficiency'] != causal_sufficiency:
                 continue
-            if assume_faithfulness is not None and algo.assume_faithfulness != assume_faithfulness:
+            if assume_faithfulness is not None and causal_configs[algo]['assume_faithfulness'] != assume_faithfulness:
                 continue
-            if is_output_mec is not None and algo.is_output_mec != is_output_mec:
+            if accepts_missing_values is not None and causal_configs[algo]['missing_values'] != accepts_missing_values:
                 continue
-            if accepts_missing_values is not None and algo.accepts_missing_values != accepts_missing_values:
-                continue
-            algorithms.append(name)
+            algorithms.append(algo)
 
         best_config = self.cdhpo.find_best_config(algorithms)
         self.logger.debug(f'Best configuration among filtered algorithms: {best_config}')

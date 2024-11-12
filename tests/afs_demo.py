@@ -22,13 +22,13 @@ def main():
 
     # Define target features and their types
     target_features = {
-        'target': 'categorical'
+        'Category': 'categorical'
     }
 
     # Define custom configurations
     custom_configs = [
         {
-            'fs_name': 'fbed',
+            'fs_name': 'ses',
             'ind_test_name': 'testIndReg',
             'alpha': 0.05,
             'k': 0,
@@ -46,11 +46,11 @@ def main():
     ]
 
     # Initialize the AFS class with depth
-    afs = AFS(depth=2, verbose=True, random_seed=42)
+    afs = AFS(depth=1, verbose=True, random_seed=42)
 
     # Run the AFS process using custom configurations
     results = afs.run_AFS(
-        data=data,
+        data='data_sample1.csv',
         target_features=target_features,
         pred_configs=0.1,  # Use custom configurations
         dataset_name='synthetic_dataset'

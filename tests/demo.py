@@ -1,8 +1,6 @@
 import pandas as pd
 from ETIA.AFS import AFS
 from ETIA.CausalLearning import CausalLearner
-
-# Additional imports for visualization and path finding
 from ETIA.CRV.visualization import Visualization  # Visualization class provided
 from ETIA.CRV.queries import one_potentially_directed_path  # Function provided
 from ETIA.CRV import find_adjset  # Function provided
@@ -13,13 +11,13 @@ data = pd.read_csv('example_dataset.csv')
 print("Original Dataset:")
 print(data.head())
 
-target_features = {'t1': 'categorical', 't2': 'categorical'}
+target_features = {'target': 'continuous'}
 
 # Initialize the AFS module with depth 1
 afs_instance = AFS(depth=1)
 
 # Run AFS to select features for the target variables
-afs_result = afs_instance.run_AFS(data=data, target_features=target_features)
+afs_result = afs_instance.run_AFS(data=data, target_features=target_features, pred_configs=0.1)
 
 # Display the selected features and the best configuration found
 print("Selected Features by AFS:")
@@ -35,11 +33,14 @@ reduced_data = afs_result['reduced_data']
 learner = CausalLearner(dataset_input=reduced_data)
 
 # Run the causal discovery process
-opt_conf, matrix_mec_graph, run_time, library_results = learner.learn_model()
+cl_results = learner.learn_model()
 
 # Display the results of causal discovery
 print("Optimal Causal Discovery Configuration from CL:")
-print(opt_conf)
+print(cl_results['optimal_conf'])
 
 print("MEC Matrix Graph (Markov Equivalence Class):")
-print(matrix_mec_graph)
+print(cl_results['matrix_mec_graph'])
+
+viz = Visualization(cl_results['matrix_mec_graph'], 'Collection', 'Graph')
+viz.plot_cytoscape()

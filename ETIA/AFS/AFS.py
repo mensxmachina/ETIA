@@ -132,6 +132,9 @@ class AFS:
         else:
             raise ValueError("Data must be a filename (str), pandas DataFrame, or NumPy array.")
 
+        if(original_data.empty):
+            raise ValueError("Dataframe is empty.")
+
         # Handle target features being either a list or a dictionary
         if isinstance(target_features, list):
             target_features = {feature: 'unknown' for feature in target_features}
@@ -211,7 +214,17 @@ class AFS:
         all_selected_features.update(target_features.keys())
         reduced_data = reduced_data[list(all_selected_features)]
         reduced_without_target = reduced_data.loc[:, reduced_data.columns != main_target]
-
+        if(reduced_without_target.empty):
+            self.logger.info(f"No features selected for target '{target_feature}'")
+            return {
+                'original_data': original_data,
+                'reduced_data': reduced_data,
+                'best_config': best_config,
+                'bbc_score': best_score,
+                'ci': best_ci,
+                'trained_model': None,
+                'selected_features': selected_features[target_feature],
+            }
         pm = PredictiveModel()
         pm.fit(
                 best_config,
@@ -272,6 +285,7 @@ class AFS:
         if depth == 0:
             return {
                 'bbc_score': -float('inf'),
+                'ci': None,
                 'selected_features': [],
                 'best_config': None,
             }
@@ -288,10 +302,10 @@ class AFS:
             self.logger.warning(f"No features left to select for target '{target_feature}' at depth {self.depth - depth + 1}.")
             return {
                 'bbc_score': -float('inf'),
+                'ci': None,
                 'selected_features': [],
                 'best_config': None,
             }
-
         # Generate the folds once and use them for every configuration
         oos = OOS()
         X = data[feature_columns]
@@ -337,6 +351,7 @@ class AFS:
             self.logger.warning(f"No valid configurations for target '{target_feature}' at depth {self.depth - depth + 1}.")
             return {
                 'bbc_score': -float('inf'),
+                'ci': None,
                 'selected_features': [],
                 'best_config': None,
             }

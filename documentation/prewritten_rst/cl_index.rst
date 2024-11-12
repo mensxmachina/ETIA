@@ -481,7 +481,7 @@ Main Class
 ---------------
 The main entry point for using the CL module is the `CausalLearner` class. This class allows users to configure and run the causal discovery process, selecting from a variety of algorithms, tests, and scoring functions. The causal graphs generated can then be passed on for downstream reasoning or visualization tasks.
 
-.. autoclass:: ETIA.CausalLearning.CausalLearner
+.. autoclass:: CausalLearning.CausalLearner
    :members:
    :undoc-members:
    :inherited-members:
