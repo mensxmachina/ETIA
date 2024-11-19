@@ -3,7 +3,7 @@ default_conf = {
         {
                 "dataset_name": "test.csv",
                 "time_lagged": False,
-                "n_lags": 2
+                "n_lags": 0
         },
     "Results_folder_path": "res/",
     "causal_sufficiency": False,
@@ -33,7 +33,7 @@ default_conf = {
                             }
                     },
                 "CausalDiscoveryAlgorithms": {
-                    "include_algs": ['fci']
+                    "exclude_algs": ['gfci', 'rfci', 'cfci']
                 }
 
         }

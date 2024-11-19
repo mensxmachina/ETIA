@@ -45,6 +45,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation_guide.html">Installation Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../example_usage.html#advanced-example">Advanced Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../afs_index.html">Automated Feature Selection (AFS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cl_index.html">Causal Learning (CL)</a></li>
@@ -92,7 +93,7 @@
 <span class="kn">from</span> <span class="nn">.CausalModel.utils</span> <span class="kn">import</span> <span class="n">pywhy_graph_to_matrix</span>
 <span class="kn">from</span> <span class="nn">..utils.jvm_manager</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># Import the JVMManager</span>
 
-<div class="viewcode-block" id="CausalLearner"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner">[docs]</a><span class="k">class</span> <span class="nc">CausalLearner</span><span class="p">:</span>
+<div class="viewcode-block" id="CausalLearner"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner">[docs]</a><span class="k">class</span> <span class="nc">CausalLearner</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CausalLearner class for automated causal discovery.</span>
 
@@ -135,7 +136,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">dataset_input</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">],</span>
+        <span class="n">dataset_input</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">configurations</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Configurations</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">n_jobs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -153,31 +154,31 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Initializing CausalLearner&#39;</span><span class="p">)</span>
 
-        <span class="c1"># Initialize dataset</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset_input</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-            <span class="c1"># If a plain DataFrame is provided, initialize Dataset with a default name</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span>
-                <span class="n">data</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">,</span>
-                <span class="n">data_time_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-                <span class="n">time_series</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;Preloaded Dataset&#39;</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataset_input must be either a file path, a Dataset instance, or a pandas DataFrame&quot;</span><span class="p">)</span>
-
         <span class="c1"># Initialize configurations</span>
         <span class="k">if</span> <span class="n">configurations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Initialize dataset</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset_input</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                <span class="c1"># If a plain DataFrame is provided, initialize Dataset with a default name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">,</span>
+                    <span class="n">data_time_info</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;n_lags&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;time_lagged&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+                    <span class="n">time_series</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">dataset_name</span><span class="o">=</span><span class="s1">&#39;Preloaded Dataset&#39;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">dataset_input</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dataset_input must be either a file path, a Dataset instance, or a pandas DataFrame&quot;</span><span class="p">)</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">Configurations</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">)</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span> <span class="n">Configurations</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Configurations must be of type Configurations.&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">configurations</span>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">configurations</span><span class="o">.</span><span class="n">dataset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">results_folder</span>
 
         <span class="c1"># Initialize CDHPO (Combined Discovery and Hyperparameter Optimization)</span>
@@ -196,7 +197,7 @@
             <span class="kn">import</span> <span class="nn">random</span>
             <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_seed</span><span class="p">)</span>
-<div class="viewcode-block" id="CausalLearner.learn_model"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.learn_model">[docs]</a>    <span class="k">def</span> <span class="nf">learn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.learn_model"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.learn_model">[docs]</a>    <span class="k">def</span> <span class="nf">learn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs the causal discovery process using the OCT algorithm.</span>
 
@@ -232,7 +233,7 @@
             <span class="s1">&#39;library_results&#39;</span><span class="p">:</span> <span class="n">library_results</span>
         <span class="p">}</span></div>
 
-<div class="viewcode-block" id="CausalLearner.print_results"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.print_results">[docs]</a>    <span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_conf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.print_results"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.print_results">[docs]</a>    <span class="k">def</span> <span class="nf">print_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opt_conf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Prints the results of the causal discovery process.</span>
 
@@ -253,7 +254,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The MEC matrix graph is:&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.set_dataset"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.set_dataset"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the dataset for the causal learner.</span>
 
@@ -271,7 +272,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Dataset must be of type Dataset.&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
 
-<div class="viewcode-block" id="CausalLearner.set_configurations"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.set_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">set_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configurations</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.set_configurations"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.set_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">set_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configurations</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the configurations for the causal learner.</span>
 
@@ -290,7 +291,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span> <span class="o">=</span> <span class="n">configurations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.save_progress"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.save_progress"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.save_progress">[docs]</a>    <span class="k">def</span> <span class="nf">save_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves the progress of the experiment to a file.</span>
 
@@ -306,7 +307,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
 <span class="sa">f</span><span class="s1">&#39;Progress saved to </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.load_progress"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.load_progress">[docs]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="CausalLearner.load_progress"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.load_progress">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">load_progress</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads the progress of the experiment from a file.</span>
@@ -327,7 +328,7 @@
 <span class="sa">f</span><span class="s1">&#39;Progress loaded from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">learner</span></div>
 
-<div class="viewcode-block" id="CausalLearner.add_configurations_from_file"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.add_configurations_from_file"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.add_configurations_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">add_configurations_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds additional configurations to the experiment from a JSON file.</span>
 
@@ -339,14 +340,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">configurations</span><span class="o">.</span><span class="n">add_configurations_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Configurations added from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CausalLearner.update_learnt_model"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.update_learnt_model">[docs]</a>    <span class="k">def</span> <span class="nf">update_learnt_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.update_learnt_model"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.update_learnt_model">[docs]</a>    <span class="k">def</span> <span class="nf">update_learnt_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the learnt model with the new configurations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Updating learnt model with new configurations&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">opt_conf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cdhpo</span><span class="o">.</span><span class="n">run_new</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CausalLearner.get_best_model_between_algorithms"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_algorithms">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_algorithms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
+<div class="viewcode-block" id="CausalLearner.get_best_model_between_algorithms"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_algorithms">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_algorithms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the best model between specified algorithms.</span>
 
@@ -364,7 +365,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best configuration among specified algorithms: </span><span class="si">{</span><span class="n">best_config</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">best_config</span></div>
 
-<div class="viewcode-block" id="CausalLearner.get_best_model_between_family"><a class="viewcode-back" href="../../../CausalLearning.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_family">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_family</span><span class="p">(</span>
+<div class="viewcode-block" id="CausalLearner.get_best_model_between_family"><a class="viewcode-back" href="../../../cl_index.html#ETIA.CausalLearning.CausalLearner.get_best_model_between_family">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_between_family</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">causal_sufficiency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">assume_faithfulness</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>

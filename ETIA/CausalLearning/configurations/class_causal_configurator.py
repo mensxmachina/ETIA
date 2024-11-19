@@ -99,7 +99,7 @@ class CausalDiscoveryConfigurator:
                         ci_names = []
                         ci_params = {}
                         for test_name in values:
-                            if test_name in ci_touse and test_name == 'FisherZ':
+                            if test_name in ci_touse:
                                 ci_names.append(test_name)
                                 ci_params.update({k: v for k, v in ci_touse[test_name].items() if k != 'data_type'})
                         if ci_names:

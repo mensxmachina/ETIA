@@ -40,7 +40,7 @@ class Configurations:
 
     def __init__(
         self,
-        dataset: Dataset,
+        dataset: Dataset = None,
         n_lags: int = 0,
         time_lagged: bool = False,
         time_series: bool = False,

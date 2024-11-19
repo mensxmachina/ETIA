@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Example Usage &mdash; ETIA 1.0 documentation</title>
+  <title>Usage Examples &mdash; ETIA 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
 
@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Experiments" href="experiments.html" />
+    <link rel="next" title="Beginner Example" href="beginner_example.html" />
     <link rel="prev" title="Installation Guide" href="installation_guide.html" /> 
 </head>
 
@@ -47,15 +47,9 @@
               <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Example Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-import-required-modules">Step 1: Import Required Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-load-example-dataset">Step 2: Load Example Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3-define-target-features">Step 3: Define Target Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-4-run-automated-feature-selection-afs">Step 4: Run Automated Feature Selection (AFS)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-5-run-causal-learner-cl">Step 5: Run Causal Learner (CL)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-6-run-causal-reasoning-validator-crv">Step 6: Run Causal Reasoning Validator (CRV)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-7-optional-save-progress">Step 7: (Optional) Save Progress</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#explanation">Explanation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html">Beginner Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html">Advanced Example</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
@@ -78,7 +72,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Example Usage</li>
+      <li class="breadcrumb-item active">Usage Examples</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/example_usage.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,230 +82,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="example-usage">
-<h1>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this heading"></a></h1>
-<p>This demo walks through the full pipeline of feature selection, causal discovery, and causal reasoning.
-We will use the AFS module to perform feature selection, then pass the reduced dataset to CL for causal discovery,
-and finally use CRV for causal reasoning and validation on the learned causal model.</p>
-<p><strong>Note:</strong> Ensure that Cytoscape is open before running the visualization steps in Step 6.</p>
-<section id="step-1-import-required-modules">
-<h2>Step 1: Import Required Modules<a class="headerlink" href="#step-1-import-required-modules" title="Permalink to this heading"></a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">ETIA.AFS</span> <span class="kn">import</span> <span class="n">AFS</span>
-<span class="kn">from</span> <span class="nn">ETIA.CausalLearning</span> <span class="kn">import</span> <span class="n">CausalLearner</span>
-
-<span class="c1"># Additional imports for visualization and path finding</span>
-<span class="kn">from</span> <span class="nn">ETIA.CRV.visualization</span> <span class="kn">import</span> <span class="n">Visualization</span>  <span class="c1"># Visualization class provided</span>
-<span class="kn">from</span> <span class="nn">ETIA.CRV.queries</span> <span class="kn">import</span> <span class="n">one_potentially_directed_path</span>  <span class="c1"># Function provided</span>
-<span class="kn">from</span> <span class="nn">ETIA.CRV</span> <span class="kn">import</span> <span class="n">find_adjset</span>  <span class="c1"># Function provided</span>
-</pre></div>
-</div>
-</section>
-<section id="step-2-load-example-dataset">
-<h2>Step 2: Load Example Dataset<a class="headerlink" href="#step-2-load-example-dataset" title="Permalink to this heading"></a></h2>
-<p>We start by loading the example dataset <code class="docutils literal notranslate"><span class="pre">example_dataset.csv</span></code> which contains several features and two target variables.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;example_dataset.csv&#39;</span><span class="p">)</span>
-
-<span class="c1"># Display the first few rows of the dataset</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original Dataset:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</pre></div>
-</div>
-</section>
-<section id="step-3-define-target-features">
-<h2>Step 3: Define Target Features<a class="headerlink" href="#step-3-define-target-features" title="Permalink to this heading"></a></h2>
-<p>We define two target variables (<code class="docutils literal notranslate"><span class="pre">'t1'</span></code> and <code class="docutils literal notranslate"><span class="pre">'t2'</span></code>) for which we want to perform feature selection and causal discovery.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;t1&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="s1">&#39;t2&#39;</span><span class="p">:</span> <span class="s1">&#39;categorical&#39;</span><span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="step-4-run-automated-feature-selection-afs">
-<h2>Step 4: Run Automated Feature Selection (AFS)<a class="headerlink" href="#step-4-run-automated-feature-selection-afs" title="Permalink to this heading"></a></h2>
-<p>Now, we initialize the AFS module and run it on the dataset to select the most relevant features.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the AFS module with depth 1</span>
-<span class="n">afs_instance</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># Run AFS to select features for the target variables</span>
-<span class="n">afs_result</span> <span class="o">=</span> <span class="n">afs_instance</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">)</span>
-
-<span class="c1"># Display the selected features and the best configuration found</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected Features by AFS:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">afs_result</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best AFS Configuration:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">afs_result</span><span class="p">[</span><span class="s1">&#39;best_config&#39;</span><span class="p">])</span>
-
-<span class="c1"># Extract the reduced dataset containing only the selected features and the target variables</span>
-<span class="n">reduced_data</span> <span class="o">=</span> <span class="n">afs_result</span><span class="p">[</span><span class="s1">&#39;reduced_data&#39;</span><span class="p">]</span>
-</pre></div>
-</div>
-</section>
-<section id="step-5-run-causal-learner-cl">
-<h2>Step 5: Run Causal Learner (CL)<a class="headerlink" href="#step-5-run-causal-learner-cl" title="Permalink to this heading"></a></h2>
-<p>Next, we use the CausalLearner (CL) to discover causal relationships between the selected features and the target variables.
-The reduced dataset from AFS is passed as input to CL.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the CausalLearner with the reduced dataset</span>
-<span class="n">learner</span> <span class="o">=</span> <span class="n">CausalLearner</span><span class="p">(</span><span class="n">dataset_input</span><span class="o">=</span><span class="n">reduced_data</span><span class="p">)</span>
-
-<span class="c1"># Run the causal discovery process</span>
-<span class="n">opt_conf</span><span class="p">,</span> <span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">run_time</span><span class="p">,</span> <span class="n">library_results</span> <span class="o">=</span> <span class="n">learner</span><span class="o">.</span><span class="n">learn_model</span><span class="p">()</span>
-
-<span class="c1"># Display the results of causal discovery</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimal Causal Discovery Configuration from CL:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">opt_conf</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MEC Matrix Graph (Markov Equivalence Class):&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">matrix_mec_graph</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="step-6-run-causal-reasoning-validator-crv">
-<h2>Step 6: Run Causal Reasoning Validator (CRV)<a class="headerlink" href="#step-6-run-causal-reasoning-validator-crv" title="Permalink to this heading"></a></h2>
-<p>Finally, we use the Causal Reasoning Validator (CRV) to perform causal reasoning and validation on the learned causal model from CL.</p>
-<p><strong>Note:</strong> Ensure that Cytoscape is open before running this step, as the visualization requires Cytoscape to be running.</p>
-<p>### Visualize the Causal Graph using Cytoscape</p>
-<p>We use the <code class="docutils literal notranslate"><span class="pre">Visualization</span></code> class to send the graph to Cytoscape for visualization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the Visualization class with the adjacency matrix</span>
-<span class="n">visualization</span> <span class="o">=</span> <span class="n">Visualization</span><span class="p">(</span><span class="n">matrix_pd</span><span class="o">=</span><span class="n">matrix_mec_graph</span><span class="p">,</span> <span class="n">net_name</span><span class="o">=</span><span class="s1">&#39;CausalGraph&#39;</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="s1">&#39;CausalAnalysis&#39;</span><span class="p">)</span>
-
-<span class="c1"># Plot the graph in Cytoscape</span>
-<span class="n">visualization</span><span class="o">.</span><span class="n">plot_cytoscape</span><span class="p">()</span>
-
-<span class="c1"># Optionally, set a specific layout and export the visualization</span>
-<span class="n">visualization</span><span class="o">.</span><span class="n">set_layout</span><span class="p">(</span><span class="n">layout_name</span><span class="o">=</span><span class="s1">&#39;force-directed&#39;</span><span class="p">)</span>
-<span class="n">visualization</span><span class="o">.</span><span class="n">export_to_png</span><span class="p">(</span><span class="n">file_path</span><span class="o">=</span><span class="s1">&#39;causal_graph.png&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>### Find a Path from a Variable to a Target Variable</p>
-<p>We can find a potentially directed path from a variable to a target using the <code class="docutils literal notranslate"><span class="pre">one_potentially_directed_path</span></code> function.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the variable names (ensure they exist in your dataset and graph)</span>
-<span class="n">source_variable</span> <span class="o">=</span> <span class="s1">&#39;X1&#39;</span>  <span class="c1"># Replace with an actual variable name from your dataset</span>
-<span class="n">target_variable</span> <span class="o">=</span> <span class="s1">&#39;t1&#39;</span>  <span class="c1"># Target variable</span>
-
-<span class="c1"># Get the adjacency matrix as a NumPy array</span>
-<span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="n">matrix_mec_graph</span><span class="o">.</span><span class="n">values</span>
-<span class="n">node_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">matrix_mec_graph</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-<span class="n">node_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">node_names</span><span class="p">)}</span>
-
-<span class="c1"># Find one potentially directed path from source to target</span>
-<span class="n">path</span> <span class="o">=</span> <span class="n">one_potentially_directed_path</span><span class="p">(</span>
-    <span class="n">matrix</span><span class="o">=</span><span class="n">adjacency_matrix</span><span class="p">,</span>
-    <span class="n">start</span><span class="o">=</span><span class="n">node_indices</span><span class="p">[</span><span class="n">source_variable</span><span class="p">],</span>
-    <span class="n">end</span><span class="o">=</span><span class="n">node_indices</span><span class="p">[</span><span class="n">target_variable</span><span class="p">]</span>
-<span class="p">)</span>
-
-<span class="k">if</span> <span class="n">path</span><span class="p">:</span>
-    <span class="n">path_variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">node_names</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">path</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">A potentially directed path from </span><span class="si">{</span><span class="n">source_variable</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; -&gt; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_variables</span><span class="p">))</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">No potentially directed path found from </span><span class="si">{</span><span class="n">source_variable</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>### Compute the Adjustment Set</p>
-<p>We compute the adjustment set for estimating the causal effect of the source variable on the target variable.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the graph type (e.g., &#39;pag&#39; for Partial Ancestral Graph)</span>
-<span class="n">graph_type</span> <span class="o">=</span> <span class="s1">&#39;pag&#39;</span>  <span class="c1"># Adjust based on your graph&#39;s type</span>
-
-<span class="c1"># Find the adjustment set using the provided function</span>
-<span class="n">adj_set_can</span><span class="p">,</span> <span class="n">adj_set_min</span> <span class="o">=</span> <span class="n">find_adjset</span><span class="p">(</span>
-    <span class="n">graph_pd</span><span class="o">=</span><span class="n">matrix_mec_graph</span><span class="p">,</span>
-    <span class="n">graph_type</span><span class="o">=</span><span class="n">graph_type</span><span class="p">,</span>
-    <span class="n">target_name</span><span class="o">=</span><span class="p">[</span><span class="n">target_variable</span><span class="p">],</span>
-    <span class="n">exposure_names</span><span class="o">=</span><span class="p">[</span><span class="n">source_variable</span><span class="p">],</span>
-    <span class="n">r_path</span><span class="o">=</span><span class="s1">&#39;/path/to/Rscript&#39;</span>  <span class="c1"># Replace with the correct path</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Canonical Adjustment Set for </span><span class="si">{</span><span class="n">source_variable</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">adj_set_can</span> <span class="k">if</span> <span class="n">adj_set_can</span> <span class="k">else</span> <span class="s2">&quot;No canonical adjustment set found.&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Minimal Adjustment Set for </span><span class="si">{</span><span class="n">source_variable</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">adj_set_min</span> <span class="k">if</span> <span class="n">adj_set_min</span> <span class="k">else</span> <span class="s2">&quot;No minimal adjustment set found.&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>### Calculate Edge Confidence (Optional)</p>
-<p>We can estimate the confidence of the edges in the causal graph by performing bootstrapping.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate edge consistency and similarity confidence</span>
-<span class="n">edge_consistency</span><span class="p">,</span> <span class="n">edge_similarity</span> <span class="o">=</span> <span class="n">calculate_confidence</span><span class="p">(</span>
-    <span class="n">dataset</span><span class="o">=</span><span class="n">learner</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
-    <span class="n">opt_conf</span><span class="o">=</span><span class="n">opt_conf</span><span class="p">,</span>
-    <span class="n">n_bootstraps</span><span class="o">=</span><span class="mi">50</span>  <span class="c1"># Adjust the number of bootstraps as needed</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Edge Consistency:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">edge_consistency</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Edge Similarity:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">edge_similarity</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="step-7-optional-save-progress">
-<h2>Step 7: (Optional) Save Progress<a class="headerlink" href="#step-7-optional-save-progress" title="Permalink to this heading"></a></h2>
-<p>You can save the progress of the experiment if needed.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">learner</span><span class="o">.</span><span class="n">save_progress</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;causal_pipeline_progress.pkl&quot;</span><span class="p">)</span>
-
-<span class="c1"># To load the saved progress later:</span>
-<span class="c1"># learner = learner.load_progress(path=&quot;causal_pipeline_progress.pkl&quot;)</span>
-</pre></div>
-</div>
-<p>—</p>
-</section>
-<section id="explanation">
-<h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this heading"></a></h2>
-<p>### Overview</p>
-<p>This example demonstrates the complete pipeline of using the AFS, CL, and CRV modules for causal analysis:</p>
-<ol class="arabic simple">
-<li><p><strong>Feature Selection (AFS)</strong>: Identifies the most relevant features for the target variables.</p></li>
-<li><p><strong>Causal Discovery (CL)</strong>: Discovers causal relationships among the selected features.</p></li>
-<li><p><strong>Causal Reasoning and Validation (CRV)</strong>: Validates the causal model, visualizes it, finds causal paths, and computes adjustment sets.</p></li>
-</ol>
-<p>### Visualization with Cytoscape</p>
-<ul class="simple">
-<li><p><strong>Visualization Class</strong>: We use the <code class="docutils literal notranslate"><span class="pre">Visualization</span></code> class to handle graph visualization in Cytoscape.</p></li>
-<li><p><strong>Plotting</strong>: The <code class="docutils literal notranslate"><span class="pre">plot_cytoscape</span></code> method sends the graph to Cytoscape for visualization.</p></li>
-<li><p><strong>Layout and Export</strong>: Use <code class="docutils literal notranslate"><span class="pre">set_layout</span></code> and <code class="docutils literal notranslate"><span class="pre">export_to_png</span></code> to adjust the layout and save the visualization.</p></li>
+  <section id="usage-examples">
+<h1>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="beginner_example.html">Beginner Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-1-import-required-modules">Step 1: Import Required Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-2-load-example-dataset">Step 2: Load Example Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-3-define-target-features">Step 3: Define Target Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-4-run-automated-feature-selection-afs">Step 4: Run Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-5-run-causal-learner-cl">Step 5: Run Causal Learner (CL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-6-run-causal-reasoning-validator-crv">Step 6: Run Causal Reasoning Validator (CRV)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#step-7-optional-save-progress">Step 7: (Optional) Save Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html#explanation">Explanation</a></li>
 </ul>
-<p>### Finding Paths</p>
-<ul class="simple">
-<li><p><strong>``one_potentially_directed_path`` Function</strong>: Searches for a potentially directed path from a start node to an end node in the causal graph.</p></li>
-<li><p><strong>Node Mapping</strong>: Maps node names to indices for processing and back to interpret the results.</p></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_example.html">Advanced Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-1-import-required-modules">Step 1: Import Required Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-2-load-and-inspect-the-dataset">Step 2: Load and Inspect the Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-3-define-target-and-exposure-features">Step 3: Define Target and Exposure Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-4-initialize-automated-feature-selection-afs">Step 4: Initialize Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-5-define-prediction-configurations-for-afs">Step 5: Define Prediction Configurations for AFS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-6-run-afs-for-target-features">Step 6: Run AFS for Target Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-7-run-afs-for-exposure-features-with-parallel-processing">Step 7: Run AFS for Exposure Features with Parallel Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-8-aggregate-and-display-selected-features">Step 8: Aggregate and Display Selected Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-9-prepare-the-reduced-dataset">Step 9: Prepare the Reduced Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-10-initialize-causal-learner-cl">Step 10: Initialize Causal Learner (CL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-11-run-causal-discovery-process">Step 11: Run Causal Discovery Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-12-visualize-the-causal-graph-with-cytoscape">Step 12: Visualize the Causal Graph with Cytoscape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-13-identify-directed-paths-in-the-causal-graph">Step 13: Identify Directed Paths in the Causal Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_example.html#step-14-save-and-load-progress-optional">Step 14: Save and Load Progress (Optional)</a></li>
 </ul>
-<p>### Computing Adjustment Sets</p>
-<ul class="simple">
-<li><p><strong>``find_adjset`` Function</strong>: Uses the <code class="docutils literal notranslate"><span class="pre">dagitty</span></code> R package to compute adjustment sets for causal effect estimation.</p></li>
-<li><p><strong>Parameters</strong>:
-- <code class="docutils literal notranslate"><span class="pre">graph_pd</span></code>: The adjacency matrix as a pandas DataFrame.
-- <code class="docutils literal notranslate"><span class="pre">graph_type</span></code>: Type of the graph (e.g., <code class="docutils literal notranslate"><span class="pre">'dag'</span></code>, <code class="docutils literal notranslate"><span class="pre">'cpdag'</span></code>, <code class="docutils literal notranslate"><span class="pre">'mag'</span></code>, <code class="docutils literal notranslate"><span class="pre">'pag'</span></code>).
-- <code class="docutils literal notranslate"><span class="pre">target_name</span></code>: The target variable.
-- <code class="docutils literal notranslate"><span class="pre">exposure_names</span></code>: The exposure variable(s).
-- <code class="docutils literal notranslate"><span class="pre">r_path</span></code>: Path to the Rscript executable.</p></li>
+</li>
 </ul>
-<p>### Calculating Edge Confidence</p>
-<ul class="simple">
-<li><p><strong>Bootstrap Methods</strong>: Functions like <code class="docutils literal notranslate"><span class="pre">bootstrapping_causal_graph</span></code> and <code class="docutils literal notranslate"><span class="pre">edge_metrics_on_bootstraps</span></code> estimate the confidence of edges via bootstrapping.</p></li>
-<li><p><strong>Edge Consistency and Similarity</strong>: Metrics to assess the stability of the discovered causal relationships.</p></li>
-</ul>
-<p>### Dependencies and Setup</p>
-<ul class="simple">
-<li><p><strong>Cytoscape</strong>: Ensure Cytoscape is installed and running.</p></li>
-<li><p><strong>R and dagitty</strong>: The <code class="docutils literal notranslate"><span class="pre">find_adjset</span></code> function requires R and the <code class="docutils literal notranslate"><span class="pre">dagitty</span></code> package.</p></li>
-<li><p><strong>Python Packages</strong>: Install required Python packages (e.g., <code class="docutils literal notranslate"><span class="pre">py4cytoscape</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>).</p></li>
-</ul>
-<p>### Variable Names</p>
-<ul class="simple">
-<li><p><strong>Source and Target Variables</strong>: Replace <code class="docutils literal notranslate"><span class="pre">'X1'</span></code> and <code class="docutils literal notranslate"><span class="pre">'t1'</span></code> with actual variable names from your dataset.</p></li>
-<li><p><strong>Node Names</strong>: Ensure node names in the adjacency matrix match those used in your dataset.</p></li>
-</ul>
-<p>### Error Handling</p>
-<ul class="simple">
-<li><p><strong>Module Imports</strong>: Confirm all modules and functions are correctly imported.</p></li>
-<li><p><strong>Path Corrections</strong>: Update paths like <code class="docutils literal notranslate"><span class="pre">/path/to/Rscript</span></code> to correct locations on your system.</p></li>
-<li><p><strong>Function Compatibility</strong>: Verify method compatibility with your module versions.</p></li>
-</ul>
-<p>—</p>
-<p>By following these steps, you can utilize the full pipeline provided by the AFS, CL, and CRV modules to perform comprehensive causal analysis on your dataset. This includes selecting relevant features, discovering causal structures, visualizing the causal graph, finding causal paths, computing adjustment sets, and assessing the confidence of causal relationships.</p>
-</section>
+</div>
 </section>
 
 
@@ -319,7 +124,7 @@ The reduced dataset from AFS is passed as input to CL.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="installation_guide.html" class="btn btn-neutral float-left" title="Installation Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="experiments.html" class="btn btn-neutral float-right" title="Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="beginner_example.html" class="btn btn-neutral float-right" title="Beginner Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Example &mdash; ETIA 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Experiments" href="experiments.html" />
+    <link rel="prev" title="Beginner Example" href="beginner_example.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ETIA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Menu</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation_guide.html">Installation Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="example_usage.html">Usage Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="beginner_example.html">Beginner Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Advanced Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-import-required-modules">Step 1: Import Required Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-load-and-inspect-the-dataset">Step 2: Load and Inspect the Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-define-target-and-exposure-features">Step 3: Define Target and Exposure Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-initialize-automated-feature-selection-afs">Step 4: Initialize Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-define-prediction-configurations-for-afs">Step 5: Define Prediction Configurations for AFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-6-run-afs-for-target-features">Step 6: Run AFS for Target Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-7-run-afs-for-exposure-features-with-parallel-processing">Step 7: Run AFS for Exposure Features with Parallel Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-8-aggregate-and-display-selected-features">Step 8: Aggregate and Display Selected Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-9-prepare-the-reduced-dataset">Step 9: Prepare the Reduced Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-10-initialize-causal-learner-cl">Step 10: Initialize Causal Learner (CL)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-11-run-causal-discovery-process">Step 11: Run Causal Discovery Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-12-visualize-the-causal-graph-with-cytoscape">Step 12: Visualize the Causal Graph with Cytoscape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-13-identify-directed-paths-in-the-causal-graph">Step 13: Identify Directed Paths in the Causal Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-14-save-and-load-progress-optional">Step 14: Save and Load Progress (Optional)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crv_index.html">Causal Reasoning and Visualization (CRV)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ETIA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="example_usage.html">Usage Examples</a></li>
+      <li class="breadcrumb-item active">Advanced Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/advanced_example.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-example">
+<h1>Advanced Example<a class="headerlink" href="#advanced-example" title="Permalink to this heading"></a></h1>
+<p>This advanced example demonstrates a comprehensive pipeline for <strong>Automated Feature Selection (AFS)</strong>, <strong>Causal Learning (CL)</strong>, and <strong>Causal Reasoning Validation (CRV)</strong>. It showcases advanced configurations, parallel processing, and in-depth causal analysis, providing a robust framework for complex datasets.</p>
+<p><strong>Prerequisites:</strong></p>
+<ul class="simple">
+<li><p>Ensure all prerequisites from the <strong>Prerequisites</strong> section are met.</p></li>
+<li><p>Familiarity with Python programming and causal analysis concepts.</p></li>
+<li><p>Cytoscape must be installed and running for visualization steps.</p></li>
+</ul>
+<section id="step-1-import-required-modules">
+<h2>Step 1: Import Required Modules<a class="headerlink" href="#step-1-import-required-modules" title="Permalink to this heading"></a></h2>
+<p>Begin by importing all necessary modules, including those for feature selection, causal learning, visualization, and path finding.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Importing Required Modules</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">ETIA.AFS</span> <span class="kn">import</span> <span class="n">AFS</span>
+<span class="kn">from</span> <span class="nn">ETIA.CausalLearning</span> <span class="kn">import</span> <span class="n">CausalLearner</span><span class="p">,</span> <span class="n">Configurations</span>
+<span class="kn">from</span> <span class="nn">ETIA.CRV.visualization</span> <span class="kn">import</span> <span class="n">Visualization</span>  <span class="c1"># Visualization class for graph plotting</span>
+<span class="kn">from</span> <span class="nn">ETIA.CRV.queries</span> <span class="kn">import</span> <span class="n">one_potentially_directed_path</span>  <span class="c1"># Function to find directed paths</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-2-load-and-inspect-the-dataset">
+<h2>Step 2: Load and Inspect the Dataset<a class="headerlink" href="#step-2-load-and-inspect-the-dataset" title="Permalink to this heading"></a></h2>
+<p>Load your dataset and perform an initial inspection to understand its structure.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Loading and Displaying the Dataset</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the dataset from a CSV file</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;example_dataset.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Display the first few rows of the dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original Dataset:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-3-define-target-and-exposure-features">
+<h2>Step 3: Define Target and Exposure Features<a class="headerlink" href="#step-3-define-target-and-exposure-features" title="Permalink to this heading"></a></h2>
+<p>Specify the target variables and exposure features for feature selection and causal analysis.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Defining Target and Exposure Features</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the target features with their data types</span>
+<span class="n">target_features</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="s1">&#39;continuous&#39;</span><span class="p">}</span>
+
+<span class="c1"># Specify the names of exposure variables</span>
+<span class="n">exposure_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;feature4&#39;</span><span class="p">,</span> <span class="s1">&#39;feature5&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-4-initialize-automated-feature-selection-afs">
+<h2>Step 4: Initialize Automated Feature Selection (AFS)<a class="headerlink" href="#step-4-initialize-automated-feature-selection-afs" title="Permalink to this heading"></a></h2>
+<p>Set up the AFS module with a specified search depth to control the complexity of feature selection.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Initializing Automated Feature Selection (AFS)</span><a class="headerlink" href="#id4" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the AFS module with depth 2</span>
+<span class="n">afs_instance</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-5-define-prediction-configurations-for-afs">
+<h2>Step 5: Define Prediction Configurations for AFS<a class="headerlink" href="#step-5-define-prediction-configurations-for-afs" title="Permalink to this heading"></a></h2>
+<p>Configure the parameters for the feature selection model. Here, two configurations using Random Forest are defined with different alpha values.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Defining Prediction Configurations for AFS</span><a class="headerlink" href="#id5" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pred_configs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;random_forest&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fs_name&#39;</span><span class="p">:</span> <span class="s1">&#39;fbed&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;ind_test_name&#39;</span><span class="p">:</span> <span class="s1">&#39;testIndFisher&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;random_forest&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fs_name&#39;</span><span class="p">:</span> <span class="s1">&#39;fbed&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s1">&#39;ind_test_name&#39;</span><span class="p">:</span> <span class="s1">&#39;testIndFisher&#39;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-6-run-afs-for-target-features">
+<h2>Step 6: Run AFS for Target Features<a class="headerlink" href="#step-6-run-afs-for-target-features" title="Permalink to this heading"></a></h2>
+<p>Execute the AFS process to select features relevant to the target variable.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Running AFS for Target Features</span><a class="headerlink" href="#id6" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run AFS to select features relevant to the target variable</span>
+<span class="n">afs_result</span> <span class="o">=</span> <span class="n">afs_instance</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+    <span class="n">target_features</span><span class="o">=</span><span class="n">target_features</span><span class="p">,</span>
+    <span class="n">pred_configs</span><span class="o">=</span><span class="n">pred_configs</span>
+<span class="p">)</span>
+
+<span class="c1"># Retrieve the selected features for the target</span>
+<span class="n">selected_features_target</span> <span class="o">=</span> <span class="n">afs_result</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">]</span>
+
+<span class="c1"># Initialize a set with the target&#39;s selected features</span>
+<span class="n">selected_feature_set</span> <span class="o">=</span> <span class="n">selected_features_target</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-7-run-afs-for-exposure-features-with-parallel-processing">
+<h2>Step 7: Run AFS for Exposure Features with Parallel Processing<a class="headerlink" href="#step-7-run-afs-for-exposure-features-with-parallel-processing" title="Permalink to this heading"></a></h2>
+<p>Perform AFS for each exposure variable using parallel processing to enhance performance.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Running AFS for Exposure Features with Parallel Processing</span><a class="headerlink" href="#id7" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># AFS on each exposure</span>
+<span class="k">for</span> <span class="n">e_name</span> <span class="ow">in</span> <span class="n">exposure_names</span><span class="p">:</span>
+    <span class="c1"># Initialize AFS with a search depth of 1 and utilize 12 processors for parallel processing</span>
+    <span class="n">afs</span> <span class="o">=</span> <span class="n">AFS</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_processors</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="c1"># Run AFS to select features relevant to the current exposure</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">afs</span><span class="o">.</span><span class="n">run_AFS</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="n">target_features</span><span class="o">=</span><span class="p">{</span><span class="n">e_name</span><span class="p">:</span> <span class="s1">&#39;continuous&#39;</span><span class="p">},</span>
+        <span class="n">pred_configs</span><span class="o">=</span><span class="n">pred_configs</span>
+    <span class="p">)</span>
+    <span class="c1"># Retrieve the selected features for the current exposure</span>
+    <span class="n">selected_features_exposure</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">]</span>
+    <span class="c1"># Update the overall set of selected features</span>
+    <span class="n">selected_feature_set</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">selected_features_exposure</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-8-aggregate-and-display-selected-features">
+<h2>Step 8: Aggregate and Display Selected Features<a class="headerlink" href="#step-8-aggregate-and-display-selected-features" title="Permalink to this heading"></a></h2>
+<p>Combine all selected features into a unique set to avoid duplicates and display them.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Aggregating and Displaying Selected Features</span><a class="headerlink" href="#id8" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Collect all unique selected feature names</span>
+<span class="n">unique_selected_features</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="c1"># Iterate over the selected feature lists and add them to the unique set</span>
+<span class="k">for</span> <span class="n">feature_list</span> <span class="ow">in</span> <span class="n">selected_feature_set</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">unique_selected_features</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">feature_list</span><span class="p">)</span>
+
+<span class="c1"># Convert the set of unique selected features to a list</span>
+<span class="n">unique_selected_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">unique_selected_features</span><span class="p">)</span>
+
+<span class="c1"># Display the selected features from AFS</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected Features by AFS:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">unique_selected_features</span><span class="p">)</span>
+
+<span class="c1"># Display the best configuration found by AFS</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best AFS Configuration:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">afs_result</span><span class="p">[</span><span class="s1">&#39;best_config&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-9-prepare-the-reduced-dataset">
+<h2>Step 9: Prepare the Reduced Dataset<a class="headerlink" href="#step-9-prepare-the-reduced-dataset" title="Permalink to this heading"></a></h2>
+<p>Create a new dataset containing only the selected features to reduce dimensionality.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">Preparing the Reduced Dataset</span><a class="headerlink" href="#id9" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract the reduced dataset containing only the selected features</span>
+<span class="n">reduced_data</span> <span class="o">=</span> <span class="n">afs_result</span><span class="p">[</span><span class="s1">&#39;original_data&#39;</span><span class="p">][</span><span class="n">unique_selected_features</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-10-initialize-causal-learner-cl">
+<h2>Step 10: Initialize Causal Learner (CL)<a class="headerlink" href="#step-10-initialize-causal-learner-cl" title="Permalink to this heading"></a></h2>
+<p>Load configurations and initialize the CausalLearner with the reduced dataset.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">Initializing Causal Learner (CL)</span><a class="headerlink" href="#id10" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load configurations from a JSON file for causal learning</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">Configurations</span><span class="p">(</span><span class="n">conf_file</span><span class="o">=</span><span class="s1">&#39;conf.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize the CausalLearner with the loaded configurations</span>
+<span class="n">learner</span> <span class="o">=</span> <span class="n">CausalLearner</span><span class="p">(</span><span class="n">configurations</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">conf.json</span><a class="headerlink" href="#id11" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;Dataset&quot;</span><span class="p">:</span>
+        <span class="p">{</span>
+                <span class="s2">&quot;dataset_name&quot;</span><span class="p">:</span> <span class="s2">&quot;example_dataset.csv&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;time_lagged&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+                <span class="s2">&quot;n_lags&quot;</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="p">},</span>
+    <span class="s2">&quot;Results_folder_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;causal_sufficiency&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;assume_faithfulness&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;OCT&quot;</span><span class="p">:</span>
+        <span class="p">{</span>
+                <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+                <span class="s2">&quot;n_permutations&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s2">&quot;variables_type&quot;</span><span class="p">:</span> <span class="s2">&quot;mixed&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;out_of_sample_protocol&quot;</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;KFoldCV&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;folds&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                            <span class="s2">&quot;folds_to_run&quot;</span><span class="p">:</span> <span class="mi">5</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                <span class="s2">&quot;Regressor_parameters&quot;</span><span class="p">:</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;RandomForestRegressor&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;parameters&quot;</span><span class="p">:</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;n_trees&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                                <span class="s2">&quot;min_samples_leaf&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span>
+                                <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="mi">10</span>
+                            <span class="p">}</span>
+                    <span class="p">},</span>
+                <span class="s2">&quot;CausalDiscoveryAlgorithms&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;exclude_algs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;fcimax&quot;</span><span class="p">,</span> <span class="s2">&quot;gfci&quot;</span><span class="p">,</span> <span class="s2">&quot;rfci&quot;</span><span class="p">,</span> <span class="s2">&quot;cfci&quot;</span><span class="p">]</span>
+                <span class="p">}</span>
+
+        <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-11-run-causal-discovery-process">
+<h2>Step 11: Run Causal Discovery Process<a class="headerlink" href="#step-11-run-causal-discovery-process" title="Permalink to this heading"></a></h2>
+<p>Execute the causal discovery process to identify causal relationships among the selected features.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">Running the Causal Discovery Process</span><a class="headerlink" href="#id12" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the causal discovery process</span>
+<span class="n">cl_results</span> <span class="o">=</span> <span class="n">learner</span><span class="o">.</span><span class="n">learn_model</span><span class="p">()</span>
+
+<span class="c1"># Display the results of causal discovery</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimal Causal Discovery Configuration from CL:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cl_results</span><span class="p">[</span><span class="s1">&#39;optimal_conf&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MEC Matrix Graph (Markov Equivalence Class):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cl_results</span><span class="p">[</span><span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-12-visualize-the-causal-graph-with-cytoscape">
+<h2>Step 12: Visualize the Causal Graph with Cytoscape<a class="headerlink" href="#step-12-visualize-the-causal-graph-with-cytoscape" title="Permalink to this heading"></a></h2>
+<p>Use the Visualization class to send the causal graph to Cytoscape for interactive visualization.</p>
+<p><strong>Note:</strong> Ensure that Cytoscape is open before running this step.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">Visualizing the Causal Graph with Cytoscape</span><a class="headerlink" href="#id13" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the Visualization object with the MEC graph</span>
+<span class="n">viz</span> <span class="o">=</span> <span class="n">Visualization</span><span class="p">(</span><span class="n">cl_results</span><span class="p">[</span><span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">],</span> <span class="s1">&#39;Collection&#39;</span><span class="p">,</span> <span class="s1">&#39;Graph&#39;</span><span class="p">)</span>
+<span class="c1"># Plot the MEC graph using Cytoscape</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">plot_cytoscape</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-13-identify-directed-paths-in-the-causal-graph">
+<h2>Step 13: Identify Directed Paths in the Causal Graph<a class="headerlink" href="#step-13-identify-directed-paths-in-the-causal-graph" title="Permalink to this heading"></a></h2>
+<p>Find a potentially directed path from a specified source variable to the target variable within the causal graph.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">Identifying Directed Paths in the Causal Graph</span><a class="headerlink" href="#id14" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find a potentially directed path from &quot;feature1&quot; to &quot;target&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">one_potentially_directed_path</span><span class="p">(</span><span class="n">cl_results</span><span class="p">[</span><span class="s1">&#39;matrix_mec_graph&#39;</span><span class="p">],</span> <span class="s2">&quot;feature1&quot;</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">)</span>
+
+<span class="c1"># Display the identified path</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The path from feature1 to target is:&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="step-14-save-and-load-progress-optional">
+<h2>Step 14: Save and Load Progress (Optional)<a class="headerlink" href="#step-14-save-and-load-progress-optional" title="Permalink to this heading"></a></h2>
+<p>Optionally, save the progress of the causal learning process for future use.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">Saving and Loading Progress</span><a class="headerlink" href="#id15" title="Permalink to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save the progress of the causal learning process</span>
+<span class="n">learner</span><span class="o">.</span><span class="n">save_progress</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;causal_pipeline_progress.pkl&quot;</span><span class="p">)</span>
+
+<span class="c1"># To load the saved progress later:</span>
+<span class="c1"># learner = learner.load_progress(path=&quot;causal_pipeline_progress.pkl&quot;)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="beginner_example.html" class="btn btn-neutral float-left" title="Beginner Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="experiments.html" class="btn btn-neutral float-right" title="Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

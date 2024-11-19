@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Example Usage" href="example_usage.html" />
+    <link rel="next" title="Usage Examples" href="example_usage.html" />
     <link rel="prev" title="ETIA: A Comprehensive Automated Causal Discovery Library" href="index.html" /> 
 </head>
 
@@ -54,7 +54,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Example Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_usage.html">Usage Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="experiments.html">Experiments</a></li>
 <li class="toctree-l1"><a class="reference internal" href="afs_index.html">Automated Feature Selection (AFS)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cl_index.html">Causal Learning (CL)</a></li>
@@ -94,7 +94,7 @@
 <ul class="simple">
 <li><p><strong>Python 3.8+</strong></p></li>
 <li><p><strong>Java 17</strong> (required for Tetrad algorithms in the Causal Learning module)</p></li>
-<li><p><strong>R 4.4+</strong> (required for some feature selection algorithms in the AFS module)</p></li>
+<li><p><strong>R 4++</strong> (required for some feature selection algorithms in the AFS module)</p></li>
 <li><p><strong>Cytoscape</strong> (required for the visualization)</p></li>
 <li><p><strong>MxM package in R</strong> (required for AFS, more information on that follows)</p></li>
 <li><p><strong>daggity package in R</strong> (required for CRV.adjustment_set, more information on that follows)</p></li>
@@ -158,10 +158,13 @@
 <p>3. Install MxM package (this part may take a while), and the daggity package. MxM package is necessary for
 AFS while daggity is only used in CRV to find the adjustment sets.
 Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>MXM<span class="s2">&quot;, repos = &quot;</span>http://cran.us.r-project.org<span class="s2">&quot;)&quot;</span>
-Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>daggity<span class="s2">&quot;, repos = &quot;</span>http://cran.us.r-project.org<span class="s2">&quot;)&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;url &lt;- &quot;</span>https://cran.r-project.org/src/contrib/Archive/MXM/MXM_1.5.5.tar.gz<span class="s2">&quot;</span>
 </pre></div>
 </div>
+<dl class="simple">
+<dt>install.packages(url, type=”source”, repos=NULL)”</dt><dd><p>Rscipt –vanilla “install.packages(“daggity”, repos = “<a class="reference external" href="http://cran.us.r-project.org">http://cran.us.r-project.org</a>”)”</p>
+</dd>
+</dl>
 </section>
 <section id="verify-installation">
 <h2>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this heading"></a></h2>
@@ -184,7 +187,7 @@ Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="ETIA: A Comprehensive Automated Causal Discovery Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="example_usage.html" class="btn btn-neutral float-right" title="Example Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="example_usage.html" class="btn btn-neutral float-right" title="Usage Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

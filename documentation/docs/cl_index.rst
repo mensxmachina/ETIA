@@ -160,8 +160,8 @@ Algorithm Parameters
 
 Each algorithm may have specific parameters that can be tuned to optimize performance based on the dataset and requirements. Below are the parameters for each available algorithm:
 
-PC Algorithm Parameters
------------------------
+**PC Algorithm Parameters**
+
 
 .. list-table:: **PC Algorithm Parameters**
    :widths: 20 20 60
@@ -177,8 +177,8 @@ PC Algorithm Parameters
      - boolean
      - Whether to use the stable version of the PC algorithm.
 
-CPC Parameters
---------------
+**CPC Parameters**
+
 
 .. list-table:: **CPC Parameters**
    :widths: 20 20 60
@@ -194,8 +194,8 @@ CPC Parameters
      - boolean
      - Whether to use the stable version of the CPC algorithm.
 
-FGES Parameters
----------------
+**FGES Parameters**
+
 
 .. list-table:: **FGES Parameters**
    :widths: 20 20 60
@@ -208,8 +208,8 @@ FGES Parameters
      - string
      - Scoring function to use. Options: sem_bic_score, bdeu, discrete_bic, cg_bic, dg_bic.
 
-FCI Parameters
---------------
+**FCI Parameters**
+
 
 .. list-table:: **FCI Parameters**
    :widths: 20 20 60
@@ -225,8 +225,8 @@ FCI Parameters
      - boolean
      - Whether to use a stable version of the FCI algorithm.
 
-FCI-Max Parameters
-------------------
+**FCI-Max Parameters**
+
 
 .. list-table:: **FCI-Max Parameters**
    :widths: 20 20 60
@@ -242,8 +242,8 @@ FCI-Max Parameters
      - boolean
      - Whether to use a stable version of the FCI-Max algorithm.
 
-RFCI Parameters
----------------
+**RFCI Parameters**
+
 
 .. list-table:: **RFCI Parameters**
    :widths: 20 20 60
@@ -259,8 +259,8 @@ RFCI Parameters
      - boolean
      - Whether to use a stable version of the RFCI algorithm.
 
-GFCI Parameters
----------------
+**GFCI Parameters**
+
 
 .. list-table:: **GFCI Parameters**
    :widths: 20 20 60
@@ -279,8 +279,8 @@ GFCI Parameters
      - string
      - Additional scoring functions (optional): sem_bic_score, bdeu, discrete_bic, cg_bic, dg_bic.
 
-CFCI Parameters
----------------
+**CFCI Parameters**
+
 
 .. list-table:: **CFCI Parameters**
    :widths: 20 20 60
@@ -296,8 +296,8 @@ CFCI Parameters
      - boolean
      - Whether to use a stable version of the CFCI algorithm.
 
-sVAR-FCI Parameters
--------------------
+**sVAR-FCI Parameters**
+
 
 .. list-table:: **sVAR-FCI Parameters**
    :widths: 20 20 60
@@ -316,8 +316,8 @@ sVAR-FCI Parameters
      - boolean
      - Indicates if the data is a time series.
 
-svargFCI Parameters
--------------------
+**svargFCI Parameters**
+
 
 .. list-table:: **svargFCI Parameters**
    :widths: 20 20 60
@@ -339,8 +339,8 @@ svargFCI Parameters
      - boolean
      - Indicates if the data is a time series.
 
-PCMCI Parameters
-----------------
+**PCMCI Parameters**
+
 
 .. list-table:: **PCMCI Parameters**
    :widths: 20 20 60
@@ -353,8 +353,8 @@ PCMCI Parameters
      - string
      - Type of conditional independence test to use. Options: ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.
 
-PCMCI+ Parameters
------------------
+**PCMCI+ Parameters**
+
 
 .. list-table:: **PCMCI+ Parameters**
    :widths: 20 20 60
@@ -367,8 +367,8 @@ PCMCI+ Parameters
      - string
      - Type of conditional independence test to use. Options: ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.
 
-LPCMCI Parameters
------------------
+**LPCMCI Parameters**
+
 
 .. list-table:: **LPCMCI Parameters**
    :widths: 20 20 60
@@ -381,8 +381,8 @@ LPCMCI Parameters
      - string
      - Type of conditional independence test to use. Options: ParCor, RobustParCor, GPDC, CMIknn, ParCorrWLS, Gsquared, CMIsymb, RegressionCI.
 
-SAM Parameters
---------------
+**SAM Parameters**
+
 
 .. list-table:: **SAM Parameters**
    :widths: 20 20 60
@@ -422,8 +422,8 @@ SAM Parameters
      - string
      - Type of loss function. Options: fgan, gan, mse.
 
-NOTEARS Parameters
-------------------
+**NOTEARS Parameters**
+
 
 .. list-table:: **NOTEARS Parameters**
    :widths: 20 20 60

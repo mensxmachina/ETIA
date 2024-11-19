@@ -169,6 +169,19 @@ class TetradAlgorithm:
 
         return knowledge
 
+    def add_knowledge(self, ds, var_map, prior_knowledge):
+        data = jpype.JPackage("edu.cmu.tetrad.data")
+        knowledge = data.Knowledge()
+        var_names = list(ds.getVariableNames())
+        i = 0
+        var_to_tetrad = var_map.set_index("var_name")["tetrad_name"].to_dict()
+        for tier in prior_knowledge:
+            for var in prior_knowledge[tier]:
+                tetrad_name = var_to_tetrad.get(var, None)
+                idx = var_names.index(tetrad_name)
+                knowledge.addToTier(i, var_names[idx])
+            i += 1
+        return knowledge
     def _ci_test(self, ds, parameters):
         """
         Configures the conditional independence test for the algorithm.

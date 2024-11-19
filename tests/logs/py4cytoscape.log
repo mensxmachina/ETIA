@@ -1107,3 +1107,2272 @@
 2024-11-12 10:47:20,726 [DEBUG] py4...: ǀReturning 'set_edge_source_arrow_mapping': ''
 2024-11-12 10:47:20,726 [DEBUG] py4...: Returning 'set_edge_source_arrow_shape_mapping': ''
 2024-11-12 10:47:20,727 [DEBUG] py4...: --------------------
+2024-11-19 13:26:57,695 [DEBUG] py4...: Calling cytoscape_ping()
+2024-11-19 13:26:57,698 [DEBUG] py4...: ǀCalling cytoscape_version_info(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:26:57,698 [DEBUG] py4...: ǀǀCalling cyrest_get('version', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:26:57,698 [DEBUG] py4...: Attempting to direct connect to Cytoscape on http://127.0.0.1:1234/v1
+2024-11-19 13:26:58,451 [DEBUG] py4...: Detected py4cytoscape running on Cytoscape workstation
+2024-11-19 13:26:58,452 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/version)
+2024-11-19 13:26:58,487 [DEBUG] py4...: ǀǀOK[200], content: {"apiVersion":"v1","cytoscapeVersion":"3.9.1"}
+2024-11-19 13:26:58,488 [DEBUG] py4...: ǀǀReturning 'cyrest_get': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1'}
+2024-11-19 13:26:58,488 [DEBUG] py4...: ǀReturning 'cytoscape_version_info': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1', 'automationAPIVersion': '1.6.0', 'py4cytoscapeVersion': '1.5.0'}
+2024-11-19 13:26:58,490 [DEBUG] py4...: Returning 'cytoscape_ping': 'You are connected to Cytoscape!'
+2024-11-19 13:26:58,490 [DEBUG] py4...: --------------------
+2024-11-19 13:26:58,490 [DEBUG] py4...: Calling cytoscape_version_info()
+2024-11-19 13:26:58,490 [DEBUG] py4...: ǀCalling cyrest_get('version', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:26:58,490 [DEBUG] py4...: ǀHTTP GET(http://127.0.0.1:1234/v1/version)
+2024-11-19 13:26:58,519 [DEBUG] py4...: ǀOK[200], content: {"apiVersion":"v1","cytoscapeVersion":"3.9.1"}
+2024-11-19 13:26:58,520 [DEBUG] py4...: ǀReturning 'cyrest_get': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1'}
+2024-11-19 13:26:58,520 [DEBUG] py4...: Returning 'cytoscape_version_info': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1', 'automationAPIVersion': '1.6.0', 'py4cytoscapeVersion': '1.5.0'}
+2024-11-19 13:26:58,557 [DEBUG] py4...: --------------------
+2024-11-19 13:26:58,578 [DEBUG] py4...: Calling create_network_from_data_frames(edges=     source  target interaction_type
+0  feature2  target    Circle-Circle
+1  feature1  target     Arrow-Circle, title='Collection', collection='Graph')
+2024-11-19 13:26:58,585 [DEBUG] py4...: ǀCalling cyrest_post('networks', parameters={'title': 'Collection', 'collection': 'Graph'}, body={'data': [{'name': 'Collection'}], 'elements': {'nodes': [{'data': {'id': 'feature2'}}, {'data': {'id': 'target'}}, {'data': {'id': 'feature1'}}, {'data': {'id': 'target'}}], 'edges': [{'data': {'name': 'feature2 (interacts with) target', 'source': 'feature2', 'target': 'target', 'interaction': 'interacts with'}}, {'data': {'name': 'feature1 (interacts with) target', 'source': 'feature1', 'target': 'target', 'interaction': 'interacts with'}}]}}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:26:58,585 [DEBUG] py4...: ǀHTTP POST(http://127.0.0.1:1234/v1/networks), params: {'title': 'Collection', 'collection': 'Graph'}, json: {'data': [{'name': 'Collection'}], 'elements': {'nodes': [{'data': {'id': 'feature2'}}, {'data': {'id': 'target'}}, {'data': {'id': 'feature1'}}, {'data': {'id': 'target'}}], 'edges': [{'data': {'name': 'feature2 (interacts with) target', 'source': 'feature2', 'target': 'target', 'interaction': 'interacts with'}}, {'data': {'name': 'feature1 (interacts with) target', 'source': 'feature1', 'target': 'target', 'interaction': 'interacts with'}}]}}
+2024-11-19 13:27:00,517 [DEBUG] py4...: ǀOK[200], content: {"networkSUID":124}
+2024-11-19 13:27:00,518 [DEBUG] py4...: ǀReturning 'cyrest_post': {'networkSUID': 124}
+2024-11-19 13:27:00,519 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,519 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,519 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,616 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,616 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,617 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,617 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,617 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,617 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,647 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,648 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,648 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,648 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,648 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,649 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,672 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,673 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,673 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,673 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,673 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,673 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,739 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,740 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,740 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,740 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,741 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,741 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,768 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,769 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,769 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,769 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,769 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,769 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,793 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,798 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,799 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,799 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,799 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,800 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,858 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,859 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,859 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,859 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,859 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,860 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,907 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,907 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,907 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,907 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,907 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,908 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,934 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,934 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,934 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,935 [DEBUG] py4...: ǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,935 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,935 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:00,956 [DEBUG] py4...: ǀǀOK[200], content: [124]
+2024-11-19 13:27:00,957 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:00,957 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:00,969 [DEBUG] py4...: ǀCalling get_table_columns('edge', ['name'], 'default', 124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,969 [DEBUG] py4...: ǀǀCalling get_network_suid(124, 'http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,970 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:00,970 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:01,012 [DEBUG] py4...: ǀǀǀOK[200], content: [124]
+2024-11-19 13:27:01,013 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:01,013 [DEBUG] py4...: ǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:01,013 [DEBUG] py4...: ǀǀCalling get_table_column_types('edge', namespace='default', network=124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,013 [DEBUG] py4...: ǀǀǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,014 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,014 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:01,078 [DEBUG] py4...: ǀǀǀǀOK[200], content: [124]
+2024-11-19 13:27:01,079 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:01,079 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:01,079 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,079 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:01,115 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:01,115 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:01,116 [DEBUG] py4...: ǀǀReturning 'get_table_column_types': {'SUID': 'Long', 'shared name': 'String', 'shared interaction': 'String', 'name': 'String', 'selected': 'Boolean', 'interaction': 'String', 'source': 'String', 'target': 'String'}
+2024-11-19 13:27:01,116 [DEBUG] py4...: ǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns/SUID', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,116 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns/SUID)
+2024-11-19 13:27:01,147 [DEBUG] py4...: ǀǀOK[200], content: {"name":"SUID","values":[164,173]}
+2024-11-19 13:27:01,148 [DEBUG] py4...: ǀǀReturning 'cyrest_get': {'name': 'SUID', 'values': [164, 173]}
+2024-11-19 13:27:01,155 [DEBUG] py4...: ǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns/name', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,155 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns/name)
+2024-11-19 13:27:01,168 [DEBUG] py4...: ǀǀOK[200], content: {"name":"name","values":["feature2 (interacts with) target","feature1 (interacts with) target"]}
+2024-11-19 13:27:01,169 [DEBUG] py4...: ǀǀReturning 'cyrest_get': {'name': 'name', 'values': ['feature2 (interacts with) target', 'feature1 (interacts with) target']}
+2024-11-19 13:27:01,177 [DEBUG] py4...: ǀReturning 'get_table_columns':                                  name
+164  feature2 (interacts with) target
+173  feature1 (interacts with) target
+2024-11-19 13:27:01,189 [DEBUG] py4...: ǀCalling load_table_data(     source  target interaction_type     interaction                              name  data.key.column
+0  feature2  target    Circle-Circle  interacts with  feature2 (interacts with) target              164
+1  feature1  target     Arrow-Circle  interacts with  feature1 (interacts with) target              173, data_key_column='data.key.column', table='edge', table_key_column='SUID', network=124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,190 [DEBUG] py4...: ǀǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,190 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,190 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:01,206 [DEBUG] py4...: ǀǀǀOK[200], content: [124]
+2024-11-19 13:27:01,206 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:01,206 [DEBUG] py4...: ǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:01,207 [DEBUG] py4...: ǀǀCalling get_table_columns(table='edge', namespace='default', columns='SUID', network=124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,207 [DEBUG] py4...: ǀǀǀCalling get_network_suid(124, 'http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,207 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,207 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:01,224 [DEBUG] py4...: ǀǀǀǀOK[200], content: [124]
+2024-11-19 13:27:01,225 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:01,225 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:01,225 [DEBUG] py4...: ǀǀǀCalling get_table_column_types('edge', namespace='default', network=124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,225 [DEBUG] py4...: ǀǀǀǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,225 [DEBUG] py4...: ǀǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,225 [DEBUG] py4...: ǀǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:01,244 [DEBUG] py4...: ǀǀǀǀǀOK[200], content: [124]
+2024-11-19 13:27:01,245 [DEBUG] py4...: ǀǀǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:01,245 [DEBUG] py4...: ǀǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:01,245 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,245 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:01,275 [DEBUG] py4...: ǀǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:01,276 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:01,276 [DEBUG] py4...: ǀǀǀReturning 'get_table_column_types': {'SUID': 'Long', 'shared name': 'String', 'shared interaction': 'String', 'name': 'String', 'selected': 'Boolean', 'interaction': 'String', 'source': 'String', 'target': 'String'}
+2024-11-19 13:27:01,276 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns/SUID', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,276 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns/SUID)
+2024-11-19 13:27:01,286 [DEBUG] py4...: ǀǀǀOK[200], content: {"name":"SUID","values":[164,173]}
+2024-11-19 13:27:01,287 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': {'name': 'SUID', 'values': [164, 173]}
+2024-11-19 13:27:01,289 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns/SUID', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,289 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns/SUID)
+2024-11-19 13:27:01,311 [DEBUG] py4...: ǀǀǀOK[200], content: {"name":"SUID","values":[164,173]}
+2024-11-19 13:27:01,312 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': {'name': 'SUID', 'values': [164, 173]}
+2024-11-19 13:27:01,317 [DEBUG] py4...: ǀǀReturning 'get_table_columns':     SUID
+164  164
+173  173
+2024-11-19 13:27:01,326 [DEBUG] py4...: ǀǀCalling get_table_column_names('edge', 'default', 124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,327 [DEBUG] py4...: ǀǀǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,327 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,328 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:01,342 [DEBUG] py4...: ǀǀǀǀOK[200], content: [124]
+2024-11-19 13:27:01,343 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:01,343 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:01,343 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,343 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:01,363 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:01,363 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:01,363 [DEBUG] py4...: ǀǀReturning 'get_table_column_names': ['SUID', 'shared name', 'shared interaction', 'name', 'selected', 'interaction', 'source', 'target']
+2024-11-19 13:27:01,364 [DEBUG] py4...: ǀǀCalling cyrest_post('networks/124/tables/defaultedge/columns', body={'name': 'data.key.column', 'type': 'Integer'}, require_json=False, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,364 [DEBUG] py4...: ǀǀHTTP POST(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns), json: {'name': 'data.key.column', 'type': 'Integer'}
+2024-11-19 13:27:01,421 [DEBUG] py4...: ǀǀCreated[201], content: 
+2024-11-19 13:27:01,421 [DEBUG] py4...: ǀǀReturning 'cyrest_post': ''
+2024-11-19 13:27:01,422 [DEBUG] py4...: ǀǀCalling cyrest_put('networks/124/tables/defaultedge', body={'key': 'SUID', 'dataKey': 'data.key.column', 'data': [{'source': 'feature2', 'target': 'target', 'interaction_type': 'Circle-Circle', 'interaction': 'interacts with', 'name': 'feature2 (interacts with) target', 'data.key.column': 164}, {'source': 'feature1', 'target': 'target', 'interaction_type': 'Arrow-Circle', 'interaction': 'interacts with', 'name': 'feature1 (interacts with) target', 'data.key.column': 173}]}, require_json=False, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,422 [DEBUG] py4...: ǀǀHTTP PUT(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge), json: {'key': 'SUID', 'dataKey': 'data.key.column', 'data': [{'source': 'feature2', 'target': 'target', 'interaction_type': 'Circle-Circle', 'interaction': 'interacts with', 'name': 'feature2 (interacts with) target', 'data.key.column': 164}, {'source': 'feature1', 'target': 'target', 'interaction_type': 'Arrow-Circle', 'interaction': 'interacts with', 'name': 'feature1 (interacts with) target', 'data.key.column': 173}]}
+2024-11-19 13:27:01,445 [DEBUG] py4...: ǀǀOK[200], content: 
+2024-11-19 13:27:01,445 [DEBUG] py4...: ǀǀReturning 'cyrest_put': ''
+2024-11-19 13:27:01,445 [DEBUG] py4...: ǀReturning 'load_table_data': 'Success: Data loaded in defaultedge table'
+2024-11-19 13:27:01,446 [DEBUG] py4...: ǀCalling commands_post('vizmap apply styles="default"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:01,447 [DEBUG] py4...: ǀHTTP POST(http://127.0.0.1:1234/v1/commands/vizmap/apply), json: {'styles': 'default'}
+2024-11-19 13:27:02,611 [DEBUG] py4...: ǀOK[200], content: {
+ "data": {"views":[
+  204
+]},
+ "errors":[]
+}
+2024-11-19 13:27:02,612 [DEBUG] py4...: ǀReturning 'commands_post': {'views': [204]}
+2024-11-19 13:27:02,612 [DEBUG] py4...: ǀCalling layout_network(network=124)
+2024-11-19 13:27:02,612 [DEBUG] py4...: ǀǀCalling get_network_suid(124, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,612 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,613 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:27:02,638 [DEBUG] py4...: ǀǀǀOK[200], content: [124]
+2024-11-19 13:27:02,639 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [124]
+2024-11-19 13:27:02,639 [DEBUG] py4...: ǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:02,639 [DEBUG] py4...: ǀǀCalling commands_post('layout apply preferred networkSelected="SUID:124"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,640 [DEBUG] py4...: ǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/layout/apply%20preferred), json: {'networkSelected': 'SUID:124'}
+2024-11-19 13:27:02,722 [DEBUG] py4...: ǀǀOK[200], content: {
+ "data": {},
+ "errors":[]
+}
+2024-11-19 13:27:02,723 [DEBUG] py4...: ǀǀReturning 'commands_post': {}
+2024-11-19 13:27:02,723 [DEBUG] py4...: ǀReturning 'layout_network': {}
+2024-11-19 13:27:02,723 [DEBUG] py4...: Returning 'create_network_from_data_frames': 124
+2024-11-19 13:27:02,723 [DEBUG] py4...: --------------------
+2024-11-19 13:27:02,724 [DEBUG] py4...: Calling create_visual_style('AutoCD_Visualization_Style', defaults={'NODE_SHAPE': 'ellipse', 'NODE_SIZE': 35, 'NODE_FILL_COLOR': '#FDD49E'})
+2024-11-19 13:27:02,724 [DEBUG] py4...: ǀCalling cyrest_post('styles', body={'title': 'AutoCD_Visualization_Style', 'defaults': [{'visualProperty': 'NODE_SHAPE', 'value': 'ellipse'}, {'visualProperty': 'NODE_SIZE', 'value': 35}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#FDD49E'}], 'mappings': []}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,724 [DEBUG] py4...: ǀHTTP POST(http://127.0.0.1:1234/v1/styles), json: {'title': 'AutoCD_Visualization_Style', 'defaults': [{'visualProperty': 'NODE_SHAPE', 'value': 'ellipse'}, {'visualProperty': 'NODE_SIZE', 'value': 35}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#FDD49E'}], 'mappings': []}
+2024-11-19 13:27:02,768 [DEBUG] py4...: ǀCreated[201], content: {"title": "AutoCD_Visualization_Style"}
+2024-11-19 13:27:02,771 [DEBUG] py4...: ǀReturning 'cyrest_post': {'title': 'AutoCD_Visualization_Style'}
+2024-11-19 13:27:02,771 [DEBUG] py4...: Returning 'create_visual_style': {'title': 'AutoCD_Visualization_Style'}
+2024-11-19 13:27:02,771 [DEBUG] py4...: --------------------
+2024-11-19 13:27:02,771 [DEBUG] py4...: Calling set_visual_style('AutoCD_Visualization_Style')
+2024-11-19 13:27:02,772 [DEBUG] py4...: ǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,772 [DEBUG] py4...: ǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,776 [DEBUG] py4...: ǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:27:02,810 [DEBUG] py4...: ǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 124
+}
+],
+ "errors":[]
+}
+2024-11-19 13:27:02,811 [DEBUG] py4...: ǀǀReturning 'commands_post': [{'SUID': 124}]
+2024-11-19 13:27:02,811 [DEBUG] py4...: ǀReturning 'get_network_suid': 124
+2024-11-19 13:27:02,811 [DEBUG] py4...: ǀCalling get_visual_style_names(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,811 [DEBUG] py4...: ǀǀCalling cyrest_get('apply/styles', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,811 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/apply/styles)
+2024-11-19 13:27:02,825 [DEBUG] py4...: ǀǀOK[200], content: ["Gradient1","Sample1","BioPAX_SIF","Directed","BioPAX","default black","Sample3","AutoCD_Visualization_Style","Nested Network Style","Solid","Minimal","Sample2","size_rank","Ripple","Universe","default","Curved","Marquee","Big Labels"]
+2024-11-19 13:27:02,826 [DEBUG] py4...: ǀǀReturning 'cyrest_get': ['Gradient1', 'Sample1', 'BioPAX_SIF', 'Directed', 'BioPAX', 'default black', 'Sample3', 'AutoCD_Visualization_Style', 'Nested Network Style', 'Solid', 'Minimal', 'Sample2', 'size_rank', 'Ripple', 'Universe', 'default', 'Curved', 'Marquee', 'Big Labels']
+2024-11-19 13:27:02,826 [DEBUG] py4...: ǀReturning 'get_visual_style_names': ['Gradient1', 'Sample1', 'BioPAX_SIF', 'Directed', 'BioPAX', 'default black', 'Sample3', 'AutoCD_Visualization_Style', 'Nested Network Style', 'Solid', 'Minimal', 'Sample2', 'size_rank', 'Ripple', 'Universe', 'default', 'Curved', 'Marquee', 'Big Labels']
+2024-11-19 13:27:02,826 [DEBUG] py4...: ǀCalling cyrest_get('apply/styles/AutoCD_Visualization_Style/124', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:02,826 [DEBUG] py4...: ǀHTTP GET(http://127.0.0.1:1234/v1/apply/styles/AutoCD_Visualization_Style/124)
+2024-11-19 13:27:03,787 [DEBUG] py4...: ǀOK[200], content: {"message":"Visual Style applied."}
+2024-11-19 13:27:03,788 [DEBUG] py4...: ǀReturning 'cyrest_get': {'message': 'Visual Style applied.'}
+2024-11-19 13:27:03,788 [DEBUG] py4...: Returning 'set_visual_style': {'message': 'Visual Style applied.'}
+2024-11-19 13:27:03,788 [DEBUG] py4...: --------------------
+2024-11-19 13:27:03,788 [DEBUG] py4...: Calling set_edge_target_arrow_shape_mapping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['ARROW', 'CIRCLE', 'NONE', 'CIRCLE', 'NONE', 'ARROW', 'ARROW', 'CIRCLE', 'NONE'], style_name='AutoCD_Visualization_Style')
+2024-11-19 13:27:03,789 [DEBUG] py4...: ǀCalling set_edge_target_arrow_maping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['ARROW', 'CIRCLE', 'NONE', 'CIRCLE', 'NONE', 'ARROW', 'ARROW', 'CIRCLE', 'NONE'], default_shape=None, style_name='AutoCD_Visualization_Style', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,789 [DEBUG] py4...: ǀǀCalling get_table_column_names('edge', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,789 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,789 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,789 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:27:03,831 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 124
+}
+],
+ "errors":[]
+}
+2024-11-19 13:27:03,831 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 124}]
+2024-11-19 13:27:03,831 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:03,832 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,832 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:03,849 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:03,849 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:03,849 [DEBUG] py4...: ǀǀReturning 'get_table_column_names': ['SUID', 'shared name', 'shared interaction', 'name', 'selected', 'interaction', 'source', 'target', 'data.key.column', 'interaction_type']
+2024-11-19 13:27:03,850 [DEBUG] py4...: ǀǀCalling map_visual_property('EDGE_TARGET_ARROW_SHAPE', 'interaction_type', 'd', ['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], ['ARROW', 'CIRCLE', 'NONE', 'CIRCLE', 'NONE', 'ARROW', 'ARROW', 'CIRCLE', 'NONE'], network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,850 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,850 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,850 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:27:03,880 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 124
+}
+],
+ "errors":[]
+}
+2024-11-19 13:27:03,880 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 124}]
+2024-11-19 13:27:03,880 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:03,881 [DEBUG] py4...: ǀǀǀCalling get_visual_property_names(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,881 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('styles/default/defaults', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,881 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/default/defaults)
+2024-11-19 13:27:03,949 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+  "defaults" : [ {
+    "visualProperty" : "COMPOUND_NODE_PADDING",
+    "value" : 10.0
+  }, {
+    "visualProperty" : "COMPOUND_NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "DING_RENDERING_ENGINE_ROOT",
+    "value" : "org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6"
+  }, {
+    "visualProperty" : "EDGE",
+    "value" : "DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)"
+  }, {
+    "visualProperty" : "EDGE_BEND",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_CURVED",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_FACE",
+    "value" : "Dialog,plain,10"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_SIZE",
+    "value" : 10
+  }, {
+    "visualProperty" : "EDGE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "EDGE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "EDGE_LINE_TYPE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "EDGE_PAINT",
+    "value" : "#323232"
+  }, {
+    "visualProperty" : "EDGE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "EDGE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_STACKING",
+    "value" : "AUTO_BEND"
+  }, {
+    "visualProperty" : "EDGE_STACKING_DENSITY",
+    "value" : 0.5
+  }, {
+    "visualProperty" : "EDGE_STROKE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_STROKE_UNSELECTED_PAINT",
+    "value" : "#848484"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_UNSELECTED_PAINT",
+    "value" : "#404040"
+  }, {
+    "visualProperty" : "EDGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_WIDTH",
+    "value" : 2.0
+  }, {
+    "visualProperty" : "EDGE_Z_ORDER",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK",
+    "value" : "DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)"
+  }, {
+    "visualProperty" : "NETWORK_ANNOTATION_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_BACKGROUND_PAINT",
+    "value" : "#FFFFFF"
+  }, {
+    "visualProperty" : "NETWORK_CENTER_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Z_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_EDGE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_FORCE_HIGH_DETAIL",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_HEIGHT",
+    "value" : 400.0
+  }, {
+    "visualProperty" : "NETWORK_NODE_LABEL_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_NODE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_SCALE_FACTOR",
+    "value" : 1.0
+  }, {
+    "visualProperty" : "NETWORK_SIZE",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NETWORK_TITLE",
+    "value" : ""
+  }, {
+    "visualProperty" : "NETWORK_WIDTH",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NODE",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)"
+  }, {
+    "visualProperty" : "NODE_BORDER_PAINT",
+    "value" : "#CCCCCC"
+  }, {
+    "visualProperty" : "NODE_BORDER_STROKE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "NODE_BORDER_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_BORDER_WIDTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_1",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_2",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_3",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_4",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_5",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_6",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_7",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_8",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_9",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_1",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_2",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_3",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_4",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_5",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_6",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_7",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_8",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_9",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_1",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_2",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_3",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_4",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_5",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_6",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_7",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_8",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_9",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_1",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_2",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_3",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_4",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_5",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_6",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_7",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_8",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_9",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)"
+  }, {
+    "visualProperty" : "NODE_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_FILL_COLOR",
+    "value" : "#89D0F5"
+  }, {
+    "visualProperty" : "NODE_HEIGHT",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_FACE",
+    "value" : "SansSerif,plain,12"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_SIZE",
+    "value" : 12
+  }, {
+    "visualProperty" : "NODE_LABEL_POSITION",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "NODE_NESTED_NETWORK_IMAGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_PAINT",
+    "value" : "#1E90FF"
+  }, {
+    "visualProperty" : "NODE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "NODE_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "NODE_SIZE",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_WIDTH",
+    "value" : 75.0
+  }, {
+    "visualProperty" : "NODE_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Z_LOCATION",
+    "value" : 0.0
+  } ]
+}
+2024-11-19 13:27:03,950 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': {'defaults': [{'visualProperty': 'COMPOUND_NODE_PADDING', 'value': 10.0}, {'visualProperty': 'COMPOUND_NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'DING_RENDERING_ENGINE_ROOT', 'value': 'org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6'}, {'visualProperty': 'EDGE', 'value': 'DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)'}, {'visualProperty': 'EDGE_BEND', 'value': ''}, {'visualProperty': 'EDGE_CURVED', 'value': True}, {'visualProperty': 'EDGE_LABEL', 'value': ''}, {'visualProperty': 'EDGE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'EDGE_LABEL_FONT_FACE', 'value': 'Dialog,plain,10'}, {'visualProperty': 'EDGE_LABEL_FONT_SIZE', 'value': 10}, {'visualProperty': 'EDGE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'EDGE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'EDGE_LINE_TYPE', 'value': 'SOLID'}, {'visualProperty': 'EDGE_PAINT', 'value': '#323232'}, {'visualProperty': 'EDGE_SELECTED', 'value': False}, {'visualProperty': 'EDGE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_STACKING', 'value': 'AUTO_BEND'}, {'visualProperty': 'EDGE_STACKING_DENSITY', 'value': 0.5}, {'visualProperty': 'EDGE_STROKE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_STROKE_UNSELECTED_PAINT', 'value': '#848484'}, {'visualProperty': 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_TARGET_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_TOOLTIP', 'value': ''}, {'visualProperty': 'EDGE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_UNSELECTED_PAINT', 'value': '#404040'}, {'visualProperty': 'EDGE_VISIBLE', 'value': True}, {'visualProperty': 'EDGE_WIDTH', 'value': 2.0}, {'visualProperty': 'EDGE_Z_ORDER', 'value': 0.0}, {'visualProperty': 'NETWORK', 'value': 'DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)'}, {'visualProperty': 'NETWORK_ANNOTATION_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_BACKGROUND_PAINT', 'value': '#FFFFFF'}, {'visualProperty': 'NETWORK_CENTER_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Z_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_DEPTH', 'value': 0.0}, {'visualProperty': 'NETWORK_EDGE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_FORCE_HIGH_DETAIL', 'value': False}, {'visualProperty': 'NETWORK_HEIGHT', 'value': 400.0}, {'visualProperty': 'NETWORK_NODE_LABEL_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_NODE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_SCALE_FACTOR', 'value': 1.0}, {'visualProperty': 'NETWORK_SIZE', 'value': 550.0}, {'visualProperty': 'NETWORK_TITLE', 'value': ''}, {'visualProperty': 'NETWORK_WIDTH', 'value': 550.0}, {'visualProperty': 'NODE', 'value': 'DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)'}, {'visualProperty': 'NODE_BORDER_PAINT', 'value': '#CCCCCC'}, {'visualProperty': 'NODE_BORDER_STROKE', 'value': 'SOLID'}, {'visualProperty': 'NODE_BORDER_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_BORDER_WIDTH', 'value': 0.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_1', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_2', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_3', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_4', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_5', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_6', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_7', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_8', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_9', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_1', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_2', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_3', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_4', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_5', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_6', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_7', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_8', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_9', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_1', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_2', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_3', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_4', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_5', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_6', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_7', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_8', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_9', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMPAINT_1', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)'}, {'visualProperty': 'NODE_CUSTOMPAINT_2', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)'}, {'visualProperty': 'NODE_CUSTOMPAINT_3', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)'}, {'visualProperty': 'NODE_CUSTOMPAINT_4', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)'}, {'visualProperty': 'NODE_CUSTOMPAINT_5', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)'}, {'visualProperty': 'NODE_CUSTOMPAINT_6', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)'}, {'visualProperty': 'NODE_CUSTOMPAINT_7', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)'}, {'visualProperty': 'NODE_CUSTOMPAINT_8', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)'}, {'visualProperty': 'NODE_CUSTOMPAINT_9', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)'}, {'visualProperty': 'NODE_DEPTH', 'value': 0.0}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#89D0F5'}, {'visualProperty': 'NODE_HEIGHT', 'value': 35.0}, {'visualProperty': 'NODE_LABEL', 'value': ''}, {'visualProperty': 'NODE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'NODE_LABEL_FONT_FACE', 'value': 'SansSerif,plain,12'}, {'visualProperty': 'NODE_LABEL_FONT_SIZE', 'value': 12}, {'visualProperty': 'NODE_LABEL_POSITION', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'NODE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_PAINT', 'value': '#1E90FF'}, {'visualProperty': 'NODE_SELECTED', 'value': False}, {'visualProperty': 'NODE_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'NODE_SIZE', 'value': 35.0}, {'visualProperty': 'NODE_TOOLTIP', 'value': ''}, {'visualProperty': 'NODE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_WIDTH', 'value': 75.0}, {'visualProperty': 'NODE_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Z_LOCATION', 'value': 0.0}]}
+2024-11-19 13:27:03,952 [DEBUG] py4...: ǀǀǀReturning 'get_visual_property_names': ['COMPOUND_NODE_PADDING', 'COMPOUND_NODE_SHAPE', 'DING_RENDERING_ENGINE_ROOT', 'EDGE', 'EDGE_BEND', 'EDGE_CURVED', 'EDGE_LABEL', 'EDGE_LABEL_COLOR', 'EDGE_LABEL_FONT_FACE', 'EDGE_LABEL_FONT_SIZE', 'EDGE_LABEL_ROTATION', 'EDGE_LABEL_TRANSPARENCY', 'EDGE_LABEL_WIDTH', 'EDGE_LINE_TYPE', 'EDGE_PAINT', 'EDGE_SELECTED', 'EDGE_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SHAPE', 'EDGE_SOURCE_ARROW_SIZE', 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'EDGE_STACKING', 'EDGE_STACKING_DENSITY', 'EDGE_STROKE_SELECTED_PAINT', 'EDGE_STROKE_UNSELECTED_PAINT', 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'EDGE_TARGET_ARROW_SHAPE', 'EDGE_TARGET_ARROW_SIZE', 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'EDGE_TOOLTIP', 'EDGE_TRANSPARENCY', 'EDGE_UNSELECTED_PAINT', 'EDGE_VISIBLE', 'EDGE_WIDTH', 'EDGE_Z_ORDER', 'NETWORK', 'NETWORK_ANNOTATION_SELECTION', 'NETWORK_BACKGROUND_PAINT', 'NETWORK_CENTER_X_LOCATION', 'NETWORK_CENTER_Y_LOCATION', 'NETWORK_CENTER_Z_LOCATION', 'NETWORK_DEPTH', 'NETWORK_EDGE_SELECTION', 'NETWORK_FORCE_HIGH_DETAIL', 'NETWORK_HEIGHT', 'NETWORK_NODE_LABEL_SELECTION', 'NETWORK_NODE_SELECTION', 'NETWORK_SCALE_FACTOR', 'NETWORK_SIZE', 'NETWORK_TITLE', 'NETWORK_WIDTH', 'NODE', 'NODE_BORDER_PAINT', 'NODE_BORDER_STROKE', 'NODE_BORDER_TRANSPARENCY', 'NODE_BORDER_WIDTH', 'NODE_CUSTOMGRAPHICS_1', 'NODE_CUSTOMGRAPHICS_2', 'NODE_CUSTOMGRAPHICS_3', 'NODE_CUSTOMGRAPHICS_4', 'NODE_CUSTOMGRAPHICS_5', 'NODE_CUSTOMGRAPHICS_6', 'NODE_CUSTOMGRAPHICS_7', 'NODE_CUSTOMGRAPHICS_8', 'NODE_CUSTOMGRAPHICS_9', 'NODE_CUSTOMGRAPHICS_POSITION_1', 'NODE_CUSTOMGRAPHICS_POSITION_2', 'NODE_CUSTOMGRAPHICS_POSITION_3', 'NODE_CUSTOMGRAPHICS_POSITION_4', 'NODE_CUSTOMGRAPHICS_POSITION_5', 'NODE_CUSTOMGRAPHICS_POSITION_6', 'NODE_CUSTOMGRAPHICS_POSITION_7', 'NODE_CUSTOMGRAPHICS_POSITION_8', 'NODE_CUSTOMGRAPHICS_POSITION_9', 'NODE_CUSTOMGRAPHICS_SIZE_1', 'NODE_CUSTOMGRAPHICS_SIZE_2', 'NODE_CUSTOMGRAPHICS_SIZE_3', 'NODE_CUSTOMGRAPHICS_SIZE_4', 'NODE_CUSTOMGRAPHICS_SIZE_5', 'NODE_CUSTOMGRAPHICS_SIZE_6', 'NODE_CUSTOMGRAPHICS_SIZE_7', 'NODE_CUSTOMGRAPHICS_SIZE_8', 'NODE_CUSTOMGRAPHICS_SIZE_9', 'NODE_CUSTOMPAINT_1', 'NODE_CUSTOMPAINT_2', 'NODE_CUSTOMPAINT_3', 'NODE_CUSTOMPAINT_4', 'NODE_CUSTOMPAINT_5', 'NODE_CUSTOMPAINT_6', 'NODE_CUSTOMPAINT_7', 'NODE_CUSTOMPAINT_8', 'NODE_CUSTOMPAINT_9', 'NODE_DEPTH', 'NODE_FILL_COLOR', 'NODE_HEIGHT', 'NODE_LABEL', 'NODE_LABEL_COLOR', 'NODE_LABEL_FONT_FACE', 'NODE_LABEL_FONT_SIZE', 'NODE_LABEL_POSITION', 'NODE_LABEL_ROTATION', 'NODE_LABEL_TRANSPARENCY', 'NODE_LABEL_WIDTH', 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'NODE_PAINT', 'NODE_SELECTED', 'NODE_SELECTED_PAINT', 'NODE_SHAPE', 'NODE_SIZE', 'NODE_TOOLTIP', 'NODE_TRANSPARENCY', 'NODE_VISIBLE', 'NODE_WIDTH', 'NODE_X_LOCATION', 'NODE_Y_LOCATION', 'NODE_Z_LOCATION']
+2024-11-19 13:27:03,953 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,953 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:03,971 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:03,972 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:03,972 [DEBUG] py4...: ǀǀReturning 'map_visual_property': {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}
+2024-11-19 13:27:03,972 [DEBUG] py4...: ǀǀCalling update_style_mapping('AutoCD_Visualization_Style', {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,972 [DEBUG] py4...: ǀǀǀCalling cyrest_get('styles/AutoCD_Visualization_Style/mappings', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:03,973 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings)
+2024-11-19 13:27:03,982 [DEBUG] py4...: ǀǀǀOK[200], content: []
+2024-11-19 13:27:03,983 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': []
+2024-11-19 13:27:03,983 [DEBUG] py4...: ǀǀǀCalling cyrest_post('styles/AutoCD_Visualization_Style/mappings', body=[{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}], base_url='http://127.0.0.1:1234/v1', require_json=False)
+2024-11-19 13:27:03,983 [DEBUG] py4...: ǀǀǀHTTP POST(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings), json: [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}]
+2024-11-19 13:27:04,069 [DEBUG] py4...: ǀǀǀCreated[201], content: 
+2024-11-19 13:27:04,069 [DEBUG] py4...: ǀǀǀReturning 'cyrest_post': ''
+2024-11-19 13:27:04,070 [DEBUG] py4...: ǀǀReturning 'update_style_mapping': ''
+2024-11-19 13:27:04,070 [DEBUG] py4...: ǀReturning 'set_edge_target_arrow_maping': ''
+2024-11-19 13:27:04,070 [DEBUG] py4...: Returning 'set_edge_target_arrow_shape_mapping': ''
+2024-11-19 13:27:04,070 [DEBUG] py4...: --------------------
+2024-11-19 13:27:04,071 [DEBUG] py4...: Calling set_edge_source_arrow_shape_mapping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['CIRCLE', 'ARROW', 'CIRCLE', 'NONE', 'ARROW', 'NONE', 'ARROW', 'CIRCLE', 'NONE'], style_name='AutoCD_Visualization_Style')
+2024-11-19 13:27:04,071 [DEBUG] py4...: ǀCalling set_edge_source_arrow_mapping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['CIRCLE', 'ARROW', 'CIRCLE', 'NONE', 'ARROW', 'NONE', 'ARROW', 'CIRCLE', 'NONE'], default_shape=None, style_name='AutoCD_Visualization_Style', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,071 [DEBUG] py4...: ǀǀCalling get_table_column_names('edge', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,071 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,072 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,072 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:27:04,102 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 124
+}
+],
+ "errors":[]
+}
+2024-11-19 13:27:04,103 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 124}]
+2024-11-19 13:27:04,103 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:04,103 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,104 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:04,133 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:04,136 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:04,140 [DEBUG] py4...: ǀǀReturning 'get_table_column_names': ['SUID', 'shared name', 'shared interaction', 'name', 'selected', 'interaction', 'source', 'target', 'data.key.column', 'interaction_type']
+2024-11-19 13:27:04,140 [DEBUG] py4...: ǀǀCalling map_visual_property('EDGE_SOURCE_ARROW_SHAPE', 'interaction_type', 'd', ['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], ['CIRCLE', 'ARROW', 'CIRCLE', 'NONE', 'ARROW', 'NONE', 'ARROW', 'CIRCLE', 'NONE'], network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,141 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,141 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,141 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:27:04,173 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 124
+}
+],
+ "errors":[]
+}
+2024-11-19 13:27:04,174 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 124}]
+2024-11-19 13:27:04,174 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 124
+2024-11-19 13:27:04,174 [DEBUG] py4...: ǀǀǀCalling get_visual_property_names(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,174 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('styles/default/defaults', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,174 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/default/defaults)
+2024-11-19 13:27:04,202 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+  "defaults" : [ {
+    "visualProperty" : "COMPOUND_NODE_PADDING",
+    "value" : 10.0
+  }, {
+    "visualProperty" : "COMPOUND_NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "DING_RENDERING_ENGINE_ROOT",
+    "value" : "org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6"
+  }, {
+    "visualProperty" : "EDGE",
+    "value" : "DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)"
+  }, {
+    "visualProperty" : "EDGE_BEND",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_CURVED",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_FACE",
+    "value" : "Dialog,plain,10"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_SIZE",
+    "value" : 10
+  }, {
+    "visualProperty" : "EDGE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "EDGE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "EDGE_LINE_TYPE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "EDGE_PAINT",
+    "value" : "#323232"
+  }, {
+    "visualProperty" : "EDGE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "EDGE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_STACKING",
+    "value" : "AUTO_BEND"
+  }, {
+    "visualProperty" : "EDGE_STACKING_DENSITY",
+    "value" : 0.5
+  }, {
+    "visualProperty" : "EDGE_STROKE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_STROKE_UNSELECTED_PAINT",
+    "value" : "#848484"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_UNSELECTED_PAINT",
+    "value" : "#404040"
+  }, {
+    "visualProperty" : "EDGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_WIDTH",
+    "value" : 2.0
+  }, {
+    "visualProperty" : "EDGE_Z_ORDER",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK",
+    "value" : "DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)"
+  }, {
+    "visualProperty" : "NETWORK_ANNOTATION_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_BACKGROUND_PAINT",
+    "value" : "#FFFFFF"
+  }, {
+    "visualProperty" : "NETWORK_CENTER_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Z_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_EDGE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_FORCE_HIGH_DETAIL",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_HEIGHT",
+    "value" : 400.0
+  }, {
+    "visualProperty" : "NETWORK_NODE_LABEL_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_NODE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_SCALE_FACTOR",
+    "value" : 1.0
+  }, {
+    "visualProperty" : "NETWORK_SIZE",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NETWORK_TITLE",
+    "value" : ""
+  }, {
+    "visualProperty" : "NETWORK_WIDTH",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NODE",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)"
+  }, {
+    "visualProperty" : "NODE_BORDER_PAINT",
+    "value" : "#CCCCCC"
+  }, {
+    "visualProperty" : "NODE_BORDER_STROKE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "NODE_BORDER_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_BORDER_WIDTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_1",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_2",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_3",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_4",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_5",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_6",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_7",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_8",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_9",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_1",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_2",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_3",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_4",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_5",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_6",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_7",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_8",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_9",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_1",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_2",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_3",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_4",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_5",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_6",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_7",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_8",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_9",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_1",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_2",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_3",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_4",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_5",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_6",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_7",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_8",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_9",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)"
+  }, {
+    "visualProperty" : "NODE_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_FILL_COLOR",
+    "value" : "#89D0F5"
+  }, {
+    "visualProperty" : "NODE_HEIGHT",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_FACE",
+    "value" : "SansSerif,plain,12"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_SIZE",
+    "value" : 12
+  }, {
+    "visualProperty" : "NODE_LABEL_POSITION",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "NODE_NESTED_NETWORK_IMAGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_PAINT",
+    "value" : "#1E90FF"
+  }, {
+    "visualProperty" : "NODE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "NODE_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "NODE_SIZE",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_WIDTH",
+    "value" : 75.0
+  }, {
+    "visualProperty" : "NODE_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Z_LOCATION",
+    "value" : 0.0
+  } ]
+}
+2024-11-19 13:27:04,204 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': {'defaults': [{'visualProperty': 'COMPOUND_NODE_PADDING', 'value': 10.0}, {'visualProperty': 'COMPOUND_NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'DING_RENDERING_ENGINE_ROOT', 'value': 'org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6'}, {'visualProperty': 'EDGE', 'value': 'DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)'}, {'visualProperty': 'EDGE_BEND', 'value': ''}, {'visualProperty': 'EDGE_CURVED', 'value': True}, {'visualProperty': 'EDGE_LABEL', 'value': ''}, {'visualProperty': 'EDGE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'EDGE_LABEL_FONT_FACE', 'value': 'Dialog,plain,10'}, {'visualProperty': 'EDGE_LABEL_FONT_SIZE', 'value': 10}, {'visualProperty': 'EDGE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'EDGE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'EDGE_LINE_TYPE', 'value': 'SOLID'}, {'visualProperty': 'EDGE_PAINT', 'value': '#323232'}, {'visualProperty': 'EDGE_SELECTED', 'value': False}, {'visualProperty': 'EDGE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_STACKING', 'value': 'AUTO_BEND'}, {'visualProperty': 'EDGE_STACKING_DENSITY', 'value': 0.5}, {'visualProperty': 'EDGE_STROKE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_STROKE_UNSELECTED_PAINT', 'value': '#848484'}, {'visualProperty': 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_TARGET_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_TOOLTIP', 'value': ''}, {'visualProperty': 'EDGE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_UNSELECTED_PAINT', 'value': '#404040'}, {'visualProperty': 'EDGE_VISIBLE', 'value': True}, {'visualProperty': 'EDGE_WIDTH', 'value': 2.0}, {'visualProperty': 'EDGE_Z_ORDER', 'value': 0.0}, {'visualProperty': 'NETWORK', 'value': 'DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)'}, {'visualProperty': 'NETWORK_ANNOTATION_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_BACKGROUND_PAINT', 'value': '#FFFFFF'}, {'visualProperty': 'NETWORK_CENTER_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Z_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_DEPTH', 'value': 0.0}, {'visualProperty': 'NETWORK_EDGE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_FORCE_HIGH_DETAIL', 'value': False}, {'visualProperty': 'NETWORK_HEIGHT', 'value': 400.0}, {'visualProperty': 'NETWORK_NODE_LABEL_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_NODE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_SCALE_FACTOR', 'value': 1.0}, {'visualProperty': 'NETWORK_SIZE', 'value': 550.0}, {'visualProperty': 'NETWORK_TITLE', 'value': ''}, {'visualProperty': 'NETWORK_WIDTH', 'value': 550.0}, {'visualProperty': 'NODE', 'value': 'DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)'}, {'visualProperty': 'NODE_BORDER_PAINT', 'value': '#CCCCCC'}, {'visualProperty': 'NODE_BORDER_STROKE', 'value': 'SOLID'}, {'visualProperty': 'NODE_BORDER_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_BORDER_WIDTH', 'value': 0.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_1', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_2', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_3', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_4', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_5', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_6', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_7', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_8', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_9', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_1', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_2', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_3', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_4', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_5', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_6', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_7', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_8', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_9', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_1', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_2', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_3', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_4', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_5', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_6', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_7', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_8', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_9', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMPAINT_1', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)'}, {'visualProperty': 'NODE_CUSTOMPAINT_2', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)'}, {'visualProperty': 'NODE_CUSTOMPAINT_3', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)'}, {'visualProperty': 'NODE_CUSTOMPAINT_4', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)'}, {'visualProperty': 'NODE_CUSTOMPAINT_5', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)'}, {'visualProperty': 'NODE_CUSTOMPAINT_6', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)'}, {'visualProperty': 'NODE_CUSTOMPAINT_7', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)'}, {'visualProperty': 'NODE_CUSTOMPAINT_8', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)'}, {'visualProperty': 'NODE_CUSTOMPAINT_9', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)'}, {'visualProperty': 'NODE_DEPTH', 'value': 0.0}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#89D0F5'}, {'visualProperty': 'NODE_HEIGHT', 'value': 35.0}, {'visualProperty': 'NODE_LABEL', 'value': ''}, {'visualProperty': 'NODE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'NODE_LABEL_FONT_FACE', 'value': 'SansSerif,plain,12'}, {'visualProperty': 'NODE_LABEL_FONT_SIZE', 'value': 12}, {'visualProperty': 'NODE_LABEL_POSITION', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'NODE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_PAINT', 'value': '#1E90FF'}, {'visualProperty': 'NODE_SELECTED', 'value': False}, {'visualProperty': 'NODE_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'NODE_SIZE', 'value': 35.0}, {'visualProperty': 'NODE_TOOLTIP', 'value': ''}, {'visualProperty': 'NODE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_WIDTH', 'value': 75.0}, {'visualProperty': 'NODE_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Z_LOCATION', 'value': 0.0}]}
+2024-11-19 13:27:04,206 [DEBUG] py4...: ǀǀǀReturning 'get_visual_property_names': ['COMPOUND_NODE_PADDING', 'COMPOUND_NODE_SHAPE', 'DING_RENDERING_ENGINE_ROOT', 'EDGE', 'EDGE_BEND', 'EDGE_CURVED', 'EDGE_LABEL', 'EDGE_LABEL_COLOR', 'EDGE_LABEL_FONT_FACE', 'EDGE_LABEL_FONT_SIZE', 'EDGE_LABEL_ROTATION', 'EDGE_LABEL_TRANSPARENCY', 'EDGE_LABEL_WIDTH', 'EDGE_LINE_TYPE', 'EDGE_PAINT', 'EDGE_SELECTED', 'EDGE_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SHAPE', 'EDGE_SOURCE_ARROW_SIZE', 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'EDGE_STACKING', 'EDGE_STACKING_DENSITY', 'EDGE_STROKE_SELECTED_PAINT', 'EDGE_STROKE_UNSELECTED_PAINT', 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'EDGE_TARGET_ARROW_SHAPE', 'EDGE_TARGET_ARROW_SIZE', 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'EDGE_TOOLTIP', 'EDGE_TRANSPARENCY', 'EDGE_UNSELECTED_PAINT', 'EDGE_VISIBLE', 'EDGE_WIDTH', 'EDGE_Z_ORDER', 'NETWORK', 'NETWORK_ANNOTATION_SELECTION', 'NETWORK_BACKGROUND_PAINT', 'NETWORK_CENTER_X_LOCATION', 'NETWORK_CENTER_Y_LOCATION', 'NETWORK_CENTER_Z_LOCATION', 'NETWORK_DEPTH', 'NETWORK_EDGE_SELECTION', 'NETWORK_FORCE_HIGH_DETAIL', 'NETWORK_HEIGHT', 'NETWORK_NODE_LABEL_SELECTION', 'NETWORK_NODE_SELECTION', 'NETWORK_SCALE_FACTOR', 'NETWORK_SIZE', 'NETWORK_TITLE', 'NETWORK_WIDTH', 'NODE', 'NODE_BORDER_PAINT', 'NODE_BORDER_STROKE', 'NODE_BORDER_TRANSPARENCY', 'NODE_BORDER_WIDTH', 'NODE_CUSTOMGRAPHICS_1', 'NODE_CUSTOMGRAPHICS_2', 'NODE_CUSTOMGRAPHICS_3', 'NODE_CUSTOMGRAPHICS_4', 'NODE_CUSTOMGRAPHICS_5', 'NODE_CUSTOMGRAPHICS_6', 'NODE_CUSTOMGRAPHICS_7', 'NODE_CUSTOMGRAPHICS_8', 'NODE_CUSTOMGRAPHICS_9', 'NODE_CUSTOMGRAPHICS_POSITION_1', 'NODE_CUSTOMGRAPHICS_POSITION_2', 'NODE_CUSTOMGRAPHICS_POSITION_3', 'NODE_CUSTOMGRAPHICS_POSITION_4', 'NODE_CUSTOMGRAPHICS_POSITION_5', 'NODE_CUSTOMGRAPHICS_POSITION_6', 'NODE_CUSTOMGRAPHICS_POSITION_7', 'NODE_CUSTOMGRAPHICS_POSITION_8', 'NODE_CUSTOMGRAPHICS_POSITION_9', 'NODE_CUSTOMGRAPHICS_SIZE_1', 'NODE_CUSTOMGRAPHICS_SIZE_2', 'NODE_CUSTOMGRAPHICS_SIZE_3', 'NODE_CUSTOMGRAPHICS_SIZE_4', 'NODE_CUSTOMGRAPHICS_SIZE_5', 'NODE_CUSTOMGRAPHICS_SIZE_6', 'NODE_CUSTOMGRAPHICS_SIZE_7', 'NODE_CUSTOMGRAPHICS_SIZE_8', 'NODE_CUSTOMGRAPHICS_SIZE_9', 'NODE_CUSTOMPAINT_1', 'NODE_CUSTOMPAINT_2', 'NODE_CUSTOMPAINT_3', 'NODE_CUSTOMPAINT_4', 'NODE_CUSTOMPAINT_5', 'NODE_CUSTOMPAINT_6', 'NODE_CUSTOMPAINT_7', 'NODE_CUSTOMPAINT_8', 'NODE_CUSTOMPAINT_9', 'NODE_DEPTH', 'NODE_FILL_COLOR', 'NODE_HEIGHT', 'NODE_LABEL', 'NODE_LABEL_COLOR', 'NODE_LABEL_FONT_FACE', 'NODE_LABEL_FONT_SIZE', 'NODE_LABEL_POSITION', 'NODE_LABEL_ROTATION', 'NODE_LABEL_TRANSPARENCY', 'NODE_LABEL_WIDTH', 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'NODE_PAINT', 'NODE_SELECTED', 'NODE_SELECTED_PAINT', 'NODE_SHAPE', 'NODE_SIZE', 'NODE_TOOLTIP', 'NODE_TRANSPARENCY', 'NODE_VISIBLE', 'NODE_WIDTH', 'NODE_X_LOCATION', 'NODE_Y_LOCATION', 'NODE_Z_LOCATION']
+2024-11-19 13:27:04,206 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/124/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,207 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/124/tables/defaultedge/columns)
+2024-11-19 13:27:04,223 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false}]
+2024-11-19 13:27:04,224 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}]
+2024-11-19 13:27:04,224 [DEBUG] py4...: ǀǀReturning 'map_visual_property': {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}
+2024-11-19 13:27:04,224 [DEBUG] py4...: ǀǀCalling update_style_mapping('AutoCD_Visualization_Style', {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,224 [DEBUG] py4...: ǀǀǀCalling cyrest_get('styles/AutoCD_Visualization_Style/mappings', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:27:04,224 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings)
+2024-11-19 13:27:04,256 [DEBUG] py4...: ǀǀǀOK[200], content: [ {
+  "mappingType" : "discrete",
+  "mappingColumn" : "interaction_type",
+  "mappingColumnType" : "String",
+  "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+  "map" : [ {
+    "key" : "Circle-Arrow",
+    "value" : "ARROW"
+  }, {
+    "key" : "Tail-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Tail-Arrow",
+    "value" : "ARROW"
+  }, {
+    "key" : "Tail-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Arrow-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Arrow",
+    "value" : "ARROW"
+  } ]
+} ]
+2024-11-19 13:27:04,256 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Tail-Tail', 'value': 'NONE'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}]}]
+2024-11-19 13:27:04,257 [DEBUG] py4...: ǀǀǀCalling cyrest_post('styles/AutoCD_Visualization_Style/mappings', body=[{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}], base_url='http://127.0.0.1:1234/v1', require_json=False)
+2024-11-19 13:27:04,257 [DEBUG] py4...: ǀǀǀHTTP POST(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings), json: [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}]
+2024-11-19 13:27:04,337 [DEBUG] py4...: ǀǀǀCreated[201], content: 
+2024-11-19 13:27:04,338 [DEBUG] py4...: ǀǀǀReturning 'cyrest_post': ''
+2024-11-19 13:27:04,338 [DEBUG] py4...: ǀǀReturning 'update_style_mapping': ''
+2024-11-19 13:27:04,338 [DEBUG] py4...: ǀReturning 'set_edge_source_arrow_mapping': ''
+2024-11-19 13:27:04,339 [DEBUG] py4...: Returning 'set_edge_source_arrow_shape_mapping': ''
+2024-11-19 13:27:04,339 [DEBUG] py4...: --------------------
+2024-11-19 13:40:45,659 [DEBUG] py4...: Calling cytoscape_ping()
+2024-11-19 13:40:45,664 [DEBUG] py4...: ǀCalling cytoscape_version_info(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:45,664 [DEBUG] py4...: ǀǀCalling cyrest_get('version', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:45,664 [DEBUG] py4...: Attempting to direct connect to Cytoscape on http://127.0.0.1:1234/v1
+2024-11-19 13:40:45,823 [DEBUG] py4...: Detected py4cytoscape running on Cytoscape workstation
+2024-11-19 13:40:45,823 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/version)
+2024-11-19 13:40:45,856 [DEBUG] py4...: ǀǀOK[200], content: {"apiVersion":"v1","cytoscapeVersion":"3.9.1"}
+2024-11-19 13:40:45,857 [DEBUG] py4...: ǀǀReturning 'cyrest_get': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1'}
+2024-11-19 13:40:45,857 [DEBUG] py4...: ǀReturning 'cytoscape_version_info': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1', 'automationAPIVersion': '1.6.0', 'py4cytoscapeVersion': '1.5.0'}
+2024-11-19 13:40:45,857 [DEBUG] py4...: Returning 'cytoscape_ping': 'You are connected to Cytoscape!'
+2024-11-19 13:40:45,857 [DEBUG] py4...: --------------------
+2024-11-19 13:40:45,857 [DEBUG] py4...: Calling cytoscape_version_info()
+2024-11-19 13:40:45,857 [DEBUG] py4...: ǀCalling cyrest_get('version', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:45,857 [DEBUG] py4...: ǀHTTP GET(http://127.0.0.1:1234/v1/version)
+2024-11-19 13:40:45,876 [DEBUG] py4...: ǀOK[200], content: {"apiVersion":"v1","cytoscapeVersion":"3.9.1"}
+2024-11-19 13:40:45,876 [DEBUG] py4...: ǀReturning 'cyrest_get': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1'}
+2024-11-19 13:40:45,876 [DEBUG] py4...: Returning 'cytoscape_version_info': {'apiVersion': 'v1', 'cytoscapeVersion': '3.9.1', 'automationAPIVersion': '1.6.0', 'py4cytoscapeVersion': '1.5.0'}
+2024-11-19 13:40:45,876 [DEBUG] py4...: --------------------
+2024-11-19 13:40:45,881 [DEBUG] py4...: Calling create_network_from_data_frames(edges=     source    target interaction_type
+0  feature2    target     Circle-Arrow
+1  feature2  feature1    Circle-Circle
+2    target  feature1     Arrow-Circle, title='Collection', collection='Graph')
+2024-11-19 13:40:45,884 [DEBUG] py4...: ǀCalling cyrest_post('networks', parameters={'title': 'Collection', 'collection': 'Graph'}, body={'data': [{'name': 'Collection'}], 'elements': {'nodes': [{'data': {'id': 'feature2'}}, {'data': {'id': 'target'}}, {'data': {'id': 'feature2'}}, {'data': {'id': 'feature1'}}, {'data': {'id': 'target'}}, {'data': {'id': 'feature1'}}], 'edges': [{'data': {'name': 'feature2 (interacts with) target', 'source': 'feature2', 'target': 'target', 'interaction': 'interacts with'}}, {'data': {'name': 'feature2 (interacts with) feature1', 'source': 'feature2', 'target': 'feature1', 'interaction': 'interacts with'}}, {'data': {'name': 'target (interacts with) feature1', 'source': 'target', 'target': 'feature1', 'interaction': 'interacts with'}}]}}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:45,884 [DEBUG] py4...: ǀHTTP POST(http://127.0.0.1:1234/v1/networks), params: {'title': 'Collection', 'collection': 'Graph'}, json: {'data': [{'name': 'Collection'}], 'elements': {'nodes': [{'data': {'id': 'feature2'}}, {'data': {'id': 'target'}}, {'data': {'id': 'feature2'}}, {'data': {'id': 'feature1'}}, {'data': {'id': 'target'}}, {'data': {'id': 'feature1'}}], 'edges': [{'data': {'name': 'feature2 (interacts with) target', 'source': 'feature2', 'target': 'target', 'interaction': 'interacts with'}}, {'data': {'name': 'feature2 (interacts with) feature1', 'source': 'feature2', 'target': 'feature1', 'interaction': 'interacts with'}}, {'data': {'name': 'target (interacts with) feature1', 'source': 'target', 'target': 'feature1', 'interaction': 'interacts with'}}]}}
+2024-11-19 13:40:46,728 [DEBUG] py4...: ǀOK[200], content: {"networkSUID":224}
+2024-11-19 13:40:46,728 [DEBUG] py4...: ǀReturning 'cyrest_post': {'networkSUID': 224}
+2024-11-19 13:40:46,729 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,729 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,729 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,745 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,746 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,746 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,746 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,747 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,747 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,767 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,767 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,767 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,767 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,767 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,767 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,785 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,785 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,785 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,786 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,786 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,786 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,837 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,838 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,838 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,838 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,838 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,838 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,851 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,852 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,852 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,852 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,853 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,853 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,868 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,869 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,869 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,870 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,870 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,870 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,888 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,889 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,889 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,889 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,889 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,889 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,906 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,907 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,907 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,907 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,907 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,908 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,919 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,920 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,920 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,920 [DEBUG] py4...: ǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,921 [DEBUG] py4...: ǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,921 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,941 [DEBUG] py4...: ǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,942 [DEBUG] py4...: ǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,942 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,944 [DEBUG] py4...: ǀCalling get_table_columns('edge', ['name'], 'default', 224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,944 [DEBUG] py4...: ǀǀCalling get_network_suid(224, 'http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,944 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,944 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,956 [DEBUG] py4...: ǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,956 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,956 [DEBUG] py4...: ǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,957 [DEBUG] py4...: ǀǀCalling get_table_column_types('edge', namespace='default', network=224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,957 [DEBUG] py4...: ǀǀǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,957 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,957 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:46,975 [DEBUG] py4...: ǀǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:46,975 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:46,976 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:46,976 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,976 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:46,992 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:46,992 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:46,993 [DEBUG] py4...: ǀǀReturning 'get_table_column_types': {'SUID': 'Long', 'shared name': 'String', 'shared interaction': 'String', 'source': 'String', 'target': 'String', 'data.key.column': 'Integer', 'interaction_type': 'String', 'name': 'String', 'selected': 'Boolean', 'interaction': 'String'}
+2024-11-19 13:40:46,993 [DEBUG] py4...: ǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns/SUID', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:46,993 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns/SUID)
+2024-11-19 13:40:47,004 [DEBUG] py4...: ǀǀOK[200], content: {"name":"SUID","values":[265,268,271]}
+2024-11-19 13:40:47,004 [DEBUG] py4...: ǀǀReturning 'cyrest_get': {'name': 'SUID', 'values': [265, 268, 271]}
+2024-11-19 13:40:47,006 [DEBUG] py4...: ǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns/name', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,006 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns/name)
+2024-11-19 13:40:47,015 [DEBUG] py4...: ǀǀOK[200], content: {"name":"name","values":["feature2 (interacts with) target","feature2 (interacts with) feature1","target (interacts with) feature1"]}
+2024-11-19 13:40:47,015 [DEBUG] py4...: ǀǀReturning 'cyrest_get': {'name': 'name', 'values': ['feature2 (interacts with) target', 'feature2 (interacts with) feature1', 'target (interacts with) feature1']}
+2024-11-19 13:40:47,018 [DEBUG] py4...: ǀReturning 'get_table_columns':                                    name
+265    feature2 (interacts with) target
+268  feature2 (interacts with) feature1
+271    target (interacts with) feature1
+2024-11-19 13:40:47,023 [DEBUG] py4...: ǀCalling load_table_data(     source    target interaction_type     interaction                                name  data.key.column
+0  feature2    target     Circle-Arrow  interacts with    feature2 (interacts with) target              265
+1  feature2  feature1    Circle-Circle  interacts with  feature2 (interacts with) feature1              268
+2    target  feature1     Arrow-Circle  interacts with    target (interacts with) feature1              271, data_key_column='data.key.column', table='edge', table_key_column='SUID', network=224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,023 [DEBUG] py4...: ǀǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,023 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,023 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:47,037 [DEBUG] py4...: ǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:47,038 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:47,038 [DEBUG] py4...: ǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:47,038 [DEBUG] py4...: ǀǀCalling get_table_columns(table='edge', namespace='default', columns='SUID', network=224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,038 [DEBUG] py4...: ǀǀǀCalling get_network_suid(224, 'http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,038 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,038 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀCalling get_table_column_types('edge', namespace='default', network=224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,054 [DEBUG] py4...: ǀǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:47,066 [DEBUG] py4...: ǀǀǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:47,067 [DEBUG] py4...: ǀǀǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:47,067 [DEBUG] py4...: ǀǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:47,067 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,067 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:47,083 [DEBUG] py4...: ǀǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:47,083 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:47,083 [DEBUG] py4...: ǀǀǀReturning 'get_table_column_types': {'SUID': 'Long', 'shared name': 'String', 'shared interaction': 'String', 'source': 'String', 'target': 'String', 'data.key.column': 'Integer', 'interaction_type': 'String', 'name': 'String', 'selected': 'Boolean', 'interaction': 'String'}
+2024-11-19 13:40:47,084 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns/SUID', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,084 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns/SUID)
+2024-11-19 13:40:47,098 [DEBUG] py4...: ǀǀǀOK[200], content: {"name":"SUID","values":[265,268,271]}
+2024-11-19 13:40:47,098 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': {'name': 'SUID', 'values': [265, 268, 271]}
+2024-11-19 13:40:47,100 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns/SUID', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,100 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns/SUID)
+2024-11-19 13:40:47,117 [DEBUG] py4...: ǀǀǀOK[200], content: {"name":"SUID","values":[265,268,271]}
+2024-11-19 13:40:47,117 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': {'name': 'SUID', 'values': [265, 268, 271]}
+2024-11-19 13:40:47,119 [DEBUG] py4...: ǀǀReturning 'get_table_columns':     SUID
+265  265
+268  268
+271  271
+2024-11-19 13:40:47,123 [DEBUG] py4...: ǀǀCalling get_table_column_names('edge', 'default', 224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,123 [DEBUG] py4...: ǀǀǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,124 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,124 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:47,136 [DEBUG] py4...: ǀǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:47,136 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:47,136 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:47,136 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,136 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:47,145 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:47,145 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:47,145 [DEBUG] py4...: ǀǀReturning 'get_table_column_names': ['SUID', 'shared name', 'shared interaction', 'source', 'target', 'data.key.column', 'interaction_type', 'name', 'selected', 'interaction']
+2024-11-19 13:40:47,146 [DEBUG] py4...: ǀǀCalling cyrest_put('networks/224/tables/defaultedge', body={'key': 'SUID', 'dataKey': 'data.key.column', 'data': [{'source': 'feature2', 'target': 'target', 'interaction_type': 'Circle-Arrow', 'interaction': 'interacts with', 'name': 'feature2 (interacts with) target', 'data.key.column': 265}, {'source': 'feature2', 'target': 'feature1', 'interaction_type': 'Circle-Circle', 'interaction': 'interacts with', 'name': 'feature2 (interacts with) feature1', 'data.key.column': 268}, {'source': 'target', 'target': 'feature1', 'interaction_type': 'Arrow-Circle', 'interaction': 'interacts with', 'name': 'target (interacts with) feature1', 'data.key.column': 271}]}, require_json=False, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,146 [DEBUG] py4...: ǀǀHTTP PUT(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge), json: {'key': 'SUID', 'dataKey': 'data.key.column', 'data': [{'source': 'feature2', 'target': 'target', 'interaction_type': 'Circle-Arrow', 'interaction': 'interacts with', 'name': 'feature2 (interacts with) target', 'data.key.column': 265}, {'source': 'feature2', 'target': 'feature1', 'interaction_type': 'Circle-Circle', 'interaction': 'interacts with', 'name': 'feature2 (interacts with) feature1', 'data.key.column': 268}, {'source': 'target', 'target': 'feature1', 'interaction_type': 'Arrow-Circle', 'interaction': 'interacts with', 'name': 'target (interacts with) feature1', 'data.key.column': 271}]}
+2024-11-19 13:40:47,172 [DEBUG] py4...: ǀǀOK[200], content: 
+2024-11-19 13:40:47,173 [DEBUG] py4...: ǀǀReturning 'cyrest_put': ''
+2024-11-19 13:40:47,173 [DEBUG] py4...: ǀReturning 'load_table_data': 'Success: Data loaded in defaultedge table'
+2024-11-19 13:40:47,173 [DEBUG] py4...: ǀCalling commands_post('vizmap apply styles="default"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,173 [DEBUG] py4...: ǀHTTP POST(http://127.0.0.1:1234/v1/commands/vizmap/apply), json: {'styles': 'default'}
+2024-11-19 13:40:47,770 [DEBUG] py4...: ǀOK[200], content: {
+ "data": {"views":[
+  306
+]},
+ "errors":[]
+}
+2024-11-19 13:40:47,771 [DEBUG] py4...: ǀReturning 'commands_post': {'views': [306]}
+2024-11-19 13:40:47,771 [DEBUG] py4...: ǀCalling layout_network(network=224)
+2024-11-19 13:40:47,771 [DEBUG] py4...: ǀǀCalling get_network_suid(224, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,771 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,771 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks)
+2024-11-19 13:40:47,782 [DEBUG] py4...: ǀǀǀOK[200], content: [224,124]
+2024-11-19 13:40:47,783 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [224, 124]
+2024-11-19 13:40:47,783 [DEBUG] py4...: ǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:47,784 [DEBUG] py4...: ǀǀCalling commands_post('layout apply preferred networkSelected="SUID:224"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,784 [DEBUG] py4...: ǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/layout/apply%20preferred), json: {'networkSelected': 'SUID:224'}
+2024-11-19 13:40:47,816 [DEBUG] py4...: ǀǀOK[200], content: {
+ "data": {},
+ "errors":[]
+}
+2024-11-19 13:40:47,816 [DEBUG] py4...: ǀǀReturning 'commands_post': {}
+2024-11-19 13:40:47,816 [DEBUG] py4...: ǀReturning 'layout_network': {}
+2024-11-19 13:40:47,816 [DEBUG] py4...: Returning 'create_network_from_data_frames': 224
+2024-11-19 13:40:47,816 [DEBUG] py4...: --------------------
+2024-11-19 13:40:47,816 [DEBUG] py4...: Calling create_visual_style('AutoCD_Visualization_Style', defaults={'NODE_SHAPE': 'ellipse', 'NODE_SIZE': 35, 'NODE_FILL_COLOR': '#FDD49E'})
+2024-11-19 13:40:47,816 [DEBUG] py4...: ǀCalling cyrest_post('styles', body={'title': 'AutoCD_Visualization_Style', 'defaults': [{'visualProperty': 'NODE_SHAPE', 'value': 'ellipse'}, {'visualProperty': 'NODE_SIZE', 'value': 35}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#FDD49E'}], 'mappings': []}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,816 [DEBUG] py4...: ǀHTTP POST(http://127.0.0.1:1234/v1/styles), json: {'title': 'AutoCD_Visualization_Style', 'defaults': [{'visualProperty': 'NODE_SHAPE', 'value': 'ellipse'}, {'visualProperty': 'NODE_SIZE', 'value': 35}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#FDD49E'}], 'mappings': []}
+2024-11-19 13:40:47,840 [DEBUG] py4...: ǀCreated[201], content: {"title": "AutoCD_Visualization_Style_0"}
+2024-11-19 13:40:47,841 [DEBUG] py4...: ǀReturning 'cyrest_post': {'title': 'AutoCD_Visualization_Style_0'}
+2024-11-19 13:40:47,841 [DEBUG] py4...: Returning 'create_visual_style': {'title': 'AutoCD_Visualization_Style_0'}
+2024-11-19 13:40:47,841 [DEBUG] py4...: --------------------
+2024-11-19 13:40:47,841 [DEBUG] py4...: Calling set_visual_style('AutoCD_Visualization_Style')
+2024-11-19 13:40:47,841 [DEBUG] py4...: ǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,842 [DEBUG] py4...: ǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,842 [DEBUG] py4...: ǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:40:47,862 [DEBUG] py4...: ǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 224
+}
+],
+ "errors":[]
+}
+2024-11-19 13:40:47,863 [DEBUG] py4...: ǀǀReturning 'commands_post': [{'SUID': 224}]
+2024-11-19 13:40:47,863 [DEBUG] py4...: ǀReturning 'get_network_suid': 224
+2024-11-19 13:40:47,863 [DEBUG] py4...: ǀCalling get_visual_style_names(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,863 [DEBUG] py4...: ǀǀCalling cyrest_get('apply/styles', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,863 [DEBUG] py4...: ǀǀHTTP GET(http://127.0.0.1:1234/v1/apply/styles)
+2024-11-19 13:40:47,874 [DEBUG] py4...: ǀǀOK[200], content: ["Gradient1","Sample1","BioPAX_SIF","Directed","BioPAX","default black","Sample3","AutoCD_Visualization_Style","Nested Network Style","Solid","Minimal","Sample2","size_rank","Ripple","Universe","default","Curved","Marquee","AutoCD_Visualization_Style_0","Big Labels"]
+2024-11-19 13:40:47,875 [DEBUG] py4...: ǀǀReturning 'cyrest_get': ['Gradient1', 'Sample1', 'BioPAX_SIF', 'Directed', 'BioPAX', 'default black', 'Sample3', 'AutoCD_Visualization_Style', 'Nested Network Style', 'Solid', 'Minimal', 'Sample2', 'size_rank', 'Ripple', 'Universe', 'default', 'Curved', 'Marquee', 'AutoCD_Visualization_Style_0', 'Big Labels']
+2024-11-19 13:40:47,875 [DEBUG] py4...: ǀReturning 'get_visual_style_names': ['Gradient1', 'Sample1', 'BioPAX_SIF', 'Directed', 'BioPAX', 'default black', 'Sample3', 'AutoCD_Visualization_Style', 'Nested Network Style', 'Solid', 'Minimal', 'Sample2', 'size_rank', 'Ripple', 'Universe', 'default', 'Curved', 'Marquee', 'AutoCD_Visualization_Style_0', 'Big Labels']
+2024-11-19 13:40:47,875 [DEBUG] py4...: ǀCalling cyrest_get('apply/styles/AutoCD_Visualization_Style/224', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:47,876 [DEBUG] py4...: ǀHTTP GET(http://127.0.0.1:1234/v1/apply/styles/AutoCD_Visualization_Style/224)
+2024-11-19 13:40:48,972 [DEBUG] py4...: ǀOK[200], content: {"message":"Visual Style applied."}
+2024-11-19 13:40:48,974 [DEBUG] py4...: ǀReturning 'cyrest_get': {'message': 'Visual Style applied.'}
+2024-11-19 13:40:48,974 [DEBUG] py4...: Returning 'set_visual_style': {'message': 'Visual Style applied.'}
+2024-11-19 13:40:48,974 [DEBUG] py4...: --------------------
+2024-11-19 13:40:48,974 [DEBUG] py4...: Calling set_edge_target_arrow_shape_mapping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['ARROW', 'CIRCLE', 'NONE', 'CIRCLE', 'NONE', 'ARROW', 'ARROW', 'CIRCLE', 'NONE'], style_name='AutoCD_Visualization_Style')
+2024-11-19 13:40:48,975 [DEBUG] py4...: ǀCalling set_edge_target_arrow_maping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['ARROW', 'CIRCLE', 'NONE', 'CIRCLE', 'NONE', 'ARROW', 'ARROW', 'CIRCLE', 'NONE'], default_shape=None, style_name='AutoCD_Visualization_Style', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:48,975 [DEBUG] py4...: ǀǀCalling get_table_column_names('edge', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:48,975 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:48,976 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:48,976 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:40:49,058 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 224
+}
+],
+ "errors":[]
+}
+2024-11-19 13:40:49,059 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 224}]
+2024-11-19 13:40:49,059 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:49,059 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,060 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:49,076 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:49,077 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:49,077 [DEBUG] py4...: ǀǀReturning 'get_table_column_names': ['SUID', 'shared name', 'shared interaction', 'source', 'target', 'data.key.column', 'interaction_type', 'name', 'selected', 'interaction']
+2024-11-19 13:40:49,077 [DEBUG] py4...: ǀǀCalling map_visual_property('EDGE_TARGET_ARROW_SHAPE', 'interaction_type', 'd', ['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], ['ARROW', 'CIRCLE', 'NONE', 'CIRCLE', 'NONE', 'ARROW', 'ARROW', 'CIRCLE', 'NONE'], network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,077 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,077 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,078 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:40:49,115 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 224
+}
+],
+ "errors":[]
+}
+2024-11-19 13:40:49,116 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 224}]
+2024-11-19 13:40:49,116 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:49,117 [DEBUG] py4...: ǀǀǀCalling get_visual_property_names(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,117 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('styles/default/defaults', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,117 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/default/defaults)
+2024-11-19 13:40:49,152 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+  "defaults" : [ {
+    "visualProperty" : "COMPOUND_NODE_PADDING",
+    "value" : 10.0
+  }, {
+    "visualProperty" : "COMPOUND_NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "DING_RENDERING_ENGINE_ROOT",
+    "value" : "org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6"
+  }, {
+    "visualProperty" : "EDGE",
+    "value" : "DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)"
+  }, {
+    "visualProperty" : "EDGE_BEND",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_CURVED",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_FACE",
+    "value" : "Dialog,plain,10"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_SIZE",
+    "value" : 10
+  }, {
+    "visualProperty" : "EDGE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "EDGE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "EDGE_LINE_TYPE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "EDGE_PAINT",
+    "value" : "#323232"
+  }, {
+    "visualProperty" : "EDGE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "EDGE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_STACKING",
+    "value" : "AUTO_BEND"
+  }, {
+    "visualProperty" : "EDGE_STACKING_DENSITY",
+    "value" : 0.5
+  }, {
+    "visualProperty" : "EDGE_STROKE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_STROKE_UNSELECTED_PAINT",
+    "value" : "#848484"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_UNSELECTED_PAINT",
+    "value" : "#404040"
+  }, {
+    "visualProperty" : "EDGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_WIDTH",
+    "value" : 2.0
+  }, {
+    "visualProperty" : "EDGE_Z_ORDER",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK",
+    "value" : "DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)"
+  }, {
+    "visualProperty" : "NETWORK_ANNOTATION_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_BACKGROUND_PAINT",
+    "value" : "#FFFFFF"
+  }, {
+    "visualProperty" : "NETWORK_CENTER_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Z_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_EDGE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_FORCE_HIGH_DETAIL",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_HEIGHT",
+    "value" : 400.0
+  }, {
+    "visualProperty" : "NETWORK_NODE_LABEL_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_NODE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_SCALE_FACTOR",
+    "value" : 1.0
+  }, {
+    "visualProperty" : "NETWORK_SIZE",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NETWORK_TITLE",
+    "value" : ""
+  }, {
+    "visualProperty" : "NETWORK_WIDTH",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NODE",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)"
+  }, {
+    "visualProperty" : "NODE_BORDER_PAINT",
+    "value" : "#CCCCCC"
+  }, {
+    "visualProperty" : "NODE_BORDER_STROKE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "NODE_BORDER_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_BORDER_WIDTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_1",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_2",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_3",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_4",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_5",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_6",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_7",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_8",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_9",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_1",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_2",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_3",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_4",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_5",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_6",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_7",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_8",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_9",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_1",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_2",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_3",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_4",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_5",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_6",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_7",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_8",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_9",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_1",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_2",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_3",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_4",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_5",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_6",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_7",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_8",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_9",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)"
+  }, {
+    "visualProperty" : "NODE_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_FILL_COLOR",
+    "value" : "#89D0F5"
+  }, {
+    "visualProperty" : "NODE_HEIGHT",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_FACE",
+    "value" : "SansSerif,plain,12"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_SIZE",
+    "value" : 12
+  }, {
+    "visualProperty" : "NODE_LABEL_POSITION",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "NODE_NESTED_NETWORK_IMAGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_PAINT",
+    "value" : "#1E90FF"
+  }, {
+    "visualProperty" : "NODE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "NODE_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "NODE_SIZE",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_WIDTH",
+    "value" : 75.0
+  }, {
+    "visualProperty" : "NODE_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Z_LOCATION",
+    "value" : 0.0
+  } ]
+}
+2024-11-19 13:40:49,154 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': {'defaults': [{'visualProperty': 'COMPOUND_NODE_PADDING', 'value': 10.0}, {'visualProperty': 'COMPOUND_NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'DING_RENDERING_ENGINE_ROOT', 'value': 'org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6'}, {'visualProperty': 'EDGE', 'value': 'DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)'}, {'visualProperty': 'EDGE_BEND', 'value': ''}, {'visualProperty': 'EDGE_CURVED', 'value': True}, {'visualProperty': 'EDGE_LABEL', 'value': ''}, {'visualProperty': 'EDGE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'EDGE_LABEL_FONT_FACE', 'value': 'Dialog,plain,10'}, {'visualProperty': 'EDGE_LABEL_FONT_SIZE', 'value': 10}, {'visualProperty': 'EDGE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'EDGE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'EDGE_LINE_TYPE', 'value': 'SOLID'}, {'visualProperty': 'EDGE_PAINT', 'value': '#323232'}, {'visualProperty': 'EDGE_SELECTED', 'value': False}, {'visualProperty': 'EDGE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_STACKING', 'value': 'AUTO_BEND'}, {'visualProperty': 'EDGE_STACKING_DENSITY', 'value': 0.5}, {'visualProperty': 'EDGE_STROKE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_STROKE_UNSELECTED_PAINT', 'value': '#848484'}, {'visualProperty': 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_TARGET_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_TOOLTIP', 'value': ''}, {'visualProperty': 'EDGE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_UNSELECTED_PAINT', 'value': '#404040'}, {'visualProperty': 'EDGE_VISIBLE', 'value': True}, {'visualProperty': 'EDGE_WIDTH', 'value': 2.0}, {'visualProperty': 'EDGE_Z_ORDER', 'value': 0.0}, {'visualProperty': 'NETWORK', 'value': 'DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)'}, {'visualProperty': 'NETWORK_ANNOTATION_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_BACKGROUND_PAINT', 'value': '#FFFFFF'}, {'visualProperty': 'NETWORK_CENTER_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Z_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_DEPTH', 'value': 0.0}, {'visualProperty': 'NETWORK_EDGE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_FORCE_HIGH_DETAIL', 'value': False}, {'visualProperty': 'NETWORK_HEIGHT', 'value': 400.0}, {'visualProperty': 'NETWORK_NODE_LABEL_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_NODE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_SCALE_FACTOR', 'value': 1.0}, {'visualProperty': 'NETWORK_SIZE', 'value': 550.0}, {'visualProperty': 'NETWORK_TITLE', 'value': ''}, {'visualProperty': 'NETWORK_WIDTH', 'value': 550.0}, {'visualProperty': 'NODE', 'value': 'DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)'}, {'visualProperty': 'NODE_BORDER_PAINT', 'value': '#CCCCCC'}, {'visualProperty': 'NODE_BORDER_STROKE', 'value': 'SOLID'}, {'visualProperty': 'NODE_BORDER_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_BORDER_WIDTH', 'value': 0.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_1', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_2', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_3', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_4', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_5', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_6', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_7', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_8', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_9', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_1', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_2', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_3', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_4', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_5', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_6', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_7', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_8', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_9', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_1', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_2', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_3', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_4', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_5', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_6', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_7', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_8', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_9', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMPAINT_1', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)'}, {'visualProperty': 'NODE_CUSTOMPAINT_2', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)'}, {'visualProperty': 'NODE_CUSTOMPAINT_3', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)'}, {'visualProperty': 'NODE_CUSTOMPAINT_4', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)'}, {'visualProperty': 'NODE_CUSTOMPAINT_5', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)'}, {'visualProperty': 'NODE_CUSTOMPAINT_6', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)'}, {'visualProperty': 'NODE_CUSTOMPAINT_7', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)'}, {'visualProperty': 'NODE_CUSTOMPAINT_8', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)'}, {'visualProperty': 'NODE_CUSTOMPAINT_9', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)'}, {'visualProperty': 'NODE_DEPTH', 'value': 0.0}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#89D0F5'}, {'visualProperty': 'NODE_HEIGHT', 'value': 35.0}, {'visualProperty': 'NODE_LABEL', 'value': ''}, {'visualProperty': 'NODE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'NODE_LABEL_FONT_FACE', 'value': 'SansSerif,plain,12'}, {'visualProperty': 'NODE_LABEL_FONT_SIZE', 'value': 12}, {'visualProperty': 'NODE_LABEL_POSITION', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'NODE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_PAINT', 'value': '#1E90FF'}, {'visualProperty': 'NODE_SELECTED', 'value': False}, {'visualProperty': 'NODE_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'NODE_SIZE', 'value': 35.0}, {'visualProperty': 'NODE_TOOLTIP', 'value': ''}, {'visualProperty': 'NODE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_WIDTH', 'value': 75.0}, {'visualProperty': 'NODE_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Z_LOCATION', 'value': 0.0}]}
+2024-11-19 13:40:49,154 [DEBUG] py4...: ǀǀǀReturning 'get_visual_property_names': ['COMPOUND_NODE_PADDING', 'COMPOUND_NODE_SHAPE', 'DING_RENDERING_ENGINE_ROOT', 'EDGE', 'EDGE_BEND', 'EDGE_CURVED', 'EDGE_LABEL', 'EDGE_LABEL_COLOR', 'EDGE_LABEL_FONT_FACE', 'EDGE_LABEL_FONT_SIZE', 'EDGE_LABEL_ROTATION', 'EDGE_LABEL_TRANSPARENCY', 'EDGE_LABEL_WIDTH', 'EDGE_LINE_TYPE', 'EDGE_PAINT', 'EDGE_SELECTED', 'EDGE_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SHAPE', 'EDGE_SOURCE_ARROW_SIZE', 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'EDGE_STACKING', 'EDGE_STACKING_DENSITY', 'EDGE_STROKE_SELECTED_PAINT', 'EDGE_STROKE_UNSELECTED_PAINT', 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'EDGE_TARGET_ARROW_SHAPE', 'EDGE_TARGET_ARROW_SIZE', 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'EDGE_TOOLTIP', 'EDGE_TRANSPARENCY', 'EDGE_UNSELECTED_PAINT', 'EDGE_VISIBLE', 'EDGE_WIDTH', 'EDGE_Z_ORDER', 'NETWORK', 'NETWORK_ANNOTATION_SELECTION', 'NETWORK_BACKGROUND_PAINT', 'NETWORK_CENTER_X_LOCATION', 'NETWORK_CENTER_Y_LOCATION', 'NETWORK_CENTER_Z_LOCATION', 'NETWORK_DEPTH', 'NETWORK_EDGE_SELECTION', 'NETWORK_FORCE_HIGH_DETAIL', 'NETWORK_HEIGHT', 'NETWORK_NODE_LABEL_SELECTION', 'NETWORK_NODE_SELECTION', 'NETWORK_SCALE_FACTOR', 'NETWORK_SIZE', 'NETWORK_TITLE', 'NETWORK_WIDTH', 'NODE', 'NODE_BORDER_PAINT', 'NODE_BORDER_STROKE', 'NODE_BORDER_TRANSPARENCY', 'NODE_BORDER_WIDTH', 'NODE_CUSTOMGRAPHICS_1', 'NODE_CUSTOMGRAPHICS_2', 'NODE_CUSTOMGRAPHICS_3', 'NODE_CUSTOMGRAPHICS_4', 'NODE_CUSTOMGRAPHICS_5', 'NODE_CUSTOMGRAPHICS_6', 'NODE_CUSTOMGRAPHICS_7', 'NODE_CUSTOMGRAPHICS_8', 'NODE_CUSTOMGRAPHICS_9', 'NODE_CUSTOMGRAPHICS_POSITION_1', 'NODE_CUSTOMGRAPHICS_POSITION_2', 'NODE_CUSTOMGRAPHICS_POSITION_3', 'NODE_CUSTOMGRAPHICS_POSITION_4', 'NODE_CUSTOMGRAPHICS_POSITION_5', 'NODE_CUSTOMGRAPHICS_POSITION_6', 'NODE_CUSTOMGRAPHICS_POSITION_7', 'NODE_CUSTOMGRAPHICS_POSITION_8', 'NODE_CUSTOMGRAPHICS_POSITION_9', 'NODE_CUSTOMGRAPHICS_SIZE_1', 'NODE_CUSTOMGRAPHICS_SIZE_2', 'NODE_CUSTOMGRAPHICS_SIZE_3', 'NODE_CUSTOMGRAPHICS_SIZE_4', 'NODE_CUSTOMGRAPHICS_SIZE_5', 'NODE_CUSTOMGRAPHICS_SIZE_6', 'NODE_CUSTOMGRAPHICS_SIZE_7', 'NODE_CUSTOMGRAPHICS_SIZE_8', 'NODE_CUSTOMGRAPHICS_SIZE_9', 'NODE_CUSTOMPAINT_1', 'NODE_CUSTOMPAINT_2', 'NODE_CUSTOMPAINT_3', 'NODE_CUSTOMPAINT_4', 'NODE_CUSTOMPAINT_5', 'NODE_CUSTOMPAINT_6', 'NODE_CUSTOMPAINT_7', 'NODE_CUSTOMPAINT_8', 'NODE_CUSTOMPAINT_9', 'NODE_DEPTH', 'NODE_FILL_COLOR', 'NODE_HEIGHT', 'NODE_LABEL', 'NODE_LABEL_COLOR', 'NODE_LABEL_FONT_FACE', 'NODE_LABEL_FONT_SIZE', 'NODE_LABEL_POSITION', 'NODE_LABEL_ROTATION', 'NODE_LABEL_TRANSPARENCY', 'NODE_LABEL_WIDTH', 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'NODE_PAINT', 'NODE_SELECTED', 'NODE_SELECTED_PAINT', 'NODE_SHAPE', 'NODE_SIZE', 'NODE_TOOLTIP', 'NODE_TRANSPARENCY', 'NODE_VISIBLE', 'NODE_WIDTH', 'NODE_X_LOCATION', 'NODE_Y_LOCATION', 'NODE_Z_LOCATION']
+2024-11-19 13:40:49,154 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,155 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:49,170 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:49,171 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:49,172 [DEBUG] py4...: ǀǀReturning 'map_visual_property': {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}
+2024-11-19 13:40:49,172 [DEBUG] py4...: ǀǀCalling update_style_mapping('AutoCD_Visualization_Style', {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,173 [DEBUG] py4...: ǀǀǀCalling cyrest_get('styles/AutoCD_Visualization_Style/mappings', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,173 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings)
+2024-11-19 13:40:49,212 [DEBUG] py4...: ǀǀǀOK[200], content: [ {
+  "mappingType" : "discrete",
+  "mappingColumn" : "interaction_type",
+  "mappingColumnType" : "String",
+  "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+  "map" : [ {
+    "key" : "Circle-Arrow",
+    "value" : "ARROW"
+  }, {
+    "key" : "Tail-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Tail-Arrow",
+    "value" : "ARROW"
+  }, {
+    "key" : "Tail-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Arrow-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Arrow",
+    "value" : "ARROW"
+  } ]
+}, {
+  "mappingType" : "discrete",
+  "mappingColumn" : "interaction_type",
+  "mappingColumnType" : "String",
+  "visualProperty" : "EDGE_SOURCE_ARROW_SHAPE",
+  "map" : [ {
+    "key" : "Circle-Arrow",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Tail-Circle",
+    "value" : "NONE"
+  }, {
+    "key" : "Circle-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Tail",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Tail-Arrow",
+    "value" : "NONE"
+  }, {
+    "key" : "Tail-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Circle",
+    "value" : "ARROW"
+  }, {
+    "key" : "Arrow-Tail",
+    "value" : "ARROW"
+  }, {
+    "key" : "Arrow-Arrow",
+    "value" : "ARROW"
+  } ]
+}, {
+  "mappingType" : "passthrough",
+  "mappingColumn" : "id",
+  "mappingColumnType" : "String",
+  "visualProperty" : "NODE_LABEL"
+} ]
+2024-11-19 13:40:49,213 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Tail-Tail', 'value': 'NONE'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}]}, {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Tail-Tail', 'value': 'NONE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}]}, {'mappingType': 'passthrough', 'mappingColumn': 'id', 'mappingColumnType': 'String', 'visualProperty': 'NODE_LABEL'}]
+2024-11-19 13:40:49,213 [DEBUG] py4...: ǀǀǀCalling cyrest_put('styles/AutoCD_Visualization_Style/mappings/EDGE_TARGET_ARROW_SHAPE', body=[{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}], base_url='http://127.0.0.1:1234/v1', require_json=False)
+2024-11-19 13:40:49,213 [DEBUG] py4...: ǀǀǀHTTP PUT(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings/EDGE_TARGET_ARROW_SHAPE), json: [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}]
+2024-11-19 13:40:49,617 [DEBUG] py4...: ǀǀǀOK[200], content: 
+2024-11-19 13:40:49,617 [DEBUG] py4...: ǀǀǀReturning 'cyrest_put': ''
+2024-11-19 13:40:49,617 [DEBUG] py4...: ǀǀReturning 'update_style_mapping': ''
+2024-11-19 13:40:49,618 [DEBUG] py4...: ǀReturning 'set_edge_target_arrow_maping': ''
+2024-11-19 13:40:49,618 [DEBUG] py4...: Returning 'set_edge_target_arrow_shape_mapping': ''
+2024-11-19 13:40:49,618 [DEBUG] py4...: --------------------
+2024-11-19 13:40:49,618 [DEBUG] py4...: Calling set_edge_source_arrow_shape_mapping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['CIRCLE', 'ARROW', 'CIRCLE', 'NONE', 'ARROW', 'NONE', 'ARROW', 'CIRCLE', 'NONE'], style_name='AutoCD_Visualization_Style')
+2024-11-19 13:40:49,618 [DEBUG] py4...: ǀCalling set_edge_source_arrow_mapping('interaction_type', table_column_values=['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], shapes=['CIRCLE', 'ARROW', 'CIRCLE', 'NONE', 'ARROW', 'NONE', 'ARROW', 'CIRCLE', 'NONE'], default_shape=None, style_name='AutoCD_Visualization_Style', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,618 [DEBUG] py4...: ǀǀCalling get_table_column_names('edge', network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,619 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,619 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,619 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:40:49,660 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 224
+}
+],
+ "errors":[]
+}
+2024-11-19 13:40:49,661 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 224}]
+2024-11-19 13:40:49,661 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:49,661 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,662 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:49,674 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:49,674 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:49,674 [DEBUG] py4...: ǀǀReturning 'get_table_column_names': ['SUID', 'shared name', 'shared interaction', 'source', 'target', 'data.key.column', 'interaction_type', 'name', 'selected', 'interaction']
+2024-11-19 13:40:49,675 [DEBUG] py4...: ǀǀCalling map_visual_property('EDGE_SOURCE_ARROW_SHAPE', 'interaction_type', 'd', ['Circle-Arrow', 'Arrow-Circle', 'Circle-Tail', 'Tail-Circle', 'Arrow-Tail', 'Tail-Arrow', 'Arrow-Arrow', 'Circle-Circle', 'Tail-Tail'], ['CIRCLE', 'ARROW', 'CIRCLE', 'NONE', 'ARROW', 'NONE', 'ARROW', 'CIRCLE', 'NONE'], network=None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,675 [DEBUG] py4...: ǀǀǀCalling get_network_suid(None, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,675 [DEBUG] py4...: ǀǀǀǀCalling commands_post('network get attribute network="current" namespace="default" columnList="SUID"', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,675 [DEBUG] py4...: ǀǀǀǀHTTP POST(http://127.0.0.1:1234/v1/commands/network/get%20attribute), json: {'network': 'current', 'namespace': 'default', 'columnList': 'SUID'}
+2024-11-19 13:40:49,689 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+ "data": [ {
+  "SUID": 224
+}
+],
+ "errors":[]
+}
+2024-11-19 13:40:49,689 [DEBUG] py4...: ǀǀǀǀReturning 'commands_post': [{'SUID': 224}]
+2024-11-19 13:40:49,690 [DEBUG] py4...: ǀǀǀReturning 'get_network_suid': 224
+2024-11-19 13:40:49,690 [DEBUG] py4...: ǀǀǀCalling get_visual_property_names(base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,690 [DEBUG] py4...: ǀǀǀǀCalling cyrest_get('styles/default/defaults', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,690 [DEBUG] py4...: ǀǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/default/defaults)
+2024-11-19 13:40:49,704 [DEBUG] py4...: ǀǀǀǀOK[200], content: {
+  "defaults" : [ {
+    "visualProperty" : "COMPOUND_NODE_PADDING",
+    "value" : 10.0
+  }, {
+    "visualProperty" : "COMPOUND_NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "DING_RENDERING_ENGINE_ROOT",
+    "value" : "org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6"
+  }, {
+    "visualProperty" : "EDGE",
+    "value" : "DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)"
+  }, {
+    "visualProperty" : "EDGE_BEND",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_CURVED",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_FACE",
+    "value" : "Dialog,plain,10"
+  }, {
+    "visualProperty" : "EDGE_LABEL_FONT_SIZE",
+    "value" : 10
+  }, {
+    "visualProperty" : "EDGE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "EDGE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "EDGE_LINE_TYPE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "EDGE_PAINT",
+    "value" : "#323232"
+  }, {
+    "visualProperty" : "EDGE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "EDGE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_SOURCE_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_STACKING",
+    "value" : "AUTO_BEND"
+  }, {
+    "visualProperty" : "EDGE_STACKING_DENSITY",
+    "value" : 0.5
+  }, {
+    "visualProperty" : "EDGE_STROKE_SELECTED_PAINT",
+    "value" : "#FF0000"
+  }, {
+    "visualProperty" : "EDGE_STROKE_UNSELECTED_PAINT",
+    "value" : "#848484"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+    "value" : "NONE"
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_SIZE",
+    "value" : 6.0
+  }, {
+    "visualProperty" : "EDGE_TARGET_ARROW_UNSELECTED_PAINT",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "EDGE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "EDGE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "EDGE_UNSELECTED_PAINT",
+    "value" : "#404040"
+  }, {
+    "visualProperty" : "EDGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "EDGE_WIDTH",
+    "value" : 2.0
+  }, {
+    "visualProperty" : "EDGE_Z_ORDER",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK",
+    "value" : "DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)"
+  }, {
+    "visualProperty" : "NETWORK_ANNOTATION_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_BACKGROUND_PAINT",
+    "value" : "#FFFFFF"
+  }, {
+    "visualProperty" : "NETWORK_CENTER_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_CENTER_Z_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NETWORK_EDGE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_FORCE_HIGH_DETAIL",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_HEIGHT",
+    "value" : 400.0
+  }, {
+    "visualProperty" : "NETWORK_NODE_LABEL_SELECTION",
+    "value" : false
+  }, {
+    "visualProperty" : "NETWORK_NODE_SELECTION",
+    "value" : true
+  }, {
+    "visualProperty" : "NETWORK_SCALE_FACTOR",
+    "value" : 1.0
+  }, {
+    "visualProperty" : "NETWORK_SIZE",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NETWORK_TITLE",
+    "value" : ""
+  }, {
+    "visualProperty" : "NETWORK_WIDTH",
+    "value" : 550.0
+  }, {
+    "visualProperty" : "NODE",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)"
+  }, {
+    "visualProperty" : "NODE_BORDER_PAINT",
+    "value" : "#CCCCCC"
+  }, {
+    "visualProperty" : "NODE_BORDER_STROKE",
+    "value" : "SOLID"
+  }, {
+    "visualProperty" : "NODE_BORDER_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_BORDER_WIDTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_1",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_2",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_3",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_4",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_5",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_6",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_7",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_8",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_9",
+    "value" : "org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_1",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_2",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_3",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_4",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_5",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_6",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_7",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_8",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_POSITION_9",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_1",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_2",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_3",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_4",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_5",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_6",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_7",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_8",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMGRAPHICS_SIZE_9",
+    "value" : 50.0
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_1",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_2",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_3",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_4",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_5",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_6",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_7",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_8",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)"
+  }, {
+    "visualProperty" : "NODE_CUSTOMPAINT_9",
+    "value" : "DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)"
+  }, {
+    "visualProperty" : "NODE_DEPTH",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_FILL_COLOR",
+    "value" : "#89D0F5"
+  }, {
+    "visualProperty" : "NODE_HEIGHT",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_LABEL",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_LABEL_COLOR",
+    "value" : "#000000"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_FACE",
+    "value" : "SansSerif,plain,12"
+  }, {
+    "visualProperty" : "NODE_LABEL_FONT_SIZE",
+    "value" : 12
+  }, {
+    "visualProperty" : "NODE_LABEL_POSITION",
+    "value" : "C,C,c,0.00,0.00"
+  }, {
+    "visualProperty" : "NODE_LABEL_ROTATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_LABEL_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_LABEL_WIDTH",
+    "value" : 200.0
+  }, {
+    "visualProperty" : "NODE_NESTED_NETWORK_IMAGE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_PAINT",
+    "value" : "#1E90FF"
+  }, {
+    "visualProperty" : "NODE_SELECTED",
+    "value" : false
+  }, {
+    "visualProperty" : "NODE_SELECTED_PAINT",
+    "value" : "#FFFF00"
+  }, {
+    "visualProperty" : "NODE_SHAPE",
+    "value" : "ROUND_RECTANGLE"
+  }, {
+    "visualProperty" : "NODE_SIZE",
+    "value" : 35.0
+  }, {
+    "visualProperty" : "NODE_TOOLTIP",
+    "value" : ""
+  }, {
+    "visualProperty" : "NODE_TRANSPARENCY",
+    "value" : 255
+  }, {
+    "visualProperty" : "NODE_VISIBLE",
+    "value" : true
+  }, {
+    "visualProperty" : "NODE_WIDTH",
+    "value" : 75.0
+  }, {
+    "visualProperty" : "NODE_X_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Y_LOCATION",
+    "value" : 0.0
+  }, {
+    "visualProperty" : "NODE_Z_LOCATION",
+    "value" : 0.0
+  } ]
+}
+2024-11-19 13:40:49,706 [DEBUG] py4...: ǀǀǀǀReturning 'cyrest_get': {'defaults': [{'visualProperty': 'COMPOUND_NODE_PADDING', 'value': 10.0}, {'visualProperty': 'COMPOUND_NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'DING_RENDERING_ENGINE_ROOT', 'value': 'org.cytoscape.view.presentation.property.NullVisualProperty$NullDataTypeImpl@53558ab6'}, {'visualProperty': 'EDGE', 'value': 'DefaultVisualizableVisualProperty(id=EDGE, name=Edge Visual Property)'}, {'visualProperty': 'EDGE_BEND', 'value': ''}, {'visualProperty': 'EDGE_CURVED', 'value': True}, {'visualProperty': 'EDGE_LABEL', 'value': ''}, {'visualProperty': 'EDGE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'EDGE_LABEL_FONT_FACE', 'value': 'Dialog,plain,10'}, {'visualProperty': 'EDGE_LABEL_FONT_SIZE', 'value': 10}, {'visualProperty': 'EDGE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'EDGE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'EDGE_LINE_TYPE', 'value': 'SOLID'}, {'visualProperty': 'EDGE_PAINT', 'value': '#323232'}, {'visualProperty': 'EDGE_SELECTED', 'value': False}, {'visualProperty': 'EDGE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_SOURCE_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_STACKING', 'value': 'AUTO_BEND'}, {'visualProperty': 'EDGE_STACKING_DENSITY', 'value': 0.5}, {'visualProperty': 'EDGE_STROKE_SELECTED_PAINT', 'value': '#FF0000'}, {'visualProperty': 'EDGE_STROKE_UNSELECTED_PAINT', 'value': '#848484'}, {'visualProperty': 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'value': 'NONE'}, {'visualProperty': 'EDGE_TARGET_ARROW_SIZE', 'value': 6.0}, {'visualProperty': 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'value': '#000000'}, {'visualProperty': 'EDGE_TOOLTIP', 'value': ''}, {'visualProperty': 'EDGE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'EDGE_UNSELECTED_PAINT', 'value': '#404040'}, {'visualProperty': 'EDGE_VISIBLE', 'value': True}, {'visualProperty': 'EDGE_WIDTH', 'value': 2.0}, {'visualProperty': 'EDGE_Z_ORDER', 'value': 0.0}, {'visualProperty': 'NETWORK', 'value': 'DefaultVisualizableVisualProperty(id=NETWORK, name=Network Visual Property)'}, {'visualProperty': 'NETWORK_ANNOTATION_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_BACKGROUND_PAINT', 'value': '#FFFFFF'}, {'visualProperty': 'NETWORK_CENTER_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_CENTER_Z_LOCATION', 'value': 0.0}, {'visualProperty': 'NETWORK_DEPTH', 'value': 0.0}, {'visualProperty': 'NETWORK_EDGE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_FORCE_HIGH_DETAIL', 'value': False}, {'visualProperty': 'NETWORK_HEIGHT', 'value': 400.0}, {'visualProperty': 'NETWORK_NODE_LABEL_SELECTION', 'value': False}, {'visualProperty': 'NETWORK_NODE_SELECTION', 'value': True}, {'visualProperty': 'NETWORK_SCALE_FACTOR', 'value': 1.0}, {'visualProperty': 'NETWORK_SIZE', 'value': 550.0}, {'visualProperty': 'NETWORK_TITLE', 'value': ''}, {'visualProperty': 'NETWORK_WIDTH', 'value': 550.0}, {'visualProperty': 'NODE', 'value': 'DefaultVisualizableVisualProperty(id=NODE, name=Node Visual Property)'}, {'visualProperty': 'NODE_BORDER_PAINT', 'value': '#CCCCCC'}, {'visualProperty': 'NODE_BORDER_STROKE', 'value': 'SOLID'}, {'visualProperty': 'NODE_BORDER_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_BORDER_WIDTH', 'value': 0.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_1', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_2', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_3', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_4', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_5', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_6', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_7', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_8', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_9', 'value': 'org.cytoscape.cg.model.NullCustomGraphics,0,[ Remove Graphics ],'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_1', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_2', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_3', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_4', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_5', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_6', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_7', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_8', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_POSITION_9', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_1', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_2', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_3', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_4', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_5', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_6', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_7', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_8', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMGRAPHICS_SIZE_9', 'value': 50.0}, {'visualProperty': 'NODE_CUSTOMPAINT_1', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_1, name=Node Custom Paint 1)'}, {'visualProperty': 'NODE_CUSTOMPAINT_2', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_2, name=Node Custom Paint 2)'}, {'visualProperty': 'NODE_CUSTOMPAINT_3', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_3, name=Node Custom Paint 3)'}, {'visualProperty': 'NODE_CUSTOMPAINT_4', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_4, name=Node Custom Paint 4)'}, {'visualProperty': 'NODE_CUSTOMPAINT_5', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_5, name=Node Custom Paint 5)'}, {'visualProperty': 'NODE_CUSTOMPAINT_6', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_6, name=Node Custom Paint 6)'}, {'visualProperty': 'NODE_CUSTOMPAINT_7', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_7, name=Node Custom Paint 7)'}, {'visualProperty': 'NODE_CUSTOMPAINT_8', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_8, name=Node Custom Paint 8)'}, {'visualProperty': 'NODE_CUSTOMPAINT_9', 'value': 'DefaultVisualizableVisualProperty(id=NODE_CUSTOMPAINT_9, name=Node Custom Paint 9)'}, {'visualProperty': 'NODE_DEPTH', 'value': 0.0}, {'visualProperty': 'NODE_FILL_COLOR', 'value': '#89D0F5'}, {'visualProperty': 'NODE_HEIGHT', 'value': 35.0}, {'visualProperty': 'NODE_LABEL', 'value': ''}, {'visualProperty': 'NODE_LABEL_COLOR', 'value': '#000000'}, {'visualProperty': 'NODE_LABEL_FONT_FACE', 'value': 'SansSerif,plain,12'}, {'visualProperty': 'NODE_LABEL_FONT_SIZE', 'value': 12}, {'visualProperty': 'NODE_LABEL_POSITION', 'value': 'C,C,c,0.00,0.00'}, {'visualProperty': 'NODE_LABEL_ROTATION', 'value': 0.0}, {'visualProperty': 'NODE_LABEL_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_LABEL_WIDTH', 'value': 200.0}, {'visualProperty': 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_PAINT', 'value': '#1E90FF'}, {'visualProperty': 'NODE_SELECTED', 'value': False}, {'visualProperty': 'NODE_SELECTED_PAINT', 'value': '#FFFF00'}, {'visualProperty': 'NODE_SHAPE', 'value': 'ROUND_RECTANGLE'}, {'visualProperty': 'NODE_SIZE', 'value': 35.0}, {'visualProperty': 'NODE_TOOLTIP', 'value': ''}, {'visualProperty': 'NODE_TRANSPARENCY', 'value': 255}, {'visualProperty': 'NODE_VISIBLE', 'value': True}, {'visualProperty': 'NODE_WIDTH', 'value': 75.0}, {'visualProperty': 'NODE_X_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Y_LOCATION', 'value': 0.0}, {'visualProperty': 'NODE_Z_LOCATION', 'value': 0.0}]}
+2024-11-19 13:40:49,706 [DEBUG] py4...: ǀǀǀReturning 'get_visual_property_names': ['COMPOUND_NODE_PADDING', 'COMPOUND_NODE_SHAPE', 'DING_RENDERING_ENGINE_ROOT', 'EDGE', 'EDGE_BEND', 'EDGE_CURVED', 'EDGE_LABEL', 'EDGE_LABEL_COLOR', 'EDGE_LABEL_FONT_FACE', 'EDGE_LABEL_FONT_SIZE', 'EDGE_LABEL_ROTATION', 'EDGE_LABEL_TRANSPARENCY', 'EDGE_LABEL_WIDTH', 'EDGE_LINE_TYPE', 'EDGE_PAINT', 'EDGE_SELECTED', 'EDGE_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SELECTED_PAINT', 'EDGE_SOURCE_ARROW_SHAPE', 'EDGE_SOURCE_ARROW_SIZE', 'EDGE_SOURCE_ARROW_UNSELECTED_PAINT', 'EDGE_STACKING', 'EDGE_STACKING_DENSITY', 'EDGE_STROKE_SELECTED_PAINT', 'EDGE_STROKE_UNSELECTED_PAINT', 'EDGE_TARGET_ARROW_SELECTED_PAINT', 'EDGE_TARGET_ARROW_SHAPE', 'EDGE_TARGET_ARROW_SIZE', 'EDGE_TARGET_ARROW_UNSELECTED_PAINT', 'EDGE_TOOLTIP', 'EDGE_TRANSPARENCY', 'EDGE_UNSELECTED_PAINT', 'EDGE_VISIBLE', 'EDGE_WIDTH', 'EDGE_Z_ORDER', 'NETWORK', 'NETWORK_ANNOTATION_SELECTION', 'NETWORK_BACKGROUND_PAINT', 'NETWORK_CENTER_X_LOCATION', 'NETWORK_CENTER_Y_LOCATION', 'NETWORK_CENTER_Z_LOCATION', 'NETWORK_DEPTH', 'NETWORK_EDGE_SELECTION', 'NETWORK_FORCE_HIGH_DETAIL', 'NETWORK_HEIGHT', 'NETWORK_NODE_LABEL_SELECTION', 'NETWORK_NODE_SELECTION', 'NETWORK_SCALE_FACTOR', 'NETWORK_SIZE', 'NETWORK_TITLE', 'NETWORK_WIDTH', 'NODE', 'NODE_BORDER_PAINT', 'NODE_BORDER_STROKE', 'NODE_BORDER_TRANSPARENCY', 'NODE_BORDER_WIDTH', 'NODE_CUSTOMGRAPHICS_1', 'NODE_CUSTOMGRAPHICS_2', 'NODE_CUSTOMGRAPHICS_3', 'NODE_CUSTOMGRAPHICS_4', 'NODE_CUSTOMGRAPHICS_5', 'NODE_CUSTOMGRAPHICS_6', 'NODE_CUSTOMGRAPHICS_7', 'NODE_CUSTOMGRAPHICS_8', 'NODE_CUSTOMGRAPHICS_9', 'NODE_CUSTOMGRAPHICS_POSITION_1', 'NODE_CUSTOMGRAPHICS_POSITION_2', 'NODE_CUSTOMGRAPHICS_POSITION_3', 'NODE_CUSTOMGRAPHICS_POSITION_4', 'NODE_CUSTOMGRAPHICS_POSITION_5', 'NODE_CUSTOMGRAPHICS_POSITION_6', 'NODE_CUSTOMGRAPHICS_POSITION_7', 'NODE_CUSTOMGRAPHICS_POSITION_8', 'NODE_CUSTOMGRAPHICS_POSITION_9', 'NODE_CUSTOMGRAPHICS_SIZE_1', 'NODE_CUSTOMGRAPHICS_SIZE_2', 'NODE_CUSTOMGRAPHICS_SIZE_3', 'NODE_CUSTOMGRAPHICS_SIZE_4', 'NODE_CUSTOMGRAPHICS_SIZE_5', 'NODE_CUSTOMGRAPHICS_SIZE_6', 'NODE_CUSTOMGRAPHICS_SIZE_7', 'NODE_CUSTOMGRAPHICS_SIZE_8', 'NODE_CUSTOMGRAPHICS_SIZE_9', 'NODE_CUSTOMPAINT_1', 'NODE_CUSTOMPAINT_2', 'NODE_CUSTOMPAINT_3', 'NODE_CUSTOMPAINT_4', 'NODE_CUSTOMPAINT_5', 'NODE_CUSTOMPAINT_6', 'NODE_CUSTOMPAINT_7', 'NODE_CUSTOMPAINT_8', 'NODE_CUSTOMPAINT_9', 'NODE_DEPTH', 'NODE_FILL_COLOR', 'NODE_HEIGHT', 'NODE_LABEL', 'NODE_LABEL_COLOR', 'NODE_LABEL_FONT_FACE', 'NODE_LABEL_FONT_SIZE', 'NODE_LABEL_POSITION', 'NODE_LABEL_ROTATION', 'NODE_LABEL_TRANSPARENCY', 'NODE_LABEL_WIDTH', 'NODE_NESTED_NETWORK_IMAGE_VISIBLE', 'NODE_PAINT', 'NODE_SELECTED', 'NODE_SELECTED_PAINT', 'NODE_SHAPE', 'NODE_SIZE', 'NODE_TOOLTIP', 'NODE_TRANSPARENCY', 'NODE_VISIBLE', 'NODE_WIDTH', 'NODE_X_LOCATION', 'NODE_Y_LOCATION', 'NODE_Z_LOCATION']
+2024-11-19 13:40:49,707 [DEBUG] py4...: ǀǀǀCalling cyrest_get('networks/224/tables/defaultedge/columns', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,707 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/networks/224/tables/defaultedge/columns)
+2024-11-19 13:40:49,717 [DEBUG] py4...: ǀǀǀOK[200], content: [{"name":"SUID","type":"Long","immutable":true,"primaryKey":true},{"name":"shared name","type":"String","immutable":true,"primaryKey":false},{"name":"shared interaction","type":"String","immutable":true,"primaryKey":false},{"name":"source","type":"String","immutable":false,"primaryKey":false},{"name":"target","type":"String","immutable":false,"primaryKey":false},{"name":"data.key.column","type":"Integer","immutable":false,"primaryKey":false},{"name":"interaction_type","type":"String","immutable":false,"primaryKey":false},{"name":"name","type":"String","immutable":true,"primaryKey":false},{"name":"selected","type":"Boolean","immutable":true,"primaryKey":false},{"name":"interaction","type":"String","immutable":true,"primaryKey":false}]
+2024-11-19 13:40:49,718 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'name': 'SUID', 'type': 'Long', 'immutable': True, 'primaryKey': True}, {'name': 'shared name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'shared interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'source', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'target', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'data.key.column', 'type': 'Integer', 'immutable': False, 'primaryKey': False}, {'name': 'interaction_type', 'type': 'String', 'immutable': False, 'primaryKey': False}, {'name': 'name', 'type': 'String', 'immutable': True, 'primaryKey': False}, {'name': 'selected', 'type': 'Boolean', 'immutable': True, 'primaryKey': False}, {'name': 'interaction', 'type': 'String', 'immutable': True, 'primaryKey': False}]
+2024-11-19 13:40:49,718 [DEBUG] py4...: ǀǀReturning 'map_visual_property': {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}
+2024-11-19 13:40:49,718 [DEBUG] py4...: ǀǀCalling update_style_mapping('AutoCD_Visualization_Style', {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}, base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,718 [DEBUG] py4...: ǀǀǀCalling cyrest_get('styles/AutoCD_Visualization_Style/mappings', base_url='http://127.0.0.1:1234/v1')
+2024-11-19 13:40:49,718 [DEBUG] py4...: ǀǀǀHTTP GET(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings)
+2024-11-19 13:40:49,731 [DEBUG] py4...: ǀǀǀOK[200], content: [ {
+  "mappingType" : "discrete",
+  "mappingColumn" : "interaction_type",
+  "mappingColumnType" : "String",
+  "visualProperty" : "EDGE_TARGET_ARROW_SHAPE",
+  "map" : [ {
+    "key" : "Circle-Arrow",
+    "value" : "ARROW"
+  }, {
+    "key" : "Tail-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Tail-Arrow",
+    "value" : "ARROW"
+  }, {
+    "key" : "Tail-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Arrow-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Arrow",
+    "value" : "ARROW"
+  } ]
+}, {
+  "mappingType" : "discrete",
+  "mappingColumn" : "interaction_type",
+  "mappingColumnType" : "String",
+  "visualProperty" : "EDGE_SOURCE_ARROW_SHAPE",
+  "map" : [ {
+    "key" : "Circle-Arrow",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Tail-Circle",
+    "value" : "NONE"
+  }, {
+    "key" : "Circle-Circle",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Circle-Tail",
+    "value" : "CIRCLE"
+  }, {
+    "key" : "Tail-Arrow",
+    "value" : "NONE"
+  }, {
+    "key" : "Tail-Tail",
+    "value" : "NONE"
+  }, {
+    "key" : "Arrow-Circle",
+    "value" : "ARROW"
+  }, {
+    "key" : "Arrow-Tail",
+    "value" : "ARROW"
+  }, {
+    "key" : "Arrow-Arrow",
+    "value" : "ARROW"
+  } ]
+}, {
+  "mappingType" : "passthrough",
+  "mappingColumn" : "id",
+  "mappingColumnType" : "String",
+  "visualProperty" : "NODE_LABEL"
+} ]
+2024-11-19 13:40:49,731 [DEBUG] py4...: ǀǀǀReturning 'cyrest_get': [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_TARGET_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'ARROW'}, {'key': 'Tail-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'NONE'}, {'key': 'Tail-Arrow', 'value': 'ARROW'}, {'key': 'Tail-Tail', 'value': 'NONE'}, {'key': 'Arrow-Circle', 'value': 'CIRCLE'}, {'key': 'Arrow-Tail', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}]}, {'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Tail-Tail', 'value': 'NONE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}]}, {'mappingType': 'passthrough', 'mappingColumn': 'id', 'mappingColumnType': 'String', 'visualProperty': 'NODE_LABEL'}]
+2024-11-19 13:40:49,732 [DEBUG] py4...: ǀǀǀCalling cyrest_put('styles/AutoCD_Visualization_Style/mappings/EDGE_SOURCE_ARROW_SHAPE', body=[{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}], base_url='http://127.0.0.1:1234/v1', require_json=False)
+2024-11-19 13:40:49,732 [DEBUG] py4...: ǀǀǀHTTP PUT(http://127.0.0.1:1234/v1/styles/AutoCD_Visualization_Style/mappings/EDGE_SOURCE_ARROW_SHAPE), json: [{'mappingType': 'discrete', 'mappingColumn': 'interaction_type', 'mappingColumnType': 'String', 'visualProperty': 'EDGE_SOURCE_ARROW_SHAPE', 'map': [{'key': 'Circle-Arrow', 'value': 'CIRCLE'}, {'key': 'Arrow-Circle', 'value': 'ARROW'}, {'key': 'Circle-Tail', 'value': 'CIRCLE'}, {'key': 'Tail-Circle', 'value': 'NONE'}, {'key': 'Arrow-Tail', 'value': 'ARROW'}, {'key': 'Tail-Arrow', 'value': 'NONE'}, {'key': 'Arrow-Arrow', 'value': 'ARROW'}, {'key': 'Circle-Circle', 'value': 'CIRCLE'}, {'key': 'Tail-Tail', 'value': 'NONE'}]}]
+2024-11-19 13:40:49,764 [DEBUG] py4...: ǀǀǀOK[200], content: 
+2024-11-19 13:40:49,766 [DEBUG] py4...: ǀǀǀReturning 'cyrest_put': ''
+2024-11-19 13:40:49,767 [DEBUG] py4...: ǀǀReturning 'update_style_mapping': ''
+2024-11-19 13:40:49,767 [DEBUG] py4...: ǀReturning 'set_edge_source_arrow_mapping': ''
+2024-11-19 13:40:49,767 [DEBUG] py4...: Returning 'set_edge_source_arrow_shape_mapping': ''
+2024-11-19 13:40:49,768 [DEBUG] py4...: --------------------

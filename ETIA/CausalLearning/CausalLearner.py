@@ -57,7 +57,7 @@ class CausalLearner:
 
     def __init__(
         self,
-        dataset_input: Union[str, Dataset],
+        dataset_input: Optional[Union[str, Dataset]] = None,
         configurations: Optional[Configurations] = None,
         verbose: bool = False,
         n_jobs: Optional[int] = None,
@@ -75,31 +75,31 @@ class CausalLearner:
 
         self.logger.debug('Initializing CausalLearner')
 
-        # Initialize dataset
-        if isinstance(dataset_input, Dataset):
-            self.dataset = dataset_input
-        elif isinstance(dataset_input, pd.DataFrame):
-            # If a plain DataFrame is provided, initialize Dataset with a default name
-            self.dataset = Dataset(
-                data=dataset_input,
-                data_time_info={'n_lags': 0, 'time_lagged': False},
-                time_series=False,
-                dataset_name='Preloaded Dataset'
-            )
-        elif isinstance(dataset_input, str):
-            self.dataset = Dataset(filename=dataset_input)
-        else:
-            raise ValueError("dataset_input must be either a file path, a Dataset instance, or a pandas DataFrame")
-
         # Initialize configurations
         if configurations is None:
+            # Initialize dataset
+            if isinstance(dataset_input, Dataset):
+                self.dataset = dataset_input
+            elif isinstance(dataset_input, pd.DataFrame):
+                # If a plain DataFrame is provided, initialize Dataset with a default name
+                self.dataset = Dataset(
+                    data=dataset_input,
+                    data_time_info={'n_lags': 0, 'time_lagged': False},
+                    time_series=False,
+                    dataset_name='Preloaded Dataset'
+                )
+            elif isinstance(dataset_input, str):
+                self.dataset = Dataset(filename=dataset_input)
+            else:
+                raise ValueError("dataset_input must be either a file path, a Dataset instance, or a pandas DataFrame")
+
             self.configurations = Configurations(dataset=self.dataset, verbose=self.verbose, n_jobs=n_jobs)
         elif not isinstance(configurations, Configurations):
             self.logger.error('Configurations must be of type Configurations.')
             raise TypeError('Configurations must be of type Configurations.')
         else:
             self.configurations = configurations
-
+            self.dataset = configurations.dataset
         self.results_folder = self.configurations.results_folder
 
         # Initialize CDHPO (Combined Discovery and Hyperparameter Optimization)
