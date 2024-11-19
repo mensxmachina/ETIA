@@ -1,0 +1,41 @@
+{
+   "Dataset":
+        {
+                "dataset_name": "example_dataset.csv",
+                "time_lagged": false,
+                "n_lags": 0
+        },
+    "Results_folder_path": "./",
+    "causal_sufficiency": false,
+    "assume_faithfulness": true,
+    "OCT":
+        {
+                "alpha": 0.01,
+                "n_permutations": 100,
+                "variables_type": "mixed",
+                "out_of_sample_protocol":
+                    {
+                        "name": "KFoldCV",
+                        "parameters":
+                        {
+                            "folds": 10,
+                            "folds_to_run": 5
+                        }
+                    },
+                "Regressor_parameters":
+                    {
+                        "name": "RandomForestRegressor",
+                        "parameters":
+                            {
+                                "n_trees": 100,
+                                "min_samples_leaf": 0.01,
+                                "max_depth": 10
+                            }
+                    },
+                "CausalDiscoveryAlgorithms": {
+                    "exclude_algs": ["fcimax", "gfci", "rfci", "cfci"]
+                }
+
+        }
+
+}

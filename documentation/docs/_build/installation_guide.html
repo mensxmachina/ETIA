@@ -51,6 +51,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#etia-installation">ETIA Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#java-and-r-configuration">Java and R Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#verify-installation">Verify Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-the-library">Test the Library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
@@ -158,13 +159,10 @@
 <p>3. Install MxM package (this part may take a while), and the daggity package. MxM package is necessary for
 AFS while daggity is only used in CRV to find the adjustment sets.
 Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;url &lt;- &quot;</span>https://cran.r-project.org/src/contrib/Archive/MXM/MXM_1.5.5.tar.gz<span class="s2">&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>https://cran.r-project.org/src/contrib/Archive/MXM/MXM_1.5.5.tar.gz<span class="s2">&quot;, type=&quot;</span>source<span class="s2">&quot;, repos=NULL)&quot;</span>
+Rscipt<span class="w"> </span>--vanilla<span class="w"> </span><span class="s2">&quot;install.packages(&quot;</span>daggity<span class="s2">&quot;, repos = &quot;</span>http://cran.us.r-project.org<span class="s2">&quot;)&quot;</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>install.packages(url, type=”source”, repos=NULL)”</dt><dd><p>Rscipt –vanilla “install.packages(“daggity”, repos = “<a class="reference external" href="http://cran.us.r-project.org">http://cran.us.r-project.org</a>”)”</p>
-</dd>
-</dl>
 </section>
 <section id="verify-installation">
 <h2>Verify Installation<a class="headerlink" href="#verify-installation" title="Permalink to this heading"></a></h2>
@@ -175,6 +173,14 @@ Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific 
 </pre></div>
 </div>
 <p>If no errors occur, the installation was successful.</p>
+</section>
+<section id="test-the-library">
+<h2>Test the Library<a class="headerlink" href="#test-the-library" title="Permalink to this heading"></a></h2>
+<p>Download test folder from (<a class="reference external" href="https://github.com/mensxmachina/ETIA/tree/main/tests">https://github.com/mensxmachina/ETIA/tree/main/tests</a>) and run
+.. code-block:: bash</p>
+<blockquote>
+<div><p>pytest tests/</p>
+</div></blockquote>
 </section>
 <section id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading"></a></h2>

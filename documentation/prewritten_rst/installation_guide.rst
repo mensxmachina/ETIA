@@ -84,8 +84,7 @@ Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific 
 
 .. code-block:: bash
 
-    Rscipt --vanilla "url <- "https://cran.r-project.org/src/contrib/Archive/MXM/MXM_1.5.5.tar.gz"
-install.packages(url, type="source", repos=NULL)"
+    Rscipt --vanilla "install.packages("https://cran.r-project.org/src/contrib/Archive/MXM/MXM_1.5.5.tar.gz", type="source", repos=NULL)"
     Rscipt --vanilla "install.packages("daggity", repos = "http://cran.us.r-project.org")"
 
 Verify Installation
@@ -100,6 +99,13 @@ After installing the library, you can verify the installation by importing the E
 
 
 If no errors occur, the installation was successful.
+
+Test the Library
+--------------------
+Download test folder from (https://github.com/mensxmachina/ETIA/tree/main/tests) and run
+.. code-block:: bash
+
+    pytest tests/
 
 Next Steps
 ----------
