@@ -1,7 +1,7 @@
 Experiments
 ===========
 
-This section documents the experiments conducted using the ETIA library.
+This section documents the experiments conducted using the ETIA library. Code for the experiments can be found here (https://github.com/mensxmachina/ETIA/tree/main/experiments)
 
 Experimental Setup
 ------------------
