@@ -6,7 +6,6 @@ authors = ["MensXMachina Lab, Comp. Science Department, University of Crete",
             "Antonios Ntroumpogiannis",
             "Konstantina Biza"]
 readme = "README.md"
-
 [tool.poetry.dependencies]
 python = ">= 3.8"
 causalnex = "*"

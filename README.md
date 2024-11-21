@@ -1,4 +1,11 @@
 
+![Python versions](https://img.shields.io/badge/Python-3.8%2B-brightgreen)
+![Java version](https://img.shields.io/badge/Java-17%2B-brightgreen)
+![R version](https://img.shields.io/badge/R-4%2B-brightgreen)
+![PyPI Downloads](https://static.pepy.tech/badge/etia)
+
+
+
 # ETIA: A Comprehensive Automated Causal Discovery Library
 
 Find the complete Documentantion <https://etia.readthedocs.io/en/latest/index.html#>
