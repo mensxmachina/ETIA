@@ -195,7 +195,7 @@ AFS while daggity is only used in CRV to find the adjustment sets.
 Note: Depending on the OS you may need to install CMake and GSL (GNU Scientific Library)
 
 ```bash
-Rscipt --vanilla "install.packages("MXM", repos = "http://cran.us.r-project.org")"
+Rscipt --vanilla "install.packages("https://cran.r-project.org/src/contrib/Archive/MXM/MXM_1.5.5.tar.gz", type="source", repos=NULL)"
 Rscipt --vanilla "install.packages("daggity", repos = "http://cran.us.r-project.org")"
 ```
 
