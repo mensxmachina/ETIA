@@ -2,7 +2,7 @@
 
 # Variables
 PACKAGE_NAME = ETIA
-PACKAGE_VERSION = 1.0.2
+PACKAGE_VERSION = 1.0.3
 WHEEL_FILE = dist/$(PACKAGE_NAME)-$(PACKAGE_VERSION)-py3-none-any.whl
 TEST_SCRIPT = test_autocd.py
 

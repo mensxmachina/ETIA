@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "etia"
-version = "1.0.2"
+version = "1.0.3"
 description = "Automated Causal Discovery Library"
 authors = ["MensXMachina Lab, Comp. Science Department, University of Crete",
             "Antonios Ntroumpogiannis",

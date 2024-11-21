@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ETIA',
-    version='1.0.2',
+    version='1.0.3',
     packages=find_packages(include=['ETIA', 'ETIA.*']),
     author_email='droubo@csd.uoc.gr',
     description='Automated Causal Discovery Library',
